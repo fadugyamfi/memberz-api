@@ -1,10 +1,10 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrganisationGroupType extends ApiModel  
+class OrganisationGroup extends ApiModel  
 {
 
     
@@ -14,15 +14,26 @@ class OrganisationGroupType extends ApiModel
      *
      * @var string
      */
-    protected $table = 'organisation_group_types';
+    protected $table = 'organisation_groups';
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['organisation_id', 'name', 'description', 'show_on_reg_forms', 'allow_multi_select', 'created', 'modified', 'active'];
+    protected $fillable = ['organisation_id', 'organisation_group_type_id', 'name', 'organisation_member_group_count', 'created', 'modified', 'active'];
+    
 
+    public function organisation(){
+        
+            return $this->belongsTo(Organisation::class);
+    }
+
+    public function organisation_group_type(){
+        return $this->belongsTo(OrganisationGroupType::class);
+    }
+
+    
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -35,7 +46,7 @@ class OrganisationGroupType extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['show_on_reg_forms' => 'boolean', 'allow_multi_select' => 'boolean', 'active' => 'boolean'];
+    protected $casts = ['active' => 'boolean'];
 
     /**
      * The attributes that should be mutated to dates.
