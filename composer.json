@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "fadugyamfi/laravel-api-base": "^0.6.0",
         "fideloper/proxy": "^4.0",
         "jaybizzle/laravel-migrations-organiser": "^4.2",
         "laravel/framework": "^6.2",
@@ -38,8 +39,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
-            "LaravelApiBase\\": "packages/fadugyamfi/laravel-api-base/src/"
+            "App\\": "app/"
+            
         },
         "classmap": [
             "database/seeds",
