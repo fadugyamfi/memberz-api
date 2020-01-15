@@ -38,8 +38,10 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('countries', 'CountryController');
     Route::apiResource('currencies', 'CurrencyController');
     
+    Route::get('members/search', 'MemberController@search');
     Route::apiResource('members', 'MemberController');
-
+    
+    Route::get('member_accounts/search', 'MemberAccountController@search');
     Route::get('member_accounts/{id}/organisations', 'MemberAccountController@organisations');
     Route::apiResource('member_accounts', 'MemberAccountController');
 
