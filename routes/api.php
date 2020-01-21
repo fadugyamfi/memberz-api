@@ -71,5 +71,9 @@ Route::middleware(['auth:api'])->group(function () {
     
     Route::apiResource('subscription_types', 'SubscriptionTypeController');
     Route::apiResource('transaction_types', 'TransactionTypeController');
+    
+    Route::get('organisation_groups/search', 'OrganisationGroupController@search');
+
+    Route::apiResource('organisation_groups', 'OrganisationGroupController');
 
 });
