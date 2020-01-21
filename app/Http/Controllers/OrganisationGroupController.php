@@ -13,9 +13,5 @@ class OrganisationGroupController extends ApiController
         parent::__construct($OrganisationGroup);
     } 
 
-    public function store(Request $request)
-    {
-        $copy = OrganisationCreationRequest::createFrom($request);
-        return parent::store($copy);
-    }
+  
 }

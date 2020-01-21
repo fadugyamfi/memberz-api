@@ -30,8 +30,10 @@ class OrganisationGroupType extends ApiModel
      */
     protected $hidden = [];
 
-    public function organisation(){
+    public function organisation()
+        {
         return $this->belongsTo(Organisation::class);
+        
         }
 
 
