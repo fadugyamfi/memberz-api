@@ -29,9 +29,6 @@ class OrganisationGroupRequest extends ApiRequest
             'organisation_type_id' => 'required|numeric',
             'organisation_group_type_id' => 'required|numeric',
             'name' => 'required|string', 
-            'organisation_member_group_count' => 'nullable|integer',
-            'created' => 'datetime|nullable',
-            'modified' => 'timestamp|nullable',
             'active' => 'tinyint|nullable'
             
         ];
