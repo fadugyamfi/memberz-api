@@ -41,6 +41,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('countries', 'CountryController');
     Route::apiResource('currencies', 'CurrencyController');
 
+    Route::get('members/search', 'MemberController@search');
     Route::apiResource('members', 'MemberController');
     Route::apiResource('member_accounts', 'MemberAccountController');
 
@@ -65,4 +66,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('subscription_types', 'SubscriptionTypeController');
 
     Route::apiResource('transaction_types', 'TransactionTypeController');
+    Route::get('organisation_groups/search', 'OrganisationGroupController@search');
+
+    Route::apiResource('organisation_groups', 'OrganisationGroupController');
+
 });
