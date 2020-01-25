@@ -33,5 +33,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SystemSettingCategoriesTableSeeder::class);
         $this->call(SystemSettingsTableSeeder::class);
         $this->call(TransactionTypesTableSeeder::class);
+        $this->call(PermissionsTableSeeder::class);
     }
 }
