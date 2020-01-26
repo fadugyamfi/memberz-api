@@ -36,6 +36,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('member_accounts/{id}/organisations', 'MemberAccountController@organisations');
     Route::get('organisations/{id}/memberships/statistics', 'OrganisationMemberController@statistics');
     Route::get('organisation_roles/{id}/permissions', 'OrganisationRoleController@permissions');
+    Route::post('organisation_roles/{id}/permissions', 'OrganisationRoleController@syncPermissions');
 
     Route::apiResource('banks', 'BankController');
     Route::apiResource('countries', 'CountryController');
