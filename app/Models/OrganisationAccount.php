@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 use Torzer\Awesome\Landlord\BelongsToTenants;
 
 class OrganisationAccount extends ApiModel  
