@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use LaravelApiBase\Models\CommonFunctions;
 use Spatie\Permission\Traits\HasPermissions;
 use Torzer\Awesome\Landlord\BelongsToTenants;
 
 class OrganisationRole extends ApiModel
 {
 
-    use BelongsToTenants, CommonFunctions, HasPermissions;
+    use BelongsToTenants, HasPermissions;
 
     /**
      * The database table used by the model.
