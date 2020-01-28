@@ -62,6 +62,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('organisation_settings', 'OrganisationSettingController');
     Route::apiResource('organisation_subscriptions', 'OrganisationSubscriptionController');
     Route::apiResource('organisation_types', 'OrganisationTypeController');
+    Route::apiResource('organisation_group_leaders', 'OrganisationGroupLeaderController');
 
     
     Route::apiResource('system_settings', 'SystemSettingController');
