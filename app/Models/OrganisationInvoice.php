@@ -62,6 +62,10 @@ class OrganisationInvoice extends ApiModel
         return $this->hasMany(OrganisationInvoicePayment::class);
     }
 
+    public function currency() {
+        return $this->belongsTo(Currency::class);
+    }
+
     public static function createSubscriptionInvoice(Organisation $organisation, int $subscriptionTypeId, int $subscriptionLength, string $transactionType = 'Subscription Purchase') {
         $transactionType = TransactionType::where('name', $transactionType)->first();
         $subscriptionType = SubscriptionType::find($subscriptionTypeId);
