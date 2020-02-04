@@ -7,6 +7,7 @@ use App\Models\OrganisationAccount;
 use App\Models\OrganisationInvoice;
 use App\Models\OrganisationInvoiceItem;
 use App\Models\OrganisationMember;
+use App\Models\OrganisationGroupLeader;
 use App\Models\OrganisationMemberCategory;
 use App\Models\OrganisationSubscription;
 use App\Observers\OrganisationAccountObserver;
@@ -15,6 +16,7 @@ use App\Observers\OrganisationInvoiceObserver;
 use App\Observers\OrganisationMemberCategoryObserver;
 use App\Observers\OrganisationMemberObserver;
 use App\Observers\OrganisationObserver;
+use App\Observers\OrganisationGroupLeaderObserver;
 use App\Observers\OrganisationSubscriptionObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -48,6 +50,7 @@ class EventServiceProvider extends ServiceProvider
         Organisation::observe(OrganisationObserver::class);
         OrganisationSubscription::observe(OrganisationSubscriptionObserver::class);
         OrganisationInvoice::observe(OrganisationInvoiceObserver::class);
+        OrganisationGroupLeader::observe(OrganisationGroupLeaderObserver::class);
         OrganisationInvoiceItem::observe(OrganisationInvoiceItemObserver::class);
     }
 }
