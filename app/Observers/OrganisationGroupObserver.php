@@ -1,0 +1,86 @@
+<?php
+
+namespace App\Observers;
+
+use App\Models\Organisation;
+use App\Models\OrganisationGroup;
+use App\Models\OrganisationAccount;
+use App\Models\OrganisationInvoice;
+use App\Models\OrganisationMember;
+use App\Models\OrganisationMemberCategory;
+use App\Models\OrganisationSubscription;
+use Illuminate\Support\Str;
+
+class OrganisationObserver
+{
+    
+    /**
+     * Handle the organisation "created" event.
+     *
+     * @param  \App\Organisation  $organisation
+     * @return void
+     */
+    public function creating(Organisation $organisation)
+    {
+        if( !$organisation->slug ) {
+            $organisation->slug = Str::slug($organisation->name) . '-' . rand(10000,99999);
+        }
+
+        $organisation->active = 1;
+    }
+    
+    /**
+     * Handle the organisation "created" event.
+     *
+     * @param  \App\Organisation  $organisation
+     * @return void
+     */
+    public function created(Organisation $organisation)
+    {
+        
+    }
+
+    /**
+     * Handle the organisation "updated" event.
+     *
+     * @param  \App\Organisation  $organisation
+     * @return void
+     */
+    public function updated(Organisation $organisation)
+    {
+        //
+    }
+
+    /**
+     * Handle the organisation "deleted" event.
+     *
+     * @param  \App\Organisation  $organisation
+     * @return void
+     */
+    public function deleted(Organisation $organisation)
+    {
+        //
+    }
+
+    /**
+     * Handle the organisation "restored" event.
+     *
+     * @param  \App\Organisation  $organisation
+     * @return void
+     */
+    public function restored(Organisation $organisation)
+    {
+        //
+    }
+
+    /**
+     * Handle the organisation "force deleted" event.
+     *
+     * @param  \App\Organisation  $organisation
+     * @return void
+     */
+    public function forceDeleted(Organisation $organisation)
+    {
+        //
+    }
+}

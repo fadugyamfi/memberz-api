@@ -1,55 +1,54 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Models;
 
-    use LaravelApiBase\Http\Requests\ApiRequest;
+use Illuminate\Database\Eloquent\Model;
 
-class OrganisationGroupTypeRequest extends ApiRequest
+class OrganisationGroupType extends ApiModel  
 {
-     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
+
+    
 
     /**
-     * Get the validation rules that apply to the request.
+     * The database table used by the model.
      *
-     * @return array
+     * @var string
      */
+    protected $table = 'organisation_group_types';
 
-     public function rules()
-     {
-        return [
-            'organisation_id' => 'required|numeric',
-            'name' => 'required|string',
-            'description' => 'required|string',
-            'show_on_reg_forms' => 'required|boolean',
-            'allow_multi_select' => 'required|string',
-            'active' => 'required|string'
-        ];
+    /**
+     * Attributes that should be mass-assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['organisation_id', 'name', 'description', 'show_on_reg_forms', 'allow_multi_select', 'created', 'modified', 'active'];
 
-        // return [
-        //     'organisation_type_id' => 'required|numeric',
-        //     'name' => 'required|string', 
-        //     'slug' => 'nullable|string',
-        //     'email' => 'required|email',
-        //     'phone' => 'required|string',
-        //     'website' => 'nullable|url',
-        //     'country_id' => 'required|numeric',
-        //     'currency_id' => 'nullable|numeric',
-        //     'logo' => 'nullable|url',
-        //     'address' => 'nullable|string',
-        //     'city' => 'nullable|string',
-        //     'state' => 'nullable|string',
-        //     'post_code' => 'nullable|string',
-        //     'short_description' => 'nullable|string',
-        //     'long_description' => 'nullable|string',
-        // ];
-     }
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = [];
+
+    public function organisation()
+        {
+        return $this->belongsTo(Organisation::class);
+        
+        }
+
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = ['show_on_reg_forms' => 'boolean', 'allow_multi_select' => 'boolean', 'active' => 'boolean'];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['created', 'modified'];
+
 }
-
