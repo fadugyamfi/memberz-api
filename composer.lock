@@ -577,6 +577,46 @@
             "time": "2019-03-17T18:48:37+00:00"
         },
         {
+            "name": "fadugyamfi/laravel-api-base",
+            "version": "0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fadugyamfi/laravel-api-base.git",
+                "reference": "35c637c298aee2ea0434593a5c8522f8699704c3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fadugyamfi/laravel-api-base/zipball/35c637c298aee2ea0434593a5c8522f8699704c3",
+                "reference": "35c637c298aee2ea0434593a5c8522f8699704c3",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelApiBase\\Providers\\LaravelApiBaseProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelApiBase\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Francis Adu-Gyamfi",
+                    "email": "icewalker2g@yahoo.co.uk"
+                }
+            ],
+            "description": "Laravel Package for easy RESTful API development",
+            "time": "2019-11-10T16:02:31+00:00"
+        },
+        {
             "name": "fideloper/proxy",
             "version": "4.2.1",
             "source": {
