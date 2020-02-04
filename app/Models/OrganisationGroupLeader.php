@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrganisationGroupTypeRequest extends ApiModel  
+class OrganisationGroupLeader extends ApiModel  
 {
 
     
@@ -14,14 +14,14 @@ class OrganisationGroupTypeRequest extends ApiModel
      *
      * @var string
      */
-    protected $table = 'organisation_group_types';
+    protected $table = 'organisation_group_leaders';
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['organisation_id', 'name', 'description', 'show_on_reg_forms', 'allow_multi_select', 'created', 'modified', 'active'];
+    protected $fillable = ['organisation_id', 'organisation_group_id', 'organisation_member_id', 'role', 'created', 'modified', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -30,19 +30,12 @@ class OrganisationGroupTypeRequest extends ApiModel
      */
     protected $hidden = [];
 
-    public function organisation()
-        {
-        return $this->belongsTo(Organisation::class);
-        
-        }
-
-
     /**
      * The attributes that should be casted to native types.
      *
      * @var array
      */
-    protected $casts = ['show_on_reg_forms' => 'boolean', 'allow_multi_select' => 'boolean', 'active' => 'boolean'];
+    protected $casts = ['active' => 'boolean'];
 
     /**
      * The attributes that should be mutated to dates.

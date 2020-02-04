@@ -7,7 +7,12 @@ use App\Models\OrganisationAccount;
 use App\Models\OrganisationInvoice;
 use App\Models\OrganisationInvoiceItem;
 use App\Models\OrganisationMember;
+<<<<<<< HEAD
 use App\Models\OrganisationGroup;
+=======
+use App\Models\OrganisationGroupType;
+use App\Models\OrganisationGroupLeader;
+>>>>>>> dev
 use App\Models\OrganisationMemberCategory;
 use App\Models\OrganisationSubscription;
 use App\Observers\OrganisationAccountObserver;
@@ -17,6 +22,8 @@ use App\Observers\OrganisationGroupObserver;
 use App\Observers\OrganisationMemberCategoryObserver;
 use App\Observers\OrganisationMemberObserver;
 use App\Observers\OrganisationObserver;
+use App\Observers\OrganisationGroupTypeObserver;
+use App\Observers\OrganisationGroupLeaderObserver;
 use App\Observers\OrganisationSubscriptionObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -48,9 +55,14 @@ class EventServiceProvider extends ServiceProvider
         OrganisationMemberCategory::observe(OrganisationMemberCategoryObserver::class);
         OrganisationMember::observe(OrganisationMemberObserver::class);
         Organisation::observe(OrganisationObserver::class);
+<<<<<<< HEAD
         OrganisationGroup::observe(OrganisationGroupObserver::class);
+=======
+        OrganisationGroupType::observe(OrganisationGroupTypeObserver::class);
+>>>>>>> dev
         OrganisationSubscription::observe(OrganisationSubscriptionObserver::class);
         OrganisationInvoice::observe(OrganisationInvoiceObserver::class);
-        OrganisationInvoiceItem::observe(OrganisationInvoiceItemObserver::class);
+        OrganisationGroupLeader::observe(OrganisationGroupLeaderObserver::class);
+        OrganisationInvoiceItem::observe(OrganisationInvoiceItemObserver::class); 
     }
 }
