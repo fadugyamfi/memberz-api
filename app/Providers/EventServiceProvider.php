@@ -51,6 +51,6 @@ class EventServiceProvider extends ServiceProvider
         OrganisationGroupType::observe(OrganisationGroupTypeObserver::class);
         OrganisationSubscription::observe(OrganisationSubscriptionObserver::class);
         OrganisationInvoice::observe(OrganisationInvoiceObserver::class);
-        OrganisationInvoiceItem::observe(OrganisationInvoiceItemObserver::class);
+        OrganisationInvoiceItem::observe(OrganisationInvoiceItemObserver::class); 
     }
 }
