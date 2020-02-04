@@ -4,6 +4,7 @@ namespace App\Models;
 
 use DateInterval;
 use DateTime;
+use Exception;
 use Torzer\Awesome\Landlord\BelongsToTenants;
 
 class OrganisationSubscription extends ApiModel  

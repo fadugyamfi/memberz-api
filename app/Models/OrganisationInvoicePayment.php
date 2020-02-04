@@ -8,7 +8,7 @@ use Torzer\Awesome\Landlord\BelongsToTenants;
 class OrganisationInvoicePayment extends ApiModel  
 {
 
-    use BelongsToTenants;
+    //use BelongsToTenants;
     
 
     /**

@@ -66,12 +66,12 @@ class OrganisationInvoice extends ApiModel
         return $this->belongsTo(Currency::class);
     }
 
-    public static function createSubscriptionInvoice(Organisation $organisation, int $subscriptionTypeId, int $subscriptionLength, string $transactionType = 'Subscription Purchase') {
+    public static function createSubscriptionInvoice(int $organisation_id, int $subscriptionTypeId, int $subscriptionLength, string $transactionType = 'Subscription Purchase') {
         $transactionType = TransactionType::where('name', $transactionType)->first();
         $subscriptionType = SubscriptionType::find($subscriptionTypeId);
 
         $invoice = self::create([
-            'organisation_id' => $organisation->id,
+            'organisation_id' => $organisation_id,
             'transaction_type_id' => $transactionType->id,
             'currency_id' => $subscriptionType->currency_id,
             'paid' => $subscriptionType->billing_required ? 0 : 1,

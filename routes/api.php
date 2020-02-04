@@ -32,17 +32,19 @@ Route::group([
 });
 
 Route::middleware(['auth:api'])->group(function () {
-
+    
+    Route::get('members/search', 'MemberController@search');
     Route::get('member_accounts/{id}/organisations', 'MemberAccountController@organisations');
     Route::get('organisations/{id}/memberships/statistics', 'OrganisationMemberController@statistics');
     Route::get('organisation_roles/{id}/permissions', 'OrganisationRoleController@permissions');
     Route::post('organisation_roles/{id}/permissions', 'OrganisationRoleController@syncPermissions');
+    Route::post('organisation_subscriptions/{id}/renew', 'OrganisationSubscriptionController@renew');
+    Route::post('organisation_subscriptions/{id}/upgrade', 'OrganisationSubscriptionController@upgrade');
 
     Route::apiResource('banks', 'BankController');
     Route::apiResource('countries', 'CountryController');
     Route::apiResource('currencies', 'CurrencyController');
 
-    Route::get('members/search', 'MemberController@search');
     Route::apiResource('members', 'MemberController');
     Route::apiResource('member_accounts', 'MemberAccountController');
 

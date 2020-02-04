@@ -38,7 +38,7 @@ class OrganisationObserver
     {
         $subscriptionTypeId = intval(request('subscription_type_id'));
         $subscriptionLength = intval(request('subscription_length'));
-        $organisationInvoice = OrganisationInvoice::createSubscriptionInvoice($organisation, $subscriptionTypeId, $subscriptionLength);
+        $organisationInvoice = OrganisationInvoice::createSubscriptionInvoice($organisation->id, $subscriptionTypeId, $subscriptionLength);
 
         OrganisationSubscription::createNewSubscription($organisation->id, $subscriptionTypeId, $subscriptionLength, $organisationInvoice->id);
         $account = OrganisationAccount::createDefaultAccount($organisation);
