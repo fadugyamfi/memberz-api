@@ -55,6 +55,10 @@ class OrganisationSubscription extends ApiModel
         return $this->belongsTo(SubscriptionType::class);
     }
 
+    public function organisation_invoice() {
+        return $this->belongsTo(OrganisationInvoice::class);
+    }
+
     /**
      * Returns the current subscription for the organisation
      */

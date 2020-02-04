@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-
+use Spatie\Permission\Traits\HasPermissions;
 use Torzer\Awesome\Landlord\BelongsToTenants;
 
-class OrganisationRole extends ApiModel  
+class OrganisationRole extends ApiModel
 {
 
-    use BelongsToTenants;
+    use BelongsToTenants, HasPermissions;
 
     /**
      * The database table used by the model.
@@ -48,5 +48,9 @@ class OrganisationRole extends ApiModel
 
     public function organisation() {
         return $this->belongsTo(Organisation::class);
+    }
+
+    public function organisation_account() {
+        return $this->hasMany(OrganisationAccount::class);
     }
 }
