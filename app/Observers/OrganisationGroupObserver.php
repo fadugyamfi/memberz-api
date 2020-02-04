@@ -11,7 +11,7 @@ use App\Models\OrganisationMemberCategory;
 use App\Models\OrganisationSubscription;
 use Illuminate\Support\Str;
 
-class OrganisationObserver
+class OrganisationGroupObserver
 {
     
     /**
