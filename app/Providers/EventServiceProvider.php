@@ -7,6 +7,7 @@ use App\Models\OrganisationAccount;
 use App\Models\OrganisationInvoice;
 use App\Models\OrganisationInvoiceItem;
 use App\Models\OrganisationMember;
+use App\Models\OrganisationGroup;
 use App\Models\OrganisationMemberCategory;
 use App\Models\OrganisationSubscription;
 use App\Observers\OrganisationAccountObserver;
