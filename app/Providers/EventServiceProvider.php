@@ -12,6 +12,7 @@ use App\Models\OrganisationSubscription;
 use App\Observers\OrganisationAccountObserver;
 use App\Observers\OrganisationInvoiceItemObserver;
 use App\Observers\OrganisationInvoiceObserver;
+use App\Observers\OrganisationGroupObserver;
 use App\Observers\OrganisationMemberCategoryObserver;
 use App\Observers\OrganisationMemberObserver;
 use App\Observers\OrganisationObserver;
@@ -46,6 +47,7 @@ class EventServiceProvider extends ServiceProvider
         OrganisationMemberCategory::observe(OrganisationMemberCategoryObserver::class);
         OrganisationMember::observe(OrganisationMemberObserver::class);
         Organisation::observe(OrganisationObserver::class);
+        OrganisationGroup::observe(OrganisationGroupObserver::class);
         OrganisationSubscription::observe(OrganisationSubscriptionObserver::class);
         OrganisationInvoice::observe(OrganisationInvoiceObserver::class);
         OrganisationInvoiceItem::observe(OrganisationInvoiceItemObserver::class);
