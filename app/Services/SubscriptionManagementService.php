@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services;
 
@@ -8,7 +8,7 @@ use Exception;
 
 class SubscriptionManagementService {
 
-    
+
     public function renew($orgSubscriptionId, $length) {
         $subscription = OrganisationSubscription::with('organisation')->find($orgSubscriptionId);
 
@@ -28,9 +28,9 @@ class SubscriptionManagementService {
         }
 
         $newSubscription = OrganisationSubscription::createNewSubscription(
-            $subscription->organisation_id, 
-            $subscription->subscription_type_id, 
-            $length, 
+            $subscription->organisation_id,
+            $subscription->subscription_type_id,
+            $length,
             $invoice->id
         );
 
@@ -60,9 +60,9 @@ class SubscriptionManagementService {
         }
 
         $newSubscription = OrganisationSubscription::createNewSubscription(
-            $subscription->organisation_id, 
-            $newSubscriptionTypeId, 
-            $length, 
+            $subscription->organisation_id,
+            $newSubscriptionTypeId,
+            $length,
             $invoice->id
         );
 
