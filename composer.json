@@ -9,7 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "fadugyamfi/laravel-api-base": "^0.6.0",
+        "fadugyamfi/laravel-api-base": "^0.7.0",
         "fideloper/proxy": "^4.0",
         "jaybizzle/laravel-migrations-organiser": "^4.2",
         "laravel/framework": "^6.2",

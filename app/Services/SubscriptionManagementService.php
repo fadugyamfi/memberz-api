@@ -8,12 +8,18 @@ use Exception;
 
 class SubscriptionManagementService {
 
-
+    /**
+     * Renews a subscription at a current tier
+     */
     public function renew($orgSubscriptionId, $length) {
-        $subscription = OrganisationSubscription::with('organisation')->find($orgSubscriptionId);
+        $subscription = OrganisationSubscription::with(['organisation', 'organisation_invoice'])->find($orgSubscriptionId);
 
         if( !$subscription ) {
             throw new Exception("Subscription to renew not found");
+        }
+
+        if( $subscription->organisation_invoice->paid == 0 ) {
+            throw new Exception("Current subscription invoice has not been paid. You cannot renew the subscription until previous has been paid");
         }
 
         $invoice = OrganisationInvoice::createSubscriptionInvoice(
@@ -41,22 +47,25 @@ class SubscriptionManagementService {
         return $newSubscription;
     }
 
+    /**
+     * Upgrade a subscription to a higher tier
+     */
     public function upgrade($orgSubscriptionId, $newSubscriptionTypeId, $length) {
         $subscription = OrganisationSubscription::with('organisation')->find($orgSubscriptionId);
 
         if( !$subscription ) {
-            throw new Exception("Subscription to renew not found");
+            throw new Exception("Subscription to upgrade not found");
         }
 
         $invoice = OrganisationInvoice::createSubscriptionInvoice(
             $subscription->organisation_id,
             $newSubscriptionTypeId,
             $length,
-            'Subscription Renewal'
+            'Subscription Upgrade'
         );
 
         if( !$invoice ) {
-            throw new Exception("Could not create subscription renewal invoice");
+            throw new Exception("Could not create subscription upgrade invoice");
         }
 
         $newSubscription = OrganisationSubscription::createNewSubscription(
@@ -67,7 +76,7 @@ class SubscriptionManagementService {
         );
 
         if( !$newSubscription ) {
-            throw new Exception('Could not create subscription renewal entry');
+            throw new Exception('Could not create subscription upgrade entry');
         }
 
         return $newSubscription;

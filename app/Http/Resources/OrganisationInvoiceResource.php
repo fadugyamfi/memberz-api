@@ -10,7 +10,8 @@ class OrganisationInvoiceResource extends ApiResource {
     {
         $data = array_merge(parent::toArray($request), [
             'organisation_invoice_item' => $this->organisation_invoice_item,
-            'transaction_type' => $this->transaction_type
+            'transaction_type' => $this->transaction_type,
+            'currency' => $this->currency
         ]);
 
         return $data;

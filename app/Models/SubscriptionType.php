@@ -4,10 +4,10 @@ namespace App\Models;
 
 
 
-class SubscriptionType extends ApiModel  
+class SubscriptionType extends ApiModel
 {
 
-    
+
 
     /**
      * The database table used by the model.
@@ -21,7 +21,7 @@ class SubscriptionType extends ApiModel
      *
      * @var array
      */
-    protected $fillable = ['name', 'description', 'capacity', 'validity', 'currency_id', 'initial_price', 'renewal_price', 'billing_required', 'initial_sms_credit', 'monthly_sms_bonus', 'accounts', 'reporting', 'revenue_tracking', 'expenditure_tracking', 'events', 'featured', 'created', 'modified', 'promotional', 'active'];
+    protected $fillable = ['id', 'name', 'description', 'capacity', 'validity', 'currency_id', 'initial_price', 'renewal_price', 'billing_required', 'initial_sms_credit', 'monthly_sms_bonus', 'accounts', 'reporting', 'revenue_tracking', 'expenditure_tracking', 'events', 'featured', 'created', 'modified', 'promotional', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
