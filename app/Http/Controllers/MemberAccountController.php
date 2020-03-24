@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -30,7 +30,10 @@ class MemberAccountController extends ApiController
         $uniqueIds = collect($organisationAccountOrgIds)->merge($organisationMemberOrgIds)->unique()->all();
 
         $organisations = Organisation::whereIn('id', $uniqueIds)->with([
-            'active_subscription.subscription_type', 'organisation_type'
+            'active_subscription' => function($query) {
+                return $query->with(['subscription_type', 'organisation_invoice.transaction_type']);
+            },
+            'organisation_type'
         ])->orderBy('name', 'asc')->paginate($limit);
 
         return $this->Resource::collection($organisations);

@@ -8,7 +8,7 @@ use Torzer\Awesome\Landlord\BelongsToTenants;
 class OrganisationInvoiceItem extends ApiModel  
 {
 
-    use BelongsToTenants;
+    //use BelongsToTenants;
 
     /**
      * The database table used by the model.

@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Torzer\Awesome\Landlord\BelongsToTenants;
 
-class OrganisationInvoice extends ApiModel  
+class OrganisationInvoice extends ApiModel
 {
 
     use BelongsToTenants;
@@ -66,27 +67,27 @@ class OrganisationInvoice extends ApiModel
         return $this->belongsTo(Currency::class);
     }
 
-    public static function createSubscriptionInvoice(Organisation $organisation, int $subscriptionTypeId, int $subscriptionLength, string $transactionType = 'Subscription Purchase') {
+    public static function createSubscriptionInvoice(int $organisation_id, int $subscriptionTypeId, int $subscriptionLength, string $transactionType = 'Subscription Purchase') {
         $transactionType = TransactionType::where('name', $transactionType)->first();
         $subscriptionType = SubscriptionType::find($subscriptionTypeId);
 
         $invoice = self::create([
-            'organisation_id' => $organisation->id,
+            'organisation_id' => $organisation_id,
             'transaction_type_id' => $transactionType->id,
             'currency_id' => $subscriptionType->currency_id,
-            'paid' => $subscriptionType->billing_required ? 0 : 1,
+            'paid' => $subscriptionType->billing_required == 'yes' ? 0 : 1,
             'member_account_id' => auth()->user()->id,
             'due_date' => date('Y-m-d H:i:s', strtotime("+7 days")),
             'notes' => "Your new organisation will be temporarily enabled for <b>7 days</b> within which you will be required to make
                     payment for your chosen subscription via any cash, cheque or bank transfer to the indicated bank account. <br /><br />
-                    
+
                     Your new organisation setup will be disabled after <b>7 days</b> pending payment."
         ]);
 
         if( $invoice ) {
             self::saveSubscriptionInvoiceItems($invoice, $subscriptionType, $subscriptionLength);
             self::applyDiscountInvoiceItems($invoice, $subscriptionType, $subscriptionLength);
-            self::applyProratedDiscountOnUpgrade($invoice, $subscriptionType, $subscriptionLength, $transactionType);
+            self::applyProratedDiscountOnUpgrade($invoice, $subscriptionType, $subscriptionLength, $transactionType->name);
         }
 
         return $invoice;
@@ -127,100 +128,20 @@ class OrganisationInvoice extends ApiModel
             return;
         }
 
-        //$invoice->organisation->active_subscription->remaining_balance;
+        $subscription = OrganisationSubscription::getCurrentSubscription($invoice->organisation_id);
+
+        if( $subscription->hasProrateDiscount() ) {
+            $invoice->organisation_invoice_item()->saveMany([
+                new OrganisationInvoiceItem([
+                    'qty' => 1,
+                    'product_type' => 'subscription',
+                    'product_id' => $subscriptionType->id,
+                    'description' => $subscriptionType->description . ' Prorate Discount',
+                    'unit_price' => -$subscription->remaining_balance,
+                    'total' => -$subscription->remaining_balance
+                ])
+            ]);
+        }
     }
 
-    public function oldVersion() {
-    //     $OrgInvoice = ClassRegistry::init("OrganisationInvoice");
-    //     $next_invoice_id = $OrgInvoice->getNextAutoIncrement();
-    //     $organisation_id = $org_subscription_data['OrganisationSubscription']['organisation_id'];
-    //     $invoice_no = $organisation_id . str_pad($next_invoice_id, 5, '0', STR_PAD_LEFT);
-    //     $transaction_type_id = ClassRegistry::init('TransactionType')->getTypeId( $subscription_type );
-    //     $billing_required = $org_subscription_data['SubscriptionType']['billing_required'] == 'yes';
-        
-    //     $data = array(
-    //         'OrganisationInvoice' => array(
-    //             'organisation_id' => $organisation_id,
-    //             'transaction_type_id' => $transaction_type_id,
-    //             'invoice_no' => $invoice_no,
-    //             'currency_id' => $org_subscription_data['SubscriptionType']['currency_id'],
-    //             'paid' => $billing_required ? 0 : 1,
-    //             'member_account_id' => $member_account_id,
-    //             'due_date' => date('Y-m-d H:i:s', strtotime("+7 days")),
-    //             'notes' => "Your new organisation will be temporarily enabled for <b>7 days</b> within which you will be required to make
-    //                     payment for your chosen subscription via any cash, cheque or bank transfer to the indicated bank account. <br /><br />
-                        
-    //                     Your new organisation setup will be disabled after <b>7 days</b> pending payment."
-    //         ),
-    //         'OrganisationInvoiceItem' => array(
-    //             array(
-    //                 'qty' => $org_subscription_data['OrganisationSubscription']['length'],
-    //                 'product_type' => 'subscription',
-    //                 'product_id' => $org_subscription_data['OrganisationSubscription']['id'],
-    //                 'description' => $org_subscription_data['SubscriptionType']['description'] . ' Subscription ' . ($billing_required ? '(1 Month)' : ''),
-    //                 'unit_price' => $org_subscription_data['SubscriptionType']['initial_price'],
-    //                 'total' => intval($org_subscription_data['OrganisationSubscription']['length']) * doubleval($org_subscription_data['SubscriptionType']['initial_price'])
-    //             )
-    //         )
-    //     );
-        
-    //     $discount_months = floor($org_subscription_data['OrganisationSubscription']['length'] / 6);
-        
-    //     if( $discount_months ) {
-    //         $data['OrganisationInvoiceItem'][] = array(
-    //             'qty' => $discount_months,
-    //             'product_type' => 'subscription',
-    //             'product_id' => $org_subscription_data['OrganisationSubscription']['id'],
-    //             'description' => $org_subscription_data['SubscriptionType']['description'] . ' Subscription Discount',
-    //             'unit_price' => -$org_subscription_data['SubscriptionType']['initial_price'],
-    //             'total' => -intval($discount_months) * doubleval($org_subscription_data['SubscriptionType']['initial_price'])
-    //         );
-    //     }
-        
-    //     // record prorated discount as invoice line item only if doing an upgrade
-    //     if( $subscription_type == 'Subscription Upgrade' ) {
-    //         $org = $this->Organisation->getOrganisationInfo($organisation_id);
-            
-    //         if( $org['OrganisationSubscription']['remaining_balance'] > 0 && $org['OrganisationSubscription']['SubscriptionType']['billing_required'] == 'yes' ) {
-    //             $data['OrganisationInvoiceItem'][] = array(
-    //                 'qty' => 1,
-    //                 'product_type' => 'subscription',
-    //                 'product_id' => $org_subscription_data['OrganisationSubscription']['id'],
-    //                 'description' => $org['OrganisationSubscription']['SubscriptionType']['description'] . ' Prorate Discount',
-    //                 'unit_price' => -$org['OrganisationSubscription']['remaining_balance'],
-    //                 'total' => -$org['OrganisationSubscription']['remaining_balance']
-    //             );
-    //         }
-    //     }
-    //     // end prorate discount line item addition
-        
-    //     // calculate and set the total due for the invoice
-    //     $total_due = 0;
-    //     foreach($data['OrganisationInvoiceItem'] as $item) {
-    //         $total_due += $item['total'];
-    //     }
-        
-    //     $data['OrganisationInvoice']['total_due'] = $total_due;
-    //     // end calculation
-        
-        
-    //     try {
-            
-    //         $result = $OrgInvoice->saveAll($data);
-
-    //         if( $result ) {
-    //             $org_invoice_id = $OrgInvoice->id;
-                
-    //             $this->updateAll(array(
-    //                 'OrganisationSubscription.organisation_invoice_id' => $org_invoice_id
-    //             ), array(
-    //                 'OrganisationSubscription.id' => $org_subscription_data['OrganisationSubscription']['id'],
-    //             ));
-                
-    //             return array('status' => 'success', 'message' => 'Invoice information saved', 'organisation_invoice_id' => $org_invoice_id);
-    //         }
-    //     } catch(Exception $e) {
-    //         return array('status' => 'failed', 'message' => 'Error saving data.', 'error' => $e->getMessage());
-    //     }
-    }
 }
