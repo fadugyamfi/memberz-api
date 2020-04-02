@@ -1,8 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Http;
+namespace App\Services;
 
-class SmsService {
+use App\Models\Support\SmsLog;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+
+class ConnectBindSmsService {
 
     /**
      * Send SMS API URL
@@ -68,29 +72,24 @@ class SmsService {
             $response = [];
             $options = array();
 
-            try {
-                $responseObj = Http::get( ConnectBindSmsTask::CB_SEND_URL, array(
-                    "username" => $this->settings['username'],
-                    "password" => $this->settings['password'],
-                    "type" => 0,
-                    "dlr" => 1,
-                    "source" => $this->settings['sender'],
-                    "destination" => $to,
-                    "message" => $text
-                ), $options);
+            $responseObj = Http::get( ConnectBindSmsService::CB_SEND_URL, array(
+                "username" => $this->settings['username'],
+                "password" => $this->settings['password'],
+                "type" => 0,
+                "dlr" => 1,
+                "source" => $this->settings['sender'],
+                "destination" => $to,
+                "message" => $text
+            ), $options);
 
-                $this->log($responseObj->body, 'debug');
+            Log::debug($responseObj->body());
 
-                $parts = explode("|", $responseObj->body);
-                $response = [
-                    'code' => $parts[0],
-                    'number' => $parts[1] ?? null,
-                    'message_id' => $parts[2] ?? null
-                ];
-            } catch (HttpException $ex) {
-                echo $ex;
-                $this->log( $ex->getMessage(), 'debug');
-            }
+            $parts = explode("|", $responseObj->body());
+            $response = [
+                'code' => $parts[0],
+                'number' => $parts[1] ?? null,
+                'message_id' => $parts[2] ?? null
+            ];
 
             $last_messageid = null;
             $last_status = null;
@@ -109,7 +108,7 @@ class SmsService {
                 ];
             }
 
-            ClassRegistry::init('SmsLog')->logMsg($sender_id, $to, $text, $last_messageid, $last_status_group_id);
+            SmsLog::logMsg($sender_id, $to, $text, $last_messageid, $last_status_group_id);
 
             return array(
                 'status' => 'success',
@@ -120,45 +119,9 @@ class SmsService {
                 'status_code' => $last_status_group_id
             );
 
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             return array('status' => 'error', 'message' => $ex->getMessage(), 'error' => $ex->getTraceAsString());
         }
     }
 
-    /**
-     * Get number of credits
-     *
-     * @return int
-     */
-    public function getCredits() {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, sprintf(self::CB_CREDITS_URL, $this->settings['username'], $this->settings['password']));
-        curl_setopt($ch, CURLOPT_HTTPGET, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
-        return (int) $response;
-    }
-
-    /**
-     * Parse number to required format
-     *
-     * @param string
-     * @return string
-     */
-    protected function _parseNumber($number) {
-        $number = trim($number);
-
-        // decide whether already has prefix
-        if (!preg_match('/^(00|\+)/', $number)) {
-            if (substr($number, 0, 1) === '0') {
-                $number = substr($number, 1);
-            }
-
-            $number = $this->settings['default_prefix'] . $number;
-        } else {
-            $number = preg_replace('/^(00|\+)/', '', $number);
-        }
-
-        return preg_replace('/[^0-9]/', '', $number);
-    }
 }

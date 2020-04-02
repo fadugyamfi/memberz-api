@@ -6,7 +6,7 @@ return [
      * ConnectBind SMS Service Credentials
      */
     'connectbind' => [
-        'username' => 'sofb-matrix',
-        'password' => 'qwerty@1'
+        'username' => env('CONNECT_BIND_USERNAME', 'sofb-matrix'),
+        'password' => env('CONNECT_BIND_PASSWORD', 'qwerty@1')
     ]
 ];

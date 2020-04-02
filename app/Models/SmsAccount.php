@@ -44,4 +44,17 @@ class SmsAccount extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(function($query) {
+            $query->where('active', 1);
+        });
+    }
 }
