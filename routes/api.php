@@ -32,7 +32,7 @@ Route::group([
 });
 
 Route::middleware(['auth:api'])->group(function () {
-    
+
     Route::get('members/search', 'MemberController@search');
     Route::get('member_accounts/{id}/organisations', 'MemberAccountController@organisations');
     Route::get('organisations/{id}/memberships/statistics', 'OrganisationMemberController@statistics');
@@ -65,6 +65,9 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('organisation_types', 'OrganisationTypeController');
     Route::apiResource('organisation_group_types', 'OrganisationGroupTypeController');
     Route::apiResource('organisation_group_leaders', 'OrganisationGroupLeaderController');
+
+    Route::apiResource('sms_accounts', 'SmsAccountController');
+    Route::apiResource('sms_account_messages', 'SmsAccountMessageController');
 
     Route::apiResource('system_settings', 'SystemSettingController');
     Route::apiResource('system_setting_category', 'SystemSettingCategoryController');
