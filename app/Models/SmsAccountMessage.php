@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class SmsAccountMessage extends ApiModel
 {
 
-
-
     /**
      * The database table used by the model.
      *
@@ -53,7 +51,7 @@ class SmsAccountMessage extends ApiModel
         return $this->belongsTo(Member::class);
     }
 
-    public function sentBy() {
+    public function sender() {
         return $this->belongsTo(OrganisationAccount::class, 'sent_by');
     }
 }

@@ -19,12 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group([
-
     'middleware' => 'api',
     'prefix' => 'auth'
-
 ], function ($router) {
-
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
@@ -63,19 +60,18 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('organisation_settings', 'OrganisationSettingController');
     Route::apiResource('organisation_subscriptions', 'OrganisationSubscriptionController');
     Route::apiResource('organisation_types', 'OrganisationTypeController');
+    Route::apiResource('organisation_groups', 'OrganisationGroupController');
     Route::apiResource('organisation_group_types', 'OrganisationGroupTypeController');
     Route::apiResource('organisation_group_leaders', 'OrganisationGroupLeaderController');
 
     Route::apiResource('sms_accounts', 'SmsAccountController');
     Route::apiResource('sms_account_messages', 'SmsAccountMessageController');
+    Route::apiResource('sms_account_topups', 'SmsAccountTopupController');
+    Route::apiResource('sms_credits', 'SmsCreditController');
 
+    Route::apiResource('subscription_types', 'SubscriptionTypeController');
     Route::apiResource('system_settings', 'SystemSettingController');
     Route::apiResource('system_setting_category', 'SystemSettingCategoryController');
-    Route::apiResource('subscription_types', 'SubscriptionTypeController');
 
     Route::apiResource('transaction_types', 'TransactionTypeController');
-    Route::get('organisation_groups/search', 'OrganisationGroupController@search');
-
-    Route::apiResource('organisation_groups', 'OrganisationGroupController');
-
 });
