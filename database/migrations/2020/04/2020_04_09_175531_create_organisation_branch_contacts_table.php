@@ -14,6 +14,8 @@ class CreateOrganisationBranchContactsTable extends Migration
     public function up()
     {
         Schema::create('organisation_branch_contacts', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
             $table->id();
             $table->integer('organisation_id')->unsigned()->index();
             $table->bigInteger('organisation_branch_id')->unsigned()->index();
