@@ -2,51 +2,40 @@
 
 namespace App\Observers;
 
-use App\Models\Organisation;
 use App\Models\OrganisationGroup;
-use App\Models\OrganisationAccount;
-use App\Models\OrganisationInvoice;
-use App\Models\OrganisationMember;
-use App\Models\OrganisationMemberCategory;
-use App\Models\OrganisationSubscription;
-use Illuminate\Support\Str;
 
 class OrganisationGroupObserver
 {
-    
-    /**
-     * Handle the organisation "created" event.
-     *
-     * @param  \App\Organisation  $organisation
-     * @return void
-     */
-    public function creating(Organisation $organisation)
-    {
-        if( !$organisation->slug ) {
-            $organisation->slug = Str::slug($organisation->name) . '-' . rand(10000,99999);
-        }
 
-        $organisation->active = 1;
-    }
-    
     /**
      * Handle the organisation "created" event.
      *
-     * @param  \App\Organisation  $organisation
+     * @param  \App\Models\OrganisationGroup  $organisation
      * @return void
      */
-    public function created(Organisation $organisation)
+    public function creating(OrganisationGroup $organisation)
     {
-        
+
+    }
+
+    /**
+     * Handle the organisation "created" event.
+     *
+     * @param  \App\Models\OrganisationGroup  $organisation
+     * @return void
+     */
+    public function created(OrganisationGroup $organisation)
+    {
+
     }
 
     /**
      * Handle the organisation "updated" event.
      *
-     * @param  \App\Organisation  $organisation
+     * @param  \App\Models\OrganisationGroup  $organisation
      * @return void
      */
-    public function updated(Organisation $organisation)
+    public function updated(OrganisationGroup $organisation)
     {
         //
     }
@@ -54,10 +43,10 @@ class OrganisationGroupObserver
     /**
      * Handle the organisation "deleted" event.
      *
-     * @param  \App\Organisation  $organisation
+     * @param  \App\Models\OrganisationGroup  $organisation
      * @return void
      */
-    public function deleted(Organisation $organisation)
+    public function deleted(OrganisationGroup $organisation)
     {
         //
     }
@@ -65,10 +54,10 @@ class OrganisationGroupObserver
     /**
      * Handle the organisation "restored" event.
      *
-     * @param  \App\Organisation  $organisation
+     * @param  \App\Models\OrganisationGroup  $organisation
      * @return void
      */
-    public function restored(Organisation $organisation)
+    public function restored(OrganisationGroup $organisation)
     {
         //
     }
@@ -76,10 +65,10 @@ class OrganisationGroupObserver
     /**
      * Handle the organisation "force deleted" event.
      *
-     * @param  \App\Organisation  $organisation
+     * @param  \App\Models\OrganisationGroup  $organisation
      * @return void
      */
-    public function forceDeleted(Organisation $organisation)
+    public function forceDeleted(OrganisationGroup $organisation)
     {
         //
     }

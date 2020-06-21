@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 
 class OrganisationObserver
 {
-    
+
     /**
      * Handle the organisation "created" event.
      *
@@ -27,7 +27,7 @@ class OrganisationObserver
 
         $organisation->active = 1;
     }
-    
+
     /**
      * Handle the organisation "created" event.
      *
@@ -40,9 +40,9 @@ class OrganisationObserver
         $subscriptionLength = intval(request('subscription_length'));
         $organisationInvoice = OrganisationInvoice::createSubscriptionInvoice($organisation->id, $subscriptionTypeId, $subscriptionLength);
 
-        OrganisationSubscription::createNewSubscription($organisation->id, $subscriptionTypeId, $subscriptionLength, $organisationInvoice->id);
         $account = OrganisationAccount::createDefaultAccount($organisation);
         $category = OrganisationMemberCategory::createDefault($organisation);
+        OrganisationSubscription::createNewSubscription($organisation->id, $subscriptionTypeId, $subscriptionLength, $organisationInvoice->id);
         OrganisationMember::createDefaultMember($organisation, $category, $account);
     }
 
