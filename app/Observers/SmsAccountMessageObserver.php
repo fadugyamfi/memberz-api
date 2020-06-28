@@ -16,26 +16,32 @@ class SmsAccountMessageObserver implements ShouldQueue
         $send_status = '';
         $organisation_id = $smsAccountMessage->sms_account->organisation_id;
 
-        if( $response['status'] == 'success' ) {
-            if( $response['status_code'] == 1) {
-                $sent = 1;
-                $send_status = 'Sent Successfully';
-                $pages = ceil($smsAccountMessage->message / 160);
-                SmsAccount::deductCredit($organisation_id, $pages);
-                Log::debug('Sent message successfully to ' . $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
-
-            } else {
-                $sent = -1;
-                $send_status = "Send Failed. ({$response['last_status']})";
-                Log::debug('Message not sent to ' .  $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
-            }
-        } else {
+        if( $response['status'] != 'success' ) {
             // TODO: determine what todo if no credit present
             $sent = -1;
             $send_status = "Send Failed. Not enough credits available.";
             Log::debug('Failed to send message to ' .  $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
+
+            return $this->updateAccountMessage($smsAccountMessage, $send_status, $sent);
         }
 
+        if( $response['status_code'] == 1) {
+            $sent = 1;
+            $send_status = 'Sent Successfully';
+            $pages = ceil($smsAccountMessage->message / 160);
+            SmsAccount::deductCredit($organisation_id, $pages);
+            Log::debug('Sent message successfully to ' . $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
+
+        } else {
+            $sent = -1;
+            $send_status = "Send Failed. ({$response['last_status']})";
+            Log::debug('Message not sent to ' .  $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
+        }
+
+        return $this->updateAccountMessage($smsAccountMessage, $send_status, $sent);
+    }
+
+    private function updateAccountMessage(SmsAccountMessage $smsAccountMessage, $send_status, $sent) {
         $smsAccountMessage->send_status = $send_status;
         $smsAccountMessage->sent = $sent;
         $smsAccountMessage->sent_at = date('Y-m-d H:i:s');

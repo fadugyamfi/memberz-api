@@ -4,7 +4,7 @@ namespace App\Models;
 
 
 use Torzer\Awesome\Landlord\BelongsToTenants;
-class OrganisationMemberCategory extends ApiModel  
+class OrganisationMemberCategory extends ApiModel
 {
     use BelongsToTenants;
 
@@ -20,7 +20,7 @@ class OrganisationMemberCategory extends ApiModel
      *
      * @var array
      */
-    protected $fillable = ['organisation_id', 'name', 'slug', 'description', 'auto_gen_ids', 'id_prefix', 'id_suffix', 'id_next_increment', 'default', 'organisation_member_count', 'rank', 'paid_membership', 'payment_required', 'price', 'registration_fee', 'renewal_frequency', 'publicly_joinable', 'created', 'modified', 'active'];
+    protected $fillable = ['organisation_id', 'parent_id', 'lft', 'rght', 'name', 'slug', 'description', 'auto_gen_ids', 'id_prefix', 'id_suffix', 'id_next_increment', 'default', 'organisation_member_count', 'rank', 'paid_membership', 'payment_required', 'price', 'registration_fee', 'renewal_frequency', 'publicly_joinable', 'created', 'modified', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -58,7 +58,7 @@ class OrganisationMemberCategory extends ApiModel
         return self::firstOrCreate(
             ['organisation_id' => $organisation->id],
             [
-                'name' => 'General Members', 
+                'name' => 'General Members',
                 'description' => 'General category for new memberships',
                 'slug' => 'general-members',
                 'auto_gen_ids' => 1,

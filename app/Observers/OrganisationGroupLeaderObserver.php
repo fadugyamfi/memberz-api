@@ -4,9 +4,6 @@ namespace App\Observers;
 
 use App\Models\OrganisationGroupLeader;
 
-
-
-
 class OrganisationGroupLeaderObserver
 {
     /**
@@ -17,9 +14,7 @@ class OrganisationGroupLeaderObserver
      */
     public function created(OrganisationGroupLeader $organisationGroupLeader)
     {
-        $invoice = $organisationGroupLeader->organisation_invoice;
 
-        
     }
 
     /**
