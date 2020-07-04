@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Landlord;
+use Torzer\Awesome\Landlord\Facades\Landlord;
 
 class MultiTenant
 {
@@ -17,7 +17,7 @@ class MultiTenant
      */
 
     public function handle(Request $request, Closure $next)
-    {        
+    {
         if ($request->organisation_id) {
             Landlord::addTenant('organisation_id', $request->organisation_id);
         }

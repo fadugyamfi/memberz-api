@@ -2,13 +2,8 @@
 
 namespace App\Models;
 
-
-use Torzer\Awesome\Landlord\BelongsToTenants;
-
 class OrganisationSettingType extends ApiModel
 {
-
-    use BelongsToTenants;
 
     /**
      * The database table used by the model.

@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Torzer\Awesome\Landlord\BelongsToTenants;
 
 class OrganisationMemberCategorySetting extends ApiModel
 {
 
-
+    use BelongsToTenants;
 
     /**
      * The database table used by the model.

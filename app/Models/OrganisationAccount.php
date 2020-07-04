@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Torzer\Awesome\Landlord\BelongsToTenants;
 
-class OrganisationAccount extends ApiModel  
+class OrganisationAccount extends ApiModel
 {
 
     use BelongsToTenants;
@@ -58,7 +58,7 @@ class OrganisationAccount extends ApiModel
     }
 
     public function scopeActive($query) {
-        $query->where('active', 1);
+        return $query->where('active', 1);
     }
 
     public static function memberAccountOrganisationIds(int $member_account_id) {
@@ -71,7 +71,13 @@ class OrganisationAccount extends ApiModel
     public static function createDefaultAccount(Organisation $organisation) {
         $defaultRole = OrganisationRole::firstOrCreate(
             ['organisation_id' => $organisation->id, 'name' => 'Administrator'],
-            ['name' => 'Administrator', 'admin_access' => 1, 'weekly_activity_update' => 1, 'birthday_updates' => 1, 'active' => 1]
+            [
+                'name' => 'Administrator',
+                'admin_access' => 1,
+                'weekly_activity_update' => 1,
+                'birthday_updates' => 1,
+                'active' => 1
+            ]
         );
 
         return self::create([

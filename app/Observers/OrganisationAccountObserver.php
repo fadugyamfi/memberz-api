@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\MemberAccount;
 use App\Models\OrganisationAccount;
+use Exception;
 use Illuminate\Support\Facades\Log;
 
 class OrganisationAccountObserver
@@ -28,7 +29,7 @@ class OrganisationAccountObserver
 
             if( $orgAccount ) {
                 Log::error('An organisation account for this member already exists');
-                return false;
+                throw new Exception('An organisation account already exists for this member');
             }
 
             $organisationAccount->member_account_id = $tempMemberAccount->id;
