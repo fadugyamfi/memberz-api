@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b95f4d9a238383bd547bf623c71c597a",
+    "content-hash": "d0418c194937380aaec730f2b3dfd70e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -629,16 +629,16 @@
         },
         {
             "name": "fadugyamfi/laravel-api-base",
-            "version": "v0.8.0",
+            "version": "v0.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fadugyamfi/laravel-api-base.git",
-                "reference": "9b463c177347da64ec4f3ced73bfe24711b1b230"
+                "reference": "a8ad0c86f6f62868c6750e9adfd0eb804ee2c8ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fadugyamfi/laravel-api-base/zipball/9b463c177347da64ec4f3ced73bfe24711b1b230",
-                "reference": "9b463c177347da64ec4f3ced73bfe24711b1b230",
+                "url": "https://api.github.com/repos/fadugyamfi/laravel-api-base/zipball/a8ad0c86f6f62868c6750e9adfd0eb804ee2c8ab",
+                "reference": "a8ad0c86f6f62868c6750e9adfd0eb804ee2c8ab",
                 "shasum": ""
             },
             "require": {
@@ -669,7 +669,7 @@
                 }
             ],
             "description": "Laravel Package for easy RESTful API development",
-            "time": "2020-04-02T19:33:55+00:00"
+            "time": "2020-07-26T00:54:48+00:00"
         },
         {
             "name": "fideloper/proxy",

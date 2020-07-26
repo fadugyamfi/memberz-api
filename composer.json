@@ -10,7 +10,7 @@
     "require": {
         "php": "^7.2.5",
         "doctrine/dbal": "^2.10",
-        "fadugyamfi/laravel-api-base": "^0.8.0",
+        "fadugyamfi/laravel-api-base": "^0.8.2",
         "fideloper/proxy": "^4.0",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
