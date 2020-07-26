@@ -14,19 +14,19 @@ class Member extends ApiModel
     protected $guarded = ['id'];
     protected $fillable = ['title', 'first_name', 'middle_name', 'last_name', 'gender', 'dob', 'mobile_number', 'email', 'website', 'occupation', 'profession', 'business_name', 'active'];
 
-    public function organisation_member() {
+    public function organisationMember() {
         return $this->hasMany(OrganisationMember::class);
     }
 
-    public function member_image() {
+    public function memberImage() {
         return $this->hasMany(MemberImage::class);
     }
 
-    public function member_account() {
+    public function memberAccount() {
         return $this->hasOne(MemberAccount::class);
     }
 
-    public function profile_photo() {
+    public function profilePhoto() {
         return $this->hasOne(MemberImage::class)->latest();
     }
 

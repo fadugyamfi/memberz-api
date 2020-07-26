@@ -38,23 +38,23 @@ class Organisation extends ApiModel
         $query->where('active', 1);
     }
 
-    public function organisation_type() {
+    public function organisationType() {
         return $this->belongsTo(OrganisationType::class);
     }
 
-    public function organisation_member() {
+    public function organisationMember() {
         return $this->hasMany(OrganisationMember::class);
     }
 
-    public function organisation_account() {
+    public function organisationAccount() {
         return $this->hasMany(OrganisationAccount::class);
     }
 
-    public function organisation_subscription() {
+    public function organisationSubscription() {
         return $this->hasMany(OrganisationSubscription::class);
     }
 
-    public function active_subscription() {
+    public function activeSubscription() {
         return $this->hasOne(OrganisationSubscription::class)->where(['current' => 1]);
     }
 }

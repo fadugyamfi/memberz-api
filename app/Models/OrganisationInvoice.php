@@ -51,15 +51,15 @@ class OrganisationInvoice extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
-    public function transaction_type() {
+    public function transactionType() {
         return $this->belongsTo(TransactionType::class);
     }
 
-    public function organisation_invoice_item() {
+    public function organisationInvoiceItem() {
         return $this->hasMany(OrganisationInvoiceItem::class);
     }
 
-    public function organisation_invoice_payment() {
+    public function organisationInvoicePayment() {
         return $this->hasMany(OrganisationInvoicePayment::class);
     }
 

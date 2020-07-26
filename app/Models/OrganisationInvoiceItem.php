@@ -5,7 +5,7 @@ namespace App\Models;
 
 use Torzer\Awesome\Landlord\BelongsToTenants;
 
-class OrganisationInvoiceItem extends ApiModel  
+class OrganisationInvoiceItem extends ApiModel
 {
 
     //use BelongsToTenants;
@@ -49,7 +49,7 @@ class OrganisationInvoiceItem extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisation_invoice() {
+    public function organisationInvoice() {
         return $this->belongsTo(OrganisationInvoice::class);
     }
 }

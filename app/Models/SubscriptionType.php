@@ -45,7 +45,7 @@ class SubscriptionType extends ApiModel
     protected $dates = ['created', 'modified'];
 
 
-    public function organisation_subscription() {
+    public function organisationSubscription() {
         return $this->hasMany(OrganisationSubscription::class);
     }
 

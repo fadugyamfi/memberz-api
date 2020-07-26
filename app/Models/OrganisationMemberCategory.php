@@ -47,7 +47,7 @@ class OrganisationMemberCategory extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisation_member() {
+    public function organisationMember() {
         return $this->hasMany(OrganisationMember::class);
     }
 

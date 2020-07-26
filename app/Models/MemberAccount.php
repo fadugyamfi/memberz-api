@@ -31,7 +31,7 @@ class MemberAccount extends Authenticatable implements CommonModel, JWTSubject
         return $this->belongsTo(Member::class);
     }
 
-    public function organisation_account() {
+    public function organisationAccount() {
         return $this->hasMany(OrganisationAccount::class);
     }
 

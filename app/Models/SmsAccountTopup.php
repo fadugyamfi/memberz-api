@@ -43,11 +43,11 @@ class SmsAccountTopup extends ApiModel
     protected $dates = ['created', 'modified'];
 
 
-    public function organisation_invoice() {
+    public function organisationInvoice() {
         return $this->belongsTo(OrganisationInvoice::class);
     }
 
-    public function sms_credit() {
+    public function smsCredit() {
         return $this->belongs(SmsCredit::class);
     }
 }

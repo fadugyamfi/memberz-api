@@ -49,11 +49,11 @@ class OrganisationAccount extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisation_role() {
+    public function organisationRole() {
         return $this->belongsTo(OrganisationRole::class);
     }
 
-    public function member_account() {
+    public function memberAccount() {
         return $this->belongsTo(MemberAccount::class);
     }
 

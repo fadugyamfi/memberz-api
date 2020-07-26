@@ -43,7 +43,7 @@ class SmsAccountMessage extends ApiModel
     protected $dates = ['sent_at', 'created', 'modified'];
 
 
-    public function sms_account() {
+    public function smsAccount() {
         return $this->belongsTo(SmsAccount::class, 'module_sms_account_id');
     }
 

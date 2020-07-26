@@ -5,11 +5,11 @@ namespace App\Models;
 
 use Torzer\Awesome\Landlord\BelongsToTenants;
 
-class OrganisationInvoicePayment extends ApiModel  
+class OrganisationInvoicePayment extends ApiModel
 {
 
     //use BelongsToTenants;
-    
+
 
     /**
      * The database table used by the model.
@@ -46,7 +46,7 @@ class OrganisationInvoicePayment extends ApiModel
      */
     protected $dates = ['payment_date', 'created', 'modified'];
 
-    public function organisation_invoice() {
+    public function organisationInvoice() {
         return $this->belongsTo(OrganisationInvoice::class);
     }
 }

@@ -4,10 +4,10 @@ namespace App\Models;
 
 
 
-class TransactionType extends ApiModel  
+class TransactionType extends ApiModel
 {
 
-    
+
 
     /**
      * The database table used by the model.
@@ -46,10 +46,10 @@ class TransactionType extends ApiModel
 
     /**
      * Relationship to OrganisationInvoice
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function organisation_invoice() {
+    public function organisationInvoice() {
         return $this->hasMany(OrganisationInvoice::class);
     }
 }

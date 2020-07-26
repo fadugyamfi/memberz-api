@@ -50,7 +50,7 @@ class OrganisationRole extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisation_account() {
+    public function organisationAccount() {
         return $this->hasMany(OrganisationAccount::class);
     }
 }

@@ -4,10 +4,10 @@ namespace App\Models;
 
 
 
-class Country extends ApiModel  
+class Country extends ApiModel
 {
 
-    
+
 
     /**
      * The database table used by the model.
