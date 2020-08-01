@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Resources;
 
@@ -10,7 +10,7 @@ class OrganisationMemberResource extends ApiResource {
     {
         $data = array_merge(parent::toArray($request), [
             'member' => new MemberResource($this->member),
-            'organisation_member_category' => $this->organisation_member_category
+            'organisation_member_category' => $this->organisationMemberCategory
         ]);
 
         return $data;

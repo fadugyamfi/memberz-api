@@ -60,10 +60,10 @@ class AuthController extends Controller
     {
         $user = auth()->user();
         $memberAccount = MemberAccount::with([
-            'member.member_image' => function($q) {
+            'member.memberImage' => function($q) {
                 $q->recent();
             },
-            'organisation_account' => function($q) {
+            'organisationAccount' => function($q) {
                 $q->active()->with('organisation');
             }
         ])->find($user->id);

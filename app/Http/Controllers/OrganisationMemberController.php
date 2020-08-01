@@ -63,7 +63,7 @@ class OrganisationMemberController extends ApiController
 
         $members = OrganisationMember::inOrganisation($request->organisation_id)
             ->unapproved()
-            ->with(['member', 'organisation_member_category'])
+            ->with(['member', 'organisationMemberCategory'])
             ->paginate($limit);
 
         return $this->Resource::collection($members);

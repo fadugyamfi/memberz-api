@@ -9,9 +9,9 @@ class SmsAccountTopupResource extends ApiResource {
     public function toArray($request)
     {
         $data = array_merge(parent::toArray($request), [
-            'invoice_description' => $this->organisation_invoice->transaction_type->name,
-            'cost' => $this->organisation_invoice->total_due,
-            'currency' => $this->organisation_invoice->currency
+            'invoice_description' => $this->organisationInvoice->transactionType->name,
+            'cost' => $this->organisationInvoice->total_due,
+            'currency' => $this->organisationInvoice->currency
         ]);
 
         return $data;

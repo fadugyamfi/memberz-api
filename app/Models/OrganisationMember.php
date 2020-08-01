@@ -29,7 +29,7 @@ class OrganisationMember extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisation_member_category() {
+    public function organisationMemberCategory() {
         return $this->belongsTo(OrganisationMemberCategory::class);
     }
 

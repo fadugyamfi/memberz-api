@@ -9,7 +9,7 @@ class OrganisationAccountResource extends ApiResource {
     public function toArray($request)
     {
         $data = array_merge(parent::toArray($request), [
-            'member_account' => new MemberAccountResource($this->member_account)
+            'member_account' => new MemberAccountResource($this->memberAccount)
         ]);
 
         return $data;
