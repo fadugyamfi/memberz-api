@@ -20,7 +20,6 @@ class CreateModuleContributionExpenseTypesTable extends Migration {
 			$table->string('description', 200)->nullable();
 			$table->enum('member_required', array('Required','Not Required'))->nullable()->default('Required');
 			$table->boolean('active')->nullable()->default(1);
-			$table->primary(['id','organisation_id']);
 		});
 	}
 

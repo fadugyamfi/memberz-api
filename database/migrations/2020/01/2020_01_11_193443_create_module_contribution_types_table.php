@@ -24,7 +24,6 @@ class CreateModuleContributionTypesTable extends Migration {
 			$table->float('fixed_amount', 10)->nullable();
 			$table->boolean('system_generated')->nullable()->default(0);
 			$table->boolean('active')->nullable()->default(1);
-			$table->primary(['id','organisation_id']);
 		});
 	}
 

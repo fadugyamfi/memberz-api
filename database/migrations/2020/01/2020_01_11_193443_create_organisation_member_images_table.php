@@ -22,7 +22,6 @@ class CreateOrganisationMemberImagesTable extends Migration {
 			$table->dateTime('modified')->nullable();
 			$table->integer('deleted')->default(0);
 			$table->boolean('active')->nullable()->default(1);
-			$table->primary(['id','organisation_id']);
 		});
 	}
 

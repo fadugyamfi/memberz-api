@@ -24,7 +24,6 @@ class CreateOrganisationRolesTable extends Migration {
 			$table->dateTime('created')->nullable();
 			$table->dateTime('modified')->nullable();
 			$table->boolean('active')->nullable()->default(1);
-			$table->primary(['id','organisation_id']);
 		});
 	}
 

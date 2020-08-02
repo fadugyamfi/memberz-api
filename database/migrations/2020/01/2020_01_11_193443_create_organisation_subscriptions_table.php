@@ -25,7 +25,6 @@ class CreateOrganisationSubscriptionsTable extends Migration {
 			$table->dateTime('last_renewal_notice_dt')->nullable();
 			$table->dateTime('created')->nullable();
 			$table->dateTime('modified')->nullable();
-			$table->primary(['id','organisation_id']);
 		});
 	}
 

@@ -30,7 +30,6 @@ class CreateOrganisationMembersTable extends Migration {
 			$table->integer('approved_by')->unsigned()->nullable()->index('organisation_members_ibfk_7');
 			$table->boolean('active')->nullable()->default(1);
 			$table->index(['organisation_no','organisation_id','organisation_member_category_id'], 'organisation_no');
-			$table->primary(['id','organisation_id']);
 		});
 	}
 

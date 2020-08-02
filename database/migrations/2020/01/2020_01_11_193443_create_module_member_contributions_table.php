@@ -34,7 +34,6 @@ class CreateModuleMemberContributionsTable extends Migration {
 			$table->dateTime('modified')->nullable();
 			$table->boolean('active')->nullable()->default(1);
 			$table->index(['organisation_id','cheque_number','bank_id'], 'cheque_number');
-			$table->primary(['id','organisation_id']);
 			$table->index(['organisation_id','year','month','week'], 'year');
 			$table->index(['organisation_id','description'], 'organisation_id_2');
 			$table->index(['organisation_id','created','module_contribution_type_id'], 'organisation_id_3');

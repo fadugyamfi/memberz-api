@@ -36,7 +36,6 @@ class CreateOrganisationMemberCategoriesTable extends Migration {
 			$table->dateTime('modified')->nullable();
 			$table->boolean('active')->nullable()->default(1);
 			$table->unique(['organisation_id','slug'], 'slug');
-			$table->primary(['id','organisation_id']);
 		});
 	}
 

@@ -24,7 +24,6 @@ class CreateOrganisationAccountsTable extends Migration {
 			$table->boolean('weekly_updates')->nullable()->default(1);
 			$table->boolean('active')->nullable()->default(0);
 			$table->boolean('deleted')->nullable()->default(0);
-			$table->primary(['id','organisation_id']);
 		});
 	}
 
