@@ -16,11 +16,14 @@ class SeedModuleMenusForNewCategoriesFeature extends Migration
     public function up()
     {
         $module = Module::where('name', 'Members')->first();
-        $this->createModuleMenus($module);
-        $this->updateModuleMenuIDs($module);
-        $this->updateModuleMenus($module);
 
-        Module::where('name', 'Events')->update(['active' => 0]);
+        if( $module ) {
+            $this->createModuleMenus($module);
+            $this->updateModuleMenuIDs($module);
+            $this->updateModuleMenus($module);
+
+            Module::where('name', 'Events')->update(['active' => 0]);
+        }
     }
 
     public function createModuleMenus($module)
