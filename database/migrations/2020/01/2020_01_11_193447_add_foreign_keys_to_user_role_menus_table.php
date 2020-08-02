@@ -14,8 +14,8 @@ class AddForeignKeysToUserRoleMenusTable extends Migration {
 	{
 		Schema::table('user_role_menus', function(Blueprint $table)
 		{
-			$table->foreign('user_role_id', 'user_role_menus_ibfk_1')->references('id')->on('user_roles')->onUpdate('CASCADE')->onDelete('CASCADE');
-			$table->foreign('menu_id', 'user_role_menus_ibfk_2')->references('id')->on('menus')->onUpdate('CASCADE')->onDelete('CASCADE');
+			//$table->foreign('user_role_id', 'user_role_menus_ibfk_1')->references('id')->on('user_roles')->onUpdate('CASCADE')->onDelete('CASCADE');
+			//$table->foreign('menu_id', 'user_role_menus_ibfk_2')->references('id')->on('menus')->onUpdate('CASCADE')->onDelete('CASCADE');
 		});
 	}
 
