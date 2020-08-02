@@ -14,13 +14,12 @@ class CreateOrganisationSettingsTable extends Migration {
 	{
 		Schema::create('organisation_settings', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
 			$table->integer('organisation_id')->unsigned()->default(0)->index('organisation_id');
 			$table->smallInteger('organisation_setting_type_id')->nullable()->index('organisation_setting_type_id');
 			$table->string('value', 500)->nullable();
 			$table->dateTime('created')->nullable();
 			$table->dateTime('modified')->nullable();
-			$table->primary(['id','organisation_id']);
 		});
 	}
 
