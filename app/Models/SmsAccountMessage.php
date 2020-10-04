@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\SoftDeletesWithActiveFlag;
 
 class SmsAccountMessage extends ApiModel
 {
+
+    use SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.

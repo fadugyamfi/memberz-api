@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-
+use App\Traits\SoftDeletesWithActiveFlag;
 
 class TransactionType extends ApiModel
 {
 
-
+    use SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.
@@ -49,7 +49,7 @@ class TransactionType extends ApiModel
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function organisationInvoice() {
+    public function organisationInvoices() {
         return $this->hasMany(OrganisationInvoice::class);
     }
 }

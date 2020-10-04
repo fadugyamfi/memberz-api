@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\SoftDeletesWithActiveFlag;
 
 class SmsCredit extends ApiModel
 {
 
+    use SoftDeletesWithActiveFlag;
 
 
     /**

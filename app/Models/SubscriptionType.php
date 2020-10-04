@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-
+use App\Traits\SoftDeletesWithActiveFlag;
 
 class SubscriptionType extends ApiModel
 {
 
-
+    use SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.
@@ -45,7 +45,7 @@ class SubscriptionType extends ApiModel
     protected $dates = ['created', 'modified'];
 
 
-    public function organisationSubscription() {
+    public function organisationSubscriptions() {
         return $this->hasMany(OrganisationSubscription::class);
     }
 

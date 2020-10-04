@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-
+use App\Scopes\ActiveScope;
+use App\Traits\SoftDeletesWithActiveFlag;
 use Torzer\Awesome\Landlord\BelongsToTenants;
 class OrganisationMemberCategory extends ApiModel
 {
-    use BelongsToTenants;
+    use BelongsToTenants, SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.
@@ -47,7 +48,7 @@ class OrganisationMemberCategory extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisationMember() {
+    public function organisationMembers() {
         return $this->hasMany(OrganisationMember::class);
     }
 

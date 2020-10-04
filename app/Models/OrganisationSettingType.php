@@ -40,7 +40,7 @@ class OrganisationSettingType extends ApiModel
      */
     protected $dates = [];
 
-    public function organisationSetting() {
+    public function organisationSettings() {
         return $this->hasMany(OrganisationSetting::class);
     }
 }

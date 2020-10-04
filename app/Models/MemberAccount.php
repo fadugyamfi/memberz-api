@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,10 +14,11 @@ use LaravelApiBase\Models\CommonModel;
 class MemberAccount extends Authenticatable implements CommonModel, JWTSubject
 {
 
-    use Notifiable, CommonFunctions;
+    use Notifiable, CommonFunctions, SoftDeletesWithActiveFlag;
 
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';
+    const DELETED_AT = 'active';
 
     protected $table = 'member_accounts';
 
@@ -31,8 +33,8 @@ class MemberAccount extends Authenticatable implements CommonModel, JWTSubject
         return $this->belongsTo(Member::class);
     }
 
-    public function organisationAccount() {
-        return $this->hasMany(OrganisationAccount::class);
+    public function organisationAccounts() {
+        return $this->hasMany(OrganisationAccount::class)->where('organisation_accounts.active', 1);
     }
 
     /**

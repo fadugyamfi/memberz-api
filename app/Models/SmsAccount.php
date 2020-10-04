@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\SoftDeletesWithActiveFlag;
+use Torzer\Awesome\Landlord\BelongsToTenants;
 
 class SmsAccount extends ApiModel
 {
 
-
+    use BelongsToTenants, SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.
@@ -44,19 +45,6 @@ class SmsAccount extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
-    /**
-     * The "booting" method of the model.
-     *
-     * @return void
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::addGlobalScope(function($query) {
-            $query->where('active', 1);
-        });
-    }
 
     public static function getAccount($organisation_id) {
         return self::where('organisation_id', $organisation_id)->first();

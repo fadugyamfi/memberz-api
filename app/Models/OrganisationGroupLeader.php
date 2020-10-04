@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Database\Eloquent\Model;
+use Torzer\Awesome\Landlord\BelongsToTenants;
 
-class OrganisationGroupLeader extends ApiModel  
+class OrganisationGroupLeader extends ApiModel
 {
 
-    
+    use BelongsToTenants, SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.

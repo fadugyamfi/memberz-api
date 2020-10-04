@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-class OrganisationType extends ApiModel  
+class OrganisationType extends ApiModel
 {
 
-    
+
 
     /**
      * The database table used by the model.
@@ -43,7 +43,7 @@ class OrganisationType extends ApiModel
     protected $dates = [];
 
 
-    public function organisation() {
+    public function organisations() {
         return $this->hasMany(Organisation::class);
     }
 

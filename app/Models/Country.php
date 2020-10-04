@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-
+use App\Traits\SoftDeletesWithActiveFlag;
 
 class Country extends ApiModel
 {
 
-
+    use SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.
@@ -43,20 +43,6 @@ class Country extends ApiModel
      * @var array
      */
     protected $dates = [];
-
-     /**
-     * The "booting" method of the model.
-     *
-     * @return void
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::addGlobalScope(function($query) {
-            $query->where('active', 1);
-        });
-    }
 
 
     public function bank() {

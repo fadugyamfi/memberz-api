@@ -30,7 +30,7 @@ class Organisation extends ApiModel
         parent::boot();
 
         static::addGlobalScope('notTrashed', function (Builder $builder) {
-            $builder->where('trashed', 0)->where('active', 1);
+            $builder->where('organisations.trashed', 0)->where('organisations.active', 1);
         });
     }
 
@@ -42,15 +42,15 @@ class Organisation extends ApiModel
         return $this->belongsTo(OrganisationType::class);
     }
 
-    public function organisationMember() {
+    public function organisationMembers() {
         return $this->hasMany(OrganisationMember::class);
     }
 
-    public function organisationAccount() {
+    public function organisationAccounts() {
         return $this->hasMany(OrganisationAccount::class);
     }
 
-    public function organisationSubscription() {
+    public function organisationSubscriptions() {
         return $this->hasMany(OrganisationSubscription::class);
     }
 

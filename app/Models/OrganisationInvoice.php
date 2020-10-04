@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
+use App\Traits\SoftDeletesWithDeletedFlag;
 use Torzer\Awesome\Landlord\BelongsToTenants;
 
 class OrganisationInvoice extends ApiModel
 {
 
-    use BelongsToTenants;
+    use BelongsToTenants, SoftDeletesWithDeletedFlag;
+
+    // override default soft delete column
+    const DELETED_AT = 'deleted';
 
     /**
      * The database table used by the model.
@@ -46,28 +48,33 @@ class OrganisationInvoice extends ApiModel
      */
     protected $dates = ['due_date', 'created', 'modified'];
 
-
-    public function organisation() {
+    public function organisation()
+    {
         return $this->belongsTo(Organisation::class);
     }
 
-    public function transactionType() {
+    public function transactionType()
+    {
         return $this->belongsTo(TransactionType::class);
     }
 
-    public function organisationInvoiceItem() {
+    public function organisationInvoiceItems()
+    {
         return $this->hasMany(OrganisationInvoiceItem::class);
     }
 
-    public function organisationInvoicePayment() {
+    public function organisationInvoicePayments()
+    {
         return $this->hasMany(OrganisationInvoicePayment::class);
     }
 
-    public function currency() {
+    public function currency()
+    {
         return $this->belongsTo(Currency::class);
     }
 
-    public static function createSubscriptionInvoice(int $organisation_id, int $subscriptionTypeId, int $subscriptionLength, string $transactionType = 'Subscription Purchase') {
+    public static function createSubscriptionInvoice(int $organisation_id, int $subscriptionTypeId, int $subscriptionLength, string $transactionType = 'Subscription Purchase')
+    {
         $transactionType = TransactionType::where('name', $transactionType)->first();
         $subscriptionType = SubscriptionType::find($subscriptionTypeId);
 
@@ -81,10 +88,10 @@ class OrganisationInvoice extends ApiModel
             'notes' => "Your new organisation will be temporarily enabled for <b>7 days</b> within which you will be required to make
                     payment for your chosen subscription via any cash, cheque or bank transfer to the indicated bank account. <br /><br />
 
-                    Your new organisation setup will be disabled after <b>7 days</b> pending payment."
+                    Your new organisation setup will be disabled after <b>7 days</b> pending payment.",
         ]);
 
-        if( $invoice ) {
+        if ($invoice) {
             self::saveSubscriptionInvoiceItems($invoice, $subscriptionType, $subscriptionLength);
             self::applyDiscountInvoiceItems($invoice, $subscriptionType, $subscriptionLength);
             self::applyProratedDiscountOnUpgrade($invoice, $subscriptionType, $subscriptionLength, $transactionType->name);
@@ -93,7 +100,8 @@ class OrganisationInvoice extends ApiModel
         return $invoice;
     }
 
-    public static function saveSubscriptionInvoiceItems(OrganisationInvoice $invoice, SubscriptionType $subscriptionType, int $subscriptionLength) {
+    public static function saveSubscriptionInvoiceItems(OrganisationInvoice $invoice, SubscriptionType $subscriptionType, int $subscriptionLength)
+    {
         $invoice->organisation_invoice_item()->saveMany([
             new OrganisationInvoiceItem([
                 'qty' => $subscriptionLength,
@@ -101,15 +109,16 @@ class OrganisationInvoice extends ApiModel
                 'product_id' => $subscriptionType->id,
                 'description' => $subscriptionType->description . ' Subscription ' . ($subscriptionType->billing_required ? '(1 Month)' : ''),
                 'unit_price' => $subscriptionType->initial_price,
-                'total' => $subscriptionLength * doubleval($subscriptionType->initial_price)
-            ])
+                'total' => $subscriptionLength * doubleval($subscriptionType->initial_price),
+            ]),
         ]);
     }
 
-    public static function applyDiscountInvoiceItems(OrganisationInvoice $invoice, SubscriptionType $subscriptionType, int $subscriptionLength) {
+    public static function applyDiscountInvoiceItems(OrganisationInvoice $invoice, SubscriptionType $subscriptionType, int $subscriptionLength)
+    {
         $discountMonths = floor($subscriptionLength / 6);
 
-        if( $discountMonths ) {
+        if ($discountMonths) {
             $invoice->organisation_invoice_item()->saveMany([
                 new OrganisationInvoiceItem([
                     'qty' => $discountMonths,
@@ -117,20 +126,21 @@ class OrganisationInvoice extends ApiModel
                     'product_id' => $subscriptionType->id,
                     'description' => $subscriptionType->description . ' Subscription Discount',
                     'unit_price' => -$subscriptionType->initial_price,
-                    'total' => -intval($discountMonths) * doubleval($subscriptionType->initial_price)
-                ])
+                    'total' => -intval($discountMonths) * doubleval($subscriptionType->initial_price),
+                ]),
             ]);
         }
     }
 
-    public static function applyProratedDiscountOnUpgrade(OrganisationInvoice $invoice, SubscriptionType $subscriptionType, int $subscriptionLength, string $transactionType) {
-        if( $transactionType != 'Subscription Upgrade' ) {
+    public static function applyProratedDiscountOnUpgrade(OrganisationInvoice $invoice, SubscriptionType $subscriptionType, int $subscriptionLength, string $transactionType)
+    {
+        if ($transactionType != 'Subscription Upgrade') {
             return;
         }
 
         $subscription = OrganisationSubscription::getCurrentSubscription($invoice->organisation_id);
 
-        if( $subscription->hasProrateDiscount() ) {
+        if ($subscription->hasProrateDiscount()) {
             $invoice->organisation_invoice_item()->saveMany([
                 new OrganisationInvoiceItem([
                     'qty' => 1,
@@ -138,8 +148,8 @@ class OrganisationInvoice extends ApiModel
                     'product_id' => $subscriptionType->id,
                     'description' => $subscriptionType->description . ' Prorate Discount',
                     'unit_price' => -$subscription->remaining_balance,
-                    'total' => -$subscription->remaining_balance
-                ])
+                    'total' => -$subscription->remaining_balance,
+                ]),
             ]);
         }
     }

@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithActiveFlag;
 use Spatie\Permission\Traits\HasPermissions;
 use Torzer\Awesome\Landlord\BelongsToTenants;
 
 class OrganisationRole extends ApiModel
 {
 
-    use BelongsToTenants, HasPermissions;
+    use BelongsToTenants, HasPermissions, SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.
@@ -50,7 +51,7 @@ class OrganisationRole extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisationAccount() {
+    public function organisationAccounts() {
         return $this->hasMany(OrganisationAccount::class);
     }
 }

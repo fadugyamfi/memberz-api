@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithActiveFlag;
 use Torzer\Awesome\Landlord\BelongsToTenants;
 
 class OrganisationAccount extends ApiModel
 {
 
-    use BelongsToTenants;
+    use BelongsToTenants, SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.

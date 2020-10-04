@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-
+use App\Traits\SoftDeletesWithActiveFlag;
 
 class Member extends ApiModel
 {
+
+    use SoftDeletesWithActiveFlag;
 
     protected $table = 'members';
 
@@ -18,7 +20,7 @@ class Member extends ApiModel
         return $this->hasMany(OrganisationMember::class);
     }
 
-    public function memberImage() {
+    public function memberImages() {
         return $this->hasMany(MemberImage::class);
     }
 

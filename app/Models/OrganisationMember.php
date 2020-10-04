@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Torzer\Awesome\Landlord\BelongsToTenants;
 
 class OrganisationMember extends ApiModel
 {
 
-    use BelongsToTenants;
+    use BelongsToTenants, SoftDeletesWithActiveFlag;
 
     protected $table = 'organisation_members';
 

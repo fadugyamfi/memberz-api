@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\SoftDeletesWithDeletedFlag;
 
 class SmsAccountTopup extends ApiModel
 {
+
+    use SoftDeletesWithDeletedFlag;
+
+    const DELETED_AT = 'deleted';
 
     /**
      * The database table used by the model.
@@ -48,6 +52,6 @@ class SmsAccountTopup extends ApiModel
     }
 
     public function smsCredit() {
-        return $this->belongs(SmsCredit::class);
+        return $this->belongsTo(SmsCredit::class);
     }
 }

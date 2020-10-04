@@ -2,8 +2,14 @@
 
 namespace App\Models\Support;
 
+use App\Traits\SoftDeletesWithActiveFlag;
+
 class SmsLog extends SupportModel
 {
+
+    use SoftDeletesWithActiveFlag;
+
+    const DELETED_AT = 'deleted';
 
     /**
      * The database table used by the model.

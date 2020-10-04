@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Database\Eloquent\Model;
+use Torzer\Awesome\Landlord\BelongsToTenants;
 
 class OrganisationGroupType extends ApiModel
 {
 
-
+    use BelongsToTenants, SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.
@@ -25,11 +27,10 @@ class OrganisationGroupType extends ApiModel
 
 
     public function organisation(){
-
-            return $this->belongsTo(Organisation::class);
+        return $this->belongsTo(Organisation::class);
     }
 
-    public function organisationGroup(){
+    public function organisationGroups(){
         return $this->hasMany(OrganisationGroup::class);
     }
 
