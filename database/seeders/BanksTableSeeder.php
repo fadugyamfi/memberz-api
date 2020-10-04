@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +15,12 @@ class BanksTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         DB::table('banks')->delete();
-        
+
         DB::table('banks')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'country_id' => 80,
@@ -32,7 +34,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'country_id' => 80,
@@ -46,7 +48,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'country_id' => 80,
@@ -60,7 +62,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'country_id' => 80,
@@ -74,7 +76,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'country_id' => 80,
@@ -88,7 +90,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'country_id' => 80,
@@ -102,7 +104,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'country_id' => 80,
@@ -116,7 +118,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'country_id' => 80,
@@ -130,7 +132,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'country_id' => 80,
@@ -144,7 +146,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
                 'country_id' => 80,
@@ -158,7 +160,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 11,
                 'country_id' => 80,
@@ -172,7 +174,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 12,
                 'country_id' => 80,
@@ -186,7 +188,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            12 => 
+            12 =>
             array (
                 'id' => 13,
                 'country_id' => 80,
@@ -200,7 +202,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            13 => 
+            13 =>
             array (
                 'id' => 14,
                 'country_id' => 80,
@@ -214,7 +216,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            14 => 
+            14 =>
             array (
                 'id' => 15,
                 'country_id' => 80,
@@ -228,7 +230,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            15 => 
+            15 =>
             array (
                 'id' => 16,
                 'country_id' => 80,
@@ -242,7 +244,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            16 => 
+            16 =>
             array (
                 'id' => 17,
                 'country_id' => 80,
@@ -256,7 +258,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            17 => 
+            17 =>
             array (
                 'id' => 18,
                 'country_id' => 80,
@@ -270,7 +272,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            18 => 
+            18 =>
             array (
                 'id' => 19,
                 'country_id' => 80,
@@ -284,7 +286,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            19 => 
+            19 =>
             array (
                 'id' => 20,
                 'country_id' => 80,
@@ -298,7 +300,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            20 => 
+            20 =>
             array (
                 'id' => 21,
                 'country_id' => 80,
@@ -312,7 +314,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            21 => 
+            21 =>
             array (
                 'id' => 22,
                 'country_id' => 80,
@@ -326,7 +328,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            22 => 
+            22 =>
             array (
                 'id' => 23,
                 'country_id' => 80,
@@ -340,7 +342,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            23 => 
+            23 =>
             array (
                 'id' => 24,
                 'country_id' => 80,
@@ -354,7 +356,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            24 => 
+            24 =>
             array (
                 'id' => 25,
                 'country_id' => 80,
@@ -368,7 +370,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            25 => 
+            25 =>
             array (
                 'id' => 26,
                 'country_id' => 80,
@@ -382,7 +384,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            26 => 
+            26 =>
             array (
                 'id' => 27,
                 'country_id' => 80,
@@ -396,7 +398,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            27 => 
+            27 =>
             array (
                 'id' => 28,
                 'country_id' => 80,
@@ -410,7 +412,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            28 => 
+            28 =>
             array (
                 'id' => 29,
                 'country_id' => 80,
@@ -424,7 +426,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            29 => 
+            29 =>
             array (
                 'id' => 30,
                 'country_id' => 80,
@@ -438,7 +440,7 @@ class BanksTableSeeder extends Seeder
                 'modifid' => NULL,
                 'deleted' => 0,
             ),
-            30 => 
+            30 =>
             array (
                 'id' => 31,
                 'country_id' => 80,
@@ -453,7 +455,7 @@ class BanksTableSeeder extends Seeder
                 'deleted' => 0,
             ),
         ));
-        
-        
+
+
     }
 }

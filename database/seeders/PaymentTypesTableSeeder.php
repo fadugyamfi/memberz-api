@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +15,12 @@ class PaymentTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         DB::table('payment_types')->delete();
-        
+
         DB::table('payment_types')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'name' => 'Credit/Debit Card',
@@ -27,7 +29,7 @@ class PaymentTypesTableSeeder extends Seeder
                 'modified' => '2015-04-04 00:00:08',
                 'active' => 1,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'name' => 'Direct Debit',
@@ -36,7 +38,7 @@ class PaymentTypesTableSeeder extends Seeder
                 'modified' => '2015-04-04 00:00:23',
                 'active' => 1,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'name' => 'MTN Mobile Money',
@@ -45,7 +47,7 @@ class PaymentTypesTableSeeder extends Seeder
                 'modified' => '2015-04-04 00:00:37',
                 'active' => 1,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'name' => 'Airtel Money',
@@ -54,7 +56,7 @@ class PaymentTypesTableSeeder extends Seeder
                 'modified' => '2015-04-04 00:00:50',
                 'active' => 1,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'name' => 'Tigo Cash',
@@ -63,7 +65,7 @@ class PaymentTypesTableSeeder extends Seeder
                 'modified' => '2015-04-04 00:01:04',
                 'active' => 1,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'name' => 'Cheque',
@@ -72,7 +74,7 @@ class PaymentTypesTableSeeder extends Seeder
                 'modified' => '2015-04-04 00:01:22',
                 'active' => 1,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'name' => 'Cash',
@@ -81,7 +83,7 @@ class PaymentTypesTableSeeder extends Seeder
                 'modified' => '2015-04-04 00:01:32',
                 'active' => 1,
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'name' => 'MPower Payments',
@@ -90,7 +92,7 @@ class PaymentTypesTableSeeder extends Seeder
                 'modified' => '2015-09-07 03:32:14',
                 'active' => 1,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'name' => 'Slydepay',
@@ -100,7 +102,7 @@ class PaymentTypesTableSeeder extends Seeder
                 'active' => 1,
             ),
         ));
-        
-        
+
+
     }
 }

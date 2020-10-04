@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +15,12 @@ class OrganisationSettingTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         DB::table('organisation_setting_types')->delete();
-        
+
         DB::table('organisation_setting_types')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 2,
                 'name' => 'inactivity_delay',
@@ -26,7 +28,7 @@ class OrganisationSettingTypesTableSeeder extends Seeder
                 'type' => 'number',
                 'default' => '30',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 7,
                 'name' => 'org_contribution_default_currency',
@@ -34,7 +36,7 @@ class OrganisationSettingTypesTableSeeder extends Seeder
                 'type' => 'select',
                 'default' => 'custom',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 8,
                 'name' => 'org_contribution_receipt_mode',
@@ -42,7 +44,7 @@ class OrganisationSettingTypesTableSeeder extends Seeder
                 'type' => 'select',
                 'default' => 'custom',
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 9,
                 'name' => 'org_contribution_receipt_prefix',
@@ -50,7 +52,7 @@ class OrganisationSettingTypesTableSeeder extends Seeder
                 'type' => 'text',
                 'default' => NULL,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 10,
                 'name' => 'org_contribution_receipt_postfix',
@@ -58,7 +60,7 @@ class OrganisationSettingTypesTableSeeder extends Seeder
                 'type' => 'text',
                 'default' => NULL,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 11,
                 'name' => 'org_contribution_receipt_count',
@@ -66,7 +68,7 @@ class OrganisationSettingTypesTableSeeder extends Seeder
                 'type' => 'text',
                 'default' => '1',
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 12,
                 'name' => 'auto_birthday_messaging',
@@ -74,7 +76,7 @@ class OrganisationSettingTypesTableSeeder extends Seeder
                 'type' => 'number',
                 'default' => '0',
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 13,
                 'name' => 'auto_birthday_message',
@@ -82,7 +84,7 @@ class OrganisationSettingTypesTableSeeder extends Seeder
                 'type' => 'text',
                 'default' => NULL,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 14,
                 'name' => 'auto_birthday_datetime',
@@ -90,7 +92,7 @@ class OrganisationSettingTypesTableSeeder extends Seeder
                 'type' => 'datetime',
                 'default' => NULL,
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 15,
                 'name' => 'max_capacity_warning_triggered',
@@ -99,7 +101,7 @@ class OrganisationSettingTypesTableSeeder extends Seeder
                 'default' => '0',
             ),
         ));
-        
-        
+
+
     }
 }

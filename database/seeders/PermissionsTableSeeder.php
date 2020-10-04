@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\OrganisationRole;
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -13,10 +15,10 @@ class PermissionsTableSeeder extends Seeder
         // delete all permissions
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
         DB::table('permissions')->truncate();
-        
+
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-        
+
         // create permissions
         Permission::findOrCreate('settings:organisation_roles:view','api');
         Permission::findOrCreate('settings:organisation_roles:manage','api');
@@ -66,7 +68,7 @@ class PermissionsTableSeeder extends Seeder
         Permission::findOrCreate('finance:expenditure:manage','api');
         Permission::findOrCreate('finance:expenditure:delete','api');
         Permission::findOrCreate('finance:reports:view','api');
-        
+
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
         // assign permissions to existing roles in the system

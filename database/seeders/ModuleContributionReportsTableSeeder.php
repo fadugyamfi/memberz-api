@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +15,12 @@ class ModuleContributionReportsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         DB::table('module_contribution_reports')->delete();
-        
+
         DB::table('module_contribution_reports')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'organisation_id' => NULL,
@@ -31,7 +33,7 @@ class ModuleContributionReportsTableSeeder extends Seeder
                 'modified' => NULL,
                 'active' => 1,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'organisation_id' => NULL,
@@ -44,7 +46,7 @@ class ModuleContributionReportsTableSeeder extends Seeder
                 'modified' => NULL,
                 'active' => 1,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'organisation_id' => NULL,
@@ -57,7 +59,7 @@ class ModuleContributionReportsTableSeeder extends Seeder
                 'modified' => NULL,
                 'active' => 1,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'organisation_id' => NULL,
@@ -70,7 +72,7 @@ class ModuleContributionReportsTableSeeder extends Seeder
                 'modified' => NULL,
                 'active' => 1,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'organisation_id' => NULL,
@@ -84,7 +86,7 @@ class ModuleContributionReportsTableSeeder extends Seeder
                 'active' => 1,
             ),
         ));
-        
-        
+
+
     }
 }

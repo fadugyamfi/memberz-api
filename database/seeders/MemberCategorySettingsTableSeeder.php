@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +15,12 @@ class MemberCategorySettingsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         DB::table('member_category_settings')->delete();
-        
+
         DB::table('member_category_settings')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'name' => 'additional_profile_info',
@@ -30,7 +32,7 @@ class MemberCategorySettingsTableSeeder extends Seeder
                 'modified' => '2014-06-11 22:46:19',
                 'active' => 1,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'name' => 'location_info',
@@ -42,7 +44,7 @@ class MemberCategorySettingsTableSeeder extends Seeder
                 'modified' => '2014-06-11 22:46:15',
                 'active' => 1,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'name' => 'family_info',
@@ -54,7 +56,7 @@ class MemberCategorySettingsTableSeeder extends Seeder
                 'modified' => '2014-06-11 22:46:15',
                 'active' => 1,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'name' => 'group_info',
@@ -66,7 +68,7 @@ class MemberCategorySettingsTableSeeder extends Seeder
                 'modified' => '2014-06-11 22:46:15',
                 'active' => 1,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'name' => 'anniversary_info',
@@ -78,7 +80,7 @@ class MemberCategorySettingsTableSeeder extends Seeder
                 'modified' => '2014-06-11 22:46:15',
                 'active' => 1,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'name' => 'notes',
@@ -90,7 +92,7 @@ class MemberCategorySettingsTableSeeder extends Seeder
                 'modified' => '2014-06-11 22:46:15',
                 'active' => 0,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'name' => 'add_type_label',
@@ -102,7 +104,7 @@ class MemberCategorySettingsTableSeeder extends Seeder
                 'modified' => '2014-06-12 02:29:35',
                 'active' => 0,
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'name' => 'activity_feed',
@@ -114,7 +116,7 @@ class MemberCategorySettingsTableSeeder extends Seeder
                 'modified' => '2014-06-18 13:59:38',
                 'active' => 1,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'name' => 'birthdays',
@@ -126,7 +128,7 @@ class MemberCategorySettingsTableSeeder extends Seeder
                 'modified' => '2015-04-30 10:22:02',
                 'active' => 1,
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
                 'name' => 'medical_info',
@@ -139,7 +141,7 @@ class MemberCategorySettingsTableSeeder extends Seeder
                 'active' => 0,
             ),
         ));
-        
-        
+
+
     }
 }

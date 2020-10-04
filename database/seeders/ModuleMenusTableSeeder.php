@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +15,12 @@ class ModuleMenusTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         DB::table('module_menus')->delete();
-        
+
         DB::table('module_menus')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'module_id' => 2,
@@ -32,7 +34,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2014-12-01 23:15:37',
                 'active' => 1,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'module_id' => 2,
@@ -46,7 +48,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2014-12-01 23:16:08',
                 'active' => 1,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'module_id' => 2,
@@ -60,7 +62,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2014-12-01 23:16:54',
                 'active' => 1,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'module_id' => 3,
@@ -74,7 +76,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2014-12-03 10:55:56',
                 'active' => 1,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'module_id' => 3,
@@ -88,7 +90,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2014-12-03 11:07:17',
                 'active' => 1,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'module_id' => 3,
@@ -102,7 +104,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2014-12-03 11:09:21',
                 'active' => 1,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'module_id' => 5,
@@ -116,7 +118,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2015-01-28 01:03:45',
                 'active' => 1,
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'module_id' => 5,
@@ -130,7 +132,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2015-01-28 01:04:15',
                 'active' => 0,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'module_id' => 5,
@@ -144,7 +146,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2015-01-28 01:05:06',
                 'active' => 1,
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 11,
                 'module_id' => 3,
@@ -158,7 +160,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2015-04-30 21:06:23',
                 'active' => 1,
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 15,
                 'module_id' => 5,
@@ -172,7 +174,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2015-07-01 02:55:34',
                 'active' => 1,
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 16,
                 'module_id' => 6,
@@ -186,7 +188,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2015-11-16 12:04:19',
                 'active' => 0,
             ),
-            12 => 
+            12 =>
             array (
                 'id' => 17,
                 'module_id' => 6,
@@ -200,7 +202,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2015-11-16 12:06:41',
                 'active' => 1,
             ),
-            13 => 
+            13 =>
             array (
                 'id' => 18,
                 'module_id' => 6,
@@ -214,7 +216,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2015-11-16 12:06:41',
                 'active' => 1,
             ),
-            14 => 
+            14 =>
             array (
                 'id' => 19,
                 'module_id' => 3,
@@ -228,7 +230,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2016-02-09 11:40:05',
                 'active' => 0,
             ),
-            15 => 
+            15 =>
             array (
                 'id' => 20,
                 'module_id' => 3,
@@ -242,7 +244,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2016-02-09 11:49:52',
                 'active' => 1,
             ),
-            16 => 
+            16 =>
             array (
                 'id' => 21,
                 'module_id' => 6,
@@ -256,7 +258,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2016-04-26 10:12:52',
                 'active' => 0,
             ),
-            17 => 
+            17 =>
             array (
                 'id' => 22,
                 'module_id' => 2,
@@ -270,7 +272,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2016-05-03 23:46:55',
                 'active' => 1,
             ),
-            18 => 
+            18 =>
             array (
                 'id' => 23,
                 'module_id' => 5,
@@ -284,7 +286,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2016-07-25 16:14:06',
                 'active' => 1,
             ),
-            19 => 
+            19 =>
             array (
                 'id' => 24,
                 'module_id' => 3,
@@ -298,7 +300,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'modified' => '2017-02-19 19:51:06',
                 'active' => 1,
             ),
-            20 => 
+            20 =>
             array (
                 'id' => 25,
                 'module_id' => 6,
@@ -313,7 +315,7 @@ class ModuleMenusTableSeeder extends Seeder
                 'active' => 1,
             ),
         ));
-        
-        
+
+
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +15,12 @@ class ModulesTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         DB::table('modules')->delete();
-        
+
         DB::table('modules')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'name' => 'Reports',
@@ -34,7 +36,7 @@ class ModulesTableSeeder extends Seeder
                 'modified' => '2014-11-14 21:32:33',
                 'active' => 0,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'name' => 'Messages',
@@ -50,7 +52,7 @@ class ModulesTableSeeder extends Seeder
                 'modified' => '2014-11-14 21:32:58',
                 'active' => 1,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'name' => 'Finance',
@@ -66,7 +68,7 @@ class ModulesTableSeeder extends Seeder
                 'modified' => '2014-11-14 21:33:26',
                 'active' => 1,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'name' => 'Settings',
@@ -82,7 +84,7 @@ class ModulesTableSeeder extends Seeder
                 'modified' => '2015-01-23 11:24:59',
                 'active' => 0,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'name' => 'Members',
@@ -98,7 +100,7 @@ class ModulesTableSeeder extends Seeder
                 'modified' => '2015-01-28 00:36:02',
                 'active' => 1,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'name' => 'Events',
@@ -115,7 +117,7 @@ class ModulesTableSeeder extends Seeder
                 'active' => 1,
             ),
         ));
-        
-        
+
+
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +15,12 @@ class SubscriptionTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         DB::table('subscription_types')->delete();
-        
+
         DB::table('subscription_types')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'name' => 'free',
@@ -42,7 +44,7 @@ class SubscriptionTypesTableSeeder extends Seeder
                 'promotional' => 0,
                 'active' => 0,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'name' => 'starter',
@@ -66,7 +68,7 @@ class SubscriptionTypesTableSeeder extends Seeder
                 'promotional' => 0,
                 'active' => 0,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'name' => 'pro',
@@ -90,7 +92,7 @@ class SubscriptionTypesTableSeeder extends Seeder
                 'promotional' => 0,
                 'active' => 0,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'name' => 'medium',
@@ -114,7 +116,7 @@ class SubscriptionTypesTableSeeder extends Seeder
                 'promotional' => 0,
                 'active' => 0,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'name' => 'large',
@@ -138,7 +140,7 @@ class SubscriptionTypesTableSeeder extends Seeder
                 'promotional' => 0,
                 'active' => 0,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'name' => 'extra_large',
@@ -162,7 +164,7 @@ class SubscriptionTypesTableSeeder extends Seeder
                 'promotional' => 0,
                 'active' => 0,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'name' => 'enterprise',
@@ -186,7 +188,7 @@ class SubscriptionTypesTableSeeder extends Seeder
                 'promotional' => 0,
                 'active' => 0,
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'name' => 'basic',
@@ -210,7 +212,7 @@ class SubscriptionTypesTableSeeder extends Seeder
                 'promotional' => 0,
                 'active' => 0,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'name' => 'mini',
@@ -234,7 +236,7 @@ class SubscriptionTypesTableSeeder extends Seeder
                 'promotional' => 0,
                 'active' => 0,
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
                 'name' => 'xmas15_3x',
@@ -258,7 +260,7 @@ class SubscriptionTypesTableSeeder extends Seeder
                 'promotional' => 1,
                 'active' => 0,
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 11,
                 'name' => 'free2',
@@ -282,7 +284,7 @@ class SubscriptionTypesTableSeeder extends Seeder
                 'promotional' => 0,
                 'active' => 1,
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 12,
                 'name' => 'sms_pro',
@@ -306,7 +308,7 @@ class SubscriptionTypesTableSeeder extends Seeder
                 'promotional' => 0,
                 'active' => 1,
             ),
-            12 => 
+            12 =>
             array (
                 'id' => 13,
                 'name' => 'pro2',
@@ -330,7 +332,7 @@ class SubscriptionTypesTableSeeder extends Seeder
                 'promotional' => 0,
                 'active' => 1,
             ),
-            13 => 
+            13 =>
             array (
                 'id' => 14,
                 'name' => 'premium',
@@ -355,7 +357,7 @@ class SubscriptionTypesTableSeeder extends Seeder
                 'active' => 0,
             ),
         ));
-        
-        
+
+
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +15,12 @@ class AuthAppsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         DB::table('auth_apps')->delete();
-        
+
         DB::table('auth_apps')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'app_id' => 'memberz',
@@ -31,7 +33,7 @@ class AuthAppsTableSeeder extends Seeder
                 'modified' => '2017-11-09 20:34:15',
                 'active' => 1,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'app_id' => 'iipgh_website',
@@ -45,7 +47,7 @@ class AuthAppsTableSeeder extends Seeder
                 'active' => 1,
             ),
         ));
-        
-        
+
+
     }
 }

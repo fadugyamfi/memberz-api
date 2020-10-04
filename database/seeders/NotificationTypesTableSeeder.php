@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +15,12 @@ class NotificationTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         DB::table('notification_types')->delete();
-        
+
         DB::table('notification_types')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'name' => 'sms_low_credit',
@@ -37,7 +39,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-05-07 16:21:29',
                 'active' => 1,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'name' => 'sms_broadcast_processing_complete',
@@ -56,7 +58,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-05-07 16:21:32',
                 'active' => 1,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'name' => 'member_registration',
@@ -75,7 +77,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-05-07 16:21:36',
                 'active' => 1,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'name' => 'sms_broadcast_low_credit',
@@ -94,7 +96,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-05-07 16:21:39',
                 'active' => 1,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'name' => 'organisation_account_access_granted',
@@ -113,7 +115,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-04-30 19:45:40',
                 'active' => 1,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'name' => 'support_account_access_granted',
@@ -132,7 +134,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-04-30 19:37:29',
                 'active' => 1,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'name' => 'organisation_account_role_changed',
@@ -151,7 +153,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-04-30 19:40:30',
                 'active' => 1,
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'name' => 'support_account_role_changed',
@@ -170,7 +172,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-04-30 19:41:52',
                 'active' => 1,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'name' => 'org_account_activation',
@@ -189,7 +191,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-05-01 11:57:32',
                 'active' => 1,
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
                 'name' => 'support_account_activation',
@@ -208,7 +210,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-05-02 23:01:57',
                 'active' => 1,
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 11,
                 'name' => 'organisation_max_capacity_reached',
@@ -227,7 +229,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-05-23 01:29:55',
                 'active' => 1,
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 12,
                 'name' => 'organisation_max_capacity_warning',
@@ -246,7 +248,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-05-23 02:02:34',
                 'active' => 1,
             ),
-            12 => 
+            12 =>
             array (
                 'id' => 13,
                 'name' => 'sms_credit_pending',
@@ -265,7 +267,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-06-19 19:58:22',
                 'active' => 1,
             ),
-            13 => 
+            13 =>
             array (
                 'id' => 14,
                 'name' => 'sms_credited',
@@ -284,7 +286,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-06-19 21:30:20',
                 'active' => 1,
             ),
-            14 => 
+            14 =>
             array (
                 'id' => 15,
                 'name' => 'bulk_member_import_status',
@@ -303,7 +305,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-07-16 09:41:35',
                 'active' => 1,
             ),
-            15 => 
+            15 =>
             array (
                 'id' => 17,
                 'name' => 'bulk_contribution_import_status',
@@ -322,7 +324,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-09-19 16:34:57',
                 'active' => 1,
             ),
-            16 => 
+            16 =>
             array (
                 'id' => 18,
                 'name' => 'registration_approval_status',
@@ -341,7 +343,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-09-30 16:37:10',
                 'active' => 1,
             ),
-            17 => 
+            17 =>
             array (
                 'id' => 19,
                 'name' => 'org_invitation_accepted',
@@ -360,7 +362,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2015-12-19 20:09:23',
                 'active' => 1,
             ),
-            18 => 
+            18 =>
             array (
                 'id' => 20,
                 'name' => 'join_request',
@@ -379,7 +381,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2016-02-07 14:56:41',
                 'active' => 1,
             ),
-            19 => 
+            19 =>
             array (
                 'id' => 22,
                 'name' => 'org_join_invitation_accepted',
@@ -398,7 +400,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2016-04-12 00:25:33',
                 'active' => 1,
             ),
-            20 => 
+            20 =>
             array (
                 'id' => 23,
                 'name' => 'member_contribution_payment',
@@ -417,7 +419,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2016-02-28 18:21:36',
                 'active' => 1,
             ),
-            21 => 
+            21 =>
             array (
                 'id' => 25,
                 'name' => 'sms_broadcast_processing_failed',
@@ -436,7 +438,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2016-05-11 13:30:17',
                 'active' => 1,
             ),
-            22 => 
+            22 =>
             array (
                 'id' => 26,
                 'name' => 'anniversary_today',
@@ -455,7 +457,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2016-07-11 18:27:55',
                 'active' => 1,
             ),
-            23 => 
+            23 =>
             array (
                 'id' => 27,
                 'name' => 'anniversary_today_sms_sent',
@@ -474,7 +476,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2016-07-11 21:23:07',
                 'active' => 1,
             ),
-            24 => 
+            24 =>
             array (
                 'id' => 28,
                 'name' => 'anniversary_today_no_sms',
@@ -493,7 +495,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2016-07-11 21:23:07',
                 'active' => 1,
             ),
-            25 => 
+            25 =>
             array (
                 'id' => 29,
                 'name' => 'notice_reaction',
@@ -512,7 +514,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2016-08-11 12:02:43',
                 'active' => 1,
             ),
-            26 => 
+            26 =>
             array (
                 'id' => 30,
                 'name' => 'notice_comment_posted',
@@ -531,7 +533,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2016-08-11 19:10:23',
                 'active' => 1,
             ),
-            27 => 
+            27 =>
             array (
                 'id' => 31,
                 'name' => 'comment_reaction',
@@ -550,7 +552,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2016-08-16 16:50:54',
                 'active' => 1,
             ),
-            28 => 
+            28 =>
             array (
                 'id' => 32,
                 'name' => 'pledge_reminders_sent',
@@ -569,7 +571,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2017-04-04 15:55:19',
                 'active' => 1,
             ),
-            29 => 
+            29 =>
             array (
                 'id' => 33,
                 'name' => 'member_post_comment',
@@ -588,7 +590,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2017-05-26 01:35:06',
                 'active' => 1,
             ),
-            30 => 
+            30 =>
             array (
                 'id' => 34,
                 'name' => 'member_post_reaction',
@@ -607,7 +609,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'modified' => '2017-05-26 01:41:19',
                 'active' => 1,
             ),
-            31 => 
+            31 =>
             array (
                 'id' => 35,
                 'name' => 'member_post_comment_reaction',
@@ -627,7 +629,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'active' => 1,
             ),
         ));
-        
-        
+
+
     }
 }

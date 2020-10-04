@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +15,12 @@ class CurrenciesTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         DB::table('currencies')->delete();
-        
+
         DB::table('currencies')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'country_id' => 1,
@@ -26,7 +28,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'AFN',
                 'active' => 0,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'country_id' => 2,
@@ -34,7 +36,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'ALL',
                 'active' => 0,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'country_id' => 3,
@@ -42,7 +44,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'DZD',
                 'active' => 0,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'country_id' => 4,
@@ -50,7 +52,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'USD',
                 'active' => 0,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'country_id' => 5,
@@ -58,7 +60,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'country_id' => 6,
@@ -66,7 +68,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'AOA',
                 'active' => 0,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'country_id' => 7,
@@ -74,7 +76,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XCD',
                 'active' => 0,
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'country_id' => 8,
@@ -82,7 +84,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XCD',
                 'active' => 0,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'country_id' => 9,
@@ -90,7 +92,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XCD',
                 'active' => 0,
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
                 'country_id' => 10,
@@ -98,7 +100,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'ARS',
                 'active' => 0,
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 11,
                 'country_id' => 11,
@@ -106,7 +108,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'AMD',
                 'active' => 0,
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 12,
                 'country_id' => 12,
@@ -114,7 +116,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'AWG',
                 'active' => 0,
             ),
-            12 => 
+            12 =>
             array (
                 'id' => 13,
                 'country_id' => 13,
@@ -122,7 +124,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'AUD',
                 'active' => 0,
             ),
-            13 => 
+            13 =>
             array (
                 'id' => 14,
                 'country_id' => 14,
@@ -130,7 +132,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            14 => 
+            14 =>
             array (
                 'id' => 15,
                 'country_id' => 15,
@@ -138,7 +140,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'AZN',
                 'active' => 0,
             ),
-            15 => 
+            15 =>
             array (
                 'id' => 16,
                 'country_id' => 16,
@@ -146,7 +148,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'BSD',
                 'active' => 0,
             ),
-            16 => 
+            16 =>
             array (
                 'id' => 17,
                 'country_id' => 17,
@@ -154,7 +156,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'BHD',
                 'active' => 0,
             ),
-            17 => 
+            17 =>
             array (
                 'id' => 18,
                 'country_id' => 18,
@@ -162,7 +164,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'BDT',
                 'active' => 0,
             ),
-            18 => 
+            18 =>
             array (
                 'id' => 19,
                 'country_id' => 19,
@@ -170,7 +172,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'BBD',
                 'active' => 0,
             ),
-            19 => 
+            19 =>
             array (
                 'id' => 20,
                 'country_id' => 20,
@@ -178,7 +180,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'BYR',
                 'active' => 0,
             ),
-            20 => 
+            20 =>
             array (
                 'id' => 21,
                 'country_id' => 21,
@@ -186,7 +188,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            21 => 
+            21 =>
             array (
                 'id' => 22,
                 'country_id' => 22,
@@ -194,7 +196,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'BZD',
                 'active' => 0,
             ),
-            22 => 
+            22 =>
             array (
                 'id' => 23,
                 'country_id' => 23,
@@ -202,7 +204,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XOF',
                 'active' => 1,
             ),
-            23 => 
+            23 =>
             array (
                 'id' => 24,
                 'country_id' => 24,
@@ -210,7 +212,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'BMD',
                 'active' => 0,
             ),
-            24 => 
+            24 =>
             array (
                 'id' => 25,
                 'country_id' => 25,
@@ -218,7 +220,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'BTN',
                 'active' => 0,
             ),
-            25 => 
+            25 =>
             array (
                 'id' => 26,
                 'country_id' => 26,
@@ -226,7 +228,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'BOB',
                 'active' => 0,
             ),
-            26 => 
+            26 =>
             array (
                 'id' => 27,
                 'country_id' => 27,
@@ -234,7 +236,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'BAM',
                 'active' => 0,
             ),
-            27 => 
+            27 =>
             array (
                 'id' => 28,
                 'country_id' => 28,
@@ -242,7 +244,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'BWP',
                 'active' => 0,
             ),
-            28 => 
+            28 =>
             array (
                 'id' => 29,
                 'country_id' => 29,
@@ -250,7 +252,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'NOK',
                 'active' => 0,
             ),
-            29 => 
+            29 =>
             array (
                 'id' => 30,
                 'country_id' => 30,
@@ -258,7 +260,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'BRL',
                 'active' => 0,
             ),
-            30 => 
+            30 =>
             array (
                 'id' => 31,
                 'country_id' => 31,
@@ -266,7 +268,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'USD',
                 'active' => 0,
             ),
-            31 => 
+            31 =>
             array (
                 'id' => 32,
                 'country_id' => 32,
@@ -274,7 +276,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'BND',
                 'active' => 0,
             ),
-            32 => 
+            32 =>
             array (
                 'id' => 33,
                 'country_id' => 33,
@@ -282,7 +284,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'BGN',
                 'active' => 0,
             ),
-            33 => 
+            33 =>
             array (
                 'id' => 34,
                 'country_id' => 34,
@@ -290,7 +292,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XOF',
                 'active' => 0,
             ),
-            34 => 
+            34 =>
             array (
                 'id' => 35,
                 'country_id' => 35,
@@ -298,7 +300,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'BIF',
                 'active' => 0,
             ),
-            35 => 
+            35 =>
             array (
                 'id' => 36,
                 'country_id' => 36,
@@ -306,7 +308,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'KHR',
                 'active' => 0,
             ),
-            36 => 
+            36 =>
             array (
                 'id' => 37,
                 'country_id' => 37,
@@ -314,7 +316,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XAF',
                 'active' => 0,
             ),
-            37 => 
+            37 =>
             array (
                 'id' => 38,
                 'country_id' => 38,
@@ -322,7 +324,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'CAD',
                 'active' => 0,
             ),
-            38 => 
+            38 =>
             array (
                 'id' => 39,
                 'country_id' => 39,
@@ -330,7 +332,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'CVE',
                 'active' => 0,
             ),
-            39 => 
+            39 =>
             array (
                 'id' => 40,
                 'country_id' => 40,
@@ -338,7 +340,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'KYD',
                 'active' => 0,
             ),
-            40 => 
+            40 =>
             array (
                 'id' => 41,
                 'country_id' => 41,
@@ -346,7 +348,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XAF',
                 'active' => 0,
             ),
-            41 => 
+            41 =>
             array (
                 'id' => 42,
                 'country_id' => 42,
@@ -354,7 +356,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XAF',
                 'active' => 0,
             ),
-            42 => 
+            42 =>
             array (
                 'id' => 43,
                 'country_id' => 43,
@@ -362,7 +364,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'CLP',
                 'active' => 0,
             ),
-            43 => 
+            43 =>
             array (
                 'id' => 44,
                 'country_id' => 44,
@@ -370,7 +372,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'CNY',
                 'active' => 0,
             ),
-            44 => 
+            44 =>
             array (
                 'id' => 45,
                 'country_id' => 45,
@@ -378,7 +380,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'AUD',
                 'active' => 0,
             ),
-            45 => 
+            45 =>
             array (
                 'id' => 46,
                 'country_id' => 46,
@@ -386,7 +388,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'AUD',
                 'active' => 0,
             ),
-            46 => 
+            46 =>
             array (
                 'id' => 47,
                 'country_id' => 47,
@@ -394,7 +396,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'COP',
                 'active' => 0,
             ),
-            47 => 
+            47 =>
             array (
                 'id' => 48,
                 'country_id' => 48,
@@ -402,7 +404,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'KMF',
                 'active' => 0,
             ),
-            48 => 
+            48 =>
             array (
                 'id' => 49,
                 'country_id' => 49,
@@ -410,7 +412,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XAF',
                 'active' => 0,
             ),
-            49 => 
+            49 =>
             array (
                 'id' => 50,
                 'country_id' => 50,
@@ -418,7 +420,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'CDF',
                 'active' => 0,
             ),
-            50 => 
+            50 =>
             array (
                 'id' => 51,
                 'country_id' => 51,
@@ -426,7 +428,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'NZD',
                 'active' => 0,
             ),
-            51 => 
+            51 =>
             array (
                 'id' => 52,
                 'country_id' => 52,
@@ -434,7 +436,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'CRC',
                 'active' => 0,
             ),
-            52 => 
+            52 =>
             array (
                 'id' => 53,
                 'country_id' => 53,
@@ -442,7 +444,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'HRK',
                 'active' => 0,
             ),
-            53 => 
+            53 =>
             array (
                 'id' => 54,
                 'country_id' => 54,
@@ -450,7 +452,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'CUP',
                 'active' => 0,
             ),
-            54 => 
+            54 =>
             array (
                 'id' => 55,
                 'country_id' => 55,
@@ -458,7 +460,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            55 => 
+            55 =>
             array (
                 'id' => 56,
                 'country_id' => 56,
@@ -466,7 +468,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'CZK',
                 'active' => 0,
             ),
-            56 => 
+            56 =>
             array (
                 'id' => 57,
                 'country_id' => 57,
@@ -474,7 +476,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'DKK',
                 'active' => 0,
             ),
-            57 => 
+            57 =>
             array (
                 'id' => 58,
                 'country_id' => 58,
@@ -482,7 +484,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'DJF',
                 'active' => 0,
             ),
-            58 => 
+            58 =>
             array (
                 'id' => 59,
                 'country_id' => 59,
@@ -490,7 +492,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XCD',
                 'active' => 0,
             ),
-            59 => 
+            59 =>
             array (
                 'id' => 60,
                 'country_id' => 60,
@@ -498,7 +500,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'DOP',
                 'active' => 0,
             ),
-            60 => 
+            60 =>
             array (
                 'id' => 61,
                 'country_id' => 61,
@@ -506,7 +508,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'ECS',
                 'active' => 0,
             ),
-            61 => 
+            61 =>
             array (
                 'id' => 62,
                 'country_id' => 62,
@@ -514,7 +516,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EGP',
                 'active' => 0,
             ),
-            62 => 
+            62 =>
             array (
                 'id' => 63,
                 'country_id' => 63,
@@ -522,7 +524,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'SVC',
                 'active' => 0,
             ),
-            63 => 
+            63 =>
             array (
                 'id' => 64,
                 'country_id' => 64,
@@ -530,7 +532,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XAF',
                 'active' => 0,
             ),
-            64 => 
+            64 =>
             array (
                 'id' => 65,
                 'country_id' => 65,
@@ -538,7 +540,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'ERN',
                 'active' => 0,
             ),
-            65 => 
+            65 =>
             array (
                 'id' => 66,
                 'country_id' => 66,
@@ -546,7 +548,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            66 => 
+            66 =>
             array (
                 'id' => 67,
                 'country_id' => 67,
@@ -554,7 +556,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'ETB',
                 'active' => 0,
             ),
-            67 => 
+            67 =>
             array (
                 'id' => 68,
                 'country_id' => 68,
@@ -562,7 +564,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            68 => 
+            68 =>
             array (
                 'id' => 69,
                 'country_id' => 69,
@@ -570,7 +572,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'FKP',
                 'active' => 0,
             ),
-            69 => 
+            69 =>
             array (
                 'id' => 70,
                 'country_id' => 70,
@@ -578,7 +580,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'DKK',
                 'active' => 0,
             ),
-            70 => 
+            70 =>
             array (
                 'id' => 71,
                 'country_id' => 71,
@@ -586,7 +588,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'FJD',
                 'active' => 0,
             ),
-            71 => 
+            71 =>
             array (
                 'id' => 72,
                 'country_id' => 72,
@@ -594,7 +596,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            72 => 
+            72 =>
             array (
                 'id' => 73,
                 'country_id' => 73,
@@ -602,7 +604,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            73 => 
+            73 =>
             array (
                 'id' => 74,
                 'country_id' => 74,
@@ -610,7 +612,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            74 => 
+            74 =>
             array (
                 'id' => 75,
                 'country_id' => 75,
@@ -618,7 +620,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            75 => 
+            75 =>
             array (
                 'id' => 76,
                 'country_id' => 76,
@@ -626,7 +628,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XAF',
                 'active' => 0,
             ),
-            76 => 
+            76 =>
             array (
                 'id' => 77,
                 'country_id' => 77,
@@ -634,7 +636,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'GMD',
                 'active' => 0,
             ),
-            77 => 
+            77 =>
             array (
                 'id' => 78,
                 'country_id' => 78,
@@ -642,7 +644,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'GEL',
                 'active' => 0,
             ),
-            78 => 
+            78 =>
             array (
                 'id' => 79,
                 'country_id' => 79,
@@ -650,7 +652,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 1,
             ),
-            79 => 
+            79 =>
             array (
                 'id' => 80,
                 'country_id' => 80,
@@ -658,7 +660,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'GHS',
                 'active' => 1,
             ),
-            80 => 
+            80 =>
             array (
                 'id' => 81,
                 'country_id' => 81,
@@ -666,7 +668,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'GIP',
                 'active' => 0,
             ),
-            81 => 
+            81 =>
             array (
                 'id' => 82,
                 'country_id' => 82,
@@ -674,7 +676,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'GBP',
                 'active' => 0,
             ),
-            82 => 
+            82 =>
             array (
                 'id' => 83,
                 'country_id' => 83,
@@ -682,7 +684,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            83 => 
+            83 =>
             array (
                 'id' => 84,
                 'country_id' => 84,
@@ -690,7 +692,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'DKK',
                 'active' => 0,
             ),
-            84 => 
+            84 =>
             array (
                 'id' => 85,
                 'country_id' => 85,
@@ -698,7 +700,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XCD',
                 'active' => 0,
             ),
-            85 => 
+            85 =>
             array (
                 'id' => 86,
                 'country_id' => 86,
@@ -706,7 +708,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            86 => 
+            86 =>
             array (
                 'id' => 87,
                 'country_id' => 87,
@@ -714,7 +716,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'USD',
                 'active' => 0,
             ),
-            87 => 
+            87 =>
             array (
                 'id' => 88,
                 'country_id' => 88,
@@ -722,7 +724,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'QTQ',
                 'active' => 0,
             ),
-            88 => 
+            88 =>
             array (
                 'id' => 89,
                 'country_id' => 89,
@@ -730,7 +732,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'GGP',
                 'active' => 0,
             ),
-            89 => 
+            89 =>
             array (
                 'id' => 90,
                 'country_id' => 90,
@@ -738,7 +740,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'GNF',
                 'active' => 0,
             ),
-            90 => 
+            90 =>
             array (
                 'id' => 91,
                 'country_id' => 91,
@@ -746,7 +748,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'GWP',
                 'active' => 0,
             ),
-            91 => 
+            91 =>
             array (
                 'id' => 92,
                 'country_id' => 92,
@@ -754,7 +756,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'GYD',
                 'active' => 0,
             ),
-            92 => 
+            92 =>
             array (
                 'id' => 93,
                 'country_id' => 93,
@@ -762,7 +764,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'HTG',
                 'active' => 0,
             ),
-            93 => 
+            93 =>
             array (
                 'id' => 94,
                 'country_id' => 94,
@@ -770,7 +772,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'AUD',
                 'active' => 0,
             ),
-            94 => 
+            94 =>
             array (
                 'id' => 95,
                 'country_id' => 95,
@@ -778,7 +780,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'HNL',
                 'active' => 0,
             ),
-            95 => 
+            95 =>
             array (
                 'id' => 96,
                 'country_id' => 96,
@@ -786,7 +788,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'HKD',
                 'active' => 0,
             ),
-            96 => 
+            96 =>
             array (
                 'id' => 97,
                 'country_id' => 97,
@@ -794,7 +796,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'HUF',
                 'active' => 0,
             ),
-            97 => 
+            97 =>
             array (
                 'id' => 98,
                 'country_id' => 98,
@@ -802,7 +804,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'ISK',
                 'active' => 0,
             ),
-            98 => 
+            98 =>
             array (
                 'id' => 99,
                 'country_id' => 99,
@@ -810,7 +812,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'INR',
                 'active' => 0,
             ),
-            99 => 
+            99 =>
             array (
                 'id' => 100,
                 'country_id' => 100,
@@ -818,7 +820,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'IDR',
                 'active' => 0,
             ),
-            100 => 
+            100 =>
             array (
                 'id' => 101,
                 'country_id' => 101,
@@ -826,7 +828,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'IRR',
                 'active' => 0,
             ),
-            101 => 
+            101 =>
             array (
                 'id' => 102,
                 'country_id' => 102,
@@ -834,7 +836,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'IQD',
                 'active' => 0,
             ),
-            102 => 
+            102 =>
             array (
                 'id' => 103,
                 'country_id' => 103,
@@ -842,7 +844,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            103 => 
+            103 =>
             array (
                 'id' => 104,
                 'country_id' => 104,
@@ -850,7 +852,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'GBP',
                 'active' => 0,
             ),
-            104 => 
+            104 =>
             array (
                 'id' => 105,
                 'country_id' => 105,
@@ -858,7 +860,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'ILS',
                 'active' => 0,
             ),
-            105 => 
+            105 =>
             array (
                 'id' => 106,
                 'country_id' => 106,
@@ -866,7 +868,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            106 => 
+            106 =>
             array (
                 'id' => 107,
                 'country_id' => 107,
@@ -874,7 +876,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XOF',
                 'active' => 1,
             ),
-            107 => 
+            107 =>
             array (
                 'id' => 108,
                 'country_id' => 108,
@@ -882,7 +884,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'JMD',
                 'active' => 0,
             ),
-            108 => 
+            108 =>
             array (
                 'id' => 109,
                 'country_id' => 109,
@@ -890,7 +892,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'JPY',
                 'active' => 0,
             ),
-            109 => 
+            109 =>
             array (
                 'id' => 110,
                 'country_id' => 110,
@@ -898,7 +900,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'GBP',
                 'active' => 0,
             ),
-            110 => 
+            110 =>
             array (
                 'id' => 111,
                 'country_id' => 111,
@@ -906,7 +908,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'JOD',
                 'active' => 0,
             ),
-            111 => 
+            111 =>
             array (
                 'id' => 112,
                 'country_id' => 112,
@@ -914,7 +916,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'KZT',
                 'active' => 0,
             ),
-            112 => 
+            112 =>
             array (
                 'id' => 113,
                 'country_id' => 113,
@@ -922,7 +924,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'KES',
                 'active' => 1,
             ),
-            113 => 
+            113 =>
             array (
                 'id' => 114,
                 'country_id' => 114,
@@ -930,7 +932,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'AUD',
                 'active' => 0,
             ),
-            114 => 
+            114 =>
             array (
                 'id' => 115,
                 'country_id' => 115,
@@ -938,7 +940,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'KPW',
                 'active' => 0,
             ),
-            115 => 
+            115 =>
             array (
                 'id' => 116,
                 'country_id' => 116,
@@ -946,7 +948,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'KRW',
                 'active' => 0,
             ),
-            116 => 
+            116 =>
             array (
                 'id' => 117,
                 'country_id' => 117,
@@ -954,7 +956,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'KWD',
                 'active' => 0,
             ),
-            117 => 
+            117 =>
             array (
                 'id' => 118,
                 'country_id' => 118,
@@ -962,7 +964,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'KGS',
                 'active' => 0,
             ),
-            118 => 
+            118 =>
             array (
                 'id' => 119,
                 'country_id' => 119,
@@ -970,7 +972,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'LAK',
                 'active' => 0,
             ),
-            119 => 
+            119 =>
             array (
                 'id' => 120,
                 'country_id' => 120,
@@ -978,7 +980,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'LVL',
                 'active' => 0,
             ),
-            120 => 
+            120 =>
             array (
                 'id' => 121,
                 'country_id' => 121,
@@ -986,7 +988,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'LBP',
                 'active' => 0,
             ),
-            121 => 
+            121 =>
             array (
                 'id' => 122,
                 'country_id' => 122,
@@ -994,7 +996,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'LSL',
                 'active' => 0,
             ),
-            122 => 
+            122 =>
             array (
                 'id' => 123,
                 'country_id' => 123,
@@ -1002,7 +1004,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'LRD',
                 'active' => 0,
             ),
-            123 => 
+            123 =>
             array (
                 'id' => 124,
                 'country_id' => 124,
@@ -1010,7 +1012,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'LYD',
                 'active' => 0,
             ),
-            124 => 
+            124 =>
             array (
                 'id' => 125,
                 'country_id' => 125,
@@ -1018,7 +1020,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'CHF',
                 'active' => 0,
             ),
-            125 => 
+            125 =>
             array (
                 'id' => 126,
                 'country_id' => 126,
@@ -1026,7 +1028,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'LTL',
                 'active' => 0,
             ),
-            126 => 
+            126 =>
             array (
                 'id' => 127,
                 'country_id' => 127,
@@ -1034,7 +1036,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            127 => 
+            127 =>
             array (
                 'id' => 128,
                 'country_id' => 128,
@@ -1042,7 +1044,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'MOP',
                 'active' => 0,
             ),
-            128 => 
+            128 =>
             array (
                 'id' => 129,
                 'country_id' => 129,
@@ -1050,7 +1052,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'MKD',
                 'active' => 0,
             ),
-            129 => 
+            129 =>
             array (
                 'id' => 130,
                 'country_id' => 130,
@@ -1058,7 +1060,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'MGF',
                 'active' => 0,
             ),
-            130 => 
+            130 =>
             array (
                 'id' => 131,
                 'country_id' => 131,
@@ -1066,7 +1068,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'MWK',
                 'active' => 0,
             ),
-            131 => 
+            131 =>
             array (
                 'id' => 132,
                 'country_id' => 132,
@@ -1074,7 +1076,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'MYR',
                 'active' => 0,
             ),
-            132 => 
+            132 =>
             array (
                 'id' => 133,
                 'country_id' => 133,
@@ -1082,7 +1084,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'MVR',
                 'active' => 0,
             ),
-            133 => 
+            133 =>
             array (
                 'id' => 134,
                 'country_id' => 134,
@@ -1090,7 +1092,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XOF',
                 'active' => 0,
             ),
-            134 => 
+            134 =>
             array (
                 'id' => 135,
                 'country_id' => 135,
@@ -1098,7 +1100,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            135 => 
+            135 =>
             array (
                 'id' => 136,
                 'country_id' => 136,
@@ -1106,7 +1108,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'USD',
                 'active' => 0,
             ),
-            136 => 
+            136 =>
             array (
                 'id' => 137,
                 'country_id' => 137,
@@ -1114,7 +1116,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            137 => 
+            137 =>
             array (
                 'id' => 138,
                 'country_id' => 138,
@@ -1122,7 +1124,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'MRO',
                 'active' => 0,
             ),
-            138 => 
+            138 =>
             array (
                 'id' => 139,
                 'country_id' => 139,
@@ -1130,7 +1132,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'MUR',
                 'active' => 0,
             ),
-            139 => 
+            139 =>
             array (
                 'id' => 140,
                 'country_id' => 140,
@@ -1138,7 +1140,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            140 => 
+            140 =>
             array (
                 'id' => 141,
                 'country_id' => 141,
@@ -1146,7 +1148,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'MXN',
                 'active' => 0,
             ),
-            141 => 
+            141 =>
             array (
                 'id' => 142,
                 'country_id' => 142,
@@ -1154,7 +1156,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'USD',
                 'active' => 0,
             ),
-            142 => 
+            142 =>
             array (
                 'id' => 143,
                 'country_id' => 143,
@@ -1162,7 +1164,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'MDL',
                 'active' => 0,
             ),
-            143 => 
+            143 =>
             array (
                 'id' => 144,
                 'country_id' => 144,
@@ -1170,7 +1172,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            144 => 
+            144 =>
             array (
                 'id' => 145,
                 'country_id' => 145,
@@ -1178,7 +1180,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'MNT',
                 'active' => 0,
             ),
-            145 => 
+            145 =>
             array (
                 'id' => 146,
                 'country_id' => 146,
@@ -1186,7 +1188,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            146 => 
+            146 =>
             array (
                 'id' => 147,
                 'country_id' => 147,
@@ -1194,7 +1196,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XCD',
                 'active' => 0,
             ),
-            147 => 
+            147 =>
             array (
                 'id' => 148,
                 'country_id' => 148,
@@ -1202,7 +1204,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'MAD',
                 'active' => 0,
             ),
-            148 => 
+            148 =>
             array (
                 'id' => 149,
                 'country_id' => 149,
@@ -1210,7 +1212,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'MZN',
                 'active' => 0,
             ),
-            149 => 
+            149 =>
             array (
                 'id' => 150,
                 'country_id' => 150,
@@ -1218,7 +1220,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'MMK',
                 'active' => 0,
             ),
-            150 => 
+            150 =>
             array (
                 'id' => 151,
                 'country_id' => 151,
@@ -1226,7 +1228,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'NAD',
                 'active' => 0,
             ),
-            151 => 
+            151 =>
             array (
                 'id' => 152,
                 'country_id' => 152,
@@ -1234,7 +1236,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'AUD',
                 'active' => 0,
             ),
-            152 => 
+            152 =>
             array (
                 'id' => 153,
                 'country_id' => 153,
@@ -1242,7 +1244,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'NPR',
                 'active' => 0,
             ),
-            153 => 
+            153 =>
             array (
                 'id' => 154,
                 'country_id' => 154,
@@ -1250,7 +1252,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            154 => 
+            154 =>
             array (
                 'id' => 155,
                 'country_id' => 155,
@@ -1258,7 +1260,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'ANG',
                 'active' => 0,
             ),
-            155 => 
+            155 =>
             array (
                 'id' => 156,
                 'country_id' => 156,
@@ -1266,7 +1268,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XPF',
                 'active' => 0,
             ),
-            156 => 
+            156 =>
             array (
                 'id' => 157,
                 'country_id' => 157,
@@ -1274,7 +1276,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'NZD',
                 'active' => 0,
             ),
-            157 => 
+            157 =>
             array (
                 'id' => 158,
                 'country_id' => 158,
@@ -1282,7 +1284,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'NIO',
                 'active' => 0,
             ),
-            158 => 
+            158 =>
             array (
                 'id' => 159,
                 'country_id' => 159,
@@ -1290,7 +1292,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XOF',
                 'active' => 0,
             ),
-            159 => 
+            159 =>
             array (
                 'id' => 160,
                 'country_id' => 160,
@@ -1298,7 +1300,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'NGN',
                 'active' => 1,
             ),
-            160 => 
+            160 =>
             array (
                 'id' => 161,
                 'country_id' => 161,
@@ -1306,7 +1308,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'NZD',
                 'active' => 0,
             ),
-            161 => 
+            161 =>
             array (
                 'id' => 162,
                 'country_id' => 162,
@@ -1314,7 +1316,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'AUD',
                 'active' => 0,
             ),
-            162 => 
+            162 =>
             array (
                 'id' => 163,
                 'country_id' => 163,
@@ -1322,7 +1324,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'USD',
                 'active' => 0,
             ),
-            163 => 
+            163 =>
             array (
                 'id' => 164,
                 'country_id' => 164,
@@ -1330,7 +1332,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'NOK',
                 'active' => 0,
             ),
-            164 => 
+            164 =>
             array (
                 'id' => 165,
                 'country_id' => 165,
@@ -1338,7 +1340,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'OMR',
                 'active' => 0,
             ),
-            165 => 
+            165 =>
             array (
                 'id' => 166,
                 'country_id' => 166,
@@ -1346,7 +1348,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'PKR',
                 'active' => 0,
             ),
-            166 => 
+            166 =>
             array (
                 'id' => 167,
                 'country_id' => 167,
@@ -1354,7 +1356,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'USD',
                 'active' => 0,
             ),
-            167 => 
+            167 =>
             array (
                 'id' => 168,
                 'country_id' => 168,
@@ -1362,7 +1364,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'PAB',
                 'active' => 0,
             ),
-            168 => 
+            168 =>
             array (
                 'id' => 169,
                 'country_id' => 169,
@@ -1370,7 +1372,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'PGK',
                 'active' => 0,
             ),
-            169 => 
+            169 =>
             array (
                 'id' => 170,
                 'country_id' => 170,
@@ -1378,7 +1380,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'PYG',
                 'active' => 0,
             ),
-            170 => 
+            170 =>
             array (
                 'id' => 171,
                 'country_id' => 171,
@@ -1386,7 +1388,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'PEN',
                 'active' => 0,
             ),
-            171 => 
+            171 =>
             array (
                 'id' => 172,
                 'country_id' => 172,
@@ -1394,7 +1396,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'PHP',
                 'active' => 0,
             ),
-            172 => 
+            172 =>
             array (
                 'id' => 173,
                 'country_id' => 173,
@@ -1402,7 +1404,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'NZD',
                 'active' => 0,
             ),
-            173 => 
+            173 =>
             array (
                 'id' => 174,
                 'country_id' => 174,
@@ -1410,7 +1412,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'PLN',
                 'active' => 0,
             ),
-            174 => 
+            174 =>
             array (
                 'id' => 175,
                 'country_id' => 175,
@@ -1418,7 +1420,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XPF',
                 'active' => 0,
             ),
-            175 => 
+            175 =>
             array (
                 'id' => 176,
                 'country_id' => 176,
@@ -1426,7 +1428,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            176 => 
+            176 =>
             array (
                 'id' => 177,
                 'country_id' => 177,
@@ -1434,7 +1436,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'USD',
                 'active' => 0,
             ),
-            177 => 
+            177 =>
             array (
                 'id' => 178,
                 'country_id' => 178,
@@ -1442,7 +1444,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'QAR',
                 'active' => 0,
             ),
-            178 => 
+            178 =>
             array (
                 'id' => 179,
                 'country_id' => 179,
@@ -1450,7 +1452,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            179 => 
+            179 =>
             array (
                 'id' => 180,
                 'country_id' => 180,
@@ -1458,7 +1460,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'RON',
                 'active' => 0,
             ),
-            180 => 
+            180 =>
             array (
                 'id' => 181,
                 'country_id' => 181,
@@ -1466,7 +1468,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'RUB',
                 'active' => 0,
             ),
-            181 => 
+            181 =>
             array (
                 'id' => 182,
                 'country_id' => 182,
@@ -1474,7 +1476,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'RWF',
                 'active' => 0,
             ),
-            182 => 
+            182 =>
             array (
                 'id' => 183,
                 'country_id' => 183,
@@ -1482,7 +1484,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'SHP',
                 'active' => 0,
             ),
-            183 => 
+            183 =>
             array (
                 'id' => 184,
                 'country_id' => 184,
@@ -1490,7 +1492,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XCD',
                 'active' => 0,
             ),
-            184 => 
+            184 =>
             array (
                 'id' => 185,
                 'country_id' => 185,
@@ -1498,7 +1500,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XCD',
                 'active' => 0,
             ),
-            185 => 
+            185 =>
             array (
                 'id' => 186,
                 'country_id' => 186,
@@ -1506,7 +1508,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            186 => 
+            186 =>
             array (
                 'id' => 187,
                 'country_id' => 187,
@@ -1514,7 +1516,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XCD',
                 'active' => 0,
             ),
-            187 => 
+            187 =>
             array (
                 'id' => 188,
                 'country_id' => 188,
@@ -1522,7 +1524,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'WST',
                 'active' => 0,
             ),
-            188 => 
+            188 =>
             array (
                 'id' => 189,
                 'country_id' => 189,
@@ -1530,7 +1532,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            189 => 
+            189 =>
             array (
                 'id' => 190,
                 'country_id' => 190,
@@ -1538,7 +1540,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'STD',
                 'active' => 0,
             ),
-            190 => 
+            190 =>
             array (
                 'id' => 191,
                 'country_id' => 191,
@@ -1546,7 +1548,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'SAR',
                 'active' => 0,
             ),
-            191 => 
+            191 =>
             array (
                 'id' => 192,
                 'country_id' => 192,
@@ -1554,7 +1556,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XOF',
                 'active' => 0,
             ),
-            192 => 
+            192 =>
             array (
                 'id' => 193,
                 'country_id' => 193,
@@ -1562,7 +1564,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'RSD',
                 'active' => 0,
             ),
-            193 => 
+            193 =>
             array (
                 'id' => 194,
                 'country_id' => 194,
@@ -1570,7 +1572,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'SCR',
                 'active' => 0,
             ),
-            194 => 
+            194 =>
             array (
                 'id' => 195,
                 'country_id' => 195,
@@ -1578,7 +1580,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'SLL',
                 'active' => 0,
             ),
-            195 => 
+            195 =>
             array (
                 'id' => 196,
                 'country_id' => 196,
@@ -1586,7 +1588,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'SGD',
                 'active' => 0,
             ),
-            196 => 
+            196 =>
             array (
                 'id' => 197,
                 'country_id' => 197,
@@ -1594,7 +1596,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            197 => 
+            197 =>
             array (
                 'id' => 198,
                 'country_id' => 198,
@@ -1602,7 +1604,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            198 => 
+            198 =>
             array (
                 'id' => 199,
                 'country_id' => 199,
@@ -1610,7 +1612,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'SBD',
                 'active' => 0,
             ),
-            199 => 
+            199 =>
             array (
                 'id' => 200,
                 'country_id' => 200,
@@ -1618,7 +1620,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'SOS',
                 'active' => 0,
             ),
-            200 => 
+            200 =>
             array (
                 'id' => 201,
                 'country_id' => 201,
@@ -1626,7 +1628,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'ZAR',
                 'active' => 1,
             ),
-            201 => 
+            201 =>
             array (
                 'id' => 202,
                 'country_id' => 202,
@@ -1634,7 +1636,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'GBP',
                 'active' => 0,
             ),
-            202 => 
+            202 =>
             array (
                 'id' => 203,
                 'country_id' => 203,
@@ -1642,7 +1644,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'SSP',
                 'active' => 0,
             ),
-            203 => 
+            203 =>
             array (
                 'id' => 204,
                 'country_id' => 204,
@@ -1650,7 +1652,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            204 => 
+            204 =>
             array (
                 'id' => 205,
                 'country_id' => 205,
@@ -1658,7 +1660,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'LKR',
                 'active' => 0,
             ),
-            205 => 
+            205 =>
             array (
                 'id' => 206,
                 'country_id' => 206,
@@ -1666,7 +1668,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'SDG',
                 'active' => 0,
             ),
-            206 => 
+            206 =>
             array (
                 'id' => 207,
                 'country_id' => 207,
@@ -1674,7 +1676,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'SRD',
                 'active' => 0,
             ),
-            207 => 
+            207 =>
             array (
                 'id' => 208,
                 'country_id' => 208,
@@ -1682,7 +1684,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'NOK',
                 'active' => 0,
             ),
-            208 => 
+            208 =>
             array (
                 'id' => 209,
                 'country_id' => 209,
@@ -1690,7 +1692,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'SZL',
                 'active' => 0,
             ),
-            209 => 
+            209 =>
             array (
                 'id' => 210,
                 'country_id' => 210,
@@ -1698,7 +1700,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'SEK',
                 'active' => 0,
             ),
-            210 => 
+            210 =>
             array (
                 'id' => 211,
                 'country_id' => 211,
@@ -1706,7 +1708,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'CHF',
                 'active' => 1,
             ),
-            211 => 
+            211 =>
             array (
                 'id' => 212,
                 'country_id' => 212,
@@ -1714,7 +1716,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'SYP',
                 'active' => 0,
             ),
-            212 => 
+            212 =>
             array (
                 'id' => 213,
                 'country_id' => 213,
@@ -1722,7 +1724,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'TWD',
                 'active' => 0,
             ),
-            213 => 
+            213 =>
             array (
                 'id' => 214,
                 'country_id' => 214,
@@ -1730,7 +1732,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'TJS',
                 'active' => 0,
             ),
-            214 => 
+            214 =>
             array (
                 'id' => 215,
                 'country_id' => 215,
@@ -1738,7 +1740,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'TZS',
                 'active' => 0,
             ),
-            215 => 
+            215 =>
             array (
                 'id' => 216,
                 'country_id' => 216,
@@ -1746,7 +1748,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'THB',
                 'active' => 0,
             ),
-            216 => 
+            216 =>
             array (
                 'id' => 217,
                 'country_id' => 217,
@@ -1754,7 +1756,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XOF',
                 'active' => 0,
             ),
-            217 => 
+            217 =>
             array (
                 'id' => 218,
                 'country_id' => 218,
@@ -1762,7 +1764,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'NZD',
                 'active' => 0,
             ),
-            218 => 
+            218 =>
             array (
                 'id' => 219,
                 'country_id' => 219,
@@ -1770,7 +1772,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'TOP',
                 'active' => 0,
             ),
-            219 => 
+            219 =>
             array (
                 'id' => 220,
                 'country_id' => 220,
@@ -1778,7 +1780,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'TTD',
                 'active' => 0,
             ),
-            220 => 
+            220 =>
             array (
                 'id' => 221,
                 'country_id' => 221,
@@ -1786,7 +1788,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'TND',
                 'active' => 0,
             ),
-            221 => 
+            221 =>
             array (
                 'id' => 222,
                 'country_id' => 222,
@@ -1794,7 +1796,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'TRY',
                 'active' => 0,
             ),
-            222 => 
+            222 =>
             array (
                 'id' => 223,
                 'country_id' => 223,
@@ -1802,7 +1804,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'TMT',
                 'active' => 0,
             ),
-            223 => 
+            223 =>
             array (
                 'id' => 224,
                 'country_id' => 224,
@@ -1810,7 +1812,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'USD',
                 'active' => 0,
             ),
-            224 => 
+            224 =>
             array (
                 'id' => 225,
                 'country_id' => 225,
@@ -1818,7 +1820,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'AUD',
                 'active' => 0,
             ),
-            225 => 
+            225 =>
             array (
                 'id' => 226,
                 'country_id' => 226,
@@ -1826,7 +1828,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'GBP',
                 'active' => 1,
             ),
-            226 => 
+            226 =>
             array (
                 'id' => 227,
                 'country_id' => 227,
@@ -1834,7 +1836,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'UGX',
                 'active' => 0,
             ),
-            227 => 
+            227 =>
             array (
                 'id' => 228,
                 'country_id' => 228,
@@ -1842,7 +1844,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'UAH',
                 'active' => 0,
             ),
-            228 => 
+            228 =>
             array (
                 'id' => 229,
                 'country_id' => 229,
@@ -1850,7 +1852,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'AED',
                 'active' => 0,
             ),
-            229 => 
+            229 =>
             array (
                 'id' => 230,
                 'country_id' => 230,
@@ -1858,7 +1860,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'UYU',
                 'active' => 0,
             ),
-            230 => 
+            230 =>
             array (
                 'id' => 231,
                 'country_id' => 231,
@@ -1866,7 +1868,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'USD',
                 'active' => 1,
             ),
-            231 => 
+            231 =>
             array (
                 'id' => 232,
                 'country_id' => 232,
@@ -1874,7 +1876,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'USD',
                 'active' => 0,
             ),
-            232 => 
+            232 =>
             array (
                 'id' => 233,
                 'country_id' => 233,
@@ -1882,7 +1884,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'UZS',
                 'active' => 0,
             ),
-            233 => 
+            233 =>
             array (
                 'id' => 234,
                 'country_id' => 234,
@@ -1890,7 +1892,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'VUV',
                 'active' => 0,
             ),
-            234 => 
+            234 =>
             array (
                 'id' => 235,
                 'country_id' => 235,
@@ -1898,7 +1900,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'EUR',
                 'active' => 0,
             ),
-            235 => 
+            235 =>
             array (
                 'id' => 236,
                 'country_id' => 236,
@@ -1906,7 +1908,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'VEF',
                 'active' => 0,
             ),
-            236 => 
+            236 =>
             array (
                 'id' => 237,
                 'country_id' => 237,
@@ -1914,7 +1916,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'VND',
                 'active' => 0,
             ),
-            237 => 
+            237 =>
             array (
                 'id' => 238,
                 'country_id' => 238,
@@ -1922,7 +1924,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'USD',
                 'active' => 0,
             ),
-            238 => 
+            238 =>
             array (
                 'id' => 239,
                 'country_id' => 239,
@@ -1930,7 +1932,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'USD',
                 'active' => 0,
             ),
-            239 => 
+            239 =>
             array (
                 'id' => 240,
                 'country_id' => 240,
@@ -1938,7 +1940,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'XPF',
                 'active' => 0,
             ),
-            240 => 
+            240 =>
             array (
                 'id' => 241,
                 'country_id' => 241,
@@ -1946,7 +1948,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'MAD',
                 'active' => 0,
             ),
-            241 => 
+            241 =>
             array (
                 'id' => 242,
                 'country_id' => 242,
@@ -1954,7 +1956,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'YER',
                 'active' => 0,
             ),
-            242 => 
+            242 =>
             array (
                 'id' => 243,
                 'country_id' => 243,
@@ -1962,7 +1964,7 @@ class CurrenciesTableSeeder extends Seeder
                 'currency_code' => 'ZMW',
                 'active' => 0,
             ),
-            243 => 
+            243 =>
             array (
                 'id' => 244,
                 'country_id' => 244,
@@ -1971,7 +1973,7 @@ class CurrenciesTableSeeder extends Seeder
                 'active' => 0,
             ),
         ));
-        
-        
+
+
     }
 }

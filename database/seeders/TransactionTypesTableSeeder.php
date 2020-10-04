@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +15,12 @@ class TransactionTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         DB::table('transaction_types')->delete();
-        
+
         DB::table('transaction_types')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'group' => 'organisation',
@@ -28,7 +30,7 @@ class TransactionTypesTableSeeder extends Seeder
                 'modified' => '2015-04-01 13:14:24',
                 'active' => 1,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'group' => 'organisation',
@@ -38,7 +40,7 @@ class TransactionTypesTableSeeder extends Seeder
                 'modified' => '2015-06-01 13:33:49',
                 'active' => 1,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'group' => 'organisation',
@@ -48,7 +50,7 @@ class TransactionTypesTableSeeder extends Seeder
                 'modified' => '2015-09-02 16:36:18',
                 'active' => 1,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'group' => 'organisation',
@@ -58,7 +60,7 @@ class TransactionTypesTableSeeder extends Seeder
                 'modified' => '2015-09-02 16:36:32',
                 'active' => 1,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'group' => 'member',
@@ -68,7 +70,7 @@ class TransactionTypesTableSeeder extends Seeder
                 'modified' => '2016-03-07 20:28:02',
                 'active' => 1,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'group' => 'member',
@@ -78,7 +80,7 @@ class TransactionTypesTableSeeder extends Seeder
                 'modified' => '2016-03-07 20:28:09',
                 'active' => 1,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'group' => 'member',
@@ -89,7 +91,7 @@ class TransactionTypesTableSeeder extends Seeder
                 'active' => 1,
             ),
         ));
-        
-        
+
+
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +15,12 @@ class SystemSettingsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         DB::table('system_settings')->delete();
-        
+
         DB::table('system_settings')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'setting_type_category_id' => 1,
@@ -29,7 +31,7 @@ class SystemSettingsTableSeeder extends Seeder
                 'created' => '2015-04-29 17:32:06',
                 'modified' => '2015-04-30 17:43:04',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'setting_type_category_id' => 1,
@@ -40,7 +42,7 @@ class SystemSettingsTableSeeder extends Seeder
                 'created' => '2015-04-29 17:32:40',
                 'modified' => '2015-04-30 17:43:03',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'setting_type_category_id' => 2,
@@ -51,7 +53,7 @@ class SystemSettingsTableSeeder extends Seeder
                 'created' => '2015-04-29 17:39:43',
                 'modified' => '2015-05-23 09:14:36',
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'setting_type_category_id' => 1,
@@ -62,7 +64,7 @@ class SystemSettingsTableSeeder extends Seeder
                 'created' => '2015-04-30 17:24:52',
                 'modified' => '2015-04-30 17:42:59',
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'setting_type_category_id' => 2,
@@ -73,7 +75,7 @@ class SystemSettingsTableSeeder extends Seeder
                 'created' => '2015-04-30 17:43:59',
                 'modified' => '2015-04-30 17:44:02',
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'setting_type_category_id' => 2,
@@ -84,7 +86,7 @@ class SystemSettingsTableSeeder extends Seeder
                 'created' => '2015-04-30 17:44:51',
                 'modified' => '2015-04-30 17:44:53',
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'setting_type_category_id' => 2,
@@ -95,7 +97,7 @@ class SystemSettingsTableSeeder extends Seeder
                 'created' => '2016-06-04 06:04:24',
                 'modified' => '2017-05-25 14:57:19',
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'setting_type_category_id' => 2,
@@ -107,7 +109,7 @@ class SystemSettingsTableSeeder extends Seeder
                 'modified' => '2017-05-25 14:57:20',
             ),
         ));
-        
-        
+
+
     }
 }
