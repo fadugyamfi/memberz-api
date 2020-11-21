@@ -1,54 +1,39 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Requests;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Http\FormRequest;
+use LaravelApiBase\Http\Requests\ApiRequest;
 
-class OrganisationGroupTypeRequest extends ApiModel  
+class OrganisationGroupTypeRequest extends ApiRequest
 {
 
-    
 
     /**
-     * The database table used by the model.
+     * Determine if the user is authorized to make this request.
      *
-     * @var string
+     * @return bool
      */
-    protected $table = 'organisation_group_types';
+    public function authorize()
+    {
+        return true;
+    }
 
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['organisation_id', 'name', 'description', 'show_on_reg_forms', 'allow_multi_select', 'created', 'modified', 'active'];
-
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = [];
-
-    public function organisation()
-        {
-        return $this->belongsTo(Organisation::class);
-        
-        }
 
 
     /**
-     * The attributes that should be casted to native types.
+     * Get the validation rules that apply to the request.
      *
-     * @var array
+     * @return array
      */
-    protected $casts = ['show_on_reg_forms' => 'boolean', 'allow_multi_select' => 'boolean', 'active' => 'boolean'];
+    public function rules()
+    {
+        return [
+            'organisation_type_id' => 'required|numeric',
+            'name' => 'required|string',
+            'active' => 'tinyint|nullable'
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['created', 'modified'];
+        ];
+    }
 
 }

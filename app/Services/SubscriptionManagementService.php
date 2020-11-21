@@ -12,13 +12,13 @@ class SubscriptionManagementService {
      * Renews a subscription at a current tier
      */
     public function renew($orgSubscriptionId, $length) {
-        $subscription = OrganisationSubscription::with(['organisation', 'organisation_invoice'])->find($orgSubscriptionId);
+        $subscription = OrganisationSubscription::with(['organisation', 'organisationInvoice'])->find($orgSubscriptionId);
 
         if( !$subscription ) {
             throw new Exception("Subscription to renew not found");
         }
 
-        if( $subscription->organisation_invoice->paid == 0 ) {
+        if( $subscription->organisationInvoice->paid == 0 ) {
             throw new Exception("Current subscription invoice has not been paid. You cannot renew the subscription until previous has been paid");
         }
 

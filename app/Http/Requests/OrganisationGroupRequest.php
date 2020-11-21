@@ -16,8 +16,6 @@ class OrganisationGroupRequest extends ApiRequest
         return true;
     }
 
-    
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -28,9 +26,9 @@ class OrganisationGroupRequest extends ApiRequest
         return [
             'organisation_type_id' => 'required|numeric',
             'organisation_group_type_id' => 'required|numeric',
-            'name' => 'required|string', 
+            'name' => 'required|string',
             'active' => 'tinyint|nullable'
-            
+
         ];
     }
 }

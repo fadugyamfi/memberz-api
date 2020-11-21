@@ -1,15 +1,18 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
 use App\Models\OrganisationMemberCategory;
 use LaravelApiBase\Http\Controllers\ApiController;
 
+/**
+ * @group Organisation Member Categories
+ */
 class OrganisationMemberCategoryController extends ApiController
 {
     public function __construct(OrganisationMemberCategory $organisationMemberCategory) {
         parent::__construct($organisationMemberCategory);
-    } 
+    }
 
     public function destroy($id)
     {

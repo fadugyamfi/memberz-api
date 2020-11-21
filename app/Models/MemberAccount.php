@@ -8,13 +8,13 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use LaravelApiBase\Models\CommonFunctions;
-use LaravelApiBase\Models\CommonModel;
+use LaravelApiBase\Models\ApiModelBehavior;
+use LaravelApiBase\Models\ApiModelInterface;
 
-class MemberAccount extends Authenticatable implements CommonModel, JWTSubject
+class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSubject
 {
 
-    use Notifiable, CommonFunctions, SoftDeletesWithActiveFlag;
+    use Notifiable, ApiModelBehavior, SoftDeletesWithActiveFlag;
 
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';

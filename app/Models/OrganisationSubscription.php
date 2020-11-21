@@ -132,7 +132,7 @@ class OrganisationSubscription extends ApiModel
         $remaining_days_cost = 0;
         $total_c_plan_cost = 0;
 
-        $invoice = $this->organisation_invoice;
+        $invoice = $this->organisationInvoice;
         $sub_end_dt = $this->end_dt;
         $sub_start_dt = $this->start_dt;
         $now = new Carbon();

@@ -6,6 +6,9 @@ use App\Models\OrganisationRole;
 use Illuminate\Http\Request;
 use LaravelApiBase\Http\Controllers\ApiController;
 
+/**
+ * @group Organisation Roles
+ */
 class OrganisationRoleController extends ApiController
 {
     public function __construct(OrganisationRole $organisationRole) {
@@ -17,7 +20,7 @@ class OrganisationRoleController extends ApiController
      */
     public function permissions(Request $request, $id) {
         $role = $this->Model::find($id);
-        $permissions = $role->permissions;
+        $permissions = $role ? $role->permissions : [];
 
         return $this->Resource::collection($permissions);
     }

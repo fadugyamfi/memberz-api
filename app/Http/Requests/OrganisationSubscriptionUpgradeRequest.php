@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Foundation\Http\FormRequest;
 use LaravelApiBase\Http\Requests\ApiRequest;
 
 class OrganisationSubscriptionUpgradeRequest extends ApiRequest {

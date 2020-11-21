@@ -9,6 +9,9 @@ use App\Models\OrganisationMember;
 use Illuminate\Http\Request;
 use LaravelApiBase\Http\Controllers\ApiController;
 
+/**
+ * @group Member Accounts
+ */
 class MemberAccountController extends ApiController
 {
     public function __construct(MemberAccount $memberAccount) {

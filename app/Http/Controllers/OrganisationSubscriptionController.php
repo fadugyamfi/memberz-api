@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -8,12 +8,15 @@ use App\Models\OrganisationSubscription;
 use App\Services\SubscriptionManagementService;
 use LaravelApiBase\Http\Controllers\ApiController;
 
+/**
+ * @group Organisation Subscrptions
+ */
 class OrganisationSubscriptionController extends ApiController
 {
     public $subscriptionManager;
 
     public function __construct(
-        OrganisationSubscription $organisationSubscription, 
+        OrganisationSubscription $organisationSubscription,
         SubscriptionManagementService $subscriptionManager
     ) {
         parent::__construct($organisationSubscription);
@@ -24,11 +27,11 @@ class OrganisationSubscriptionController extends ApiController
     /**
      * Pass the current subscription to be renewed
      * Pass the renewal length
-     * 
+     *
      * Auto determine organisation_id
      * Auto determine current subscription_type
-     * 
-     * Actions: create an invoice for the transaction, return new subscription with invoice 
+     *
+     * Actions: create an invoice for the transaction, return new subscription with invoice
      */
     public function renew(OrganisationSubscriptionRenewalRequest $request, $id) {
         $subscription = $this->subscriptionManager->renew($id, $request->length);
@@ -40,9 +43,9 @@ class OrganisationSubscriptionController extends ApiController
      * Pass the current subscription to be upgraded
      * Pass the new subscription_type to upgrade to
      * Pass the subscription length
-     * 
+     *
      * Auto determine organisation_id
-     * 
+     *
      * Actions: create an invoice for the transaction, insert new subscription with invoice info
      */
     public function upgrade(OrganisationSubscriptionUpgradeRequest $request, $id) {
@@ -50,4 +53,4 @@ class OrganisationSubscriptionController extends ApiController
 
         return new $this->Resource($subscription);
     }
-} 
+}
