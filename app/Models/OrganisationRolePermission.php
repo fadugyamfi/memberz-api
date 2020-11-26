@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use LaravelApiBase\Models\CommonFunctions;
-use LaravelApiBase\Models\CommonModel;
+use LaravelApiBase\Models\ApiModelBehavior;
+use LaravelApiBase\Models\ApiModelInterface;
 
-class OrganisationRolePermission extends Permission implements CommonModel
+class OrganisationRolePermission extends Permission implements ApiModelInterface
 {
-    use CommonFunctions;
+    use ApiModelBehavior;
 
     /**
      * Database table name

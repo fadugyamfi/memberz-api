@@ -32,7 +32,7 @@ class LoginRequest extends ApiRequest
         ];
     }
 
-    public function bodyParameters()
+    public function bodyParameters(): array
     {
         return [
             'username' => [
