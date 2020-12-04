@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.3",
         "doctrine/dbal": "^2.10",
+        "fadugyamfi/laravel-api-base": "^0.9.3",
         "fideloper/proxy": "^4.0",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^7.0",
@@ -48,8 +49,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/",
-            "LaravelApiBase\\": "packages/fadugyamfi/laravel-api-base/"
+            "Tests\\": "tests/"
         }
     },
     "minimum-stability": "dev",

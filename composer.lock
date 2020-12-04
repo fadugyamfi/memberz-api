@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "071295b1e2445eb376fb1fb6ab80893d",
+    "content-hash": "5bcd46b751f83d04bd834f35b06084d3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -652,6 +652,50 @@
                 "validator"
             ],
             "time": "2020-10-31T20:37:35+00:00"
+        },
+        {
+            "name": "fadugyamfi/laravel-api-base",
+            "version": "0.9.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fadugyamfi/laravel-api-base.git",
+                "reference": "9b3974484f682f324583c5c70d853fd97fe85c4f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fadugyamfi/laravel-api-base/zipball/9b3974484f682f324583c5c70d853fd97fe85c4f",
+                "reference": "9b3974484f682f324583c5c70d853fd97fe85c4f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "^5.2|^6|^7|^8|^9",
+                "illuminate/support": "^5.2|^6|^7|^8|^9"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelApiBase\\Providers\\LaravelApiBaseProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelApiBase\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Francis Adu-Gyamfi",
+                    "email": "icewalker2g@yahoo.co.uk"
+                }
+            ],
+            "description": "Laravel Package for easy RESTful API development",
+            "time": "2020-12-04T23:35:42+00:00"
         },
         {
             "name": "fideloper/proxy",
