@@ -11,7 +11,10 @@ use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
  */
 class OrganisationGroupController extends Controller
 {
-    use ApiControllerBehavior;
+    use ApiControllerBehavior {
+        store as apiStore;
+        update as apiUpdate;
+    }
 
     public function __construct(OrganisationGroup $OrganisationGroup)
     {
@@ -23,7 +26,7 @@ class OrganisationGroupController extends Controller
      */
     public function store(OrganisationGroupRequest $request)
     {
-        return parent::store($request);
+        return $this->apiStore($request);
     }
 
     /**
@@ -31,6 +34,6 @@ class OrganisationGroupController extends Controller
      */
     public function update(OrganisationGroupRequest $request, $id)
     {
-        return parent::update($request, $id);
+        return $this->apiUpdate($request, $id);
     }
 }

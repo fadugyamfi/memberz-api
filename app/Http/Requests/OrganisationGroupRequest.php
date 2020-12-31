@@ -31,4 +31,14 @@ class OrganisationGroupRequest extends ApiRequest
 
         ];
     }
+
+    public function bodyParameters()
+    {
+        return  [
+            'organisation_type_id' => [
+                'description' => 'The group type of this group record',
+                'example' => 1
+            ]
+        ];
+    }
 }

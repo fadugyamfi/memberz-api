@@ -2,12 +2,12 @@
 
 namespace App\Models\Support;
 
-use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\SoftDeletesWithDeletedFlag;
 
 class SmsLog extends SupportModel
 {
 
-    use SoftDeletesWithActiveFlag;
+    use SoftDeletesWithDeletedFlag;
 
     const DELETED_AT = 'deleted';
 
