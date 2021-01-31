@@ -1,0 +1,7 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/icewalker2g/public_html/dev/beta
+    - composer install
+    - php artisan cache:clear
+    - php artisan route:cache

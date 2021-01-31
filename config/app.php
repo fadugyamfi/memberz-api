@@ -236,6 +236,6 @@ return [
     /**
      * Old API Transposed values
      */
-    'file_upload_root_directory' => 'memberz/files',
-    'file_upload_host_server' => 'http://localhost/'
+    'file_upload_root_directory' => env('FILES_UPLOADS_DIRECTORY', 'memberz/files'),
+    'file_upload_host_server' => env('FILES_UPLOAD_HOST', 'http://localhost/')
 ];

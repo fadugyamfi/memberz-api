@@ -70,6 +70,6 @@ class SmsBroadcast extends ApiModel
     }
 
     public function scheduledBy() {
-        return $this->belongsTo(OrganisationAccount::class);
+        return $this->belongsTo(OrganisationAccount::class, 'scheduled_by');
     }
 }
