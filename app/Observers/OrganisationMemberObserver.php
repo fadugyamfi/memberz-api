@@ -12,38 +12,18 @@ class OrganisationMemberObserver
      * Auto generate a membership ID for the membership
      */
     public function autoGenerateMembershipNo(OrganisationMember $organisationMember) {
-        if( $organisationMember->approved ) {
-            Log::debug("Membership Approved. Assigning new membership number");
-            $category = $organisationMember->organisationMemberCategory;
-
-            if( !$category ) {
-                Log::debug('Membership category not selected for membership');
-            }
-
-            if( $category->auto_gen_ids ) {
-                $nextID = $category->id_prefix . $category->id_next_increment . $category->id_suffix;
-                $organisationMember->organisation_no = $nextID;
-
-                Log::debug("Assigned membership number '$nextID' to {$organisationMember->member->name()}");
-            }
+        if( !$organisationMember->approved ) {
+            return;
         }
+
+        $organisationMember->generateMembershipNo();
     }
 
     /**
      * Incremember the counter for membership IDs on the category for the membership
      */
     public function incrementMembershipIDCounter(OrganisationMember $organisationMember) {
-        $category = $organisationMember->organisationMemberCategory;
-
-        if( !$category->auto_gen_ids ) {
-            Log::debug("Not auto generating IDs so not incrementing");
-            return;
-        }
-
-        $category->id_next_increment = $category->id_next_increment + 1;
-        $category->save();
-
-        Log::debug("Incremented ID Next Increment To {$category->id_next_increment} for {$category->name}");
+        $organisationMember->organisationMemberCategory->incrementIdCounter();
     }
 
     /**

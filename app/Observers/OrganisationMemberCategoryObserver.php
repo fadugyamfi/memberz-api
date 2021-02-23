@@ -22,9 +22,9 @@ class OrganisationMemberCategoryObserver
      */
     public function creating(OrganisationMemberCategory $category)
     {
-        $category->slug = Str::slug($category->name);
+        $category->generateSlug();
     }
-    
+
     /**
      * Handle the organisation member category "created" event.
      *

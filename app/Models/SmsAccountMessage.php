@@ -56,4 +56,11 @@ class SmsAccountMessage extends ApiModel
     public function sender() {
         return $this->belongsTo(OrganisationAccount::class, 'sent_by');
     }
+
+    public function updateSentStatus(string $status, int $sentFlag) {
+        $this->send_status = $status;
+        $this->sent = $sentFlag;
+        $this->sent_at = date('Y-m-d H:i:s');
+        $this->save();
+    }
 }

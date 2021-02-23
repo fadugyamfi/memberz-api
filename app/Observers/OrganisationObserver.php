@@ -22,10 +22,7 @@ class OrganisationObserver
      */
     public function creating(Organisation $organisation)
     {
-        if( !$organisation->slug ) {
-            $organisation->slug = Str::slug($organisation->name) . '-' . rand(10000,99999);
-        }
-
+        $organisation->generateSlug();
         $organisation->active = 1;
     }
 

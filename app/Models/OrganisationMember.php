@@ -53,6 +53,17 @@ class OrganisationMember extends ApiModel
         return $query->where('member_id', $member_id)->active()->approved()->get()->pluck('organisation_id')->all();
     }
 
+    public function generateMembershipNo() {
+        $category = $this->organisationMemberCategory;
+
+        if( !$category || !$category->auto_gen_ids ) {
+            return;
+        }
+
+        $nextID = $category->id_prefix . $category->id_next_increment . $category->id_suffix;
+        $this->organisation_no = $nextID;
+    }
+
     /**
      * Overriden to provide support for searching for members using multiple methods
      *

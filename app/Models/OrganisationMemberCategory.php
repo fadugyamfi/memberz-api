@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Scopes\ActiveScope;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Torzer\Awesome\Landlord\BelongsToTenants;
+use Illuminate\Support\Str;
 class OrganisationMemberCategory extends ApiModel
 {
     use BelongsToTenants, SoftDeletesWithActiveFlag;
@@ -50,6 +50,19 @@ class OrganisationMemberCategory extends ApiModel
 
     public function organisationMembers() {
         return $this->hasMany(OrganisationMember::class);
+    }
+
+    public function generateSlug() {
+        $this->slug = Str::slug($this->name);
+    }
+
+    public function incrementIdCounter() {
+        if( !$this->auto_gen_ids ) {
+            return;
+        }
+
+        $this->id_next_increment = $this->id_next_increment + 1;
+        $this->save();
     }
 
     /**

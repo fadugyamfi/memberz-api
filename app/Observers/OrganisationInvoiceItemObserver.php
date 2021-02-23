@@ -14,12 +14,7 @@ class OrganisationInvoiceItemObserver
      */
     public function created(OrganisationInvoiceItem $organisationInvoiceItem)
     {
-        $invoice = $organisationInvoiceItem->organisation_invoice;
-
-        if( $invoice ) {
-            $invoice->total_due += $organisationInvoiceItem->total;
-            $invoice->save();
-        }
+        $organisationInvoiceItem->organisationInvoice->incrementTotal($organisationInvoiceItem->total);
     }
 
     /**

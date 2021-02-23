@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
+use Carbon\Carbon;
 
 class SubscriptionType extends ApiModel
 {
@@ -53,4 +54,19 @@ class SubscriptionType extends ApiModel
         return $this->belongsTo(Currency::class);
     }
 
+    public function getValidityEndDate(): Carbon {
+        $end_dt = new Carbon();
+
+        switch( $this->validity ) {
+            case 'forever':
+                $end_dt->addYears(10);
+                break;
+
+            default:
+                $end_dt->addMonth(1);
+                break;
+        }
+
+        return $end_dt;
+    }
 }

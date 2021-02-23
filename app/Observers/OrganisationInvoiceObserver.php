@@ -14,10 +14,8 @@ class OrganisationInvoiceObserver
      */
     public function created(OrganisationInvoice $organisationInvoice)
     {
-        // generate an invoice number
-        if( !$organisationInvoice->invoice_no ) {
-            $organisationInvoice->invoice_no = $organisationInvoice->organisation_id . str_pad($organisationInvoice->id, 5, '0', STR_PAD_LEFT);
-            $organisationInvoice->save();
+        if( !$organisationInvoice->hasInvoiceNumber() ) {
+            $organisationInvoice->generateInvoiceNumber();
         }
     }
 

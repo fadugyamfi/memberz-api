@@ -17,23 +17,18 @@ class OrganisationAccountObserver
      * @return void
      */
     public function creating(OrganisationAccount $organisationAccount) {
-        if( !$organisationAccount->member_account_id ) {
-            $tempMemberAccount = MemberAccount::createTempAccount(request('member_id'));
-
-            if( !$tempMemberAccount ) {
-                Log::error("Temporary account not created/available, so not creating organisation account");
-                return false;
-            }
-
-            $orgAccount = OrganisationAccount::where('member_account_id', $tempMemberAccount->id)->active()->first();
-
-            if( $orgAccount ) {
-                Log::error('An organisation account for this member already exists');
-                throw new Exception('An organisation account already exists for this member');
-            }
-
-            $organisationAccount->member_account_id = $tempMemberAccount->id;
+        if( $organisationAccount->member_account_id ) {
+            return;
         }
+
+        $tempMemberAccount = MemberAccount::createTempAccount(request('member_id'));
+
+        if( !$tempMemberAccount ) {
+            Log::error("Temporary account not created/available, so not creating organisation account");
+            return;
+        }
+
+        $organisationAccount->member_account_id = $tempMemberAccount->id;
     }
 
     /**

@@ -73,6 +73,17 @@ class OrganisationInvoice extends ApiModel
         return $this->belongsTo(Currency::class);
     }
 
-    
+    public function incrementTotal($amount) {
+        $this->total_due += $amount;
+        $this->save();
+    }
 
+    public function generateInvoiceNumber() {
+        $this->invoice_no = $this->organisation_id . str_pad($this->id, 5, '0', STR_PAD_LEFT);
+        $this->save();
+    }
+
+    public function hasInvoiceNumber() {
+        return !empty($this->invoice_no);
+    }
 }

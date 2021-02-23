@@ -22,7 +22,7 @@ class SmsAccountMessageObserver implements ShouldQueue
             $send_status = "Send Failed. Not enough credits available.";
             Log::debug('Failed to send message to ' .  $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
 
-            return $this->updateAccountMessage($smsAccountMessage, $send_status, $sent);
+            return $smsAccountMessage->updateSentStatus($send_status, $sent);
         }
 
         if( $response['status_code'] == 1) {
@@ -38,14 +38,7 @@ class SmsAccountMessageObserver implements ShouldQueue
             Log::debug('Message not sent to ' .  $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
         }
 
-        return $this->updateAccountMessage($smsAccountMessage, $send_status, $sent);
-    }
-
-    private function updateAccountMessage(SmsAccountMessage $smsAccountMessage, $send_status, $sent) {
-        $smsAccountMessage->send_status = $send_status;
-        $smsAccountMessage->sent = $sent;
-        $smsAccountMessage->sent_at = date('Y-m-d H:i:s');
-        $smsAccountMessage->save();
+        $smsAccountMessage->updateSentStatus($send_status, $sent);
     }
 
     /**

@@ -9,7 +9,7 @@ use Exception;
 
 class OrganisationSubscriptionObserver
 {
-    
+
     /**
      * Handle the organisation subscription "creating" event.
      *
@@ -18,20 +18,19 @@ class OrganisationSubscriptionObserver
      */
     public function creating(OrganisationSubscription $organisationSubscription)
     {
+        if( $organisationSubscription->end_dt ) {
+            return;
+        }
+
         $subscriptionType = SubscriptionType::find($organisationSubscription->subscription_type_id);
 
         if( !$subscriptionType ) {
             throw new Exception("Invalid Subscription Type Selected");
         }
 
-        if( $subscriptionType->validity == 'forever' ) {
-            $end_dt = new Carbon();
-            $end_dt->addYears(10);
-
-            $organisationSubscription->end_dt = $end_dt->format('Y-m-d H:i:s');
-        }
+        $organisationSubscription->end_dt = $subscriptionType->getValidityEndDate()->format('Y-m-d H:i:s');
     }
-    
+
     /**
      * Handle the organisation subscription "created" event.
      *

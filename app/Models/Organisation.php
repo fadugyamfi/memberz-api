@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 
 class Organisation extends ApiModel
@@ -56,5 +57,13 @@ class Organisation extends ApiModel
 
     public function activeSubscription() {
         return $this->hasOne(OrganisationSubscription::class)->where(['current' => 1]);
+    }
+
+    public function generateSlug($force = false) {
+        if( $this->slug && !$force ) {
+            return;
+        }
+
+        $this->slug = Str::slug($this->name) . '-' . rand(10000,99999);
     }
 }
