@@ -27,8 +27,8 @@ class MemberAccountController extends ApiController
             return response()->json(['error' => 'Member Account Not Found'], 404);
         }
 
-        $organisationAccountOrgIds = OrganisationAccount::memberAccountOrganisationIds($memberAccount->id);
-        $organisationMemberOrgIds = OrganisationMember::memberOrganisationIds($memberAccount->member_id);
+        $organisationAccountOrgIds = OrganisationAccount::organisationIds($memberAccount->id);
+        $organisationMemberOrgIds = OrganisationMember::organisationIds($memberAccount->member_id);
 
         $uniqueIds = collect($organisationAccountOrgIds)->merge($organisationMemberOrgIds)->unique()->all();
 

@@ -49,8 +49,8 @@ class OrganisationMember extends ApiModel
         return $query->active()->where('organisation_members.approved', 0);
     }
 
-    public static function memberOrganisationIds(int $member_id) {
-        return self::where('member_id', $member_id)->active()->approved()->get()->pluck('organisation_id')->all();
+    public function scopeOrganisationIds($query, int $member_id) {
+        return $query->where('member_id', $member_id)->active()->approved()->get()->pluck('organisation_id')->all();
     }
 
     /**

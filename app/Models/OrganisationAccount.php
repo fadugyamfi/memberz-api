@@ -62,8 +62,8 @@ class OrganisationAccount extends ApiModel
         return $query->where('active', 1);
     }
 
-    public static function memberAccountOrganisationIds(int $member_account_id) {
-        return self::where('member_account_id', $member_account_id)->active()->get()->pluck('organisation_id')->all();
+    public function scopeOrganisationIds($query, int $member_account_id) {
+        return $query->where('member_account_id', $member_account_id)->active()->get()->pluck('organisation_id')->all();
     }
 
     /**

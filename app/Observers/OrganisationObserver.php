@@ -8,6 +8,7 @@ use App\Models\OrganisationInvoice;
 use App\Models\OrganisationMember;
 use App\Models\OrganisationMemberCategory;
 use App\Models\OrganisationSubscription;
+use App\Services\SubscriptionManagementService;
 use Illuminate\Support\Str;
 
 class OrganisationObserver
@@ -38,11 +39,12 @@ class OrganisationObserver
     {
         $subscriptionTypeId = intval(request('subscription_type_id'));
         $subscriptionLength = intval(request('subscription_length'));
-        $organisationInvoice = OrganisationInvoice::createSubscriptionInvoice($organisation->id, $subscriptionTypeId, $subscriptionLength);
+
+        $subscriptionManagementService = new SubscriptionManagementService();
+        $subscriptionManagementService->createNewSubscription($organisation->id, $subscriptionTypeId, $subscriptionLength);
 
         $account = OrganisationAccount::createDefaultAccount($organisation);
         $category = OrganisationMemberCategory::createDefault($organisation);
-        OrganisationSubscription::createNewSubscription($organisation->id, $subscriptionTypeId, $subscriptionLength, $organisationInvoice->id);
         OrganisationMember::createDefaultMember($organisation, $category, $account);
     }
 

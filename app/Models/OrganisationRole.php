@@ -37,7 +37,7 @@ class OrganisationRole extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['admin_access' => 'boolean', 'weekly_activity_update' => 'boolean', 'birthday_updates' => 'boolean'];
+    protected $casts = ['admin_access' => 'boolean', 'weekly_activity_update' => 'boolean', 'birthday_updates' => 'boolean', 'active' => 'boolean'];
 
     /**
      * The attributes that should be mutated to dates.

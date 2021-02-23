@@ -10,7 +10,7 @@ class OrganisationResource extends ApiResource
     public function toArray($request)
     {
         $data = array_merge(parent::toArray($request), [
-            'active_subscription' => new OrganisationSubscriptionResource($this->activeSubscrption),
+            'active_subscription' => new OrganisationSubscriptionResource($this->activeSubscription),
             'organisation_type' => $this->organisationType,
         ]);
 

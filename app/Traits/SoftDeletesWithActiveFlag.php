@@ -21,6 +21,18 @@ trait SoftDeletesWithActiveFlag {
     }
 
     /**
+     * Initialize the soft deleting trait for an instance.
+     *
+     * @return void
+     */
+    public function initializeSoftDeletes()
+    {
+        if (! isset($this->casts[$this->getDeletedAtColumn()])) {
+            $this->casts[$this->getDeletedAtColumn()] = 'boolean';
+        }
+    }
+
+    /**
      * Perform the actual delete query on this model instance.
      *
      * @return void

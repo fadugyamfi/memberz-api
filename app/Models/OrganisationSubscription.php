@@ -77,46 +77,6 @@ class OrganisationSubscription extends ApiModel
     }
 
     /**
-     * Creates a new subscription for an organisation with the specified paramaters
-     */
-    public static function createNewSubscription($organisationId, $subscriptionTypeId, $length, $organisationInvoiceId = null) {
-
-        $currentSubscription = self::getCurrentSubscription($organisationId);
-
-        $newStartDate = new DateTime();
-        $newEndDate = new DateTime();
-        $newEndDate->add( new DateInterval("P{$length}M") );
-
-        $currentSubEndDate = $currentSubscription ? new DateTime( $currentSubscription->end_dt ) : new DateTime();
-        $now = new DateTime();
-
-        // if current subscription date has not elapsed
-        if( $now < $currentSubEndDate ) {
-            $diff = $now->diff($currentSubEndDate);
-            $diffNewDays = $now->diff($newEndDate);
-            $days = $diff->days === -99999 || $diff->days === false ? 0 : $diff->days;
-            $newDays = $diffNewDays === -99999 || $diffNewDays->days === false ? 0 : $diffNewDays->days;
-
-            Log::debug("Remaining Sub Days: {$days}, New Sub Days: {$newDays}");
-
-            if( abs($newDays - $days) > OrganisationSubscription::MIN_ALLOWED_PRORATE_DAYS ) {
-                $newEndDate->add( new DateInterval("P{$days}D") );
-            }
-        }
-
-        // create new subscription record
-        return self::create([
-            'organisation_id' => $organisationId,
-            'organisation_invoice_id' => $organisationInvoiceId,
-            'subscription_type_id' => $subscriptionTypeId,
-            'start_dt' => $newStartDate->format('Y-m-d H:i:s'),
-            'end_dt' => $newEndDate->format('Y-m-d H:i:s'),
-            'length' => $length,
-            'current' => 0
-        ]);
-    }
-
-    /**
      * Calculates the remaining account balance in order to provide a
      * prorated discount when customers attempt a subscription upgrade
      */
