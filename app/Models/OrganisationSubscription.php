@@ -118,6 +118,7 @@ class OrganisationSubscription extends ApiModel
     public function hasProrateDiscount() {
         $this->calculateRemainingBalance();
 
-        return $this->subscription_type->billing_required == 'yes' && $this->remaining_balance > OrganisationSubscription::MIN_ALLOWED_PRORATE_DAYS;
+        return $this->subscription_type->billing_required == 'yes'
+            && $this->remaining_balance > OrganisationSubscription::MIN_ALLOWED_PRORATE_DAYS;
     }
 }

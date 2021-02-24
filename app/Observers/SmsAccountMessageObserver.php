@@ -14,7 +14,6 @@ class SmsAccountMessageObserver implements ShouldQueue
     protected function processResponse(SmsAccountMessage $smsAccountMessage, $response) {
         $sent = 0;
         $send_status = '';
-        $organisation_id = $smsAccountMessage->sms_account->organisation_id;
 
         if( $response['status'] != 'success' ) {
             // TODO: determine what todo if no credit present
@@ -29,7 +28,7 @@ class SmsAccountMessageObserver implements ShouldQueue
             $sent = 1;
             $send_status = 'Sent Successfully';
             $pages = ceil($smsAccountMessage->message / 160);
-            SmsAccount::deductCredit($organisation_id, $pages);
+            $smsAccountMessage->smsAccount->deductCredit($pages);
             Log::debug('Sent message successfully to ' . $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
 
         } else {

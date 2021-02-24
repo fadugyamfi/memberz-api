@@ -70,6 +70,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('sms_account_topups', 'SmsAccountTopupController');
     Route::apiResource('sms_credits', 'SmsCreditController');
     Route::apiResource('sms_broadcasts', 'SmsBroadcastController');
+    Route::apiResource('sms_broadcast_lists', 'SmsBroadcastListController');
 
     Route::apiResource('subscription_types', 'SubscriptionTypeController');
     Route::apiResource('system_settings', 'SystemSettingController');

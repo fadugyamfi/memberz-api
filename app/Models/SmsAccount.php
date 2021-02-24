@@ -50,16 +50,11 @@ class SmsAccount extends ApiModel
         return self::where('organisation_id', $organisation_id)->first();
     }
 
-    public static function deductCredit($organisation_id, $credit = 1) {
-        $account = self::getAccount($organisation_id);
-
-        if( !$account ) {
-            return;
-        }
+    public function deductCredit($credit = 1) {
 
         $credit_remaining = 0;
-        $bonus = intval($account->bonus_balance);
-        $credit_bal = intval($account->account_balance);
+        $bonus = intval($this->bonus_balance);
+        $credit_bal = intval($this->account_balance);
 
         if( $bonus >= $credit ) {
             $bonus -= $credit;
@@ -74,33 +69,24 @@ class SmsAccount extends ApiModel
             $credit_bal -= $credit_remaining;
         }
 
-        $account->account_balance = $credit_bal;
-        $account->bonus_balance = $bonus;
-        $account->save();
+        $this->account_balance = $credit_bal;
+        $this->bonus_balance = $bonus;
+        $this->save();
     }
 
-    public static function addCredit($organisation_id, $credit = 0, $is_bonus = 0) {
-        $account = self::getAccount($organisation_id);
-
-        if( !$account ) {
-            return;
-        }
+    public function addCredit($credit = 0, $is_bonus = 0) {
 
         if( !$is_bonus ) {
-            $account->account_balance += $credit;
+            $this->account_balance += $credit;
         } else {
-            $account->bonus_balance += $credit;
+            $this->bonus_balance += $credit;
         }
 
-        $account->save();
+        $this->save();
     }
 
-    public function setBonus($organisation_id, $bonus_amount) {
-        $account = $this->getAccount($organisation_id);
-
-        if( $account ) {
-            $account->bonus_balance = $bonus_amount;
-            $account->save();
-        }
+    public function setBonus($bonus_amount) {
+        $this->bonus_balance = $bonus_amount;
+        $this->save();
     }
 }
