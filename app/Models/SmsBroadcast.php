@@ -58,11 +58,11 @@ class SmsBroadcast extends ApiModel
     }
 
     public function smsAccount() {
-        return $this->belongsTo(SmsAccount::class);
+        return $this->belongsTo(SmsAccount::class, 'module_sms_account_id');
     }
 
     public function smsBroadcastList() {
-        return $this->belongsTo(SmsBroadcastList::class);
+        return $this->belongsTo(SmsBroadcastList::class, 'module_sms_broadcast_list_id');
     }
 
     public function organisationMemberCategory() {
