@@ -50,47 +50,4 @@ class OrganisationSubscriptionObserver
         $organisationSubscription->save();
     }
 
-    /**
-     * Handle the organisation subscription "updated" event.
-     *
-     * @param  \App\OrganisationSubscription  $organisationSubscription
-     * @return void
-     */
-    public function updated(OrganisationSubscription $organisationSubscription)
-    {
-        //
-    }
-
-    /**
-     * Handle the organisation subscription "deleted" event.
-     *
-     * @param  \App\OrganisationSubscription  $organisationSubscription
-     * @return void
-     */
-    public function deleted(OrganisationSubscription $organisationSubscription)
-    {
-        //
-    }
-
-    /**
-     * Handle the organisation subscription "restored" event.
-     *
-     * @param  \App\OrganisationSubscription  $organisationSubscription
-     * @return void
-     */
-    public function restored(OrganisationSubscription $organisationSubscription)
-    {
-        //
-    }
-
-    /**
-     * Handle the organisation subscription "force deleted" event.
-     *
-     * @param  \App\OrganisationSubscription  $organisationSubscription
-     * @return void
-     */
-    public function forceDeleted(OrganisationSubscription $organisationSubscription)
-    {
-        //
-    }
 }

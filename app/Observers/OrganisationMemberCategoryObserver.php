@@ -47,36 +47,5 @@ class OrganisationMemberCategoryObserver
         $this->unflagDefaultForOthers($category);
     }
 
-    /**
-     * Handle the organisation member category "deleted" event.
-     *
-     * @param  \App\OrganisationMemberCategory  $category
-     * @return void
-     */
-    public function deleted(OrganisationMemberCategory $category)
-    {
-        //
-    }
 
-    /**
-     * Handle the organisation member category "restored" event.
-     *
-     * @param  \App\OrganisationMemberCategory  $category
-     * @return void
-     */
-    public function restored(OrganisationMemberCategory $category)
-    {
-        //
-    }
-
-    /**
-     * Handle the organisation member category "force deleted" event.
-     *
-     * @param  \App\OrganisationMemberCategory  $category
-     * @return void
-     */
-    public function forceDeleted(OrganisationMemberCategory $category)
-    {
-        //
-    }
 }

@@ -58,47 +58,4 @@ class SmsAccountMessageObserver implements ShouldQueue
         $this->processResponse($smsAccountMessage, $response);
     }
 
-    /**
-     * Handle the sms account message "updated" event.
-     *
-     * @param  \App\SmsAccountMessage  $smsAccountMessage
-     * @return void
-     */
-    public function updated(SmsAccountMessage $smsAccountMessage)
-    {
-        //
-    }
-
-    /**
-     * Handle the sms account message "deleted" event.
-     *
-     * @param  \App\SmsAccountMessage  $smsAccountMessage
-     * @return void
-     */
-    public function deleted(SmsAccountMessage $smsAccountMessage)
-    {
-        //
-    }
-
-    /**
-     * Handle the sms account message "restored" event.
-     *
-     * @param  \App\SmsAccountMessage  $smsAccountMessage
-     * @return void
-     */
-    public function restored(SmsAccountMessage $smsAccountMessage)
-    {
-        //
-    }
-
-    /**
-     * Handle the sms account message "force deleted" event.
-     *
-     * @param  \App\SmsAccountMessage  $smsAccountMessage
-     * @return void
-     */
-    public function forceDeleted(SmsAccountMessage $smsAccountMessage)
-    {
-        //
-    }
 }

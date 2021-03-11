@@ -5,9 +5,11 @@ namespace App\Models;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Torzer\Awesome\Landlord\BelongsToTenants;
 use Illuminate\Support\Str;
+use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
+
 class OrganisationMemberCategory extends ApiModel
 {
-    use BelongsToTenants, SoftDeletesWithActiveFlag;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, HasRecursiveRelationships;
 
     /**
      * The database table used by the model.

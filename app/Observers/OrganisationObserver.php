@@ -45,47 +45,4 @@ class OrganisationObserver
         OrganisationMember::createDefaultMember($organisation, $category, $account);
     }
 
-    /**
-     * Handle the organisation "updated" event.
-     *
-     * @param  \App\Organisation  $organisation
-     * @return void
-     */
-    public function updated(Organisation $organisation)
-    {
-        //
-    }
-
-    /**
-     * Handle the organisation "deleted" event.
-     *
-     * @param  \App\Organisation  $organisation
-     * @return void
-     */
-    public function deleted(Organisation $organisation)
-    {
-        //
-    }
-
-    /**
-     * Handle the organisation "restored" event.
-     *
-     * @param  \App\Organisation  $organisation
-     * @return void
-     */
-    public function restored(Organisation $organisation)
-    {
-        //
-    }
-
-    /**
-     * Handle the organisation "force deleted" event.
-     *
-     * @param  \App\Organisation  $organisation
-     * @return void
-     */
-    public function forceDeleted(Organisation $organisation)
-    {
-        //
-    }
 }

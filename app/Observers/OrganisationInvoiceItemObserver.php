@@ -16,48 +16,4 @@ class OrganisationInvoiceItemObserver
     {
         $organisationInvoiceItem->organisationInvoice->incrementTotal($organisationInvoiceItem->total);
     }
-
-    /**
-     * Handle the organisation invoice item "updated" event.
-     *
-     * @param  \App\Models\OrganisationInvoiceItem  $organisationInvoiceItem
-     * @return void
-     */
-    public function updated(OrganisationInvoiceItem $organisationInvoiceItem)
-    {
-        //
-    }
-
-    /**
-     * Handle the organisation invoice item "deleted" event.
-     *
-     * @param  \App\Models\OrganisationInvoiceItem  $organisationInvoiceItem
-     * @return void
-     */
-    public function deleted(OrganisationInvoiceItem $organisationInvoiceItem)
-    {
-        //
-    }
-
-    /**
-     * Handle the organisation invoice item "restored" event.
-     *
-     * @param  \App\Models\OrganisationInvoiceItem  $organisationInvoiceItem
-     * @return void
-     */
-    public function restored(OrganisationInvoiceItem $organisationInvoiceItem)
-    {
-        //
-    }
-
-    /**
-     * Handle the organisation invoice item "force deleted" event.
-     *
-     * @param  \App\Models\OrganisationInvoiceItem  $organisationInvoiceItem
-     * @return void
-     */
-    public function forceDeleted(OrganisationInvoiceItem $organisationInvoiceItem)
-    {
-        //
-    }
 }

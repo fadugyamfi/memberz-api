@@ -66,47 +66,5 @@ class OrganisationMemberObserver
         }
     }
 
-    /**
-     * Handle the organisation member "updated" event.
-     *
-     * @param  \App\OrganisationMember  $organisationMember
-     * @return void
-     */
-    public function updated(OrganisationMember $organisationMember)
-    {
 
-    }
-
-    /**
-     * Handle the organisation member "deleted" event.
-     *
-     * @param  \App\OrganisationMember  $organisationMember
-     * @return void
-     */
-    public function deleted(OrganisationMember $organisationMember)
-    {
-        //
-    }
-
-    /**
-     * Handle the organisation member "restored" event.
-     *
-     * @param  \App\OrganisationMember  $organisationMember
-     * @return void
-     */
-    public function restored(OrganisationMember $organisationMember)
-    {
-        //
-    }
-
-    /**
-     * Handle the organisation member "force deleted" event.
-     *
-     * @param  \App\OrganisationMember  $organisationMember
-     * @return void
-     */
-    public function forceDeleted(OrganisationMember $organisationMember)
-    {
-        //
-    }
 }
