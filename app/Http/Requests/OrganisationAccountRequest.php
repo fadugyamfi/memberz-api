@@ -31,7 +31,10 @@ class OrganisationAccountRequest extends ApiRequest
             'member_account_id' => [
                 'required_without:member_id',
                 'numeric',
-                Rule::unique('organisation_accounts')->ignore($this->id)->where('organisation_id', $this->organisation_id)->where('active', 1)
+                Rule::unique('organisation_accounts')
+                    ->ignore($this->id)
+                    ->where('organisation_id', $this->organisation_id)
+                    ->where('active', 1)
             ],
             'organisation_role_id' => 'required|numeric',
         ];

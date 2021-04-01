@@ -3,28 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\OrganisationMemberCategory;
-use LaravelApiBase\Http\Controllers\ApiController;
+use Illuminate\Http\Request;
+use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
 /**
  * @group Organisation Member Categories
  */
-class OrganisationMemberCategoryController extends ApiController
+class OrganisationMemberCategoryController extends Controller
 {
-    public function __construct(OrganisationMemberCategory $organisationMemberCategory) {
-        parent::__construct($organisationMemberCategory);
+    use ApiControllerBehavior {
+        store as apiStore;
+        update as apiUpdate;
     }
 
-    public function destroy($id)
+    public function __construct(OrganisationMemberCategory $organisationMemberCategory) {
+        $this->setApiModel($organisationMemberCategory);
+    }
+
+    /**
+     * Create Group
+     */
+    public function store(Request $request)
     {
-        $model = $this->Model::find($id);
+        return $this->apiStore($request);
+    }
 
-        if( $model ) {
-            $model->active = 0;
-            $model->save();
-
-            return response()->json(['data' => $model]);
-        }
-
-        return response()->json(['error' => 'Could not find member record to delete'], 404);
+    /**
+     * Update Group
+     */
+    public function update(Request $request, $id)
+    {
+        return $this->apiUpdate($request, $id);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrganisationAccountRequest;
+use App\Http\Resources\OrganisationAccountResource;
 use App\Models\OrganisationAccount;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
@@ -11,11 +12,15 @@ use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
  */
 class OrganisationAccountController extends Controller
 {
-    use ApiControllerBehavior;
+    use ApiControllerBehavior {
+        store as apiStore;
+        update as apiUpdate;
+    }
 
     public function __construct(OrganisationAccount $organisationAccount)
     {
         $this->setApiModel($organisationAccount);
+        $this->setApiResource(OrganisationAccountResource::class);
     }
 
     /**
@@ -23,7 +28,7 @@ class OrganisationAccountController extends Controller
      */
     public function store(OrganisationAccountRequest $request)
     {
-        return parent::store($request);
+        return $this->apiStore($request);
     }
 
     /**
@@ -31,6 +36,6 @@ class OrganisationAccountController extends Controller
      */
     public function update(OrganisationAccountRequest $request, $id)
     {
-        return parent::update($request, $id);
+        return $this->apiUpdate($request, $id);
     }
 }

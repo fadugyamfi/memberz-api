@@ -28,6 +28,15 @@ Route::group([
     Route::get('me', 'AuthController@me');
 });
 
+Route::group(['prefix' => 'system'], function($router) {
+    Route::post('database/migrate', 'Support\SystemController@migrate');
+    Route::post('database/rollback', 'Support\SystemController@rollback');
+    Route::post('database/seed', 'Support\SystemController@seed');
+    Route::post('cache/routes', 'Support\SystemController@cacheRoutes');
+    Route::post('cache/config', 'Support\SystemController@cacheConfig');
+    Route::post('cache/clear', 'Support\SystemController@cacheClear');
+});
+
 Route::middleware(['auth:api'])->group(function () {
 
     Route::get('members/search', 'MemberController@search');
