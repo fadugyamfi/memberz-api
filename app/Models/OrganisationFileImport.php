@@ -3,9 +3,9 @@
 namespace App\Models;
 
 
-use Torzer\Awesome\Landlord\BelongsToTenants;
+use NunoMazer\Samehouse\BelongsToTenants;
 
-class OrganisationFileImport extends ApiModel  
+class OrganisationFileImport extends ApiModel
 {
 
     use BelongsToTenants;

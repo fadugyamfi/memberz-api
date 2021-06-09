@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Http\Request;
-use Torzer\Awesome\Landlord\BelongsToTenants;
+use NunoMazer\Samehouse\BelongsToTenants;
 
 class OrganisationMember extends ApiModel
 {

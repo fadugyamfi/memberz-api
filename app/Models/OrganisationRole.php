@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
 use Spatie\Permission\Traits\HasPermissions;
-use Torzer\Awesome\Landlord\BelongsToTenants;
+use NunoMazer\Samehouse\BelongsToTenants;
 
 class OrganisationRole extends ApiModel
 {

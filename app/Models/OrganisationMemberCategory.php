@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
-use Torzer\Awesome\Landlord\BelongsToTenants;
+use NunoMazer\Samehouse\BelongsToTenants;
 use Illuminate\Support\Str;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 

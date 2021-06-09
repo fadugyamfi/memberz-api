@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Database\Eloquent\Model;
-use Torzer\Awesome\Landlord\BelongsToTenants;
+use NunoMazer\Samehouse\BelongsToTenants;
 
 class OrganisationGroupLeader extends ApiModel
 {

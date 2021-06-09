@@ -5,7 +5,7 @@ namespace App\Models;
 use DateInterval;
 use DateTime;
 use Exception;
-use Torzer\Awesome\Landlord\BelongsToTenants;
+use NunoMazer\Samehouse\BelongsToTenants;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 class OrganisationSubscription extends ApiModel

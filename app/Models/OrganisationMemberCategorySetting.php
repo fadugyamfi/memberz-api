@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Scopes\ActiveScope;
 use App\Traits\SoftDeletesWithActiveFlag;
-use Torzer\Awesome\Landlord\BelongsToTenants;
+use NunoMazer\Samehouse\BelongsToTenants;
 
 class OrganisationMemberCategorySetting extends ApiModel
 {

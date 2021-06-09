@@ -3,7 +3,7 @@
 namespace App\Models;
 
 
-use Torzer\Awesome\Landlord\BelongsToTenants;
+use NunoMazer\Samehouse\BelongsToTenants;
 
 class OrganisationSetting extends ApiModel
 {

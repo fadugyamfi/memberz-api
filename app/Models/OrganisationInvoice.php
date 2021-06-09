@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithDeletedFlag;
-use Torzer\Awesome\Landlord\BelongsToTenants;
+use NunoMazer\Samehouse\BelongsToTenants;
 
 class OrganisationInvoice extends ApiModel
 {

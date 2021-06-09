@@ -16,10 +16,10 @@
         "guzzlehttp/guzzle": "^7.0",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
+        "nunomazer/laravel-samehouse": "dev-master",
         "orangehill/iseed": "^2.6",
         "spatie/laravel-permission": "^3.6",
         "staudenmeir/laravel-adjacency-list": "dev-master",
-        "torzer/awesome-landlord": "^3.1",
         "tymon/jwt-auth": "^1.0.0"
     },
     "require-dev": {

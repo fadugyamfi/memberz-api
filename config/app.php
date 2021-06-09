@@ -166,7 +166,7 @@ return [
          * Package Service Providers...
          */
         LaravelApiBase\Providers\LaravelApiBaseProvider::class,
-        Torzer\Awesome\Landlord\LandlordServiceProvider::class,
+        NunoMazer\Samehouse\LandlordServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -228,7 +228,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        'Landlord'   => Torzer\Awesome\Landlord\Facades\Landlord::class,
+        'Landlord'   => NunoMazer\Samehouse\Facades\Landlord::class,
 
     ],
 
