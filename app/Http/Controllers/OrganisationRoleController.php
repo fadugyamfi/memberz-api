@@ -17,6 +17,8 @@ class OrganisationRoleController extends ApiController
 
     /**
      * Get Permissions
+     *
+     * @urlParam id integer ID of role to retrieve permissions for. Example: 1
      */
     public function permissions(Request $request, $id) {
         $role = $this->Model::find($id);

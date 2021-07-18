@@ -28,7 +28,7 @@ Route::group([
     Route::get('me', 'AuthController@me');
 });
 
-Route::group(['prefix' => 'system'], function($router) {
+Route::group(['middleware' => ['api'], 'prefix' => 'system'], function($router) {
     Route::post('database/migrate', 'Support\SystemController@migrate');
     Route::post('database/rollback', 'Support\SystemController@rollback');
     Route::post('database/seed', 'Support\SystemController@seed');
@@ -39,7 +39,6 @@ Route::group(['prefix' => 'system'], function($router) {
 
 Route::middleware(['auth:api'])->group(function () {
 
-    Route::get('members/search', 'MemberController@search');
     Route::get('member_accounts/{id}/organisations', 'MemberAccountController@organisations');
     Route::get('organisations/{id}/memberships/statistics', 'OrganisationMemberController@statistics');
     Route::get('organisation_members/unapproved', 'OrganisationMemberController@unapproved');

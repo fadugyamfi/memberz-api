@@ -18,6 +18,13 @@ class MemberAccountController extends ApiController
         parent::__construct($memberAccount);
     }
 
+    /**
+     * Get Organisations
+     *
+     * @urlParam id integer ID of member account. Example: 1
+     *
+     * @response 404 {"error" => "Member Account Not Found"}
+     */
     public function organisations(Request $request, int $member_account_id) {
 
         $memberAccount = MemberAccount::find($member_account_id);
