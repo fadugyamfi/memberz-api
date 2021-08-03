@@ -45,4 +45,13 @@ class OrganisationFileImport extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
+
+    public function member_account() {
+        return $this->belongsTo(MemberAccount::class);
+    }
+
+    public function organisation() {
+        return $this->belongsTo(Organisation::class);
+    }
+
 }

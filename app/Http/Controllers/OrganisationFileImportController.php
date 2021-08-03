@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrganisationFileImportRequest;
+use App\Http\Resources\OrganisationFileImportResource;
 use App\Models\OrganisationFileImport;
 use Illuminate\Http\Request;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
@@ -19,6 +20,7 @@ class OrganisationFileImportController extends Controller
 
     public function __construct(OrganisationFileImport $organisationFileImport) {
         $this->setApiModel($organisationFileImport);
+        $this->setApiResource(OrganisationFileImportResource::class);
     }
 
     /**

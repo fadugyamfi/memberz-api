@@ -2,7 +2,9 @@
 
 namespace App\Observers;
 
+use App\Imports\OrganisationMembersImport;
 use App\Models\OrganisationFileImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrganisationFileImportObserver
 {
@@ -16,10 +18,12 @@ class OrganisationFileImportObserver
     public function creating(OrganisationFileImport $import)
     {
         $organisation_id = request()->input('organisation_id');
-        $path = request()->file('import_file')->storeAs("imports/{$organisation_id}", date('YmdHis') . "_member_import.xlsx");
+        $fileName = date('YmdHis') . "_member_import.xlsx";
+        $path = request()->file('import_file')->storeAs("imports/{$organisation_id}", $fileName);
 
         $import->member_account_id = auth()->id();
         $import->file_path = $path;
+        $import->file_name = $fileName;
     }
 
     /**
@@ -30,7 +34,7 @@ class OrganisationFileImportObserver
      */
     public function created(OrganisationFileImport $import)
     {
-        //
+        Excel::import( new OrganisationMembersImport($import), request()->file('import_file') );
     }
 
     /**
