@@ -15,7 +15,7 @@ class Organisation extends ApiModel
 
     protected $guarded = ['id'];
     protected $fillable = [
-        'organisation_type_id', 'name', 'slug', 'address', 'city', 'state', 'post_code', 'country_id', 'currency_id',
+        'organisation_type_id', 'name', 'slug', 'uuid', 'address', 'city', 'state', 'post_code', 'country_id', 'currency_id',
         'email', 'phone', 'logo', 'website', 'short_description', 'long_description', 'mission', 'cover_photo',
         'member_account_id', 'organisation_member_count', 'organisation_account_count', 'discoverable', 'allow_public_join',
         'default_public_join_category', 'public_directory_enabled', 'locked', 'verified', 'verified_by', 'active', 'trashed'

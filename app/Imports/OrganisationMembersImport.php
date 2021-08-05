@@ -8,6 +8,7 @@ use App\Models\OrganisationAccount;
 use App\Models\OrganisationFileImport;
 use App\Models\OrganisationMember;
 use App\Models\OrganisationMemberCategory;
+use App\Models\OrganisationMemberImport;
 use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
@@ -17,13 +18,12 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Events\AfterImport;
 use Maatwebsite\Excel\Events\ImportFailed;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Propaganistas\LaravelPhone\PhoneNumber;
 
-class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkReading, WithEvents
+class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkReading, WithEvents, ShouldQueue
 {
 
     use Importable, RegistersEventListeners;
@@ -56,21 +56,28 @@ class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkRea
 
         if( $existingMembership ) {
             $this->fileImport->records_existing += 1;
-            $this->fileImport->save();
+            $this->recordMemberImport($member, 'existing');
 
-            return $existingMembership;
+        } else if( $member->wasRecentlyCreated ) {
+            $this->fileImport->records_imported += 1;
+            $this->recordMemberImport($member, 'imported');
+
+        } else if( !$member->wasRecentlyCreated ) {
+            $this->fileImport->records_linked += 1;
+            $this->recordMemberImport($member, 'linked');
         }
 
-        $this->fileImport->records_imported += $member->wasRecentlyCreated ? 1 : 0;
-        $this->fileImport->records_linked += !$member->wasRecentlyCreated ? 1 : 0;
         $this->fileImport->save();
 
-        return $this->makeModel($row, $member);
+        return $existingMembership ?? $this->makeModel($row, $member);
     }
 
     public function makeModel($row, $member) {
         $defaultCategory = OrganisationMemberCategory::where('default', 1)->first();
-        $category = OrganisationMemberCategory::where('name', $row['category_name'])->first();
+        $category = OrganisationMemberCategory::where([
+            'organisation_id' => $this->fileImport->organisation_id,
+            'name' => $row['category_name']
+        ])->first();
 
         $orgAccount = OrganisationAccount::where([
             'member_account_id' => $this->fileImport->member_account_id,
@@ -130,5 +137,14 @@ class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkRea
     public static function importFailed(ImportFailed $event) {
         $event->getConcernable()->fileImport->import_status = 'failed';
         $event->getConcernable()->fileImport->save();
+    }
+
+    public function recordMemberImport(Member $member, string $importType) {
+        return OrganisationMemberImport::create([
+            'organisation_id' => $this->fileImport->organisation_id,
+            'organisation_file_import_id' => $this->fileImport->id,
+            'member_id' => $member->id,
+            'import_type' => $importType
+        ]);
     }
 }

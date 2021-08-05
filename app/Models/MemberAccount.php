@@ -54,7 +54,11 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        return [
+            'username' => $this->username,
+            'member_id' => $this->member_id,
+            'organisation_ids' => $this->organisationAccounts()->get()->pluck('organisation_id')
+        ];
     }
 
     /**

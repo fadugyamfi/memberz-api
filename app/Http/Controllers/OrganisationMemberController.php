@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\OrganisationMember;
+use App\Models\OrganisationMemberCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use LaravelApiBase\Http\Controllers\ApiController;

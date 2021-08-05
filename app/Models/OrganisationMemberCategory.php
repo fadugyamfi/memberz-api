@@ -11,6 +11,8 @@ class OrganisationMemberCategory extends ApiModel
 {
     use BelongsToTenants, SoftDeletesWithActiveFlag, HasRecursiveRelationships;
 
+    public $tenantColumns = ['organisation_id'];
+
     /**
      * The database table used by the model.
      *
