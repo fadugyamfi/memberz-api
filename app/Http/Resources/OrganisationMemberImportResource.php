@@ -15,7 +15,7 @@ class OrganisationMemberImportResource extends JsonResource
     public function toArray($request)
     {
         return array_merge(parent::toArray($request), [
-            'member' => new MemberResource($this->member)
+            'organisation_member' => new OrganisationMemberResource($this->organisationMember)
         ]);
     }
 }

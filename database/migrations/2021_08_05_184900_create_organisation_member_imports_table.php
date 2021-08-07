@@ -17,7 +17,7 @@ class CreateOrganisationMemberImportsTable extends Migration
             $table->id();
             $table->unsignedInteger('organisation_id')->index();
             $table->unsignedInteger('organisation_file_import_id')->index();
-            $table->unsignedInteger('member_id')->index();
+            $table->unsignedInteger('organisation_member_id')->index();
             $table->string('import_type', 100)->nullable()->index()->comment('linked, imported, existing');
             $table->timestamps();
         });

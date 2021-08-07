@@ -26,7 +26,7 @@ use Propaganistas\LaravelPhone\PhoneNumber;
 class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkReading, WithEvents, ShouldQueue
 {
 
-    use Importable, RegistersEventListeners;
+    use Importable;
 
     private OrganisationFileImport $fileImport;
 
@@ -47,6 +47,7 @@ class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkRea
     */
     public function model(array $row)
     {
+        $newMembership = null;
         $member = $this->retrieveOrCreateMember($row);
 
         $existingMembership = OrganisationMember::active()->approved()->where([
@@ -56,20 +57,22 @@ class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkRea
 
         if( $existingMembership ) {
             $this->fileImport->records_existing += 1;
-            $this->recordMemberImport($member, 'existing');
+            $this->recordMemberImport($existingMembership, 'existing');
 
         } else if( $member->wasRecentlyCreated ) {
             $this->fileImport->records_imported += 1;
-            $this->recordMemberImport($member, 'imported');
+            $newMembership = $this->makeModel($row, $member);
+            $this->recordMemberImport($newMembership, 'imported');
 
         } else if( !$member->wasRecentlyCreated ) {
             $this->fileImport->records_linked += 1;
-            $this->recordMemberImport($member, 'linked');
+            $newMembership = $this->makeModel($row, $member);
+            $this->recordMemberImport($newMembership, 'linked');
         }
 
         $this->fileImport->save();
 
-        return $existingMembership ?? $this->makeModel($row, $member);
+        return $existingMembership ?? $newMembership;
     }
 
     public function makeModel($row, $member) {
@@ -84,7 +87,7 @@ class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkRea
             'organisation_id' => $this->fileImport->organisation_id
         ])->first();
 
-        return new OrganisationMember([
+        return OrganisationMember::create([
             'organisation_id' => $this->fileImport->organisation_id,
             'organisation_member_category_id' => $category ? $category->id : $defaultCategory->id,
             'organisation_no' => $row['membership_id'],
@@ -129,21 +132,27 @@ class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkRea
         }
     }
 
-    public static function afterImport(AfterImport $event) {
-        $event->getConcernable()->fileImport->import_status = 'completed';
-        $event->getConcernable()->fileImport->save();
+    public function registerEvents(): array
+    {
+        return [
+            AfterImport::class => function(AfterImport $event) {
+                $this->fileImport->import_status = 'completed';
+                $this->fileImport->save();
+            },
+
+            ImportFailed::class => function(ImportFailed $event) {
+                $this->fileImport->import_status = 'failed';
+                $this->fileImport->save();
+                // $this->importedBy->notify(new ImportHasFailedNotification);
+            },
+        ];
     }
 
-    public static function importFailed(ImportFailed $event) {
-        $event->getConcernable()->fileImport->import_status = 'failed';
-        $event->getConcernable()->fileImport->save();
-    }
-
-    public function recordMemberImport(Member $member, string $importType) {
+    public function recordMemberImport(OrganisationMember $membership, string $importType) {
         return OrganisationMemberImport::create([
             'organisation_id' => $this->fileImport->organisation_id,
             'organisation_file_import_id' => $this->fileImport->id,
-            'member_id' => $member->id,
+            'organisation_member_id' => $membership->id,
             'import_type' => $importType
         ]);
     }
