@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -9,12 +9,22 @@ use App\Models\OrganisationMember;
 use Illuminate\Http\Request;
 use LaravelApiBase\Http\Controllers\ApiController;
 
+/**
+ * @group Member Accounts
+ */
 class MemberAccountController extends ApiController
 {
     public function __construct(MemberAccount $memberAccount) {
         parent::__construct($memberAccount);
     }
 
+    /**
+     * Get Organisations
+     *
+     * @urlParam id integer ID of member account. Example: 1
+     *
+     * @response 404 {"error" => "Member Account Not Found"}
+     */
     public function organisations(Request $request, int $member_account_id) {
 
         $memberAccount = MemberAccount::find($member_account_id);
@@ -24,13 +34,16 @@ class MemberAccountController extends ApiController
             return response()->json(['error' => 'Member Account Not Found'], 404);
         }
 
-        $organisationAccountOrgIds = OrganisationAccount::memberAccountOrganisationIds($memberAccount->id);
-        $organisationMemberOrgIds = OrganisationMember::memberOrganisationIds($memberAccount->member_id);
+        $organisationAccountOrgIds = OrganisationAccount::organisationIds($memberAccount->id);
+        $organisationMemberOrgIds = OrganisationMember::organisationIds($memberAccount->member_id);
 
         $uniqueIds = collect($organisationAccountOrgIds)->merge($organisationMemberOrgIds)->unique()->all();
 
         $organisations = Organisation::whereIn('id', $uniqueIds)->with([
-            'active_subscription.subscription_type', 'organisation_type'
+            'activeSubscription' => function($query) {
+                return $query->with(['subscriptionType', 'organisationInvoice.transactionType']);
+            },
+            'organisationType'
         ])->orderBy('name', 'asc')->paginate($limit);
 
         return $this->Resource::collection($organisations);

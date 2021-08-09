@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\SoftDeletesWithDeletedFlag;
 
-use Torzer\Awesome\Landlord\BelongsToTenants;
-
-class OrganisationInvoiceItem extends ApiModel  
+class OrganisationInvoiceItem extends ApiModel
 {
 
-    use BelongsToTenants;
+    use SoftDeletesWithDeletedFlag;
+
+    const DELETED_AT = 'deleted';
 
     /**
      * The database table used by the model.
@@ -45,11 +47,13 @@ class OrganisationInvoiceItem extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
-    public function organisation() {
+    public function organisation()
+    {
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisation_invoice() {
+    public function organisationInvoice()
+    {
         return $this->belongsTo(OrganisationInvoice::class);
     }
 }

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithActiveFlag;
 
-
-class Bank extends ApiModel  
+class Bank extends ApiModel
 {
 
-    
+    use SoftDeletesWithActiveFlag;
+
+    const DELETED_AT = 'deleted';
 
     /**
      * The database table used by the model.

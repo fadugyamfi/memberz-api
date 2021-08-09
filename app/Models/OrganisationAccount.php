@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithActiveFlag;
+use NunoMazer\Samehouse\BelongsToTenants;
 
-use Torzer\Awesome\Landlord\BelongsToTenants;
-
-class OrganisationAccount extends ApiModel  
+class OrganisationAccount extends ApiModel
 {
 
-    use BelongsToTenants;
+    use BelongsToTenants, SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.
@@ -50,20 +50,20 @@ class OrganisationAccount extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisation_role() {
+    public function organisationRole() {
         return $this->belongsTo(OrganisationRole::class);
     }
 
-    public function member_account() {
+    public function memberAccount() {
         return $this->belongsTo(MemberAccount::class);
     }
 
     public function scopeActive($query) {
-        $query->where('active', 1);
+        return $query->where('active', 1);
     }
 
-    public static function memberAccountOrganisationIds(int $member_account_id) {
-        return self::where('member_account_id', $member_account_id)->active()->get()->pluck('organisation_id')->all();
+    public function scopeOrganisationIds($query, int $member_account_id) {
+        return $query->where('member_account_id', $member_account_id)->active()->get()->pluck('organisation_id')->all();
     }
 
     /**
@@ -72,7 +72,13 @@ class OrganisationAccount extends ApiModel
     public static function createDefaultAccount(Organisation $organisation) {
         $defaultRole = OrganisationRole::firstOrCreate(
             ['organisation_id' => $organisation->id, 'name' => 'Administrator'],
-            ['name' => 'Administrator', 'admin_access' => 1, 'weekly_activity_update' => 1, 'birthday_updates' => 1, 'active' => 1]
+            [
+                'name' => 'Administrator',
+                'admin_access' => 1,
+                'weekly_activity_update' => 1,
+                'birthday_updates' => 1,
+                'active' => 1
+            ]
         );
 
         return self::create([

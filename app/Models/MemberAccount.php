@@ -2,21 +2,23 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use LaravelApiBase\Models\CommonFunctions;
-use LaravelApiBase\Models\CommonModel;
+use LaravelApiBase\Models\ApiModelBehavior;
+use LaravelApiBase\Models\ApiModelInterface;
 
-class MemberAccount extends Authenticatable implements CommonModel, JWTSubject
+class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSubject
 {
 
-    use Notifiable, CommonFunctions;
+    use Notifiable, ApiModelBehavior, SoftDeletesWithActiveFlag;
 
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';
+    const DELETED_AT = 'active';
 
     protected $table = 'member_accounts';
 
@@ -31,8 +33,8 @@ class MemberAccount extends Authenticatable implements CommonModel, JWTSubject
         return $this->belongsTo(Member::class);
     }
 
-    public function organisation_account() {
-        return $this->hasMany(OrganisationAccount::class);
+    public function organisationAccounts() {
+        return $this->hasMany(OrganisationAccount::class)->where('organisation_accounts.active', 1);
     }
 
     /**
@@ -52,7 +54,11 @@ class MemberAccount extends Authenticatable implements CommonModel, JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        return [
+            'username' => $this->username,
+            'member_id' => $this->member_id,
+            'organisation_ids' => $this->organisationAccounts()->get()->pluck('organisation_id')
+        ];
     }
 
     /**

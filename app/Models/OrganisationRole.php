@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithActiveFlag;
+use Spatie\Permission\Traits\HasPermissions;
+use NunoMazer\Samehouse\BelongsToTenants;
 
-use Torzer\Awesome\Landlord\BelongsToTenants;
-
-class OrganisationRole extends ApiModel  
+class OrganisationRole extends ApiModel
 {
 
-    use BelongsToTenants;
+    use BelongsToTenants, HasPermissions, SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.
@@ -36,7 +37,7 @@ class OrganisationRole extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['admin_access' => 'boolean', 'weekly_activity_update' => 'boolean', 'birthday_updates' => 'boolean'];
+    protected $casts = ['admin_access' => 'boolean', 'weekly_activity_update' => 'boolean', 'birthday_updates' => 'boolean', 'active' => 'boolean'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -48,5 +49,9 @@ class OrganisationRole extends ApiModel
 
     public function organisation() {
         return $this->belongsTo(Organisation::class);
+    }
+
+    public function organisationAccounts() {
+        return $this->hasMany(OrganisationAccount::class);
     }
 }

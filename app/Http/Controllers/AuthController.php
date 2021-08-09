@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\MemberAccount;
 use Illuminate\Http\Request;
-
+/**
+ * @group Auth
+ */
 class AuthController extends Controller
 {
     /**
@@ -21,10 +24,11 @@ class AuthController extends Controller
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse
+     * @unauthenticated
      */
-    public function login()
+    public function login(LoginRequest $request)
     {
-        $credentials = request(['username', 'password']);
+        $credentials = $request->only(['username', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
             return $this->oldLoginAttempt();
@@ -60,10 +64,8 @@ class AuthController extends Controller
     {
         $user = auth()->user();
         $memberAccount = MemberAccount::with([
-            'member.member_image' => function($q) {
-                $q->recent();
-            },
-            'organisation_account' => function($q) {
+            'member.profilePhoto',
+            'organisationAccounts' => function($q) {
                 $q->active()->with('organisation');
             }
         ])->find($user->id);

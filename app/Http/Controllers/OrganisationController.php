@@ -1,21 +1,43 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrganisationCreationRequest;
+use App\Http\Requests\OrganisationRequest;
+use App\Http\Resources\OrganisationResource;
 use App\Models\Organisation;
 use Illuminate\Http\Request;
-use LaravelApiBase\Http\Controllers\ApiController;
+use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
-class OrganisationController extends ApiController
+/**
+ * @group Organisations
+ */
+class OrganisationController extends Controller
 {
-    public function __construct(Organisation $organisation) {
-        parent::__construct($organisation);
-    } 
+    use ApiControllerBehavior {
+        store as apiStore;
+        update as apiUpdate;
+    }
 
-    public function store(Request $request)
+    public function __construct(Organisation $organisation)
     {
-        $copy = OrganisationCreationRequest::createFrom($request);
-        return parent::store($copy);
+        $this->setApiModel($organisation);
+        $this->setApiFormRequest(OrganisationRequest::class);
+        $this->setApiResource(OrganisationResource::class);
+    }
+
+    /**
+     * Create Organisation
+     */
+    public function store(OrganisationCreationRequest $request) {
+        return $this->apiStore($request);
+    }
+
+    /**
+     * Update Organisation
+     */
+    public function update(OrganisationRequest $request, $id)
+    {
+        return $this->apiUpdate($request, $id);
     }
 }

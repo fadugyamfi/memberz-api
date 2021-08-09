@@ -3,9 +3,9 @@
 namespace App\Models;
 
 
-use Torzer\Awesome\Landlord\BelongsToTenants;
+use NunoMazer\Samehouse\BelongsToTenants;
 
-class OrganisationFileImport extends ApiModel  
+class OrganisationFileImport extends ApiModel
 {
 
     use BelongsToTenants;
@@ -44,5 +44,14 @@ class OrganisationFileImport extends ApiModel
      * @var array
      */
     protected $dates = ['created', 'modified'];
+
+
+    public function member_account() {
+        return $this->belongsTo(MemberAccount::class);
+    }
+
+    public function organisation() {
+        return $this->belongsTo(Organisation::class);
+    }
 
 }

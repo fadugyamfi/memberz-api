@@ -2,13 +2,8 @@
 
 namespace App\Models;
 
-
-use Torzer\Awesome\Landlord\BelongsToTenants;
-
 class OrganisationSettingType extends ApiModel
 {
-
-    use BelongsToTenants;
 
     /**
      * The database table used by the model.
@@ -45,7 +40,7 @@ class OrganisationSettingType extends ApiModel
      */
     protected $dates = [];
 
-    public function organisation_setting() {
+    public function organisationSettings() {
         return $this->hasMany(OrganisationSetting::class);
     }
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Resources;
 
@@ -9,8 +9,8 @@ class MemberResource extends ApiResource {
     public function toArray($request)
     {
         $data = array_merge(parent::toArray($request), [
-            'profile_photo' => $this->profile_photo,
-            'member_account' => $this->member_account
+            'profile_photo' => $this->profilePhoto,
+            'member_account' => $this->memberAccount
         ]);
 
         return $data;

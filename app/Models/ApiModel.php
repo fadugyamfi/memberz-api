@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models;
 
@@ -8,4 +8,5 @@ class ApiModel extends BaseApiModel {
 
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';
+    const DELETED_AT = 'active';
 }
