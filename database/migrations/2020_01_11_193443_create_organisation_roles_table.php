@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 class CreateOrganisationRolesTable extends Migration {
 
@@ -25,6 +26,8 @@ class CreateOrganisationRolesTable extends Migration {
 			$table->dateTime('modified')->nullable();
 			$table->boolean('active')->nullable()->default(1);
 		});
+
+		DB::unprepared('ALTER TABLE `organisation_accounts` DROP PRIMARY KEY, ADD PRIMARY KEY (  `id` ,  `organisation_id` )');
 	}
 
 

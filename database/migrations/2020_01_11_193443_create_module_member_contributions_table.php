@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 class CreateModuleMemberContributionsTable extends Migration {
 
@@ -38,6 +39,8 @@ class CreateModuleMemberContributionsTable extends Migration {
 			$table->index(['organisation_id','description'], 'organisation_id_2');
 			$table->index(['organisation_id','created','module_contribution_type_id'], 'organisation_id_3');
 		});
+
+		DB::unprepared('ALTER TABLE `module_member_contributions` DROP PRIMARY KEY, ADD PRIMARY KEY (  `id` ,  `organisation_id` )');
 	}
 
 

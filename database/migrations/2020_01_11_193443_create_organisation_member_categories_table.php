@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 class CreateOrganisationMemberCategoriesTable extends Migration {
 
@@ -37,6 +38,8 @@ class CreateOrganisationMemberCategoriesTable extends Migration {
 			$table->boolean('active')->nullable()->default(1);
 			$table->unique(['organisation_id','slug'], 'slug');
 		});
+
+		DB::unprepared('ALTER TABLE `organisation_accounts` DROP PRIMARY KEY, ADD PRIMARY KEY (  `id` ,  `organisation_id` )');
 	}
 
 

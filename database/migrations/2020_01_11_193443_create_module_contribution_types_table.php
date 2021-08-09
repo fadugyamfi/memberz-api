@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 class CreateModuleContributionTypesTable extends Migration {
 
@@ -25,6 +26,8 @@ class CreateModuleContributionTypesTable extends Migration {
 			$table->boolean('system_generated')->nullable()->default(0);
 			$table->boolean('active')->nullable()->default(1);
 		});
+
+		DB::unprepared('ALTER TABLE `module_contribution_types` DROP PRIMARY KEY, ADD PRIMARY KEY (  `id` ,  `organisation_id` )');
 	}
 
 
