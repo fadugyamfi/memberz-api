@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 class CreateOrganisationAccountsTable extends Migration {
 
@@ -24,8 +25,9 @@ class CreateOrganisationAccountsTable extends Migration {
 			$table->boolean('weekly_updates')->nullable()->default(1);
 			$table->boolean('active')->nullable()->default(0);
 			$table->boolean('deleted')->nullable()->default(0);
-			$table->primary(['id','organisation_id']);
 		});
+
+		DB::unprepared('ALTER TABLE `organisation_accounts` DROP PRIMARY KEY, ADD PRIMARY KEY (  `id` ,  `organisation_id` )');
 	}
 
 

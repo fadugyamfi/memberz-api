@@ -14,9 +14,9 @@ class CreateUserRoleMenusTable extends Migration {
 	{
 		Schema::create('user_role_menus', function(Blueprint $table)
 		{
-			$table->integer('id', true);
-			$table->integer('user_role_id')->nullable()->index('user_role_fk');
-			$table->integer('menu_id')->nullable()->index('usr_menu_id')->comment('References the Manager Categories item');
+			$table->unsignedInteger('id', true);
+			$table->unsignedInteger('user_role_id')->nullable()->index('user_role_fk');
+			$table->unsignedInteger('menu_id')->nullable()->index('usr_menu_id')->comment('References the Manager Categories item');
 		});
 	}
 

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 class CreateModuleContributionExpensesTable extends Migration {
 
@@ -29,10 +30,11 @@ class CreateModuleContributionExpensesTable extends Migration {
 			$table->dateTime('modified')->nullable();
 			$table->boolean('active')->nullable()->default(1);
 			$table->index(['organisation_id','created','expense_type_id'], 'organisation_id_3');
-			$table->primary(['id','organisation_id']);
 			$table->index(['organisation_id','description'], 'organisation_id_2');
 			$table->index(['organisation_id','cheque_number'], 'cheque_number');
 		});
+
+		DB::unprepared('ALTER TABLE `module_contribution_expenses` DROP PRIMARY KEY, ADD PRIMARY KEY (  `id` ,  `organisation_id` )');
 	}
 
 

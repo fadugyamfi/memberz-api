@@ -14,7 +14,7 @@ class CreateUsersTable extends Migration {
 	{
 		Schema::create('users', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
 			$table->string('first_name', 50)->default('');
 			$table->string('last_name', 50)->default('');
 			$table->string('username', 50);
@@ -23,10 +23,10 @@ class CreateUsersTable extends Migration {
 			$table->string('email')->nullable();
 			$table->smallInteger('department_id')->nullable();
 			$table->enum('team', array('Alpha Team','Bravo Team','Charlie Team','Delta Team'))->nullable();
-			$table->integer('user_role_id')->nullable()->index('usr_role_fk');
+			$table->unsignedInteger('user_role_id')->nullable()->index('usr_role_fk');
 			$table->string('security_question', 200)->nullable();
 			$table->string('security_answer', 200)->nullable();
-			$table->dateTime('last_access_dt')->nullable()->default('0000-00-00 00:00:00');
+			$table->dateTime('last_access_dt')->nullable();
 			$table->boolean('active')->nullable()->default(0);
 		});
 	}
