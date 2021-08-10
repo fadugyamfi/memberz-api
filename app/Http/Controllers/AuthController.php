@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Models\Member;
 use App\Models\MemberAccount;
+use App\Models\User;
 use Illuminate\Http\Request;
 /**
  * @group Auth
@@ -35,6 +38,22 @@ class AuthController extends Controller
         }
 
         return $this->respondWithToken($token);
+    }
+
+    /**
+     * Register new user
+     */
+    public function register(RegisterRequest $request){
+        (new User())->store($request->only(['first_name', 'last_name', 'email', 'password']));
+
+        (new Member())->store($request);
+
+        if (! $token = auth()->attempt($request->only(['email', 'password']))) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        return $this->respondWithToken($token);
+
     }
 
     public function oldLoginAttempt()

@@ -35,4 +35,5 @@ class Member extends ApiModel
     public function name() {
         return $this->first_name . ' ' . $this->last_name;
     }
+
 }
