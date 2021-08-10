@@ -35,17 +35,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * Create new user
-     */
-    public function store(array $input) : User {
-        return self::create([
-            'first_name' => $input['first_name'],
-            'last_name' => $input['last_name'],
-            'email' => $input['email'],
-            'username' => strtolower(explode('@', $input['email'])[0]),
-            'password' => bcrypt($input['password'])
-        ]);
-    }
 }

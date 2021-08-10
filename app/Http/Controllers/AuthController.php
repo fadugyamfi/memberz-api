@@ -4,25 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Mail\VerificationEmail;
 use App\Models\Member;
 use App\Models\MemberAccount;
-use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
 /**
  * @group Auth
  */
 class AuthController extends Controller
 {
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login']]);
-    }
-
     /**
      * Get a JWT via given credentials.
      *
@@ -44,16 +35,35 @@ class AuthController extends Controller
      * Register new user
      */
     public function register(RegisterRequest $request){
-        (new User())->store($request->only(['first_name', 'last_name', 'email', 'password']));
+    
+        $member = (new Member())->store($request);
+        
+        $member_account_data = ['member_id' => $member->id, 'username' => $request->email, 'password' => $request->password];
+        
+        $member_account = (new MemberAccount)->createAccount($member_account_data);
 
-        (new Member())->store($request);
+        Mail::to($member_account->username)->send(new VerificationEmail($member_account->email_verification_token));
+        
+        return response()->json(['message' => 'Successfully created account']);
 
-        if (! $token = auth()->attempt($request->only(['email', 'password']))) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+    }
+
+    public function verifyEmail(string $token = null){
+        if ($token === null) {
+            return response()->json(['error' => 'Invalid login attempt'], 401);
         }
 
-        return $this->respondWithToken($token);
+        $member_account = MemberAccount::whereEmailVerificationToken($token)->first();
 
+        if (! $member_account) {
+            return response()->json(['error' => 'Invalid login attempt'], 401);
+        }
+
+        $member_account->email_verification_token = null;
+        $member_account->active = true;
+        $member_account->save();
+
+        return response()->json(['message' => 'Account creation verification successful']);
     }
 
     public function oldLoginAttempt()

@@ -28,10 +28,10 @@ class RegisterRequest extends ApiRequest
         return [
             'first_name' => 'required|min:3|max:30|string',
             'last_name' => 'required|min:3|max:30|string',
-            'email' => 'email|required|unique:users',
+            'email' => 'email|required|unique:members',
             'gender' => 'required|in:male,female',
             'dob' => 'required|date',
-            'mobile_number' => 'required|string|min:6|max:15',
+            'mobile_number' => 'required|string|min:6|max:15|unique:members',
             'password' => [
                 'required',
                 Password::min(8)->mixedCase()->letters()->numbers()->symbols()
