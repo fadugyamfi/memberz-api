@@ -12,26 +12,25 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
+ */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('login', 'AuthController@login');
-Route::post('register', 'AuthController@register');
-Route::get('verify/{token}', 'AuthController@verifyEmail');
-
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'auth'
+    'prefix' => 'auth',
 ], function ($router) {
+    Route::post('login', 'AuthController@login');
+    Route::post('register', 'AuthController@register');
+    Route::get('verify/{token}', 'AuthController@verifyEmail');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::get('me', 'AuthController@me');
 });
 
-Route::group(['middleware' => ['api'], 'prefix' => 'system'], function($router) {
+Route::group(['middleware' => ['api'], 'prefix' => 'system'], function ($router) {
     Route::post('database/migrate', 'Support\SystemController@migrate');
     Route::post('database/rollback', 'Support\SystemController@rollback');
     Route::post('database/seed', 'Support\SystemController@seed');

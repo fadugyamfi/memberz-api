@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Mail;
  */
 class AuthController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('api')->except(['login', 'register', 'verifyEmail']);
+    }
+
     /**
      * Get a JWT via given credentials.
      *
