@@ -17,7 +17,7 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        $this->middleware('api')->except(['login', 'register', 'verifyEmail']);
+        $this->middleware('auth:api')->except(['login', 'register', 'verifyEmail']);
     }
 
     /**
