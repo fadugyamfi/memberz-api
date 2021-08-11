@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use LaravelApiBase\Models\ApiModelBehavior;
 use LaravelApiBase\Models\ApiModelInterface;
-
+use Illuminate\Support\Str;
 class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSubject
 {
 
@@ -25,7 +25,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
-    protected $fillable = ['member_id', 'username', 'password', 'pass_salt', 'timezone', 'account_type', 'reset_requested', 'active', 'deleted'];
+    protected $fillable = ['member_id', 'username', 'password', 'pass_salt', 'timezone', 'account_type', 'reset_requested', 'active', 'deleted', 'email_verification_token'];
 
     protected $hidden = ['password', 'pass_salt'];
 
@@ -102,6 +102,16 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
             'username' => $member->email,
             'password' => Hash::make( rand(10000,99999) ),
             'active' => 1
+        ]);
+    }
+
+
+    public function createAccount(array $input): MemberAccount {
+       return self::create([
+            'member_id' => $input['member_id'],
+            'username' => $input['username'],
+            'password' => bcrypt($input['password']),
+            'email_verification_token' => Str::random(30)
         ]);
     }
 }
