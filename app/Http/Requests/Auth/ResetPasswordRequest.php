@@ -5,6 +5,11 @@ namespace App\Http\Requests\Auth;
 use LaravelApiBase\Http\Requests\ApiRequest;
 use Illuminate\Validation\Rules\Password;
 
+/**
+ * @bodyParam username string required User email
+ * @bodyParam token string required Password Reset Token
+ * @bodyParam password string required New User Password
+ */
 class ResetPasswordRequest extends ApiRequest
 {
 

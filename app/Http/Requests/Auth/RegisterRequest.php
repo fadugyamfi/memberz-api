@@ -5,6 +5,15 @@ namespace App\Http\Requests\Auth;
 use Illuminate\Validation\Rules\Password;
 use LaravelApiBase\Http\Requests\ApiRequest;
 
+/**
+ * @bodyParam first_name string required User First Name
+ * @bodyParam last_name string required User Last Name
+ * @bodyParam email string required user Email
+ * @bodyParam gender string required User Gender
+ * @bodyParam dob string required User Date of Birth
+ * @bodyParam mobile_number string required Mobile Number of User
+ * @bodyParam password string required User Password
+ */
 class RegisterRequest extends ApiRequest
 {
 

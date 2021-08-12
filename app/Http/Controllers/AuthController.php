@@ -3,22 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Requests\Auth\RegisterRequest;
-use App\Mail\VerificationEmail;
-use App\Models\Member;
 use App\Models\MemberAccount;
-use Illuminate\Support\Facades\Mail;
 
 /**
  * @group Auth
  */
 class AuthController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth:api')->except(['login', 'register', 'verifyEmail']);
-    }
 
     /**
      * Get a JWT via given credentials.
@@ -35,41 +26,6 @@ class AuthController extends Controller
         }
 
         return $this->respondWithToken($token);
-    }
-
-    /**
-     * Register new user
-     */
-    public function register(RegisterRequest $request){
-    
-        $member = (new Member())->store($request);
-        
-        $member_account_data = ['member_id' => $member->id, 'username' => $request->email, 'password' => $request->password];
-        
-        $member_account = (new MemberAccount)->createAccount($member_account_data);
-
-        Mail::to($member_account->username)->send(new VerificationEmail($member_account->email_verification_token));
-        
-        return response()->json(['message' => 'Successfully created account']);
-
-    }
-
-    public function verifyEmail(string $token = null){
-        if ($token === null) {
-            return response()->json(['error' => 'Invalid login attempt'], 401);
-        }
-
-        $member_account = MemberAccount::whereEmailVerificationToken($token)->first();
-
-        if (! $member_account) {
-            return response()->json(['error' => 'Invalid login attempt'], 401);
-        }
-
-        $member_account->email_verification_token = null;
-        $member_account->active = true;
-        $member_account->save();
-
-        return response()->json(['message' => 'Account creation verification successful']);
     }
 
     public function oldLoginAttempt()

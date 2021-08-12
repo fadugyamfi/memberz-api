@@ -22,15 +22,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('auth')->group(function () {
     Route::post('forgot-password', 'ForgotPasswordController');
     Route::post('reset-password', 'ResetPasswordController');
+    Route::post('register', 'RegisterController');
+    Route::post('login', 'AuthController@login');
+    Route::get('verify/{token}', 'VerifyEmailController');
 });
 
+/** Authenticated auth routes */
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth',
 ], function ($router) {
-    Route::post('login', 'AuthController@login');
-    Route::post('register', 'AuthController@register');
-    Route::get('verify/{token}', 'AuthController@verifyEmail');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::get('me', 'AuthController@me');

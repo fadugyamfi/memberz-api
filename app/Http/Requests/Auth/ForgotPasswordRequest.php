@@ -4,6 +4,9 @@ namespace App\Http\Requests\Auth;
 
 use LaravelApiBase\Http\Requests\ApiRequest;
 
+/**
+ * @bodyParam username email required The email for the password reset link
+ */
 class ForgotPasswordRequest extends ApiRequest
 {
 
