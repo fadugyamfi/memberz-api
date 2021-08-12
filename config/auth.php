@@ -68,7 +68,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\MemberAccount::class,
+            'model' => App\Models\User::class,
         ],
         'member_account' => [
             'driver' => 'eloquent',
@@ -98,7 +98,7 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'users',
+            'provider' => 'member_account',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
