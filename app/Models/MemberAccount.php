@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use App\Mail\ResetPassword;
 use App\Traits\SoftDeletesWithActiveFlag;
-use Illuminate\Notifications\Notifiable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use LaravelApiBase\Models\ApiModelBehavior;
 use LaravelApiBase\Models\ApiModelInterface;
-use Illuminate\Support\Str;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
 class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSubject
 {
 
@@ -29,11 +32,13 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
 
     protected $hidden = ['password', 'pass_salt'];
 
-    public function member() {
+    public function member()
+    {
         return $this->belongsTo(Member::class);
     }
 
-    public function organisationAccounts() {
+    public function organisationAccounts()
+    {
         return $this->hasMany(OrganisationAccount::class)->where('organisation_accounts.active', 1);
     }
 
@@ -57,7 +62,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         return [
             'username' => $this->username,
             'member_id' => $this->member_id,
-            'organisation_ids' => $this->organisationAccounts()->get()->pluck('organisation_id')
+            'organisation_ids' => $this->organisationAccounts()->get()->pluck('organisation_id'),
         ];
     }
 
@@ -74,25 +79,27 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     /**
      * Validate if a string is an MD5 Hash
      */
-    function isValidMd5($md5 = '')
+    public function isValidMd5($md5 = '')
     {
         return preg_match('/^[a-f0-9]{32}$/', $md5);
     }
 
-    public function scopeActive($query) {
+    public function scopeActive($query)
+    {
         return $query->where('active', 1);
     }
 
-    public static function createTempAccount(int $member_id) {
+    public static function createTempAccount(int $member_id)
+    {
         $existingAccount = self::where('member_id', $member_id)->active()->first();
 
-        if( $existingAccount ) {
+        if ($existingAccount) {
             return $existingAccount;
         }
 
         $member = Member::find($member_id);
 
-        if( !$member ) {
+        if (!$member) {
             Log::error("Could not create temporary member account. Member profile does not exist for member_id {$member_id}");
             return false;
         }
@@ -100,18 +107,30 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         return self::create([
             'member_id' => $member_id,
             'username' => $member->email,
-            'password' => Hash::make( rand(10000,99999) ),
-            'active' => 1
+            'password' => Hash::make(rand(10000, 99999)),
+            'active' => 1,
         ]);
     }
 
-
-    public function createAccount(array $input): MemberAccount {
-       return self::create([
+    /** Create new member accont */
+    public function createAccount(array $input): MemberAccount
+    {
+        return self::create([
             'member_id' => $input['member_id'],
             'username' => $input['username'],
             'password' => bcrypt($input['password']),
-            'email_verification_token' => Str::random(30)
+            'email_verification_token' => Str::random(30),
         ]);
     }
+
+    public function getEmailForPasswordReset()
+    {
+        return $this->username;
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        Mail::to($this->username)->send(new ResetPassword($token));
+    }
+
 }

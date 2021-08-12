@@ -18,6 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/** Unauthenticated auth routes */
+Route::prefix('auth')->group(function () {
+    Route::post('forgot-password', 'ForgotPasswordController');
+});
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth',
