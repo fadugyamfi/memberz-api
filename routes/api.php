@@ -20,7 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 /** Unauthenticated auth routes */
 Route::prefix('auth')->group(function () {
-    Route::post('forgot-password', 'ForgotPasswordController@store');
+    Route::post('forgot-password', 'ForgotPasswordController');
 });
 
 Route::group([
