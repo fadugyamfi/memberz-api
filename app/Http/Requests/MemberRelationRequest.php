@@ -11,7 +11,8 @@ use LaravelApiBase\Http\Requests\ApiRequest;
  * @bodyParam dob string required Date of birth of member relation
  * @bodyParam is_alive boolean  Member relation alive or dead
  * @bodyParam active boolean Member relation active or inactive
- * @bodyParam member_relation_id Parent id of a member relation
+ * @bodyParam relation_member_id number Linked to member id of members table
+ * @bodyParam member_relation_type_id number required Id of member relation type
  */
 class MemberRelationRequest extends ApiRequest
 {
@@ -39,9 +40,9 @@ class MemberRelationRequest extends ApiRequest
             'gender' => 'required|in:male,female',
             'dob' => 'required|date',
             'is_alive' => 'nullable|boolean',
-            'member_relation_id' => 'nullable|number|exists:member_relations,id',
+            'relation_member_id' => 'nullable|number|exists:members,id',
             'active' => 'nullable|boolean',
-            'relation' => 'required|string|in:children,parent,spouses',
+            'member_relation_type_id' => 'number|required|exists:member_relation_types',
         ];
     }
 }
