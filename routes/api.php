@@ -55,6 +55,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('currencies', 'CurrencyController');
     Route::apiResource('members', 'MemberController');
     Route::apiResource('member_accounts', 'MemberAccountController');
+    Route::apiResource('member_relation_types', 'MemberRelationTypeController');
+    Route::apiResource('member_relations', 'MemberRelationController');
     Route::apiResource('permissions', 'PermissionController');
     Route::apiResource('organisations', 'OrganisationController');
     Route::apiResource('organisation_types', 'OrganisationTypeController');
