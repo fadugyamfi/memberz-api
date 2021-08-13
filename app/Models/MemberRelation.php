@@ -10,6 +10,6 @@ class MemberRelation extends ApiModel
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
-    protected $fillable = ['member_id', 'name', 'gender', 'dob', 'is_alive', 'relation', 'active'];
+    protected $fillable = ['member_id', 'name', 'gender', 'dob', 'member_relation_id', 'is_alive', 'relation', 'active'];
 
 }

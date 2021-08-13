@@ -20,6 +20,7 @@ class CreateMemberRelationsTable extends Migration
 			$table->string('gender', 10)->nullable();
 			$table->date('dob')->nullable();
 			$table->boolean('is_alive')->nullable()->default(1);
+            $table->integer('member_relation_id')->unsigned()->nullable();
 			$table->enum('relation', ['children', 'parent', 'spouses'])->index();
 			$table->dateTime('created')->nullable();
 			$table->dateTime('modified')->nullable();
