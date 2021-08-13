@@ -22,8 +22,6 @@ class CreateMemberRelationsTable extends Migration
 			$table->boolean('is_alive')->nullable()->default(1);
             $table->integer('relation_member_id')->unsigned()->nullable();
 			$table->foreignId('member_relation_type_id');
-			$table->dateTime('created')->nullable();
-			$table->dateTime('modified')->nullable();
 			$table->boolean('active')->nullable()->default(1);
             $table->timestamps();
         });

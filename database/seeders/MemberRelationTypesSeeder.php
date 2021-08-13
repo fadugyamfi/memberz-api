@@ -16,7 +16,7 @@ class MemberRelationTypesSeeder extends Seeder
     {
         DB::table('member_relation_types')->delete();
         DB::table('member_relation_types')->insert([
-            ['id' => 1, 'name' => 'Children'],
+            ['id' => 1, 'name' => 'Child'],
             ['id' => 2, 'name' => 'Parent'],
             ['id' => 3, 'name' => 'Spouse']
         ]);
