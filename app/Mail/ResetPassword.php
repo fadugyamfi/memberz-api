@@ -36,6 +36,6 @@ class ResetPassword extends Mailable
     public function build()
     {
         return $this->view('mails.reset_password')
-                    ->with(['url' => config('app.web_url').'/password-reset/'. $this->token]);
+                    ->with(['url' => config('app.web_url').'/password-reset/token?='. $this->token]);
     }
 }
