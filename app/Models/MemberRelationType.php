@@ -12,6 +12,10 @@ class MemberRelationType extends ApiModel
     protected $guarded = ['id'];
     protected $fillable = ['name'];
 
+    public const PARENT = 2;
+    public const CHILD = 1;
+    public const SPOUSE = 3;
+
     public function member_relations(){
         return $this->hasMany(MemberRelation::class);
     }
