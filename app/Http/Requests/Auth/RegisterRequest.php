@@ -40,7 +40,7 @@ class RegisterRequest extends ApiRequest
             'email' => 'email|required|unique:members',
             'gender' => 'required|in:male,female',
             'dob' => 'required|date',
-            'mobile_number' => 'required|string|min:6|max:15|unique:members',
+            'mobile_number' => 'required|string|min:6|max:25|unique:members',
             'password' => [
                 'required',
                 Password::min(8)->mixedCase()->letters()->numbers()->symbols()

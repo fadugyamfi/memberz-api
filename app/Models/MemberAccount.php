@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Mail\ResetPassword;
+use App\Mail\PasswordReset;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -130,7 +130,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
 
     public function sendPasswordResetNotification($token)
     {
-        Mail::to($this->username)->send(new ResetPassword($token));
+        Mail::to($this->username)->send(new PasswordReset($token));
     }
 
 }

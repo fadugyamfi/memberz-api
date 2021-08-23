@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Mail\NewUserRegistered;
 use App\Models\Member;
 use App\Models\MemberAccount;
-use App\Mail\VerificationEmail;
 use Illuminate\Support\Facades\Mail;
 
 /**
@@ -26,7 +26,7 @@ class RegisterController extends Controller
         
         $member_account = (new MemberAccount)->createAccount($member_account_data);
 
-        Mail::to($member_account->username)->send(new VerificationEmail($member_account->email_verification_token));
+        Mail::to($member_account->username)->send(new NewUserRegistered($member_account->email_verification_token));
         
         return response()->json(['message' => 'Successfully created account']);
     }
