@@ -6,7 +6,7 @@ use App\Models\MemberRelationType;
 use LaravelApiBase\Http\Controllers\ApiController;
 
 /**
- * @group Member Profiles
+ * @group Member Relation Types
  */
 class MemberRelationTypeController extends ApiController
 {

@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Scopes\LatestRecordsScope;
 use App\Traits\SoftDeletesWithDeletedFlag;
+use App\Scopes\SmsAccountScope;
 
 class SmsAccountTopup extends ApiModel
 {
@@ -45,6 +47,17 @@ class SmsAccountTopup extends ApiModel
      * @var array
      */
     protected $dates = ['created', 'modified'];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new SmsAccountScope);
+        static::addGlobalScope(new LatestRecordsScope);
+    }
 
 
     public function organisationInvoice() {
