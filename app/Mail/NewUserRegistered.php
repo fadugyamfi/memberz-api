@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class VerificationEmail extends Mailable
+class NewUserRegistered extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,7 +30,6 @@ class VerificationEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.verify_email')
-                    ->with(['url' => config('app.web_url').'/'. $this->token]);
+        return $this->markdown('emails.users.created', ['url' => config('app.web_url').'/'. $this->token]);
     }
 }

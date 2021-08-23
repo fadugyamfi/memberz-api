@@ -7,16 +7,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ResetPassword extends Mailable
+class PasswordReset extends Mailable
 {
     use Queueable, SerializesModels;
+
     /**
      * The password reset token.
      *
      * @var string
      */
     public $token;
-
 
     /**
      * Create a new message instance.
@@ -35,7 +35,6 @@ class ResetPassword extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.reset_password')
-                    ->with(['url' => config('app.web_url').'/password-reset/token?='. $this->token]);
+        return $this->markdown('emails.users.passwordreset', ['url' => config('app.web_url') . '/password-reset/token?=' . $this->token]);
     }
 }
