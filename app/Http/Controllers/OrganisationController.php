@@ -6,7 +6,6 @@ use App\Http\Requests\OrganisationCreationRequest;
 use App\Http\Requests\OrganisationRequest;
 use App\Http\Resources\OrganisationResource;
 use App\Models\Organisation;
-use Illuminate\Http\Request;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
 /**
