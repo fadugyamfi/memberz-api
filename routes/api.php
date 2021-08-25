@@ -99,5 +99,6 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('sms_broadcast_lists', 'SmsBroadcastListController');
 
         Route::apiResource('contribution_types', 'ContributionTypeController');
+        Route::apiResource('contributions', 'MemberContributionController');
     });
 });
