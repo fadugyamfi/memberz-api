@@ -4,8 +4,7 @@ namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
-
-class ModuleContributionType extends ApiModel  
+class ModuleContributionReceipt extends ApiModel  
 {
     use BelongsToTenants, SoftDeletesWithActiveFlag;
 
@@ -14,14 +13,14 @@ class ModuleContributionType extends ApiModel
      *
      * @var string
      */
-    protected $table = 'module_contribution_types';
+    protected $table = 'module_contribution_receipts';
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['organisation_id', 'name', 'description', 'member_required', 'fix_amount_per_period', 'currency_id', 'fixed_amount', 'system_generated', 'active'];
+    protected $fillable = ['organisation_id', 'receipt_no', 'receipt_dt', 'organisation_account_id', 'created', 'modified', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -35,22 +34,22 @@ class ModuleContributionType extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['fix_amount_per_period' => 'boolean', 'system_generated' => 'boolean', 'active' => 'boolean'];
+    protected $casts = ['active' => 'boolean'];
 
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = [];
-
+    protected $dates = ['receipt_dt', 'created', 'modified'];
+    
 
     public function organisation() {
         return $this->belongsTo(Organisation::class);
     }
 
-    public function currency(){
-        return $this->belongsTo(Currency::class);
+    public function organisation_account(){
+        return $this->belongsTo(OrganisationAccount::class);
     }
 
     public function scopeActive($query) {
