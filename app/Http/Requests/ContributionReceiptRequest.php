@@ -11,7 +11,7 @@ use LaravelApiBase\Http\Requests\ApiRequest;
  * @bodyParam receipt_dt date Receipt date
  * @bodyParam active boolean Active
  */
-class ModuleContributionReceiptRequest extends ApiRequest
+class ContributionReceiptRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.

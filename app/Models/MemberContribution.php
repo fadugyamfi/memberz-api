@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
 
-class ModuleMemberContribution extends ApiModel  
+class MemberContribution extends ApiModel  
 {
     use BelongsToTenants, SoftDeletesWithActiveFlag;
 
@@ -53,15 +53,15 @@ class ModuleMemberContribution extends ApiModel
     }
 
     public function contribution_type(){
-        return $this->belongsTo(ModuleContributionType::class);
+        return $this->belongsTo(ContributionType::class, 'module_contribution_type_id');
     }
 
     public function organisation_file_import(){
-        return $this->belongsTo(OrganisationFileImport::class);
+        return $this->belongsTo(OrganisationFileImport::class, );
     }
 
     public function contribution_receipt(){
-        return $this->belongsTo(ModuleContributionReceipt::class);
+        return $this->belongsTo(ContributionReceipt::class, 'module_contribution_receipt_id');
     }
 
     public function bank(){
@@ -69,7 +69,7 @@ class ModuleMemberContribution extends ApiModel
     }
 
     public function contribution_payment_type(){
-        return;
+        return $this->belongsTo(ContributionPaymentType::class, 'module_contribution_payment_type_id');
     }
 
     public function scopeActive($query) {

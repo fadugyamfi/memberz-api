@@ -22,7 +22,7 @@ use LaravelApiBase\Http\Requests\ApiRequest;
  * @bodyParam amount numeric Amount
  * @bodyParam active boolean Active
  */
-class ModuleMemberContributionRequest extends ApiRequest
+class MemberContributionRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -42,13 +42,13 @@ class ModuleMemberContributionRequest extends ApiRequest
     public function rules()
     {
         return [
-            'organisation_id' => 'nullable|numeric|exists:organisation,id',
+            'organisation_id' => 'required|numeric|exists:organisation,id',
             'organisation_member_id' => 'nullable|numeric|exists:organisation_member,id',
             'module_contribution_type_id' => 'nullable|numeric|exists:module_contribution_types,id',
             'module_contribution_receipt_id' => 'nullable|numeric|exists:module_contribution_receipts,id',
             'module_contribution_payment_type_id' => 'nullable|numeric|exists:module_contribution_payment_types,id',
             'bank_id' => 'nullable|numeric|exists:banks,id',
-            'currency_id' => 'nullable|numeric|exists:currencies,id',
+            'currency_id' => 'required|numeric|exists:currencies,id',
             'organisation_file_import_id' => 'nullable|numeric|exists:organisation_file_imports,id',
             'description' => 'nullable|string|max:150',
             'week' => 'nullable|numeric',
@@ -56,7 +56,7 @@ class ModuleMemberContributionRequest extends ApiRequest
             'year' => 'nullable|numeric',
             'cheque_status' => 'nullable|in:Cleared, Not Cleared',
             'cheque_number' => 'nullable|string|max:11',
-            'amount' => 'nullable|numeric',
+            'amount' => 'required|numeric',
             'active' => 'nullable|boolean'
         ];
     }

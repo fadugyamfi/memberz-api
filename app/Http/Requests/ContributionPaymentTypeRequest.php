@@ -9,7 +9,7 @@ use LaravelApiBase\Http\Requests\ApiRequest;
  * @bodyParam payment_platform_id numeric Payment Platform id
  * @bodyParam active boolean Active
  */
-class ModuleContributionPaymentTypeRequest extends ApiRequest
+class ContributionPaymentTypeRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.

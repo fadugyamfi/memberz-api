@@ -15,7 +15,7 @@ use LaravelApiBase\Http\Requests\ApiRequest;
  * @bodyParam system_generated boolean System Generated
  * @bodyParam active boolean Active
  */
-class ModuleContributionTypeRequest extends ApiRequest
+class ContributionTypeRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.

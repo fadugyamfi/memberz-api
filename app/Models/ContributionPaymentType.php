@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class ModuleContributionPaymentType extends ApiModel  
+class ContributionPaymentType extends ApiModel  
 {
     /**
      * The database table used by the model.
