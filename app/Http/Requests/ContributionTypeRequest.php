@@ -15,7 +15,7 @@ use LaravelApiBase\Http\Requests\ApiRequest;
  * @bodyParam system_generated boolean System Generated
  * @bodyParam active boolean Active
  */
-class ModuleContributionTypeRequest extends ApiRequest
+class ContributionTypeRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -35,7 +35,7 @@ class ModuleContributionTypeRequest extends ApiRequest
     public function rules()
     {
         return [
-            'organisation_id' => 'required|numeric',
+            'organisation_id' => 'required|numeric|exists:organisation',
             'name' => 'nullable|string|max:50',
             'member_required' => 'nullable|in:Required, Not Required',
             'description' => 'nullable|string|max:200',

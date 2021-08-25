@@ -1,14 +1,9 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class ModuleContributionPaymentType extends ApiModel  
+class ContributionPaymentType extends ApiModel  
 {
-
-    
-
     /**
      * The database table used by the model.
      *
@@ -43,5 +38,13 @@ class ModuleContributionPaymentType extends ApiModel
      * @var array
      */
     protected $dates = [];
+
+    public function payment_platform(){
+        return $this->belongsTo(PaymentPlatform::class);
+    }
+
+    public function scopeActive($query) {
+        return $query->where('active', 1);
+    }
 
 }

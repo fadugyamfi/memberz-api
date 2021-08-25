@@ -1,13 +1,13 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\SoftDeletesWithActiveFlag;
+use NunoMazer\Samehouse\BelongsToTenants;
 
-class ModuleContributionType extends ApiModel  
+class ContributionType extends ApiModel  
 {
-
-    
+    use BelongsToTenants, SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.
@@ -43,5 +43,18 @@ class ModuleContributionType extends ApiModel
      * @var array
      */
     protected $dates = [];
+
+
+    public function organisation() {
+        return $this->belongsTo(Organisation::class);
+    }
+
+    public function currency(){
+        return $this->belongsTo(Currency::class);
+    }
+
+    public function scopeActive($query) {
+        return $query->where('active', 1);
+    }
 
 }

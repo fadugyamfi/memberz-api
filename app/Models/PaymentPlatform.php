@@ -1,10 +1,8 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class ModuleMemberContribution extends ApiModel  
+class PaymentPlatform extends ApiModel  
 {
 
     
@@ -14,14 +12,14 @@ class ModuleMemberContribution extends ApiModel
      *
      * @var string
      */
-    protected $table = 'module_member_contributions';
+    protected $table = 'payment_platforms';
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['organisation_id', 'organisation_member_id', 'module_contribution_type_id', 'module_contribution_receipt_id', 'description', 'week', 'month', 'year', 'module_contribution_payment_type_id', 'cheque_status', 'cheque_number', 'bank_id', 'amount', 'currency_id', 'organisation_file_import_id', 'created', 'modified', 'active'];
+    protected $fillable = ['name', 'description', 'method_name', 'config_keys', 'logo', 'instructions', 'created', 'modified', 'deleted'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -35,7 +33,7 @@ class ModuleMemberContribution extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['active' => 'boolean'];
+    protected $casts = ['deleted' => 'boolean'];
 
     /**
      * The attributes that should be mutated to dates.

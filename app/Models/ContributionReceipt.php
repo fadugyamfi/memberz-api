@@ -1,13 +1,12 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class ModuleContributionReceipt extends ApiModel  
+use App\Traits\SoftDeletesWithActiveFlag;
+use NunoMazer\Samehouse\BelongsToTenants;
+class ContributionReceipt extends ApiModel  
 {
-
-    
+    use BelongsToTenants, SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.
@@ -43,5 +42,18 @@ class ModuleContributionReceipt extends ApiModel
      * @var array
      */
     protected $dates = ['receipt_dt', 'created', 'modified'];
+    
+
+    public function organisation() {
+        return $this->belongsTo(Organisation::class);
+    }
+
+    public function organisation_account(){
+        return $this->belongsTo(OrganisationAccount::class);
+    }
+
+    public function scopeActive($query) {
+        return $query->where('active', 1);
+    }
 
 }
