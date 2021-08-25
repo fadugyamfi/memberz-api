@@ -100,5 +100,6 @@ Route::middleware(['auth:api'])->group(function () {
 
         Route::apiResource('contribution_types', 'ContributionTypeController');
         Route::apiResource('contributions', 'MemberContributionController');
+        Route::apiResource('contribution_receipts', 'ContributionReceiptController');
     });
 });
