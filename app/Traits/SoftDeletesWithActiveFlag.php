@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use App\Scopes\SoftDeletedByActiveFlagScope;
 use App\Scopes\SoftDeletedByFlagScope;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
