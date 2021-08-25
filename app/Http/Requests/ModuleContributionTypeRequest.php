@@ -35,7 +35,7 @@ class ModuleContributionTypeRequest extends ApiRequest
     public function rules()
     {
         return [
-            'organisation_id' => 'required|numeric',
+            'organisation_id' => 'required|numeric|exists:organisation',
             'name' => 'nullable|string|max:50',
             'member_required' => 'nullable|in:Required, Not Required',
             'description' => 'nullable|string|max:200',
