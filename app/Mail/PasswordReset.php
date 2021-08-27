@@ -35,6 +35,6 @@ class PasswordReset extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.users.passwordreset', ['url' => config('app.web_url') . '/password-reset/token?=' . $this->token]);
+        return $this->markdown('emails.users.passwordreset', ['url' => config('app.web_url') . '/password-reset?token=' . $this->token]);
     }
 }
