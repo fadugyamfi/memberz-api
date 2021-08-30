@@ -39,7 +39,7 @@ return [
             /*
              * Match only routes whose paths match this pattern (use * as a wildcard to match any characters). Example: 'users/*'.
              */
-            'prefixes' => ['*'],
+            'prefixes' => ['api/*'],
             /*
              * [Dingo router only] Match only routes registered under this version. Wildcards are not supported.
              */
@@ -62,7 +62,11 @@ return [
             /*
              * Additional headers to be added to the example requests
              */
-            'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'X-Tenant-ID' => env('SCRIBE_TENANT_ID')
+            ],
             /*
              * If no @response or @transformer declarations are found for the route,
              * Scribe will try to get a sample response by attempting an API call.

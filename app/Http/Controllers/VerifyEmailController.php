@@ -10,9 +10,19 @@ use App\Models\MemberAccount;
 class VerifyEmailController extends Controller
 {
     /**
+     * Verify Account
+     *
      * Verify Newly Created User Account
-     * 
+     *
      * This endpoint provides email verification for newly created user accounts
+     *
+     * @response 401 {
+     *    "message": "Invalid login attempt"
+     * }
+     *
+     * @response {
+     *    "message": "Account creation verification successful"
+     * }
      */
     public function __invoke(string $token = null)
     {

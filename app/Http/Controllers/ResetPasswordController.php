@@ -5,8 +5,22 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 use Illuminate\Support\Facades\Password;
 
+/**
+ * @group Auth
+ */
 class ResetPasswordController extends Controller
 {
+    /**
+     * Reset Password
+     *
+     * @response {
+     *   "message": "Password reset successful"
+     * }
+     *
+     * @response 401 {
+     *   "message": "Error resetting password"
+     * }
+     */
     public function __invoke(ResetPasswordRequest $request)
     {
         $status = Password::reset(

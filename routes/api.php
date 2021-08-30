@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 /** Unauthenticated auth routes */
 Route::prefix('auth')->group(function () {
     Route::post('forgot-password', 'ForgotPasswordController');
@@ -37,14 +33,15 @@ Route::group([
     Route::get('me', 'AuthController@me');
 });
 
-Route::group(['middleware' => ['api'], 'prefix' => 'system'], function ($router) {
-    Route::post('database/migrate', 'Support\SystemController@migrate');
-    Route::post('database/rollback', 'Support\SystemController@rollback');
-    Route::post('database/seed', 'Support\SystemController@seed');
-    Route::post('cache/routes', 'Support\SystemController@cacheRoutes');
-    Route::post('cache/config', 'Support\SystemController@cacheConfig');
-    Route::post('cache/clear', 'Support\SystemController@cacheClear');
-});
+// System management routes. Disabled temporarily
+// Route::group(['middleware' => ['api'], 'prefix' => 'system'], function ($router) {
+//     Route::post('database/migrate', 'Support\SystemController@migrate');
+//     Route::post('database/rollback', 'Support\SystemController@rollback');
+//     Route::post('database/seed', 'Support\SystemController@seed');
+//     Route::post('cache/routes', 'Support\SystemController@cacheRoutes');
+//     Route::post('cache/config', 'Support\SystemController@cacheConfig');
+//     Route::post('cache/clear', 'Support\SystemController@cacheClear');
+// });
 
 Route::middleware(['auth:api'])->group(function () {
 
@@ -99,7 +96,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('sms_broadcast_lists', 'SmsBroadcastListController');
 
         Route::apiResource('contribution_types', 'ContributionTypeController');
-        Route::apiResource('contributions', 'MemberContributionController');
+        Route::apiResource('contributions', 'ContributionController');
         Route::apiResource('contribution_receipts', 'ContributionReceiptController');
     });
 });

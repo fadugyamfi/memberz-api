@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Password;
 class ForgotPasswordController extends Controller
 {
     /**
-     * Send a reset password link to user email
-     * 
-     * This endpoint allows user to reset their forgotten password.
+     * Forgot Password
+     *
+     * Send a reset password link to user email. This endpoint allows user to reset their forgotten password.
      */
     public function __invoke(ForgotPasswordRequest $request)
     {

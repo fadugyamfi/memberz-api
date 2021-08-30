@@ -5,8 +5,8 @@ namespace App\Http\Requests\Auth;
 use LaravelApiBase\Http\Requests\ApiRequest;
 
 /**
- * @bodyParam username email required User Email
- * @bodyParam password string required User Password
+ * @bodyParam username email required User Email. Example: john@mail.com
+ * @bodyParam password string required User Password. Example: mypassword01
  */
 class LoginRequest extends ApiRequest
 {
