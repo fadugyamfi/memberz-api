@@ -21,6 +21,8 @@ use LaravelApiBase\Http\Requests\ApiRequest;
  * @bodyParam cheque_number string Cheque Number
  * @bodyParam amount numeric Amount
  * @bodyParam active boolean Active
+ * @bodyParam receipt_no string required Receipt no
+ * @bodyParam receipt_dt date required  Receipt date
  */
 class MemberContributionRequest extends ApiRequest
 {
@@ -57,6 +59,8 @@ class MemberContributionRequest extends ApiRequest
             'cheque_status' => 'nullable|in:Cleared, Not Cleared',
             'cheque_number' => 'nullable|string|max:11',
             'amount' => 'required|numeric',
+            'receipt_no' => 'required|string|max:50',
+            'receipt_dt' => 'required|date',
             'active' => 'nullable|boolean'
         ];
     }
