@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use LaravelApiBase\Http\Requests\ApiRequest;
 
 /**
@@ -34,15 +35,29 @@ class MemberRelationRequest extends ApiRequest
      */
     public function rules()
     {
+        $self = $this;
+
         return [
-            'member_id' => 'required|number|exists:members,id',
+            'member_id' => 'required|numeric|exists:members,id',
             'name' => 'required|min:3|max:30|string',
             'gender' => 'required|in:male,female',
             'dob' => 'required|date',
             'is_alive' => 'nullable|boolean',
-            'relation_member_id' => 'nullable|number|exists:members,id',
             'active' => 'nullable|boolean',
-            'member_relation_type_id' => 'number|required|exists:member_relation_types',
+            'member_relation_type_id' => ['numeric', 'required', 'exists:member_relation_types,id'],
+            'relation_member_id' => [
+                'nullable', 'numeric', 'exists:members,id',
+                Rule::unique('member_relations')->ignore($this->id)->where(function($query) use($self) {
+                    $query->where('member_id', $self->member_id);
+                }),
+            ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            "relation_member_id.unique" => __("Member and Relative already associated")
         ];
     }
 }
