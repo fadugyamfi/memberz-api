@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\ContributionReceiptSetting;
 use LaravelApiBase\Http\Requests\ApiRequest;
 
 /**
@@ -24,6 +25,29 @@ class ContributionReceiptRequest extends ApiRequest
     }
 
     /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        if (! $this->organisation_id){
+            return;
+        }
+
+        $org_receipt_set = ContributionReceiptSetting::organisationReceipt($this->organisation_id)->first();
+
+        if (!$org_receipt_set || ($org_receipt_set && $org_receipt_set->receipt_mode == 'manual')){
+            return;
+        }
+
+        $this->merge([
+            'receipt_no' => $org_receipt_set->prefix.''.++$org_receipt_set->receipt_counter.''.$org_receipt_set->postfix,
+            'receipt_dt' => now()
+        ]);
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -33,9 +57,9 @@ class ContributionReceiptRequest extends ApiRequest
         return [
             'organisation_id' => 'required|numeric|exists:organisations,id',
             'organisation_account_id' => 'required|numeric|exists:organisation_accounts',
-            'receipt_no' => 'nullable|string|max:50',
-            'receipt_dt' => 'nullable|date',
-            'active' => 'nullable|boolean'
+            'receipt_no' => 'required|string|max:50',
+            'receipt_dt' => 'required|date',
+            'active' => 'nullable|boolean',
         ];
     }
 }

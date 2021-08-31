@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-
-
 class SystemSetting extends ApiModel  
 {
 
