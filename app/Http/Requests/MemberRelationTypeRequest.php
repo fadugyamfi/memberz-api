@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests;
 
 use LaravelApiBase\Http\Requests\ApiRequest;
 
 /**
- * @bodyParam name string required Name of member relation type
+ * @bodyParam name string required Name of member relation type. Example: Parent
  */
 class MemberRelationTypeRequest extends ApiRequest
 {

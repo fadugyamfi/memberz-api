@@ -6,7 +6,7 @@ use App\Models\ContributionReceipt;
 use LaravelApiBase\Http\Controllers\ApiController;
 
 /**
- * @group Contribution
+ * @group Contribution Receipts
  */
 class ContributionReceiptController extends ApiController
 {

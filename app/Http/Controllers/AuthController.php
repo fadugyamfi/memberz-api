@@ -12,6 +12,8 @@ class AuthController extends Controller
 {
 
     /**
+     * Login
+     *
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -47,6 +49,8 @@ class AuthController extends Controller
     }
 
     /**
+     * User Profile
+     *
      * Get the authenticated User.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -65,6 +69,8 @@ class AuthController extends Controller
     }
 
     /**
+     * Logout
+     *
      * Log the user out (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse
