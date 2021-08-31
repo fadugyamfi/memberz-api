@@ -6,7 +6,7 @@ use App\Models\ContributionType;
 use LaravelApiBase\Http\Controllers\ApiController;
 
 /**
- * @group Contribution Types
+ * @group Contributions
  */
 class ContributionTypeController extends ApiController
 {

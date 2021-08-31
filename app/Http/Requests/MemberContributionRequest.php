@@ -44,8 +44,8 @@ class MemberContributionRequest extends ApiRequest
     public function rules()
     {
         return [
-            'organisation_id' => 'required|numeric|exists:organisation,id',
-            'organisation_member_id' => 'nullable|numeric|exists:organisation_member,id',
+            'organisation_id' => 'required|numeric|exists:organisations,id',
+            'organisation_member_id' => 'nullable|numeric|exists:organisation_members,id',
             'module_contribution_type_id' => 'nullable|numeric|exists:module_contribution_types,id',
             'module_contribution_receipt_id' => 'nullable|numeric|exists:module_contribution_receipts,id',
             'module_contribution_payment_type_id' => 'nullable|numeric|exists:module_contribution_payment_types,id',
