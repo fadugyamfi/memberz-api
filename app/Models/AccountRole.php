@@ -1,10 +1,8 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class MemberCategorySetting extends ApiModel  
+class AccountRole extends ApiModel  
 {
 
     
@@ -14,14 +12,14 @@ class MemberCategorySetting extends ApiModel
      *
      * @var string
      */
-    protected $table = 'member_category_settings';
+    protected $table = 'account_roles';
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'description', 'type', 'default', 'position', 'created', 'modified', 'active'];
+    protected $fillable = ['name', 'description', 'created', 'modified', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
-class ModuleContributionReceiptSetting extends ApiModel  
+class ContributionReceiptSetting extends ApiModel  
 {
 
     
@@ -43,5 +43,13 @@ class ModuleContributionReceiptSetting extends ApiModel
      * @var array
      */
     protected $dates = ['created', 'modified'];
+
+    public function organisation() {
+        return $this->belongsTo(Organisation::class);
+    }
+
+    public function scopeOrganisationReceipt(Builder $query, int $organisation_id) {
+        return $query->where('organisation_id', $organisation_id);
+    }
 
 }

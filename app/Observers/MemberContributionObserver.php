@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\ContributionReceipt;
 use App\Models\MemberContribution;
+use App\Models\OrganisationAccount;
 
 class MemberContributionObserver
 {
@@ -23,9 +24,9 @@ class MemberContributionObserver
     private function createReceipt(MemberContribution $memberContribution){
         return ContributionReceipt::create([
             'organisation_id' => $memberContribution->organisation_id,
-            'organisation_account_id' => 1, // Get proper id appropriately
-            'receipt_no' => $memberContribution->receipt_no,
-            'receipt_dt' => $memberContribution->receipt_dt,
+            'organisation_account_id' => OrganisationAccount::where('member_account_id', auth()->id)->first()->id,
+            'receipt_no' => request()->receipt_no,
+            'receipt_dt' => request()->receipt_dt,
             'active' => true
         ]);
     }
