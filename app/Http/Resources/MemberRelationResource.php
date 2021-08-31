@@ -21,8 +21,8 @@ class MemberRelationResource extends JsonResource
             'relative' => new MemberResource($this->relative),
             'member_relation_type' => $this->member_relation_type,
             'relative_organisation_member_id' => $this->when($this->relation_member_id != null, function() use($self) {
-                $orgMember = OrganisationMember::where('member_id', $self->relation_member_id)->first();
-                return $orgMember ? $orgMember->id : null;
+                $membership = OrganisationMember::where('member_id', $self->relation_member_id)->first();
+                return $membership ? $membership->id : null;
             })
         ]);
     }

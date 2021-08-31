@@ -35,7 +35,7 @@ class ResetPasswordController extends Controller
         );
 
         if ($status !== Password::PASSWORD_RESET){
-            return response()->json(['error' => 'Error resetting password.'], 401);
+            return response()->json(['message' => 'Error resetting password.'], 401);
         }
 
         return response()->json(['message' => 'Password reset successful.']);

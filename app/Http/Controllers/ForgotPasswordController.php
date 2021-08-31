@@ -19,8 +19,12 @@ class ForgotPasswordController extends Controller
     {
         $status = Password::sendResetLink($request->only('username'));
 
+        if( $status === Password::INVALID_USER ) {
+            return response()->json(['message' => 'Invalid user / email specified'], 404);
+        }
+
         if ($status !== Password::RESET_LINK_SENT) {
-            return response()->json(['error' => 'Error sending forgot password reset link'], 401);
+            return response()->json(['message' => 'Error sending forgot password reset link'], 401);
         }
 
         return response()->json(['message' => 'Forgot password reset link sent']);

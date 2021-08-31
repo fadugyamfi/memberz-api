@@ -27,13 +27,13 @@ class VerifyEmailController extends Controller
     public function __invoke(string $token = null)
     {
         if ($token === null) {
-            return response()->json(['error' => 'Invalid login attempt'], 401);
+            return response()->json(['message' => 'Invalid login attempt'], 401);
         }
 
         $member_account = MemberAccount::whereEmailVerificationToken($token)->first();
 
         if (! $member_account) {
-            return response()->json(['error' => 'Invalid login attempt'], 401);
+            return response()->json(['message' => 'Invalid login attempt'], 401);
         }
 
         $member_account->email_verification_token = null;
