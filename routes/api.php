@@ -102,4 +102,3 @@ Route::middleware(['auth:api'])->group(function () {
     });
 });
 
-Route::apiResource('contribution_receipt_settings', 'ContributionReceiptSettingController');
