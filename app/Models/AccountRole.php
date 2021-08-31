@@ -1,10 +1,8 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class MemberSpouse extends ApiModel  
+class AccountRole extends ApiModel  
 {
 
     
@@ -14,14 +12,14 @@ class MemberSpouse extends ApiModel
      *
      * @var string
      */
-    protected $table = 'member_spouses';
+    protected $table = 'account_roles';
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['member_id', 'name', 'gender', 'dob', 'is_alive', 'spouse_member_id', 'created', 'modified', 'active'];
+    protected $fillable = ['name', 'description', 'created', 'modified', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -35,13 +33,13 @@ class MemberSpouse extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['is_alive' => 'boolean'];
+    protected $casts = [];
 
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = ['dob', 'created', 'modified'];
+    protected $dates = ['created', 'modified'];
 
 }

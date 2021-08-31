@@ -1,10 +1,8 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class MemberCategorySetting extends ApiModel  
+class AuthApp extends ApiModel  
 {
 
     
@@ -14,14 +12,14 @@ class MemberCategorySetting extends ApiModel
      *
      * @var string
      */
-    protected $table = 'member_category_settings';
+    protected $table = 'auth_apps';
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'description', 'type', 'default', 'position', 'created', 'modified', 'active'];
+    protected $fillable = ['app_id', 'app_key', 'name', 'description', 'organisation_id', 'all_access', 'created', 'modified', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -35,7 +33,7 @@ class MemberCategorySetting extends ApiModel
      *
      * @var array
      */
-    protected $casts = [];
+    protected $casts = ['all_access' => 'boolean'];
 
     /**
      * The attributes that should be mutated to dates.
