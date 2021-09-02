@@ -87,6 +87,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('organisation_groups', 'OrganisationGroupController');
         Route::apiResource('organisation_group_types', 'OrganisationGroupTypeController');
         Route::apiResource('organisation_group_leaders', 'OrganisationGroupLeaderController');
+        Route::apiResource('organisation_member_groups', 'OrganisationMemberGroupController');
 
         Route::apiResource('sms_accounts', 'SmsAccountController');
         Route::apiResource('sms_account_messages', 'SmsAccountMessageController');
@@ -101,4 +102,3 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('contribution_receipt_settings', 'ContributionReceiptSettingController');
     });
 });
-

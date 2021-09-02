@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use NunoMazer\Samehouse\BelongsToTenants;
 
-class ContributionReceiptSetting extends ApiModel  
+class ContributionReceiptSetting extends ApiModel
 {
 
-    
+    use BelongsToTenants;
+
 
     /**
      * The database table used by the model.

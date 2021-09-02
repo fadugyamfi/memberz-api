@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
 
-class MemberContribution extends ApiModel  
+class MemberContribution extends ApiModel
 {
     use BelongsToTenants, SoftDeletesWithActiveFlag;
 
@@ -57,7 +57,7 @@ class MemberContribution extends ApiModel
     }
 
     public function organisation_file_import(){
-        return $this->belongsTo(OrganisationFileImport::class, );
+        return $this->belongsTo(OrganisationFileImport::class);
     }
 
     public function contribution_receipt(){
