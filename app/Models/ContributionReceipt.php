@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
-class ContributionReceipt extends ApiModel  
+class ContributionReceipt extends ApiModel
 {
     use BelongsToTenants, SoftDeletesWithActiveFlag;
 
@@ -42,7 +42,7 @@ class ContributionReceipt extends ApiModel
      * @var array
      */
     protected $dates = ['receipt_dt', 'created', 'modified'];
-    
+
 
     public function organisation() {
         return $this->belongsTo(Organisation::class);
@@ -56,4 +56,7 @@ class ContributionReceipt extends ApiModel
         return $query->where('active', 1);
     }
 
+    public function contributions() {
+        return $this->hasMany(MemberContribution::class, 'module_contribution_receipt_id');
+    }
 }
