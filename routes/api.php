@@ -102,3 +102,6 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('contribution_receipt_settings', 'ContributionReceiptSettingController');
     });
 });
+
+// Allow for SSE notifications subscription
+Route::get('notifications/subscribe-unread/{member_id}', 'NotificationController@subscribeUnread');
