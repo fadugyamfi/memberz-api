@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-class CreateNotificationParamsTable extends Migration {
+class CreateMemberAccountNotificationParamsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,10 @@ class CreateNotificationParamsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('notification_params', function(Blueprint $table)
+		Schema::create('member_account_notification_params', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->foreignId('notification_id')->nullable();
+			$table->integer('member_account_notification_id')->unsigned()->nullable()->index('member_account_notification_id');
 			$table->string('key')->nullable();
 			$table->string('value')->nullable();
 			$table->dateTime('created')->nullable();
@@ -32,7 +32,7 @@ class CreateNotificationParamsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('notification_params');
+		Schema::drop('member_account_notification_params');
 	}
 
 }
