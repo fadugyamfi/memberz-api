@@ -40,8 +40,8 @@ class MemberRelationRequest extends ApiRequest
         return [
             'member_id' => 'required|numeric|exists:members,id',
             'name' => 'required|min:3|max:30|string',
-            'gender' => 'required|in:male,female',
-            'dob' => 'required|date',
+            'gender' => 'nullable|in:male,female',
+            'dob' => 'nullable|date',
             'is_alive' => 'nullable|boolean',
             'active' => 'nullable|boolean',
             'member_relation_type_id' => ['numeric', 'required', 'exists:member_relation_types,id'],
