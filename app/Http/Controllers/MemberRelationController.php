@@ -40,8 +40,8 @@ class MemberRelationController extends Controller
      * @apiResourceModel App\Models\MemberRelation
      * @apiResource App\Http\Resources\MemberRelationResource
      */
-    public function update(MemberRelationRequest $request)
+    public function update(MemberRelationRequest $request, $id)
     {
-        return $this->apiUpdate($request);
+        return $this->apiUpdate($request, $id);
     }
 }

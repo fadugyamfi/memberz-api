@@ -72,6 +72,10 @@ class MemberContribution extends ApiModel
         return $this->belongsTo(ContributionPaymentType::class, 'module_contribution_payment_type_id');
     }
 
+    public function currency() {
+        return $this->belongsTo(Currency::class);
+    }
+
     public function scopeActive($query) {
         return $query->where('active', 1);
     }
