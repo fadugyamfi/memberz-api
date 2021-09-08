@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,6 +62,12 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('system_setting_category', 'SystemSettingCategoryController');
     Route::apiResource('transaction_types', 'TransactionTypeController');
 
+
+    Route::post('notifications/{id}/mark_read', 'NotificationController@markRead');
+    Route::post('notifications/mark_all_read', 'NotificationController@markAllRead');
+    Route::get('notifications/unread', 'NotificationController@unread');
+    Route::get('notifications', 'NotificationController@index');
+
     // User must belong to a valid organisation to access the following routes
     Route::middleware('multi-tenant')->group(function () {
         Route::get('organisations/{id}/memberships/statistics', 'OrganisationMemberController@statistics');
@@ -100,8 +105,9 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('contributions', 'ContributionController');
         Route::apiResource('contribution_receipts', 'ContributionReceiptController');
         Route::apiResource('contribution_receipt_settings', 'ContributionReceiptSettingController');
+
     });
 });
 
 // Allow for SSE notifications subscription
-Route::get('notifications/subscribe-unread/{member_id}', 'NotificationController@subscribeUnread');
+Route::get('notifications/subscribe/{member_id}', 'NotificationController@subscribe');

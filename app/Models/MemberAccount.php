@@ -133,4 +133,8 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         Mail::to($this->username)->send(new PasswordReset($token));
     }
 
+    public function unsentNotifications() {
+        return $this->unreadNotifications()->where('sent', 0);
+    }
+
 }
