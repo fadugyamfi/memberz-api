@@ -1,0 +1,84 @@
+<?php
+namespace App\Http\Controllers;
+
+use App\Models\MemberAccount;
+use App\Models\Notification;
+use Illuminate\Http\Request;
+use LaravelApiBase\Http\Controllers\ApiController;
+
+class NotificationController extends ApiController
+{
+
+    public function __construct(Notification $notification) {
+        parent::__construct($notification);
+    }
+
+    /**
+     * Subscribe To Notifications
+     * 
+     * Subscribe to Server Sent Events (SSEs) for real time notification of new notification
+     * messages that come through for the logged in user
+     */
+    public function subscribe(Request $request, $member_account_id) {
+
+        return response()->stream(function() use($member_account_id, $request) {
+
+            $user = MemberAccount::find($member_account_id);
+            $data = $user->unsentNotifications()->get();
+
+            
+                if (!empty($data)) {
+                    echo "retry: 60000\n\n"; // no retry would default to 3 seconds.
+                    echo 'data: ' . json_encode($data) . "\n\n";
+                    ob_flush();
+                    flush();
+
+                    /* update the table rows as sent */
+                    Notification::whereIn('id', $data->pluck('id')->all())->update(['sent' => 1]);    
+                }
+        }, 200, [
+            'Access-Control-Allow-Origin' => $request->headers->get('origin'),
+            'Access-Control-Expose-Headers' => '*',
+            'Access-Control-Allow-Credentials' => 'true',
+            'Content-Type' => 'text/event-stream',
+            'X-Accel-Buffering' => 'no',
+            'Cache-Control' => 'no-cache',
+        ]);
+    }
+
+    /**
+     * Mark As Read
+     * 
+     * Mark a specific notification as read
+     */
+    public function markRead(Request $request, $id) {
+        $notification = $request->user()->unreadNotifications()->where('id', $id)->first();
+
+        if( $notification ) {
+            $notification->markAsRead();
+
+            return response()->json(['message' => 'Notification marked as read']);
+        }
+
+        return response()->json(['message' => 'Notification not found or already marked read'], 200);
+    }
+
+    /**
+     * Mark All Read
+     * 
+     * Mark all unread notifications as read
+     */
+    public function markAllRead(Request $request) {
+        $request->user()->unreadNotifications->markAsRead();
+
+        return response()->json(['message' => 'Notifications marked as read']);
+    }
+
+    public function unread(Request $request) {
+        $limit = $request->limit ?? 10;
+        $notifications = $request->user()->unreadNotifications()->paginate($limit);
+
+        return $this->Resource::collection($notifications);
+    }
+
+}

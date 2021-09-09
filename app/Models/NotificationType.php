@@ -1,8 +1,6 @@
 <?php
 
-namespace App\GenModels;
-
-use Illuminate\Database\Eloquent\Model;
+namespace App\Models;
 
 class NotificationType extends ApiModel  
 {

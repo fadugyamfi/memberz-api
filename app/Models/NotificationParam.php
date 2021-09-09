@@ -1,10 +1,10 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
-class MemberAccountNotificationParam extends ApiModel  
+class NotificationParam extends ApiModel  
 {
 
     
@@ -21,7 +21,7 @@ class MemberAccountNotificationParam extends ApiModel
      *
      * @var array
      */
-    protected $fillable = ['member_account_notification_id', 'key', 'value', 'created', 'modified', 'active'];
+    protected $fillable = ['notification_id', 'key', 'value', 'created', 'modified', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -43,5 +43,14 @@ class MemberAccountNotificationParam extends ApiModel
      * @var array
      */
     protected $dates = ['created', 'modified'];
+
+
+    public function scopeActive(Builder $query) {
+        $query->where('active', 1);
+    }
+
+    public function notification(){
+        return $this->belongsTo(Notification::class);
+    }
 
 }
