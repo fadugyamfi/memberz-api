@@ -4,12 +4,9 @@ namespace App\Observers;
 
 use App\Models\Organisation;
 use App\Models\OrganisationAccount;
-use App\Models\OrganisationInvoice;
 use App\Models\OrganisationMember;
 use App\Models\OrganisationMemberCategory;
-use App\Models\OrganisationSubscription;
 use App\Services\SubscriptionManagementService;
-use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 
 class OrganisationObserver

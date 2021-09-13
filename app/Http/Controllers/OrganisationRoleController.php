@@ -31,7 +31,7 @@ class OrganisationRoleController extends ApiController
      * Sync Permissions
      */
     public function syncPermissions(Request $request, $id) {
-        $role = $this->Model::where('id', $id)->withCount(['organisationAccount'])->first();
+        $role = $this->Model::where('id', $id)->withCount(['organisationAccounts'])->first();
         $role->syncPermissions($request->input('permissions'));
 
         return new $this->Resource($role);
