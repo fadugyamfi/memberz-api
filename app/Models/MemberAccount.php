@@ -19,8 +19,6 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
 
     use Notifiable, ApiModelBehavior, SoftDeletesWithActiveFlag;
 
-    const CREATED_AT = 'created';
-    const UPDATED_AT = 'modified';
     const DELETED_AT = 'active';
 
     protected $table = 'member_accounts';

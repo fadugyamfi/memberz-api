@@ -4,10 +4,8 @@ namespace App\Observers;
 
 use App\Models\Organisation;
 use App\Models\OrganisationAccount;
-use App\Models\OrganisationInvoice;
 use App\Models\OrganisationMember;
 use App\Models\OrganisationMemberCategory;
-use App\Models\OrganisationSubscription;
 use App\Services\SubscriptionManagementService;
 use Illuminate\Support\Str;
 
@@ -23,6 +21,7 @@ class OrganisationObserver
     public function creating(Organisation $organisation)
     {
         $organisation->generateSlug();
+        $organisation->uuid = Str::uuid();
         $organisation->active = 1;
     }
 

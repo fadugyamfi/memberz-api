@@ -23,7 +23,8 @@ class CreateMemberRelationsTable extends Migration
             $table->integer('relation_member_id')->unsigned()->nullable();
 			$table->foreignId('member_relation_type_id');
 			$table->boolean('active')->nullable()->default(1);
-            $table->timestamps();
+            $table->timestamp('created')->nullable();
+            $table->timestamp('modified')->nullable()->useCurrent();
         });
     }
 

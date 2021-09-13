@@ -16,7 +16,8 @@ class CreateMemberRelationTypes extends Migration
         Schema::create('member_relation_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamps();
+            $table->timestamp('created')->nullable();
+            $table->timestamp('modified')->nullable()->useCurrent();
         });
     }
 
