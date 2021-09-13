@@ -5,7 +5,7 @@ namespace App\Observers;
 use App\Models\MemberAccount;
 use App\Models\OrganisationAccount;
 use App\Models\OrganisationRole;
-use App\Notifications\OrganisationRoleAdminUserChanged;
+use App\Notifications\OrganisationAdminRoleChanged;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -48,7 +48,7 @@ class OrganisationAccountObserver
 
     private function sendAdminUserRoleChangedNotification(OrganisationAccount $organisationAccount){
        $member_account = MemberAccount::find($organisationAccount->member_account_id);
-       $member_account->notify(new OrganisationRoleAdminUserChanged($organisationAccount->organisation_role_id, $organisationAccount->organisation_id));
+       $member_account->notify(new OrganisationAdminRoleChanged($organisationAccount->organisation_role_id, $organisationAccount->organisation_id));
     }
 
     private function isAdminRole(int $organisation_role_id): bool {

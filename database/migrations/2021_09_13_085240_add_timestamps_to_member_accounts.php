@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RenameCreatedAndModifiedToCreatedAtAndUpdatedAt extends Migration
+class AddTimestampsToMemberAccounts extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class RenameCreatedAndModifiedToCreatedAtAndUpdatedAt extends Migration
     public function up()
     {
         Schema::table('member_accounts', function (Blueprint $table) {
-            $table->renameColumn('created', 'created_at');
-            $table->renameColumn('modified', 'updated_at');
+            $table->timestamps();
         });
     }
 
@@ -27,8 +26,7 @@ class RenameCreatedAndModifiedToCreatedAtAndUpdatedAt extends Migration
     public function down()
     {
         Schema::table('member_accounts', function (Blueprint $table) {
-            $table->renameColumn('created_at', 'created');
-            $table->renameColumn('updated_at', 'modified');
+            $table->dropColumn(['created_at', 'updated_at']);
         });
     }
 }

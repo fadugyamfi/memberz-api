@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Channels;
 
 use Illuminate\Notifications\Notification;
 

@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Channels\MemberzDbNotification;
 use App\Models\NotificationType;
 use App\Models\Organisation;
 use App\Models\OrganisationRole;
@@ -11,7 +12,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
 
-class OrganisationRoleAdminUserChanged extends Notification
+class OrganisationAdminRoleChanged extends Notification
 {
     use Queueable;
 
@@ -58,11 +59,24 @@ class OrganisationRoleAdminUserChanged extends Notification
     {
         $organisation = Organisation::find($this->organisation_id)->name;
         $role = OrganisationRole::find($this->role_id)->name;
+        $notification_type = NotificationType::whereName('organisation_account_role_changed')->first();
+
+        $message = $notification_type->template;
+
+        $replace_words_arr = [
+            '{member_name}' =>  auth()->user()->username,
+            '{org_name}' => $organisation,
+            '{role_name}' => $role
+        ];
+
+        foreach($replace_words_arr as $key => $value){
+            $message = str_ireplace($key, $value, $message);
+        }
 
         return [
-            'message' => "Your acount organisation role for the organisation, {$organisation}, has been changed by Administrator to {$role}",
+            'message' => __($message),
             'organisation_id' => $this->organisation_id,
-            'notification_type_id' => NotificationType::whereName('organisation_account_role_changed')->first()->id,
+            'notification_type_id' => $notification_type->id,
         ];
     }
 
