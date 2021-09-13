@@ -15,7 +15,9 @@ class OrganisationMemberGroupResource extends JsonResource
     public function toArray($request)
     {
         return parent::toArray($request, [
-            'organisation_member' => new OrganisationMemberResource($this->organisationMember)
+            'organisation_member' => new OrganisationMemberResource($this->organisationMember),
+            'organisation_group' => $this->organisationGroup,
+            'organisation_group_type' => $this->organisationGroup->organisationGroupType
         ]);
     }
 }

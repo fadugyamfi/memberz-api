@@ -7,7 +7,7 @@ use App\Models\OrganisationAccount;
 use App\Models\OrganisationMember;
 use App\Models\OrganisationMemberCategory;
 use App\Services\SubscriptionManagementService;
-use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 
 class OrganisationObserver
 {
@@ -21,7 +21,7 @@ class OrganisationObserver
     public function creating(Organisation $organisation)
     {
         $organisation->generateSlug();
-        $organisation->uuid = Str::uuid();
+        $organisation->uuid = Uuid::uuid4();
         $organisation->active = 1;
     }
 
