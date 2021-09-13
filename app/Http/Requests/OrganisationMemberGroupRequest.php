@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\OrganisationGroup;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use LaravelApiBase\Http\Requests\ApiFormRequest;
 
 class OrganisationMemberGroupRequest extends FormRequest implements ApiFormRequest
@@ -14,7 +16,7 @@ class OrganisationMemberGroupRequest extends FormRequest implements ApiFormReque
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,10 +26,19 @@ class OrganisationMemberGroupRequest extends FormRequest implements ApiFormReque
      */
     public function rules()
     {
+        // TODO: Add multi-select limitation validation
+
         return [
             'organisation_id' => 'required|numeric',
             'organisation_member_id' => 'required|numeric|exists:organisation_members,id',
-            'organisation_group_id' => 'required|numeric|exists:organisation_groups,id'
+            'organisation_group_id' => [
+                'required', 'numeric',
+                Rule::exists('organisation_groups', 'id'),
+                Rule::unique('organisation_member_groups')
+                    ->ignore($this->id)
+                    ->where('organisation_member_id', $this->organisation_member_id)
+                    ->where('active', 1)
+            ]
         ];
     }
 
