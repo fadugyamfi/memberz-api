@@ -139,7 +139,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'id' => 7,
                 'name' => 'organisation_account_role_changed',
                 'url' => '/{org_slug}/organisation/account/activate',
-                'template' => "{member_name} changed your role in {org_name} to {role_name}.",
+                'template' => '{member_name} changed your role in {org_name} to {role_name}.',
                 'groupable' => 0,
                 'source_type' => 'organisation_id',
                 'target_type' => 'organisation_account_id',
