@@ -20,6 +20,10 @@ class Member extends ApiModel
         return $this->hasMany(OrganisationMember::class);
     }
 
+    public function memberships() {
+        return $this->hasMany(OrganisationMember::class);
+    }
+
     public function memberImages() {
         return $this->hasMany(MemberImage::class);
     }

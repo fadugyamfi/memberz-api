@@ -28,7 +28,7 @@ class MultiTenant
                 return abort(403, "Invalid Tenant ID header value");
             }
 
-            $organisation_ids = JWTAuth::parseToken()->getPayload()->get('organisation_ids');
+            $organisation_ids = auth()->user()->getOrganisationIds();
             $organisation = Organisation::where('uuid', $tenantId)->first();
 
             if( !$organisation || !collect($organisation_ids)->contains($organisation->id) ) {

@@ -40,6 +40,17 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         return $this->hasMany(OrganisationAccount::class)->where('organisation_accounts.active', 1);
     }
 
+    public function memberships() {
+        return $this->member->memberships();
+    }
+
+    public function getOrganisationIds() {
+        $accountIds = $this->organisationAccounts()->get()->pluck('organisation_id');
+        $membershipIds = $this->memberships()->select('organisation_id')->get()->pluck('organisation_id');
+
+        return collect($accountIds)->merge($membershipIds)->unique()->values();
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
@@ -60,7 +71,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         return [
             'username' => $this->username,
             'member_id' => $this->member_id,
-            'organisation_ids' => $this->organisationAccounts()->get()->pluck('organisation_id'),
+            'organisation_ids' => $this->getOrganisationIds(),
         ];
     }
 
