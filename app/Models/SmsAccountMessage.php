@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
+use Illuminate\Http\Request;
 
 class SmsAccountMessage extends ApiModel
 {
@@ -62,5 +63,27 @@ class SmsAccountMessage extends ApiModel
         $this->sent = $sentFlag;
         $this->sent_at = date('Y-m-d H:i:s');
         $this->save();
+    }
+
+    public function buildSearchParams(Request $request, $builder)
+    {
+        $builder = parent::buildSearchParams($request, $builder);
+
+        if( $request->sent_flag != null ) {
+            switch($request->sent_flag) {
+                case 1:
+                    $builder->where('sent', 1);
+                    break;
+                case -1:
+                    $builder->where('sent', 0)->where('sent_status', 'LIKE', '%Failed%');
+                    break;
+                case 0:
+                    $builder->where('sent', 0)->whereNull('sent_status');
+                    break;
+            }
+        }
+
+
+        return $builder;
     }
 }
