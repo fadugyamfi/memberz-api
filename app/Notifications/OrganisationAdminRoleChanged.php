@@ -75,6 +75,7 @@ class OrganisationAdminRoleChanged extends Notification
 
         return [
             'message' => __($message),
+            'title' => __($notification_type->email_subject),
             'organisation_id' => $this->organisation_id,
             'notification_type_id' => $notification_type->id,
         ];

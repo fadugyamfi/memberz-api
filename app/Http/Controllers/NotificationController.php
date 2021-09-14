@@ -24,18 +24,21 @@ class NotificationController extends ApiController
         return response()->stream(function() use($member_account_id, $request) {
 
             $user = MemberAccount::find($member_account_id);
+            $data = null;
             $data = $user->unsentNotifications()->get();
 
-            
-                if (!empty($data)) {
-                    echo "retry: 60000\n\n"; // no retry would default to 3 seconds.
-                    echo 'data: ' . json_encode($data) . "\n\n";
-                    ob_flush();
-                    flush();
+            if (! $data){
+                return;
+            }
 
-                    /* update the table rows as sent */
-                    Notification::whereIn('id', $data->pluck('id')->all())->update(['sent' => 1]);    
-                }
+            echo "retry: 60000\n\n"; // no retry would default to 3 seconds.
+            echo 'data: ' . json_encode($data) . "\n\n";
+            ob_flush();
+            flush();
+
+            /* update the table rows as sent */
+            Notification::whereIn('id', $data->pluck('id')->all())->update(['sent' => 1]);    
+            
         }, 200, [
             'Access-Control-Allow-Origin' => $request->headers->get('origin'),
             'Access-Control-Expose-Headers' => '*',
