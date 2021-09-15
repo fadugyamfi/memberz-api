@@ -53,12 +53,13 @@ class OrganisationAdminRoleChanged extends BaseMemberzNotification
         $organisation = Organisation::find($this->organisation_id)->name;
         $role = OrganisationRole::find($this->role_id)->name;
         $notification_type = NotificationType::whereName('organisation_account_role_changed')->first();
+        $this->notification_type_id = $notification_type->id;
 
         $this->message = $notification_type->template;
         $this->title = $notification_type->email_subject;
 
         $this->replace_words_arr = [
-            '{member_name}' =>  auth()->user()->username,
+            '{member_name}' =>  $this->getNotifiaBy(),
             '{org_name}' => $organisation,
             '{role_name}' => $role
         ];

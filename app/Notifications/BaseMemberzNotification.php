@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Channels\MemberzDbNotification;
+use App\Models\MemberAccount;
 use Illuminate\Notifications\Notification;
 
 abstract class BaseMemberzNotification extends Notification
@@ -48,6 +49,11 @@ abstract class BaseMemberzNotification extends Notification
             'organisation_id' => $this->organisation_id,
             'notification_type_id' => $this->notification_type_id,
         ];
+    }
+
+    public function getNotifiaBy(){
+        $auth_member = MemberAccount::find(auth()->user()->id);
+        return $auth_member->member->first_name. ' '. $auth_member->member->last_name;
     }
 
     public function toDatabase($notifiable) {
