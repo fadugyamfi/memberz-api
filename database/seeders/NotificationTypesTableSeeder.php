@@ -145,7 +145,7 @@ class NotificationTypesTableSeeder extends Seeder
                 'target_type' => 'organisation_account_id',
                 'org_admin_only' => 0,
                 'send_email' => 0,
-                'email_subject' => 'Admin Role Changed',
+                'email_subject' => 'Organisation Account Role Changed',
                 'send_push_notification' => 0,
                 'icon' => 'fa fa-info-circle text-info',
                 'org_login_required' => 1,

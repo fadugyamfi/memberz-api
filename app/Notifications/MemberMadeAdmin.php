@@ -2,15 +2,15 @@
 
 namespace App\Notifications;
 
-use App\Channels\MemberzDbNotification;
 use App\Models\NotificationType;
 use App\Models\Organisation;
 use App\Models\OrganisationRole;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Log;
 
-class OrganisationAdminRoleChanged extends BaseMemberzNotification
+class MemberMadeAdmin extends BaseMemberzNotification
 {
     use Queueable;
 
@@ -28,17 +28,6 @@ class OrganisationAdminRoleChanged extends BaseMemberzNotification
     {
         $this->role_id = $role_id;
         $this->organisation_id = $organisation_id;
-    }
-
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function via($notifiable)
-    {
-        return [MemberzDbNotification::class];
     }
 
 
