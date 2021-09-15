@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Notifications\AdminUserCreated;
+use App\Notifications\OrganisationAccountRoleChanged;
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
 
@@ -90,5 +92,16 @@ class OrganisationAccount extends ApiModel
             'active' => 1,
             'deleted' => 0
         ]);
+    }
+    
+
+    public function sendAccountRoleChangedNotification() : void {
+        $member_account = MemberAccount::find($this->member_account_id);
+        $member_account->notify(new OrganisationAccountRoleChanged($this->organisation_role_id, $this->organisation_id));
+    }
+
+    public function sendAccountCreatedNotification() : void {
+        $member_account = MemberAccount::find($this->member_account_id);
+        $member_account->notify(new AdminUserCreated($this->organisation_role_id, $this->organisation_id));
     }
 }

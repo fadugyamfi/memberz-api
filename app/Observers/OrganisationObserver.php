@@ -40,6 +40,8 @@ class OrganisationObserver
         $subscriptionManagementService->createNewSubscription($organisation->id, $subscriptionTypeId, $subscriptionLength);
 
         $account = OrganisationAccount::createDefaultAccount($organisation);
+        $account->sendAccountCreatedNotification();
+
         $category = OrganisationMemberCategory::createDefault($organisation);
         OrganisationMember::createDefaultMember($organisation, $category, $account);
     }

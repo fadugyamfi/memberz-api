@@ -54,4 +54,5 @@ class OrganisationRole extends ApiModel
     public function organisationAccounts() {
         return $this->hasMany(OrganisationAccount::class);
     }
+    
 }
