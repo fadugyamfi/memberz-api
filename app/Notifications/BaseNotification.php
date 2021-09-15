@@ -6,7 +6,7 @@ use App\Channels\MemberzDbNotification;
 use App\Models\MemberAccount;
 use Illuminate\Notifications\Notification;
 
-abstract class BaseMemberzNotification extends Notification
+abstract class BaseNotification extends Notification
 {
 
     /**

@@ -9,7 +9,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class AdminUserCreated extends BaseMemberzNotification
+class AdminUserCreated extends BaseNotification
 {
     use Queueable;
 
@@ -47,7 +47,7 @@ class AdminUserCreated extends BaseMemberzNotification
         $this->title = $notification_type->email_subject;
 
         $this->replace_words_arr = [
-            '{member_name}' =>  'Memberz.org',
+            '{member_name}' =>  $this->getNotifiaBy(),
             '{org_name}' => $organisation,
             '{role_name}' => $role
         ];
