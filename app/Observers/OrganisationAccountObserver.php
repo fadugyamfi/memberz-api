@@ -3,11 +3,7 @@
 namespace App\Observers;
 
 use App\Models\MemberAccount;
-use App\Models\Organisation;
 use App\Models\OrganisationAccount;
-use App\Models\OrganisationRole;
-use App\Notifications\MemberMadeAdmin;
-use App\Notifications\OrganisationAdminRoleChanged;
 use Illuminate\Support\Facades\Log;
 
 class OrganisationAccountObserver
@@ -41,33 +37,8 @@ class OrganisationAccountObserver
      * @param  \App\OrganisationAccount  $organisationAccount
      * @return void
      */
-    public function updating(OrganisationAccount $organisationAccount)
+    public function updated(OrganisationAccount $organisationAccount)
     {
-        /** Changing member role from admin */
-        if ($organisationAccount->isDirty('organisation_role_id') && $this->isAdminRole($organisationAccount->getOriginal('organisation_role_id'))) {
-            $this->sendAdminUserRoleChangedNotification($organisationAccount);
-        }
-
-        /** Giving user admin role */
-        if ($organisationAccount->isDirty('organisation_role_id') && 
-        !$this->isAdminRole($organisationAccount->getOriginal('organisation_role_id')) && $this->isAdminRole($organisationAccount->organisation_role_id)) {
-            $this->sendMemberMadeAdminNotification($organisationAccount);
-        }
-    }
-
-    private function sendMemberMadeAdminNotification(OrganisationAccount $organisationAccount) : void {
-        $member_account = MemberAccount::find($organisationAccount->member_account_id);
-        $member_account->notify(new MemberMadeAdmin($organisationAccount->organisation_role_id, $organisationAccount->organisation_id));
-    }
-
-    private function sendAdminUserRoleChangedNotification(OrganisationAccount $organisationAccount) : void 
-    {
-        $member_account = MemberAccount::find($organisationAccount->member_account_id);
-        $member_account->notify(new OrganisationAdminRoleChanged($organisationAccount->organisation_role_id, $organisationAccount->organisation_id));
-    }
-
-    private function isAdminRole(int $organisation_role_id): bool
-    {
-        return $organisation_role_id == OrganisationRole::whereName('Administrator')->first()->id;
+        $organisationAccount->sendAccountRoleChangedNotification();
     }
 }

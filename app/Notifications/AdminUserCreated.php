@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Channels\MemberzDbNotification;
 use App\Models\NotificationType;
 use App\Models\Organisation;
 use App\Models\OrganisationRole;
@@ -10,7 +9,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class OrganisationAdminRoleChanged extends BaseMemberzNotification
+class AdminUserCreated extends BaseMemberzNotification
 {
     use Queueable;
 
@@ -30,17 +29,6 @@ class OrganisationAdminRoleChanged extends BaseMemberzNotification
         $this->organisation_id = $organisation_id;
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function via($notifiable)
-    {
-        return [MemberzDbNotification::class];
-    }
-
 
     /**
      * Get the array representation of the notification.
@@ -52,14 +40,14 @@ class OrganisationAdminRoleChanged extends BaseMemberzNotification
     {
         $organisation = Organisation::find($this->organisation_id)->name;
         $role = OrganisationRole::find($this->role_id)->name;
-        $notification_type = NotificationType::whereName('organisation_account_role_changed')->first();
+        $notification_type = NotificationType::whereName('organisation_account_access_granted')->first();
         $this->notification_type_id = $notification_type->id;
 
         $this->message = $notification_type->template;
         $this->title = $notification_type->email_subject;
 
         $this->replace_words_arr = [
-            '{member_name}' =>  $this->getNotifiaBy(),
+            '{member_name}' =>  'Memberz.org',
             '{org_name}' => $organisation,
             '{role_name}' => $role
         ];

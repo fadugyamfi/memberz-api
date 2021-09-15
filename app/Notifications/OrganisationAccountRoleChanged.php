@@ -8,9 +8,8 @@ use App\Models\OrganisationRole;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Facades\Log;
 
-class MemberMadeAdmin extends BaseMemberzNotification
+class OrganisationAccountRoleChanged extends BaseMemberzNotification
 {
     use Queueable;
 
