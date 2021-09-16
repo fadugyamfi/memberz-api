@@ -55,8 +55,9 @@ class OrganisationRole extends ApiModel
     public function organisationAccounts() {
         return $this->hasMany(OrganisationAccount::class);
     }
-    
-    public function scopeIsAdmin(Builder $builder) : Builder {
-        return $builder->whereName('Administrator');
-    }
+
+    public function isAdmin() {
+        return $this->admin_access == 1;
+     }
+
 }
