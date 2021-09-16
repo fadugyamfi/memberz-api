@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\Permission\Traits\HasPermissions;
 use NunoMazer\Samehouse\BelongsToTenants;
 
@@ -54,5 +55,9 @@ class OrganisationRole extends ApiModel
     public function organisationAccounts() {
         return $this->hasMany(OrganisationAccount::class);
     }
-    
+
+    public function isAdmin() {
+        return $this->admin_access == 1;
+     }
+
 }

@@ -2,34 +2,23 @@
 
 namespace App\Observers;
 
-use App\Models\MemberAccount;
 use App\Models\OrganisationAccount;
-use Illuminate\Support\Facades\Log;
 
 class OrganisationAccountObserver
 {
-
     /**
-     * Handle the organisation account "creating" event.
+     * Handle the organisation Account "created" event.
      *
      * @param  \App\Models\OrganisationAccount  $organisationAccount
      * @return void
      */
-    public function creating(OrganisationAccount $organisationAccount)
+    public function created(OrganisationAccount $organisationAccount)
     {
-        if ($organisationAccount->member_account_id) {
-            return;
+        if ($organisationAccount->organisationRole->isAdmin()){
+            $organisationAccount->sendAccountCreatedNotification();
         }
-
-        $tempMemberAccount = MemberAccount::createTempAccount(request('member_id'));
-
-        if (!$tempMemberAccount) {
-            Log::error("Temporary account not created/available, so not creating organisation account");
-            return;
-        }
-
-        $organisationAccount->member_account_id = $tempMemberAccount->id;
     }
+
 
     /**
      * Handle the organisation Account "updating" event.
