@@ -3,7 +3,6 @@
 namespace App\Imports;
 
 use App\Models\Member;
-use App\Models\MemberAccount;
 use App\Models\OrganisationAccount;
 use App\Models\OrganisationFileImport;
 use App\Models\OrganisationMember;
