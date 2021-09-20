@@ -16,6 +16,8 @@ class Member extends ApiModel
     protected $guarded = ['id'];
     protected $fillable = ['title', 'first_name', 'middle_name', 'last_name', 'gender', 'dob', 'mobile_number', 'email', 'website', 'occupation', 'profession', 'business_name', 'active'];
 
+    protected $appends = ['full_name', 'full_name_with_title'];
+
     public function organisationMember() {
         return $this->hasMany(OrganisationMember::class);
     }
@@ -40,4 +42,15 @@ class Member extends ApiModel
         return $this->first_name . ' ' . $this->last_name;
     }
 
+    public function getFullNameAttribute() {
+        return $this->middle_name
+            ? "{$this->first_name} {$this->middle_name} {$this->last_name}"
+            : "{$this->first_name} {$this->last_name}";
+    }
+
+    public function getFullNameWithTitleAttribute() {
+        return $this->middle_name
+            ? "{$this->title} {$this->first_name} {$this->middle_name} {$this->last_name}"
+            : "{$this->title} {$this->first_name} {$this->last_name}";
+    }
 }
