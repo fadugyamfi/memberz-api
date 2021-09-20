@@ -7,7 +7,6 @@ use Closure;
 use Illuminate\Http\Request;
 use NunoMazer\Samehouse\Facades\Landlord;
 use Ramsey\Uuid\Uuid;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class MultiTenant
 {

@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use LaravelApiBase\Models\ApiModelBehavior;
 use LaravelApiBase\Models\ApiModelInterface;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Facades\Password;
 
 class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSubject
 {
@@ -98,7 +99,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         return $query->where('active', 1);
     }
 
-    public static function createTempAccount(int $member_id)
+    public function createTempAccount(int $member_id) : self
     {
         $existingAccount = self::where('member_id', $member_id)->active()->first();
 
@@ -113,12 +114,16 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
             return false;
         }
 
-        return self::create([
+        $member_account =  self::create([
             'member_id' => $member_id,
             'username' => $member->email,
             'password' => Hash::make(rand(10000, 99999)),
             'active' => 1,
         ]);
+
+        $this->sendSetPasswordNotification($member->email);
+
+        return $member_account;
     }
 
     /** Create new member accont */
@@ -132,11 +137,25 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         ]);
     }
 
+    /**
+     * Send Set password email notification for temporary created accounts
+     */
+    public function sendSetPasswordNotification(string $username) : void {
+        $this->username = $username;
+        Password::sendResetLink(['username' => $username]);
+    }
+
+    /**
+     * Specifies what the email field is
+     */
     public function getEmailForPasswordReset()
     {
         return $this->username;
     }
 
+    /**
+     * Overrides the default laravel sendPasswordResetNotification
+     */
     public function sendPasswordResetNotification($token)
     {
         Mail::to($this->username)->send(new PasswordReset($token));
