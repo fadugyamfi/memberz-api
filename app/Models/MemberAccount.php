@@ -26,8 +26,6 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
 
     protected $primaryKey = 'id';
 
-    private $new_account_password_reset = false;
-
     protected $guarded = ['id'];
     protected $fillable = ['member_id', 'username', 'password', 'pass_salt', 'timezone', 'account_type', 'reset_requested', 'active', 'deleted', 'email_verification_token'];
 
