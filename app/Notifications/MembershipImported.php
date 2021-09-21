@@ -9,7 +9,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class MembershipImport extends BaseNotification
+class MembershipImported extends BaseNotification
 {
     use Queueable;
 
