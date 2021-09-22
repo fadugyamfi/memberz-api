@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Module extends ApiModel
 {
 
-
+    /** 
+     * Will not log any activity on []
+     */
+    protected static $recordEvents = [];
 
     /**
      * The database table used by the model.

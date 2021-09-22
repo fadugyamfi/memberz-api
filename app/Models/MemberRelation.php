@@ -4,11 +4,13 @@ namespace App\Models;
 
 class MemberRelation extends ApiModel
 {
-
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
     protected $table = 'member_relations';
+    
+    protected static $logTitle = "Member Relation";
+    protected static $logName = "member_relation";
 
     protected $primaryKey = 'id';
 

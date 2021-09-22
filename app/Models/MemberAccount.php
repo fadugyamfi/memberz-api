@@ -17,12 +17,14 @@ use Illuminate\Support\Facades\Password;
 
 class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSubject
 {
-
     use Notifiable, ApiModelBehavior, SoftDeletesWithActiveFlag;
 
     const DELETED_AT = 'active';
 
     protected $table = 'member_accounts';
+
+    protected static $logTitle = "Member Account";
+    protected static $logName = "member_account";
 
     protected $primaryKey = 'id';
 

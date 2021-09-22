@@ -20,6 +20,7 @@
         "nunomazer/laravel-samehouse": "dev-master",
         "orangehill/iseed": "^2.6",
         "propaganistas/laravel-phone": "dev-master",
+        "spatie/laravel-activitylog": "3.17.0",
         "spatie/laravel-permission": "^3.6",
         "staudenmeir/laravel-adjacency-list": "dev-master",
         "tymon/jwt-auth": "^1.0.0"

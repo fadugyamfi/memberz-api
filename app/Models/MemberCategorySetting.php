@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 class MemberCategorySetting extends ApiModel
 {
-
-
+    protected static $logTitle = "Member Category Setting";
+    protected static $logName = "member_category_setting";
 
     /**
      * The database table used by the model.
