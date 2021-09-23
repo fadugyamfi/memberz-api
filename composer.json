@@ -16,7 +16,8 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.54",
         "laravel/tinker": "^2.5",
-        "intervention/image": "^2.6",        "maatwebsite/excel": "4.0.x-dev",
+        "intervention/image": "^2.6",
+        "maatwebsite/excel": "4.0.x-dev",
         "nunomazer/laravel-samehouse": "dev-master",
         "propaganistas/laravel-phone": "dev-master",
         "spatie/laravel-activitylog": "dev-master",
@@ -25,17 +26,15 @@
         "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {
-        "facade/ignition": "^2.3.6",
+        "facade/ignition": "^2.5",
         "fakerphp/faker": "1.17.x-dev",
         "knuckleswtf/scribe": "^3.0",
         "laracademy/generators": "^2.0",
-        "facade/ignition": "^2.5",
-        "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
+        "orangehill/iseed": "dev-master",
         "phpunit/phpunit": "^9.3.3"
-        "orangehill/iseed": "dev-master"
     },
     "config": {
         "optimize-autoloader": true,
