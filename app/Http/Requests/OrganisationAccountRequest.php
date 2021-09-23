@@ -27,7 +27,7 @@ class OrganisationAccountRequest extends ApiRequest
     protected function prepareForValidation()
     {
         if (! $this->member_account_id) {
-            $tempMemberAccount = MemberAccount::createTempAccount(request('member_id'));
+            $tempMemberAccount = (new MemberAccount())->createTempAccount(request('member_id'));
 
             if (!$tempMemberAccount) {
                 Log::error("Temporary account not created/available, so not creating organisation account");

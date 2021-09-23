@@ -4,11 +4,13 @@ namespace App\Imports;
 
 use App\Models\Member;
 use App\Models\MemberAccount;
+use App\Models\Organisation;
 use App\Models\OrganisationAccount;
 use App\Models\OrganisationFileImport;
 use App\Models\OrganisationMember;
 use App\Models\OrganisationMemberCategory;
 use App\Models\OrganisationMemberImport;
+use App\Notifications\MembershipImported;
 use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
@@ -29,10 +31,19 @@ class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkRea
     use Importable;
 
     private OrganisationFileImport $fileImport;
+    private MemberAccount $memberAccount;
+    private int $org_id;
 
     public function __construct(OrganisationFileImport $fileImport)
     {
         $this->fileImport = $fileImport;
+
+        $auth_id = auth()->user()->id;
+        $this->memberAccount = MemberAccount::find($auth_id);
+
+        $tenantId = request()->header('X-Tenant-Id');
+        $organisation  =  Organisation::where('uuid', $tenantId)->first();
+        $this->org_id = $organisation->id;
     }
 
     public function chunkSize(): int
@@ -137,12 +148,13 @@ class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkRea
             AfterImport::class => function(AfterImport $event) {
                 $this->fileImport->import_status = 'completed';
                 $this->fileImport->save();
+                $this->memberAccount->notify(new MembershipImported($this->fileImport->file_name, $this->org_id));
             },
 
             ImportFailed::class => function(ImportFailed $event) {
                 $this->fileImport->import_status = 'failed';
                 $this->fileImport->save();
-                // $this->importedBy->notify(new ImportHasFailedNotification);
+                $this->memberAccount->notify(new MembershipImported($this->fileImport->file_name, $this->org_id, 'Failed'));
             },
         ];
     }

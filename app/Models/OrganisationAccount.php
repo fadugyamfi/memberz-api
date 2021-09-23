@@ -12,6 +12,9 @@ class OrganisationAccount extends ApiModel
 
     use BelongsToTenants, SoftDeletesWithActiveFlag;
 
+    protected static $logTitle = "Organisation Account";
+    protected static $logName = "organisation_account";
+
     /**
      * The database table used by the model.
      *

@@ -6,7 +6,7 @@ use App\Http\Resources\OrganisationMemberImportResource;
 use App\Models\OrganisationMemberImport;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
-/**
+/**Imported membership class
  * @group Organisation Member Imports
  */
 class OrganisationMemberImportController extends Controller

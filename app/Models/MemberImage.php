@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Models;
-
-
-
 class MemberImage extends ApiModel
 {
+    protected static $logTitle = "Member Image";
+    protected static $logName = "member_image";
 
     /**
      * The database table used by the model.
