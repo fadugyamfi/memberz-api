@@ -3,13 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Member;
 use App\Models\MemberAccount;
+use App\Services\AuthLogService;
 
 /**
  * @group Auth
  */
 class AuthController extends Controller
 {
+
+    private AuthLogService $authLogger;
+
+    public function __construct(AuthLogService $authLogger)
+    {
+        $this->authLogger = $authLogger;
+    }
 
     /**
      * Login
@@ -27,6 +36,8 @@ class AuthController extends Controller
             return $this->oldLoginAttempt();
         }
 
+        $this->authLogger->logLoginSuccess( auth()->user() );
+
         return $this->respondWithToken($token);
     }
 
@@ -42,8 +53,11 @@ class AuthController extends Controller
         $credentials['password'] = md5($credentials['password'] . $account->pass_salt);
 
         if (! $token = auth()->attempt($credentials)) {
+            $this->authLogger->logLoginFailure($account);
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+
+        $this->authLogger->logLoginSuccess($account);
 
         return $this->respondWithToken($token, true);
     }
@@ -77,9 +91,11 @@ class AuthController extends Controller
      */
     public function logout()
     {
+        $this->authLogger->logLogout( auth()->user() );
+
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => __('Successfully logged out')]);
     }
 
     /**

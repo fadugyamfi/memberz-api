@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Models;
+
+use Spatie\Activitylog\LogOptions;
+
 class MemberImage extends ApiModel  
 {
     protected static $logTitle = "Member Image";
@@ -50,6 +53,10 @@ class MemberImage extends ApiModel
         return $query->latest()->limit(1);
     }
 
+    public function member() {
+        return $this->belongsTo(Member::class);
+    }
+
     public function getUrlAttribute() {
         $save_dir_root = config('app.file_upload_root_directory');
         $host_server = config('app.file_upload_host_server');
@@ -62,5 +69,24 @@ class MemberImage extends ApiModel
         $host_server = config('app.file_upload_host_server');
 
         return "{$host_server}{$save_dir_root}/{$this->thumb_path}/{$this->file_name}";
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $title = static::$logTitle;
+        $name = static::$logName;
+
+        $member = $this->member;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("member_profile")
+            ->setDescriptionForEvent(function(string $eventName) use($member, $title, $name) {
+                if( $eventName == 'created' ) {
+                    return __("Uploaded image to profile of :name", ["name" => $member->full_name]);
+}
+
+                return ucfirst($eventName) . " {$title} - {$name}";
+            });
     }
 }

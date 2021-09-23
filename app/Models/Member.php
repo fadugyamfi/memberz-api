@@ -14,7 +14,7 @@ class Member extends ApiModel
     protected $primaryKey = 'id';
 
     protected static $logTitle = "Member";
-    protected static $logName = "member";
+    protected static $logName = "member_profile";
 
     protected $guarded = ['id'];
     protected $fillable = ['title', 'first_name', 'middle_name', 'last_name', 'gender', 'dob', 'mobile_number', 'email', 'website', 'occupation', 'profession', 'business_name', 'active'];
@@ -46,7 +46,7 @@ class Member extends ApiModel
         return $this->hasOne(MemberImage::class)->latest();
     }
 
-    public function name()
+    public function getNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
     }
