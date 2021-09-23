@@ -127,7 +127,6 @@ class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkRea
         try {
             return (string) PhoneNumber::make($phoneNumber)->ofCountry($country)->formatE164();
         } catch(Exception $e) {
-            Log::debug($e->getMessage());
             return $phoneNumber;
         }
     }
