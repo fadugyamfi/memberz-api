@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MemberAccount;
+use App\Services\AuthLogService;
 
 /**
  * @group Auth
@@ -24,7 +25,7 @@ class VerifyEmailController extends Controller
      *    "message": "Account creation verification successful"
      * }
      */
-    public function __invoke(string $token = null)
+    public function __invoke(string $token = null, AuthLogService $logger)
     {
         if ($token === null) {
             return response()->json(['message' => 'Invalid login attempt'], 401);
@@ -39,6 +40,8 @@ class VerifyEmailController extends Controller
         $member_account->email_verification_token = null;
         $member_account->active = true;
         $member_account->save();
+
+        $logger->logAccountActivated($member_account);
 
         return response()->json(['message' => 'Account creation verification successful']);
     }
