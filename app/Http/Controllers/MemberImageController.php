@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MemberImageRequest;
 use App\Models\MemberImage;
-use Illuminate\Http\Request;
+use App\Services\ProfileImageUploadService;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
-use Intervention\Image\Facades\Image;
+
 
 class MemberImageController extends Controller
 {
@@ -20,19 +20,21 @@ class MemberImageController extends Controller
         $this->setApiModel($image);
     }
 
-    public function store(MemberImageRequest $request)
+    public function store(MemberImageRequest $request, ProfileImageUploadService $uploadService)
     {
-        $path = $request->file('image')->store('images/profiles');
-        $thumbFileName = rand(100000, 999999);
-        $thumbPath = "images/profiles/thumbnails/{$thumbFileName}.jpg";
-        Image::make($path)->resize(300, 300)->save($thumbPath);
+        try {
+            $paths = $uploadService->handle($request);
 
-        $request->merge([
-            'file_path' => $path,
-            'thumb_path' => $thumbPath
-        ]);
+            $request->merge([
+                'file_path' => $paths['imagePath'],
+                'thumb_path' => $paths['thumbnailPath'],
+                'file_name' => $paths['filenametostore']
+            ]);
 
-        return $this->apiStore($request);
+            return $this->apiStore($request);
+        } catch(\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 
     public function update(MemberImageRequest $request, $id)

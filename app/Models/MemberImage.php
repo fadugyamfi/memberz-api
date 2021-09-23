@@ -51,6 +51,11 @@ class MemberImage extends ApiModel
     }
 
     public function getUrlAttribute() {
+        if ( str_contains($this->file_path, 'storage') ) {
+            return url($this->file_path);
+        }
+
+        // old server implements
         $save_dir_root = config('app.old_file_upload_root_directory');
         $host_server = config('app.old_file_upload_host_server');
 
@@ -58,6 +63,11 @@ class MemberImage extends ApiModel
     }
 
     public function getThumbUrlAttribute() {
+        if ( str_contains($this->thumb_path, 'storage') ) {
+            return url($this->thumb_path);
+        }
+
+        // old server implementation
         $save_dir_root = config('app.old_file_upload_root_directory');
         $host_server = config('app.old_file_upload_host_server');
 

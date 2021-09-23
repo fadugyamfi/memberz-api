@@ -25,7 +25,8 @@ class MemberImageRequest extends FormRequest
     {
         return [
             'member_id' => ['required', 'numeric', 'exists:members,id'],
-            'image' => ['sometimes', 'required', 'file', 'mimes:png,jpg']
+            'image' => ['sometimes', 'required', 'file', 'mimes:png,jpg', 'max:5000'],
+            'image_base64' => ['sometimes', 'required']
         ];
     }
 }

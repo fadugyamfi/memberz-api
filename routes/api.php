@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MemberImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,6 +52,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('currencies', 'CurrencyController');
     Route::apiResource('members', 'MemberController');
     Route::apiResource('member_accounts', 'MemberAccountController');
+    Route::apiResource('member_images', 'MemberImageController');
     Route::apiResource('member_relation_types', 'MemberRelationTypeController');
     Route::apiResource('member_relations', 'MemberRelationController');
     Route::apiResource('permissions', 'PermissionController');

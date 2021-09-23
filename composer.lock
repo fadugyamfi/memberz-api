@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "212947d1e2573e556fc79cc83643e8d4",
+    "content-hash": "3a021b308c1ba37e52edbb16f44292db",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4327,16 +4327,16 @@
         },
         {
             "name": "spatie/laravel-activitylog",
-            "version": "dev-master",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-activitylog.git",
-                "reference": "1d8acdac3e1f3d6937f8d10fd005de71b0350bc4"
+                "reference": "38701e699f308bcb4a31702f3859c2dfd48d385f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/1d8acdac3e1f3d6937f8d10fd005de71b0350bc4",
-                "reference": "1d8acdac3e1f3d6937f8d10fd005de71b0350bc4",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/38701e699f308bcb4a31702f3859c2dfd48d385f",
+                "reference": "38701e699f308bcb4a31702f3859c2dfd48d385f",
                 "shasum": ""
             },
             "require": {
@@ -4351,7 +4351,6 @@
                 "orchestra/testbench": "^6.0",
                 "phpunit/phpunit": "^9.3"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -4403,7 +4402,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-activitylog/issues",
-                "source": "https://github.com/spatie/laravel-activitylog/tree/master"
+                "source": "https://github.com/spatie/laravel-activitylog/tree/4.1.1"
             },
             "funding": [
                 {
@@ -4415,7 +4414,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-07-30T12:13:36+00:00"
+            "time": "2021-07-23T14:01:24+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -10593,7 +10592,6 @@
         "maatwebsite/excel": 20,
         "nunomazer/laravel-samehouse": 20,
         "propaganistas/laravel-phone": 20,
-        "spatie/laravel-activitylog": 20,
         "staudenmeir/laravel-adjacency-list": 20,
         "tymon/jwt-auth": 20,
         "fakerphp/faker": 20,
