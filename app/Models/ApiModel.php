@@ -3,25 +3,25 @@
 namespace App\Models;
 
 use LaravelApiBase\Models\ApiModel as BaseApiModel;
-use Spatie\Activitylog\Traits\LogsActivity;
+// use Spatie\Activitylog\Traits\LogsActivity;
 
 class ApiModel extends BaseApiModel {
 
-    use LogsActivity;
+    // use LogsActivity;
 
-    protected static $logAttributes = "*";
-    protected static $logTitle = "";
-    protected static $logName = "";
+    // protected static $logAttributes = "*";
+    // protected static $logTitle = "";
+    // protected static $logName = "";
 
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';
     const DELETED_AT = 'active';
 
-    public function getDescriptionForEvent(string $eventName): string
+    public function getDescriptionForEvent(string $eventName)
     {
-        $title = static::$logTitle;
-        $name = static::$logName;
+        // $title = static::$logTitle;
+        // $name = static::$logName;
   
-        return ucfirst($eventName) . " {$title} - {$name}"; 
+        // return ucfirst($eventName) . " {$title} - {$name}"; 
     }
 }
