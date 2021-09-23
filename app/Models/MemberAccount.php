@@ -14,10 +14,11 @@ use LaravelApiBase\Models\ApiModelBehavior;
 use LaravelApiBase\Models\ApiModelInterface;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Support\Facades\Password;
+use Spatie\Activitylog\Traits\CausesActivity;
 
 class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSubject
 {
-    use Notifiable, ApiModelBehavior, SoftDeletesWithActiveFlag;
+    use Notifiable, ApiModelBehavior, SoftDeletesWithActiveFlag, CausesActivity;
 
     const DELETED_AT = 'active';
 

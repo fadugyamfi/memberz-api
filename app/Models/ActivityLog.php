@@ -15,9 +15,6 @@ class ActivityLog extends ApiModel
      * Protected columns from mass assignment
      */
     public $guarded  = ['id'];
-    public $fillable = ['id', 'log_name', 'description', 'subject_id', 'causer', 'causer_id', 'properties', 'created_at'];
+    public $fillable = ['id', 'log_name', 'description', 'subject', 'causer',  'properties', 'created_at'];
 
-    public function memberAccount() {
-        return $this->belongsTo(MemberAccount::class, 'causer_id');
-    }
 }
