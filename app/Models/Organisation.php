@@ -11,6 +11,9 @@ class Organisation extends ApiModel
 
     protected $table = 'organisations';
 
+    protected static $logTitle = "Organisation";
+    protected static $logName = "organisation";
+
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
