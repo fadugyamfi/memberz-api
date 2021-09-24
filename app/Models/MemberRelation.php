@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Spatie\Activitylog\LogOptions;
+
 class MemberRelation extends ApiModel
 {
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
     protected $table = 'member_relations';
-    
+
     protected static $logTitle = "Member Relation";
     protected static $logName = "member_relation";
 
@@ -29,4 +31,35 @@ class MemberRelation extends ApiModel
         return $this->belongsTo(Member::class, 'relation_member_id');
     }
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        $member = $this->member;
+        $relation_name = $this->name;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("member_profile")
+            ->setDescriptionForEvent(function(string $eventName) use($member, $relation_name) {
+                if( $eventName == 'created' ) {
+                    return __("Added family relation \":relation_name\" to member :name", [
+                        "relation_name" => $relation_name,
+                        "name" => $member->name
+                    ]);
+                }
+
+                if( $eventName == 'updated' ) {
+                    return __("Updated family relation \":relation_name\" on member :name", [
+                        "relation_name" => $relation_name,
+                        "name" => $member->name
+                    ]);
+                }
+
+                if( $eventName == 'deleted' ) {
+                    return __("Deleted family relation \":relation_name\" from member :name", [
+                        "relation_name" => $relation_name,
+                        "name" => $member->name
+                    ]);
+                }
+            });
+    }
 }
