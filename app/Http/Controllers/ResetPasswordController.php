@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\ResetPasswordRequest;
+use App\Models\MemberAccount;
+use App\Services\AuthLogService;
 use Illuminate\Support\Facades\Password;
 
 /**
@@ -21,7 +23,7 @@ class ResetPasswordController extends Controller
      *   "message": "Error resetting password"
      * }
      */
-    public function __invoke(ResetPasswordRequest $request)
+    public function __invoke(ResetPasswordRequest $request, AuthLogService $logger)
     {
         $status = Password::reset(
             $request->only('username', 'password', 'token'),
@@ -37,6 +39,9 @@ class ResetPasswordController extends Controller
         if ($status !== Password::PASSWORD_RESET){
             return response()->json(['message' => 'Error resetting password.'], 401);
         }
+
+        $account = MemberAccount::whereUsername($request->only('username'))->first();
+        $logger->logPasswordReset($account);
 
         return response()->json(['message' => 'Password reset successful.']);
     }
