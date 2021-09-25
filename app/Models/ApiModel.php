@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\TenantOrganisationId;
 use LaravelApiBase\Models\ApiModel as BaseApiModel;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Contracts\Activity;
 
 class ApiModel extends BaseApiModel {
 
-    use LogsActivity;
+    use LogsActivity, TenantOrganisationId;
 
 
     protected static $logTitle = "";
@@ -27,6 +29,16 @@ class ApiModel extends BaseApiModel {
         return LogOptions::defaults()
         ->logAll()
         ->setDescriptionForEvent(fn(string $eventName) => ucfirst($eventName) . " {$title} - {$name}");
+    }
+
+    /**
+     * Define tap operations on Activity before activity log
+     */
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->ip_address = $_SERVER['REMOTE_ADDR'];
+        $activity->user_agent = $_SERVER['HTTP_USER_AGENT'];
+        $activity->organisation_id = $this->getTenantOrganisationId();
     }
 
 }

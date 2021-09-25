@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MemberContributionRequest;
 use App\Models\MemberContribution;
 use Illuminate\Http\Request;
-use LaravelApiBase\Http\Controllers\ApiController;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
 /**
