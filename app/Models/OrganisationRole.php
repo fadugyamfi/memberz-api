@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
-use Illuminate\Database\Eloquent\Builder;
 use Spatie\Permission\Traits\HasPermissions;
 use NunoMazer\Samehouse\BelongsToTenants;
+use Spatie\Activitylog\LogOptions;
 
 class OrganisationRole extends ApiModel
 {
@@ -59,5 +59,41 @@ class OrganisationRole extends ApiModel
     public function isAdmin() {
         return $this->admin_access == 1;
      }
+
+      /**
+     * Format user activities description for organisation role
+     * @override
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        $org = $this->organisation;
+        $role = $this->name;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("organisation_account")
+            ->setDescriptionForEvent(function (string $eventName) use ($org, $role) {
+                if ($eventName == 'created') {
+                    return __("Added organisation role of \":role\" for organisation :org_name", [
+                        "org_name" => $org->name,
+                        'role' => $role,
+                    ]);
+                }
+
+                if ($eventName == 'updated') {
+                    return __("Updated organisation role of \":role\" for organisation :org_name", [
+                        "org_name" => $org->name,
+                        'role' => $role,
+                    ]);
+                }
+
+                if ($eventName == 'deleted') {
+                    return __("Deleted organisation role of \":role\" for organisation :org_name", [
+                        "org_name" => $org->name,
+                        'role' => $role,
+                    ]);
+                }
+            });
+    }
 
 }

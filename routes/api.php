@@ -107,8 +107,9 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('contributions', 'ContributionController');
         Route::apiResource('contribution_receipts', 'ContributionReceiptController');
         Route::apiResource('contribution_receipt_settings', 'ContributionReceiptSettingController');
-
     });
+
+    Route::get('activity_logs/search', 'ActivityLogController@search');
 });
 
 // Allow for SSE notifications subscription
