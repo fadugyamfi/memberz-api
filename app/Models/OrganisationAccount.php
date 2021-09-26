@@ -6,6 +6,7 @@ use App\Notifications\AdminUserCreated;
 use App\Notifications\OrganisationAccountRoleChanged;
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
+use Spatie\Activitylog\LogOptions;
 
 class OrganisationAccount extends ApiModel
 {
@@ -106,5 +107,45 @@ class OrganisationAccount extends ApiModel
     public function sendAccountCreatedNotification() : void {
         $member_account = MemberAccount::find($this->member_account_id);
         $member_account->notify(new AdminUserCreated($this->organisation_role_id, $this->organisation_id));
+    }
+
+    /**
+     * Format user activities description for organisation account
+     * @override
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        $member = $this->memberAccount->member;
+        $org = $this->organisation;
+        $role = $this->organisationRole;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("organisation_account")
+            ->setDescriptionForEvent(function(string $eventName) use($member, $org, $role) {
+                if( $eventName == 'created' ) {
+                    return __("Added member \":member\" of role \":role\" to organisation :org_name", [
+                        "member" => $member->name,
+                        "org_name" => $org->name,
+                        'role' => $role->name
+                    ]);
+                }
+
+                if( $eventName == 'updated' ) {
+                    return __("Updated member \":member\" of role \":role\" to organisation :org_name", [
+                        "member" => $member->name,
+                        "org_name" => $org->name,
+                        'role' => $role->name
+                    ]);
+                }
+
+                if( $eventName == 'deleted' ) {
+                    return __("Deleted member \":member\" of role \":role\" to organisation :org_name", [
+                        "member" => $member->name,
+                        "org_name" => $org->name,
+                        'role' => $role->name
+                    ]);
+                }
+            });
     }
 }

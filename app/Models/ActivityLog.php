@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use NunoMazer\Samehouse\BelongsToTenants;
+
 class ActivityLog extends ApiModel
 {
+    use BelongsToTenants;
+    
     /**
      * Database table name
      */
