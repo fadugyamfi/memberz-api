@@ -51,31 +51,36 @@ class OrganisationAccount extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
-
-    public function organisation() {
+    public function organisation()
+    {
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisationRole() {
+    public function organisationRole()
+    {
         return $this->belongsTo(OrganisationRole::class);
     }
 
-    public function memberAccount() {
+    public function memberAccount()
+    {
         return $this->belongsTo(MemberAccount::class);
     }
 
-    public function scopeActive($query) {
+    public function scopeActive($query)
+    {
         return $query->where('active', 1);
     }
 
-    public function scopeOrganisationIds($query, int $member_account_id) {
+    public function scopeOrganisationIds($query, int $member_account_id)
+    {
         return $query->where('member_account_id', $member_account_id)->active()->get()->pluck('organisation_id')->all();
     }
 
     /**
      * Creates a default Administrator Account for the organisation
      */
-    public static function createDefaultAccount(Organisation $organisation) {
+    public static function createDefaultAccount(Organisation $organisation)
+    {
         $defaultRole = OrganisationRole::firstOrCreate(
             ['organisation_id' => $organisation->id, 'name' => 'Administrator'],
             [
@@ -83,7 +88,7 @@ class OrganisationAccount extends ApiModel
                 'admin_access' => 1,
                 'weekly_activity_update' => 1,
                 'birthday_updates' => 1,
-                'active' => 1
+                'active' => 1,
             ]
         );
 
@@ -94,17 +99,18 @@ class OrganisationAccount extends ApiModel
             'notifications' => 1,
             'weekly_updates' => 1,
             'active' => 1,
-            'deleted' => 0
+            'deleted' => 0,
         ]);
     }
-    
 
-    public function sendAccountRoleChangedNotification() : void {
+    public function sendAccountRoleChangedNotification(): void
+    {
         $member_account = MemberAccount::find($this->member_account_id);
         $member_account->notify(new OrganisationAccountRoleChanged($this->organisation_role_id, $this->organisation_id));
     }
 
-    public function sendAccountCreatedNotification() : void {
+    public function sendAccountCreatedNotification(): void
+    {
         $member_account = MemberAccount::find($this->member_account_id);
         $member_account->notify(new AdminUserCreated($this->organisation_role_id, $this->organisation_id));
     }
@@ -122,28 +128,28 @@ class OrganisationAccount extends ApiModel
         return LogOptions::defaults()
             ->logAll()
             ->useLogName("organisation_account")
-            ->setDescriptionForEvent(function(string $eventName) use($member, $org, $role) {
-                if( $eventName == 'created' ) {
+            ->setDescriptionForEvent(function (string $eventName) use ($member, $org, $role) {
+                if ($eventName == 'created') {
                     return __("Added member \":member\" of role \":role\" to organisation :org_name", [
                         "member" => $member->name,
                         "org_name" => $org->name,
-                        'role' => $role->name
+                        'role' => $role->name,
                     ]);
                 }
 
-                if( $eventName == 'updated' ) {
+                if ($eventName == 'updated') {
                     return __("Updated member \":member\" of role \":role\" to organisation :org_name", [
                         "member" => $member->name,
                         "org_name" => $org->name,
-                        'role' => $role->name
+                        'role' => $role->name,
                     ]);
                 }
 
-                if( $eventName == 'deleted' ) {
+                if ($eventName == 'deleted') {
                     return __("Deleted member \":member\" of role \":role\" to organisation :org_name", [
                         "member" => $member->name,
                         "org_name" => $org->name,
-                        'role' => $role->name
+                        'role' => $role->name,
                     ]);
                 }
             });
