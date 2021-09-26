@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use App\Traits\TenantOrganisationId;
 use LaravelApiBase\Models\ApiModel as BaseApiModel;
+use NunoMazer\Samehouse\Facades\Landlord;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Contracts\Activity;
 
 class ApiModel extends BaseApiModel {
 
-    use LogsActivity, TenantOrganisationId;
+    use LogsActivity;
 
 
     protected static $logTitle = "";
@@ -38,7 +38,7 @@ class ApiModel extends BaseApiModel {
     {
         $activity->ip_address = $_SERVER['REMOTE_ADDR'];
         $activity->user_agent = $_SERVER['HTTP_USER_AGENT'];
-        $activity->organisation_id = $this->getTenantOrganisationId();
+        $activity->organisation_id = Landlord::getTenantId();
     }
 
 }
