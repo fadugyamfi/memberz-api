@@ -53,7 +53,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
-    
+
     'web_url' => env('WEB_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
@@ -178,6 +178,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class
 
     ],
 
@@ -231,6 +232,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Landlord'   => NunoMazer\Samehouse\Facades\Landlord::class,
+        'Image' => Intervention\Image\Facades\Image::class
 
     ],
 
@@ -238,6 +240,6 @@ return [
     /**
      * Old API Transposed values
      */
-    'file_upload_root_directory' => env('FILES_UPLOADS_DIRECTORY', 'memberz/files'),
-    'file_upload_host_server' => env('FILES_UPLOAD_HOST', 'http://localhost/')
+    'old_file_upload_root_directory' => env('OLD_FILES_UPLOADS_DIRECTORY', 'memberz/files'),
+    'old_file_upload_host_server' => env('OLD_FILES_UPLOADS_DIRECTORY', 'http://localhost/')
 ];

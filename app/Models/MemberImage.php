@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Spatie\Activitylog\LogOptions;
 
-class MemberImage extends ApiModel  
+class MemberImage extends ApiModel
 {
     protected static $logTitle = "Member Image";
     protected static $logName = "member_image";
@@ -58,15 +58,25 @@ class MemberImage extends ApiModel
     }
 
     public function getUrlAttribute() {
-        $save_dir_root = config('app.file_upload_root_directory');
-        $host_server = config('app.file_upload_host_server');
+        if ( str_contains($this->file_path, 'storage') ) {
+            return url($this->file_path);
+        }
+
+        // old server implements
+        $save_dir_root = config('app.old_file_upload_root_directory');
+        $host_server = config('app.old_file_upload_host_server');
 
         return "{$host_server}{$save_dir_root}/{$this->file_path}/{$this->file_name}";
     }
 
     public function getThumbUrlAttribute() {
-        $save_dir_root = config('app.file_upload_root_directory');
-        $host_server = config('app.file_upload_host_server');
+        if ( str_contains($this->thumb_path, 'storage') ) {
+            return url($this->thumb_path);
+        }
+
+        // old server implementation
+        $save_dir_root = config('app.old_file_upload_root_directory');
+        $host_server = config('app.old_file_upload_host_server');
 
         return "{$host_server}{$save_dir_root}/{$this->thumb_path}/{$this->file_name}";
     }
