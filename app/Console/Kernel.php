@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('activitylog:clean')->monthly();
+        $schedule->command('activitylog:clean')->quarterly();
     }
 
     /**
