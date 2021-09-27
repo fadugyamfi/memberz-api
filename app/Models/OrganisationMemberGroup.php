@@ -71,7 +71,7 @@ class OrganisationMemberGroup extends ApiModel
 
         return LogOptions::defaults()
             ->logAll()
-            ->useLogName("organisation_account")
+            ->useLogName("groups")
             ->setDescriptionForEvent(function (string $eventName) use ($member, $org_name, $group) {
                 if ($eventName == 'created') {
                     return __("Added organisation member \":member\" for organisation \":org_name\" with group name \":group\"", [

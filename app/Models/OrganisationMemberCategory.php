@@ -104,7 +104,7 @@ class OrganisationMemberCategory extends ApiModel
 
         return LogOptions::defaults()
             ->logAll()
-            ->useLogName("organisation_account")
+            ->useLogName("memberships")
             ->setDescriptionForEvent(function (string $eventName) use ($name, $org_name) {
                 if ($eventName == 'created') {
                     return __("Added organisation member category \":name\" to organisation \":org_name\"", [

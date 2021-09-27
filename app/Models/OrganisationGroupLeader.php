@@ -73,7 +73,7 @@ class OrganisationGroupLeader extends ApiModel
 
         return LogOptions::defaults()
             ->logAll()
-            ->useLogName("organisation_account")
+            ->useLogName("groups")
             ->setDescriptionForEvent(function (string $eventName) use ($leader, $org_name, $role, $group) {
                 if ($eventName == 'created') {
                     return __("Added organisation leader \":leader\" for organisation \":org_name\" with role \":role\" and for group \":group\"", [

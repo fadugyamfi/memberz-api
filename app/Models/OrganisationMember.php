@@ -77,8 +77,7 @@ class OrganisationMember extends ApiModel
     public function buildSearchParams(Request $request, $builder)
     {
         $this->fillable = array_merge($this->fillable, ['first_name', 'last_name', 'email', 'mobile_number', 'occupation', 'business_name']);
-        $builder->approved()
-            ->active()
+        $builder->approved()->active()
             ->join('members', 'members.id', '=', 'organisation_members.member_id')
             ->select('organisation_members.*');
 
@@ -87,11 +86,11 @@ class OrganisationMember extends ApiModel
         if( $request->term ) {
             $term = $request->term;
             $builder->where(function($query) use($term) {
-                return $query->where('first_name', 'like', "%{$term}%")
-                    ->orWhere('last_name', 'like', "%{$term}%")
-                    ->orWhere('email', 'like', "%{$term}%")
-                    ->orWhere('mobile_number', 'like', "%{$term}%")
-                    ->orWhere('business_name', 'like', "%{$term}%");
+                return $query->where('members.first_name', 'like', "%{$term}%")
+                    ->orWhere('members.last_name', 'like', "%{$term}%")
+                    ->orWhere('members.email', 'like', "%{$term}%")
+                    ->orWhere('members.mobile_number', 'like', "%{$term}%")
+                    ->orWhere('members.business_name', 'like', "%{$term}%");
             });
         }
 
@@ -109,37 +108,36 @@ class OrganisationMember extends ApiModel
         ]);
     }
 
-    /**
-     * Format user activities description for organisation member
-     * @override
-     */
     public function getActivitylogOptions(): LogOptions
     {
-        $org_name = $this->organisation->name;
-        $member = $this->member->name;
+        $membership = $this;
+        $member = $this->member;
 
         return LogOptions::defaults()
             ->logAll()
-            ->useLogName("organisation_account")
-            ->setDescriptionForEvent(function (string $eventName) use ($member, $org_name) {
-                if ($eventName == 'created') {
-                    return __("Added organisation member \":member\" to organisation \":org_name\"", [
-                        "org_name" => $org_name,
-                        'member' => $member
+            ->useLogName("memberships")
+            ->setDescriptionForEvent(function($eventName) use($member, $membership) {
+                if( $eventName == 'created' ) {
+                    return __('Added membership record for ":name"', [
+                        'name' => $member->name
                     ]);
                 }
 
-                if ($eventName == 'updated') {
-                    return __("Updated organisation member \":member\" to organisation \":org_name\"", [
-                        "org_name" => $org_name,
-                        'member' => $member
-                    ]);
-                }
+                if( $eventName == 'updated' ) {
+                    if( $membership->isDirty('approved') && $membership->approved == 1 ) {
+                        return __("Approved membership application request for \":name\" ", [
+                            'name' => $member->name
+                        ]);
+                    }
 
-                if ($eventName == 'deleted') {
-                    return __("Deleted organisation member \":member\" to organisation \":org_name\"", [
-                        "org_name" => $org_name,
-                        'member' => $member
+                    if( $membership->isDirty('active') && $membership->active == 0 ) {
+                        return __("Rejected membership application request for \":name\" ", [
+                            'name' => $member->name
+                        ]);
+                    }
+
+                    return __('Updated member profile for ":name"', [
+                        'name' => $member->name
                     ]);
                 }
             });
