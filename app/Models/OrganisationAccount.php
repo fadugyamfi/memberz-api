@@ -130,7 +130,7 @@ class OrganisationAccount extends ApiModel
             ->useLogName("organisation_account")
             ->setDescriptionForEvent(function (string $eventName) use ($member, $org, $role) {
                 if ($eventName == 'created') {
-                    return __("Added member \":member\" of role \":role\" to organisation :org_name", [
+                    return __("Added member \":member\" of role \":role\" to organisation \":org_name\"", [
                         "member" => $member->name,
                         "org_name" => $org->name,
                         'role' => $role->name,
@@ -138,7 +138,7 @@ class OrganisationAccount extends ApiModel
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated member \":member\" of role \":role\" to organisation :org_name", [
+                    return __("Updated member \":member\" of role \":role\" to organisation \":org_name\"", [
                         "member" => $member->name,
                         "org_name" => $org->name,
                         'role' => $role->name,
@@ -146,7 +146,7 @@ class OrganisationAccount extends ApiModel
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted member \":member\" of role \":role\" to organisation :org_name", [
+                    return __("Deleted member \":member\" of role \":role\" to organisation \":org_name\"", [
                         "member" => $member->name,
                         "org_name" => $org->name,
                         'role' => $role->name,

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
+use Spatie\Activitylog\LogOptions;
 
 class OrganisationMemberGroup extends ApiModel
 {
@@ -56,6 +57,46 @@ class OrganisationMemberGroup extends ApiModel
 
     public function organisationGroup() {
         return $this->belongsTo(OrganisationGroup::class);
+    }
+
+    /**
+     * Format user activities description for organisation member group
+     * @override
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        $org_name = $this->organisation->name;
+        $group = $this->organisationGroup->name;
+        $member = $this->organisationMember->member->name;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("organisation_account")
+            ->setDescriptionForEvent(function (string $eventName) use ($member, $org_name, $group) {
+                if ($eventName == 'created') {
+                    return __("Added organisation member \":member\" for organisation \":org_name\" with group name \":group\"", [
+                        "org_name" => $org_name,
+                        'group' => $group,
+                        'member' => $member
+                    ]);
+                }
+
+                if ($eventName == 'updated') {
+                    return __("Updated organisation member \":member\" for organisation \":org_name\" with group name \":group\"", [
+                        "org_name" => $org_name,
+                        'group' => $group,
+                        'member' => $member
+                    ]);
+                }
+
+                if ($eventName == 'deleted') {
+                    return __("Deleted organisation member \":member\" for organisation \":org_name\" with group name \":group\"", [
+                        "org_name" => $org_name,
+                        'group' => $group,
+                        'member' => $member
+                    ]);
+                }
+            });
     }
 
 }

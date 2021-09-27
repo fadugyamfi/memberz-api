@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Http\Request;
 use NunoMazer\Samehouse\BelongsToTenants;
+use Spatie\Activitylog\LogOptions;
 
 class OrganisationMember extends ApiModel
 {
@@ -106,5 +107,41 @@ class OrganisationMember extends ApiModel
             'approved_by' => $defaultAccount->id,
             'active' => 1
         ]);
+    }
+
+    /**
+     * Format user activities description for organisation member
+     * @override
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        $org_name = $this->organisation->name;
+        $member = $this->member->name;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("organisation_account")
+            ->setDescriptionForEvent(function (string $eventName) use ($member, $org_name) {
+                if ($eventName == 'created') {
+                    return __("Added organisation member \":member\" to organisation \":org_name\"", [
+                        "org_name" => $org_name,
+                        'member' => $member
+                    ]);
+                }
+
+                if ($eventName == 'updated') {
+                    return __("Updated organisation member \":member\" to organisation \":org_name\"", [
+                        "org_name" => $org_name,
+                        'member' => $member
+                    ]);
+                }
+
+                if ($eventName == 'deleted') {
+                    return __("Deleted organisation member \":member\" to organisation \":org_name\"", [
+                        "org_name" => $org_name,
+                        'member' => $member
+                    ]);
+                }
+            });
     }
 }

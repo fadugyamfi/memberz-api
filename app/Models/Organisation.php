@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
-
+use Spatie\Activitylog\LogOptions;
 
 class Organisation extends ApiModel
 {
@@ -68,5 +68,43 @@ class Organisation extends ApiModel
         }
 
         $this->slug = Str::slug($this->name) . '-' . rand(10000,99999);
-    }
+    } 
+    
+    /**
+    * Format user activities description for organisations
+    * @override
+    */
+   public function getActivitylogOptions(): LogOptions
+   {
+       $name = $this->name;
+       $type = $this->organisationType->name;
+
+       return LogOptions::defaults()
+           ->logAll()
+           ->useLogName("organisation_account")
+           ->setDescriptionForEvent(function (string $eventName) use ($name, $type) {
+               if ($eventName == 'created') {
+                   return __("Added organisation \":name\" of type \":type\"", [
+                       "name" => $name,
+                       'type' => $type,
+                   ]);
+               }
+
+               if ($eventName == 'updated') {
+                   return __("Updated organisation \":name\" of type \":type\"", [
+                    "name" => $name,
+                    'type' => $type,
+                   ]);
+               }
+
+               if ($eventName == 'deleted') {
+                   return __("Deleted organisation \":name\" of type \":type\"", [
+                    "name" => $name,
+                    'type' => $type,
+                   ]);
+               }
+           });
+   }
+
+
 }
