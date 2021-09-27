@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
 /**
@@ -26,5 +27,14 @@ class ActivityLogController extends Controller
     public function search(Request $request)
     {
         return $this->apiSearch($request);
+    }
+
+    /**
+     * Get Log Groups
+     */
+    public function logGroups(Request $request) {
+        $logNames = ActivityLog::select(DB::raw("DISTINCT log_name"))->orderBy('log_name')->get();
+
+        return response()->json($logNames);
     }
 }
