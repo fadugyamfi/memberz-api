@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\LogOptions;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class OrganisationMemberCategory extends ApiModel
@@ -90,5 +91,41 @@ class OrganisationMemberCategory extends ApiModel
                 'active' => 1
             ]
         );
+    }
+
+    /**
+     * Format user activities description for organisation member category
+     * @override
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        $org_name = $this->organisation->name;
+        $name = $this->name;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("memberships")
+            ->setDescriptionForEvent(function (string $eventName) use ($name, $org_name) {
+                if ($eventName == 'created') {
+                    return __("Added organisation member category \":name\" to organisation \":org_name\"", [
+                        "org_name" => $org_name,
+                        'name' => $name,
+                    ]);
+                }
+
+                if ($eventName == 'updated') {
+                    return __("Updated organisation member category \":name\" to organisation \":org_name\"", [
+                        "org_name" => $org_name,
+                        'name' => $name,
+                    ]);
+                }
+
+                if ($eventName == 'deleted') {
+                    return __("Deleted organisation member category \":name\" to organisation \":org_name\"", [
+                        "org_name" => $org_name,
+                        'name' => $name,
+                    ]);
+                }
+            });
     }
 }

@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
-use Illuminate\Database\Eloquent\Model;
 use NunoMazer\Samehouse\BelongsToTenants;
+use Spatie\Activitylog\LogOptions;
 
 class OrganisationGroupLeader extends ApiModel
 {
@@ -45,5 +45,63 @@ class OrganisationGroupLeader extends ApiModel
      * @var array
      */
     protected $dates = ['created', 'modified'];
+
+
+    public function organisation(){
+        return $this->belongsTo(Organisation::class);
+    }
+
+    public function organisationGroup(){
+        return $this->belongsTo(OrganisationGroup::class);
+    }
+
+    public function organisationMember(){
+        return $this->belongsTo(OrganisationMember::class);
+    }
+
+
+     /**
+     * Format user activities description for organisation group leader
+     * @override
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        $org_name = $this->organisation->name;
+        $role = $this->role;
+        $group = $this->organisationGroup->name;
+        $leader = $this->organisationMember->member->name;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("groups")
+            ->setDescriptionForEvent(function (string $eventName) use ($leader, $org_name, $role, $group) {
+                if ($eventName == 'created') {
+                    return __("Added organisation leader \":leader\" for organisation \":org_name\" with role \":role\" and for group \":group\"", [
+                        "org_name" => $org_name,
+                        'role' => $role,
+                        'group' => $group,
+                        'leader' => $leader
+                    ]);
+                }
+
+                if ($eventName == 'updated') {
+                    return __("Updated organisation leader \":leader\" for organisation \":org_name\" with role \":role\" and for group \":group\"", [
+                        "org_name" => $org_name,
+                        'role' => $role,
+                        'group' => $group,
+                        'leader' => $leader
+                    ]);
+                }
+
+                if ($eventName == 'deleted') {
+                    return __("Deleted organisation leader \":leader\" for organisation \":org_name\" with role \":role\" and for group \":group\"", [
+                        "org_name" => $org_name,
+                        'role' => $role,
+                        'group' => $group,
+                        'leader' => $leader
+                    ]);
+                }
+            });
+    }
 
 }
