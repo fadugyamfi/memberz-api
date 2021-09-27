@@ -94,7 +94,7 @@ class OrganisationMemberCategory extends ApiModel
     }
 
     /**
-     * Format user activities description for organisation member category
+     * Format user activities description for membership category
      * @override
      */
     public function getActivitylogOptions(): LogOptions
@@ -107,21 +107,21 @@ class OrganisationMemberCategory extends ApiModel
             ->useLogName("memberships")
             ->setDescriptionForEvent(function (string $eventName) use ($name, $org_name) {
                 if ($eventName == 'created') {
-                    return __("Added organisation member category \":name\" to organisation \":org_name\"", [
+                    return __("Added membership category \":name\" to organisation \":org_name\"", [
                         "org_name" => $org_name,
                         'name' => $name,
                     ]);
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated organisation member category \":name\" to organisation \":org_name\"", [
+                    return __("Updated membership category \":name\" in organisation \":org_name\"", [
                         "org_name" => $org_name,
                         'name' => $name,
                     ]);
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted organisation member category \":name\" to organisation \":org_name\"", [
+                    return __("Deleted membership category \":name\" from organisation \":org_name\"", [
                         "org_name" => $org_name,
                         'name' => $name,
                     ]);

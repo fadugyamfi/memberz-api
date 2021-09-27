@@ -29,7 +29,7 @@ class NotificationController extends ApiController
                 $data = null;
                 $data = $user->unsentNotifications()->get();
 
-                echo "retry: 120000\n\n"; // retry connection after 5 minutes // no retry would default to 3 seconds.
+                echo "retry: 60000\n\n"; // retry connection after 60 seconds
                 echo 'data: ' . json_encode($data) . "\n\n";
                 ob_flush();
                 flush();

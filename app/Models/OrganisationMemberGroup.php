@@ -74,7 +74,7 @@ class OrganisationMemberGroup extends ApiModel
             ->useLogName("groups")
             ->setDescriptionForEvent(function (string $eventName) use ($member, $org_name, $group) {
                 if ($eventName == 'created') {
-                    return __("Added organisation member \":member\" for organisation \":org_name\" with group name \":group\"", [
+                    return __("Assigned member \":member\" to group \":group\"", [
                         "org_name" => $org_name,
                         'group' => $group,
                         'member' => $member
@@ -82,7 +82,7 @@ class OrganisationMemberGroup extends ApiModel
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated organisation member \":member\" for organisation \":org_name\" with group name \":group\"", [
+                    return __("Updated group assignment for member \":member\" to \":group\"", [
                         "org_name" => $org_name,
                         'group' => $group,
                         'member' => $member
@@ -90,7 +90,7 @@ class OrganisationMemberGroup extends ApiModel
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted organisation member \":member\" for organisation \":org_name\" with group name \":group\"", [
+                    return __("Unassigned member \":member\" from group \":group\"", [
                         "org_name" => $org_name,
                         'group' => $group,
                         'member' => $member

@@ -34,16 +34,11 @@ class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkRea
     private MemberAccount $memberAccount;
     private int $org_id;
 
-    public function __construct(OrganisationFileImport $fileImport)
+    public function __construct(OrganisationFileImport $fileImport, MemberAccount $memberAccount, int $org_id)
     {
         $this->fileImport = $fileImport;
-
-        $auth_id = auth()->user()->id;
-        $this->memberAccount = MemberAccount::find($auth_id);
-
-        $tenantId = request()->header('X-Tenant-Id');
-        $organisation  =  Organisation::where('uuid', $tenantId)->first();
-        $this->org_id = $organisation->id;
+        $this->memberAccount = $memberAccount;
+        $this->org_id = $org_id;
     }
 
     public function chunkSize(): int

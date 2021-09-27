@@ -4,7 +4,9 @@ namespace App\Observers;
 
 use App\Imports\OrganisationMembersImport;
 use App\Models\OrganisationFileImport;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
+use NunoMazer\Samehouse\Facades\Landlord;
 
 class OrganisationFileImportObserver
 {
@@ -34,7 +36,8 @@ class OrganisationFileImportObserver
      */
     public function created(OrganisationFileImport $import)
     {
-        Excel::import( new OrganisationMembersImport($import), request()->file('import_file') );
+        $org_id = Landlord::getTenants()->first();
+        Excel::import( new OrganisationMembersImport($import, auth()->user(), $org_id), request()->file('import_file') );
     }
 
     /**

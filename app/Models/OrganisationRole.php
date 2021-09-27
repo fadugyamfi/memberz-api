@@ -74,21 +74,21 @@ class OrganisationRole extends ApiModel
             ->useLogName("organisation_account")
             ->setDescriptionForEvent(function (string $eventName) use ($org, $role) {
                 if ($eventName == 'created') {
-                    return __("Added organisation role of \":role\" for organisation :org_name", [
+                    return __("Added role \":role\" to :org_name", [
                         "org_name" => $org->name,
                         'role' => $role,
                     ]);
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated organisation role of \":role\" for organisation :org_name", [
+                    return __("Updated role \":role\" in :org_name", [
                         "org_name" => $org->name,
                         'role' => $role,
                     ]);
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted organisation role of \":role\" for organisation :org_name", [
+                    return __("Deleted role \":role\" from :org_name", [
                         "org_name" => $org->name,
                         'role' => $role,
                     ]);
