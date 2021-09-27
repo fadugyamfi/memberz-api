@@ -3,14 +3,15 @@
 namespace App\Http\Resources;
 
 use LaravelApiBase\Http\Resources\ApiResource;
+use Illuminate\Support\Str;
 
-class OrganisationMemberResource extends ApiResource {
+class ActivityLogResource extends ApiResource {
 
     public function toArray($request)
     {
         $data = array_merge(parent::toArray($request), [
-            'member' => $this->when($this->member, new MemberResource($this->member)),
-            'organisation_member_category' => $this->organisationMemberCategory
+            'causer' => $this->causer,
+            'log_display_name' => Str::title( Str::replaceArray('_', [' '], $this->log_name))
         ]);
 
         return $data;

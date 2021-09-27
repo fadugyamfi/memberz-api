@@ -39,7 +39,7 @@ class MemberRelationRequest extends ApiRequest
 
         return [
             'member_id' => 'required|numeric|exists:members,id',
-            'name' => 'required|min:3|max:30|string',
+            'name' => 'required|min:3|max:150|string',
             'gender' => 'nullable|in:male,female',
             'dob' => 'nullable|date',
             'is_alive' => 'nullable|boolean',

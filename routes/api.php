@@ -110,6 +110,7 @@ Route::middleware(['auth:api'])->group(function () {
     });
 
     Route::get('activity_logs/search', 'ActivityLogController@search');
+    Route::get('activity_logs/log_groups', 'ActivityLogController@logGroups');
 });
 
 // Allow for SSE notifications subscription
