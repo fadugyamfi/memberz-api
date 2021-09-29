@@ -47,11 +47,6 @@ class SmsAccount extends ApiModel
     protected $dates = ['created', 'modified'];
 
 
-    public function sender(){
-        return $this->belongsTo(MemberAccount::class, 'sender_id');
-    }
-
-
     public static function getAccount($organisation_id) {
         return self::where('organisation_id', $organisation_id)->first();
     }
@@ -102,7 +97,7 @@ class SmsAccount extends ApiModel
      */
     public function getActivitylogOptions(): LogOptions
     {
-        $sender = $this->memberAccount->member->name;
+        $sender = $this->sender_id;
         $org = $this->organisation->name;
         $account_balance = $this->account_balance;
 
@@ -111,7 +106,7 @@ class SmsAccount extends ApiModel
             ->useLogName("sms")
             ->setDescriptionForEvent(function (string $eventName) use ($sender, $org, $account_balance) {
                 if ($eventName == 'created') {
-                    return __("Added sms account with account balance of \":account_balance\" to organisation \":org_name\" by sender \":sender\"", [
+                    return __("Added sms account with account balance of \":account_balance\" and sender id of \":sender\" for organisation \":org_name\"", [
                         "account_balance" => $account_balance,
                         "org_name" => $org,
                         'sender' => $sender,
@@ -119,7 +114,7 @@ class SmsAccount extends ApiModel
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated sms account with account balance of \":account_balance\" to organisation \":org_name\" by sender \":sender\"", [
+                    return __("Updated sms account with account balance of \":account_balance\" and sender id of \":sender\" for organisation \":org_name\"", [
                         "account_balance" => $account_balance,
                         "org_name" => $org,
                         'sender' => $sender,
@@ -127,7 +122,7 @@ class SmsAccount extends ApiModel
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted sms account with account balance of \":account_balance\" to organisation \":org_name\" by sender \":sender\"", [
+                    return __("Deleted sms account with account balance of \":account_balance\" and sender id of \":sender\" for organisation \":org_name\"", [
                         "account_balance" => $account_balance,
                         "org_name" => $org,
                         'sender' => $sender,

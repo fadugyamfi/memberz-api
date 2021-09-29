@@ -66,10 +66,6 @@ class SmsBroadcastList extends ApiModel
         return $this->hasMany(SmsBroadcast::class);
     }
 
-    public function sender(){
-        return $this->belongsTo(MemberAccount::class, 'sender_id');
-    }
-
 
     /**
      * Format user activities description for Sms Broadcast List
@@ -84,29 +80,29 @@ class SmsBroadcastList extends ApiModel
             ->useLogName("sms")
             ->setDescriptionForEvent(function (string $eventName) use ($smsBdcastList) {
                 if ($eventName == 'created') {
-                    return __("Added sms broadcast list \":name\" with type \":type\" and size \":size\" by sender \":sender\"", [
+                    return __("Added sms broadcast list \":name\" with type \":type\" ,size \":size\" and sender id \":sender\"", [
                         "name" => $smsBdcastList->name,
                         "type" => $smsBdcastList->type,
                         'size' => $smsBdcastList->size,
-                        'sender' => $smsBdcastList->sender->member->name,
+                        'sender' => $smsBdcastList->sender_id,
                     ]);
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated sms broadcast list \":name\" with type \":type\" and size \":size\" by sender \":sender\"", [
+                    return __("Updated sms broadcast list \":name\" with type \":type\" ,size \":size\" and sender id \":sender\"", [
                         "name" => $smsBdcastList->name,
                         "type" => $smsBdcastList->type,
                         'size' => $smsBdcastList->size,
-                        'sender' => $smsBdcastList->sender->member->name,
+                        'sender' => $smsBdcastList->sender_id
                     ]);
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted sms broadcast list \":name\" with type \":type\" and size \":size\" by sender \":sender\"", [
+                    return __("Deleted sms broadcast list \":name\" with type \":type\" ,size \":size\" and sender id \":sender\"", [
                         "name" => $smsBdcastList->name,
                         "type" => $smsBdcastList->type,
                         'size' => $smsBdcastList->size,
-                        'sender' => $smsBdcastList->sender->member->name,
+                        'sender' => $smsBdcastList->sender_id
                     ]);
                 }
             });

@@ -80,36 +80,43 @@ class SmsBroadcast extends ApiModel
      */
     public function getActivitylogOptions(): LogOptions
     {
-        $smsBdcast = $this;
+        $message = $this->message;
+        $for = "";
+        $for_name = "";
+
+        if ($this->module_sms_broadcast_list_id){
+            $for = "broadcast list";
+            $for_name = $this->smsBroadcastList->name;
+        } else {
+            $for = "organisation category";
+            $for_name = $this->organisationMemberCategory->name;
+        }
 
         return LogOptions::defaults()
             ->logAll()
             ->useLogName("sms")
-            ->setDescriptionForEvent(function (string $eventName) use ($smsBdcast) {
+            ->setDescriptionForEvent(function (string $eventName) use ($message, $for, $for_name) {
                 if ($eventName == 'created') {
-                    return __("Added sms broadcast with the paramaters: broadcast list \":bdcast_list\", \":bdcast_list_type\", organisation member category \":org_mem_cat\", and message \":message\"", [
-                        "bdcast_list" => $smsBdcast->smsBroadcastList->name,
-                        "bdcast_list_type" => $smsBdcast->smsBroadcastList->type,
-                        'org_mem_cat' => $smsBdcast->organisationMemberCategory->name,
-                        'message' => $smsBdcast->message
+                    return __("Scheduled sms broadcast with message \":message\" and for \":for\" with name \":for_name\"", [
+                        "for" => $for,
+                        'for_name' => $for_name,
+                        'message' => $message
                     ]);
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated sms broadcast with the paramaters: broadcast list \":bdcast_list\", \":bdcast_list_type\", organisation member category \":org_mem_cat\", and message \":message\"", [
-                        "bdcast_list" => $smsBdcast->smsBroadcastList->name,
-                        "bdcast_list_type" => $smsBdcast->smsBroadcastList->type,
-                        'org_mem_cat' => $smsBdcast->organisationMemberCategory->name,
-                        'message' => $smsBdcast->message
+                    return __("Updated scheduled sms broadcast with message \":message\" and for \":for\" with name \":for_name\"", [
+                        "for" => $for,
+                        'for_name' => $for_name,
+                        'message' => $message
                     ]);
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted sms broadcast with the paramaters: broadcast list \":bdcast_list\", \":bdcast_list_type\", organisation member category \":org_mem_cat\", and message \":message\"", [
-                        "bdcast_list" => $smsBdcast->smsBroadcastList->name,
-                        "bdcast_list_type" => $smsBdcast->smsBroadcastList->type,
-                        'org_mem_cat' => $smsBdcast->organisationMemberCategory->name,
-                        'message' => $smsBdcast->message
+                    return __("Deleted scheduled sms broadcast with message \":message\" and for \":for\" with name \":for_name\"", [
+                        "for" => $for,
+                        'for_name' => $for_name,
+                        'message' => $message
                     ]);
                 }
             });
