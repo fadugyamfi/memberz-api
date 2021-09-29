@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Scopes\LatestRecordsScope;
 use App\Scopes\SmsAccountScope;
 use App\Traits\SoftDeletesWithActiveFlag;
+use Spatie\Activitylog\LogOptions;
 
 class SmsBroadcastList extends ApiModel
 {
@@ -63,5 +64,51 @@ class SmsBroadcastList extends ApiModel
 
     public function smsBroadcast() {
         return $this->hasMany(SmsBroadcast::class);
+    }
+
+    public function sender(){
+        return $this->belongsTo(MemberAccount::class, 'sender_id');
+    }
+
+
+    /**
+     * Format user activities description for Sms Broadcast List
+     * @override
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        $smsBdcastList = $this;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("sms")
+            ->setDescriptionForEvent(function (string $eventName) use ($smsBdcastList) {
+                if ($eventName == 'created') {
+                    return __("Added sms broadcast list \":name\" with type \":type\" and size \":size\" by sender \":sender\"", [
+                        "name" => $smsBdcastList->name,
+                        "type" => $smsBdcastList->type,
+                        'size' => $smsBdcastList->size,
+                        'sender' => $smsBdcastList->sender->member->name,
+                    ]);
+                }
+
+                if ($eventName == 'updated') {
+                    return __("Updated sms broadcast list \":name\" with type \":type\" and size \":size\" by sender \":sender\"", [
+                        "name" => $smsBdcastList->name,
+                        "type" => $smsBdcastList->type,
+                        'size' => $smsBdcastList->size,
+                        'sender' => $smsBdcastList->sender->member->name,
+                    ]);
+                }
+
+                if ($eventName == 'deleted') {
+                    return __("Deleted sms broadcast list \":name\" with type \":type\" and size \":size\" by sender \":sender\"", [
+                        "name" => $smsBdcastList->name,
+                        "type" => $smsBdcastList->type,
+                        'size' => $smsBdcastList->size,
+                        'sender' => $smsBdcastList->sender->member->name,
+                    ]);
+                }
+            });
     }
 }

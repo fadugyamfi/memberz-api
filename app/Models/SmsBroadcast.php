@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Scopes\LatestRecordsScope;
 use App\Scopes\SmsAccountScope;
 use App\Traits\SoftDeletesWithActiveFlag;
+use Spatie\Activitylog\LogOptions;
 
 class SmsBroadcast extends ApiModel
 {
@@ -71,5 +72,46 @@ class SmsBroadcast extends ApiModel
 
     public function scheduledBy() {
         return $this->belongsTo(OrganisationAccount::class, 'scheduled_by');
+    }
+
+     /**
+     * Format user activities description for Sms Broadcast
+     * @override
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        $smsBdcast = $this;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("sms")
+            ->setDescriptionForEvent(function (string $eventName) use ($smsBdcast) {
+                if ($eventName == 'created') {
+                    return __("Added sms broadcast with the paramaters: broadcast list \":bdcast_list\", \":bdcast_list_type\", organisation member category \":org_mem_cat\", and message \":message\"", [
+                        "bdcast_list" => $smsBdcast->smsBroadcastList->name,
+                        "bdcast_list_type" => $smsBdcast->smsBroadcastList->type,
+                        'org_mem_cat' => $smsBdcast->organisationMemberCategory->name,
+                        'message' => $smsBdcast->message
+                    ]);
+                }
+
+                if ($eventName == 'updated') {
+                    return __("Updated sms broadcast with the paramaters: broadcast list \":bdcast_list\", \":bdcast_list_type\", organisation member category \":org_mem_cat\", and message \":message\"", [
+                        "bdcast_list" => $smsBdcast->smsBroadcastList->name,
+                        "bdcast_list_type" => $smsBdcast->smsBroadcastList->type,
+                        'org_mem_cat' => $smsBdcast->organisationMemberCategory->name,
+                        'message' => $smsBdcast->message
+                    ]);
+                }
+
+                if ($eventName == 'deleted') {
+                    return __("Deleted sms broadcast with the paramaters: broadcast list \":bdcast_list\", \":bdcast_list_type\", organisation member category \":org_mem_cat\", and message \":message\"", [
+                        "bdcast_list" => $smsBdcast->smsBroadcastList->name,
+                        "bdcast_list_type" => $smsBdcast->smsBroadcastList->type,
+                        'org_mem_cat' => $smsBdcast->organisationMemberCategory->name,
+                        'message' => $smsBdcast->message
+                    ]);
+                }
+            });
     }
 }
