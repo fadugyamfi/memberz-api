@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Scopes\LatestRecordsScope;
 use App\Scopes\SmsAccountScope;
 use App\Traits\SoftDeletesWithActiveFlag;
+use Spatie\Activitylog\LogOptions;
 
 class SmsBroadcast extends ApiModel
 {
@@ -71,5 +72,53 @@ class SmsBroadcast extends ApiModel
 
     public function scheduledBy() {
         return $this->belongsTo(OrganisationAccount::class, 'scheduled_by');
+    }
+
+     /**
+     * Format user activities description for Sms Broadcast
+     * @override
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        $message = $this->message;
+        $for = "";
+        $for_name = "";
+
+        if ($this->module_sms_broadcast_list_id){
+            $for = "broadcast list";
+            $for_name = $this->smsBroadcastList->name;
+        } else {
+            $for = "organisation category";
+            $for_name = $this->organisationMemberCategory->name;
+        }
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("sms")
+            ->setDescriptionForEvent(function (string $eventName) use ($message, $for, $for_name) {
+                if ($eventName == 'created') {
+                    return __("Scheduled sms broadcast with message \":message\" and for \":for\" with name \":for_name\"", [
+                        "for" => $for,
+                        'for_name' => $for_name,
+                        'message' => $message
+                    ]);
+                }
+
+                if ($eventName == 'updated') {
+                    return __("Updated scheduled sms broadcast with message \":message\" and for \":for\" with name \":for_name\"", [
+                        "for" => $for,
+                        'for_name' => $for_name,
+                        'message' => $message
+                    ]);
+                }
+
+                if ($eventName == 'deleted') {
+                    return __("Deleted scheduled sms broadcast with message \":message\" and for \":for\" with name \":for_name\"", [
+                        "for" => $for,
+                        'for_name' => $for_name,
+                        'message' => $message
+                    ]);
+                }
+            });
     }
 }

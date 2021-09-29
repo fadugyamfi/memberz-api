@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
+use Spatie\Activitylog\LogOptions;
 
 class SmsAccount extends ApiModel
 {
@@ -88,5 +89,45 @@ class SmsAccount extends ApiModel
     public function setBonus($bonus_amount) {
         $this->bonus_balance = $bonus_amount;
         $this->save();
+    }
+
+    /**
+     * Format user activities description for Sms Account
+     * @override
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        $sender = $this->sender_id;
+        $org = $this->organisation->name;
+        $account_balance = $this->account_balance;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("sms")
+            ->setDescriptionForEvent(function (string $eventName) use ($sender, $org, $account_balance) {
+                if ($eventName == 'created') {
+                    return __("Added sms account with account balance of \":account_balance\" and sender id of \":sender\" for organisation \":org_name\"", [
+                        "account_balance" => $account_balance,
+                        "org_name" => $org,
+                        'sender' => $sender,
+                    ]);
+                }
+
+                if ($eventName == 'updated') {
+                    return __("Updated sms account with account balance of \":account_balance\" and sender id of \":sender\" for organisation \":org_name\"", [
+                        "account_balance" => $account_balance,
+                        "org_name" => $org,
+                        'sender' => $sender,
+                    ]);
+                }
+
+                if ($eventName == 'deleted') {
+                    return __("Deleted sms account with account balance of \":account_balance\" and sender id of \":sender\" for organisation \":org_name\"", [
+                        "account_balance" => $account_balance,
+                        "org_name" => $org,
+                        'sender' => $sender,
+                    ]);
+                }
+            });
     }
 }
