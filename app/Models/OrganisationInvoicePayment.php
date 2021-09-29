@@ -3,12 +3,17 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithDeletedFlag;
+use Illuminate\Database\Eloquent\Model;
+use LaravelApiBase\Models\ApiModelBehavior;
+use LaravelApiBase\Models\ApiModelInterface;
 
-class OrganisationInvoicePayment extends ApiModel
+class OrganisationInvoicePayment extends Model implements ApiModelInterface
 {
 
-    use SoftDeletesWithDeletedFlag;
+    use SoftDeletesWithDeletedFlag, ApiModelBehavior;
 
+    const CREATED_AT = 'created';
+    const UPDATED_AT = 'modified';
     const DELETED_AT = 'deleted';
 
     /**
