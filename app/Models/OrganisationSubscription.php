@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
-use DateInterval;
-use DateTime;
-use Exception;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
-class OrganisationSubscription extends ApiModel
+use Illuminate\Database\Eloquent\Model;
+use LaravelApiBase\Models\ApiModelBehavior;
+use LaravelApiBase\Models\ApiModelInterface;
+
+class OrganisationSubscription extends Model implements ApiModelInterface
 {
 
-    use BelongsToTenants;
+    use BelongsToTenants, ApiModelBehavior;
+
+    const CREATED_AT = 'created';
+    const UPDATED_AT = 'modified';
 
     /**
      * The database table used by the model.
@@ -98,7 +101,7 @@ class OrganisationSubscription extends ApiModel
         $now = new Carbon();
         $diff = $now->diff($sub_end_dt);
 
-        if( $this->subscription_type->billing_required == 'yes' ) {
+        if( $this->subscriptionType->billing_required == 'yes' ) {
             $days_remaining = $diff->days == 99999 || !$diff->days ? 0 : $diff->days;
             $total_diff = $sub_start_dt->diff($sub_end_dt);
             $total_days = $total_diff->days == 99999 || !$total_diff->days ? 0 : $total_diff->days;
@@ -118,7 +121,7 @@ class OrganisationSubscription extends ApiModel
     public function hasProrateDiscount() {
         $this->calculateRemainingBalance();
 
-        return $this->subscription_type->billing_required == 'yes'
+        return $this->subscriptionType->billing_required == 'yes'
             && $this->remaining_balance > OrganisationSubscription::MIN_ALLOWED_PRORATE_DAYS;
     }
 }

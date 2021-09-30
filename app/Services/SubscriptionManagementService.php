@@ -12,6 +12,7 @@ use DateInterval;
 use DateTime;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use NunoMazer\Samehouse\Facades\Landlord;
 
 class SubscriptionManagementService {
 
@@ -77,6 +78,16 @@ class SubscriptionManagementService {
             throw new Exception('Could not create subscription renewal entry');
         }
 
+        activity()
+            ->inLog("subscriptions")
+            ->causedBy(auth()->user())
+            ->performedOn($newSubscription)
+            ->event('renewal')
+            ->tap(function($activity) {
+                $activity->organisation_id = Landlord::getTenants()->first();
+            })
+            ->log(__("Created subscription renewal invoice"));
+
         return $newSubscription;
     }
 
@@ -111,6 +122,16 @@ class SubscriptionManagementService {
         if( !$newSubscription ) {
             throw new Exception('Could not create subscription upgrade entry');
         }
+
+        activity()
+            ->inLog("subscriptions")
+            ->causedBy(auth()->user())
+            ->performedOn($newSubscription)
+            ->event('upgrade')
+            ->tap(function($activity) {
+                $activity->organisation_id = Landlord::getTenants()->first();
+            })
+            ->log(__("Created subscription upgrade invoice"));
 
         return $newSubscription;
     }
