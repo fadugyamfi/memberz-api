@@ -4,17 +4,17 @@ namespace App\Models;
 
 use App\Notifications\AdminUserCreated;
 use App\Notifications\OrganisationAccountRoleChanged;
-use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\LogModelActivity;
+use App\Traits\SoftDeletesWithDeletedFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
 class OrganisationAccount extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithActiveFlag;
+    use BelongsToTenants, SoftDeletesWithDeletedFlag, LogModelActivity;
 
-    protected static $logTitle = "Organisation Account";
-    protected static $logName = "organisation_account";
+    const DELETED_AT = 'deleted';
 
     /**
      * The database table used by the model.
@@ -127,10 +127,10 @@ class OrganisationAccount extends ApiModel
 
         return LogOptions::defaults()
             ->logAll()
-            ->useLogName("organisation_account")
+            ->useLogName("roles_and_permissions")
             ->setDescriptionForEvent(function (string $eventName) use ($member, $org, $role) {
                 if ($eventName == 'created') {
-                    return __("Added member \":member\" of role \":role\" to organisation \":org_name\"", [
+                    return __("Created admin account for \":member\" with role \":role\"", [
                         "member" => $member->name,
                         "org_name" => $org->name,
                         'role' => $role->name,
@@ -138,7 +138,7 @@ class OrganisationAccount extends ApiModel
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated member \":member\" of role \":role\" to organisation \":org_name\"", [
+                    return __("Updated admin account of \":member\". Current role: \":role\"", [
                         "member" => $member->name,
                         "org_name" => $org->name,
                         'role' => $role->name,
@@ -146,7 +146,7 @@ class OrganisationAccount extends ApiModel
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted member \":member\" of role \":role\" to organisation \":org_name\"", [
+                    return __("Deleted admin account of \":member\" from \":org_name\"", [
                         "member" => $member->name,
                         "org_name" => $org->name,
                         'role' => $role->name,

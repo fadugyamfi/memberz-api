@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Http\Request;
 use NunoMazer\Samehouse\BelongsToTenants;
@@ -10,7 +11,7 @@ use Spatie\Activitylog\LogOptions;
 class OrganisationMember extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithActiveFlag;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, LogModelActivity;
 
     protected $table = 'organisation_members';
 

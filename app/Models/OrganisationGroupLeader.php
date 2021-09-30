@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
@@ -9,7 +10,7 @@ use Spatie\Activitylog\LogOptions;
 class OrganisationGroupLeader extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithActiveFlag;
+    use BelongsToTenants, SoftDeletesWithActiveFlag,LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -76,7 +77,7 @@ class OrganisationGroupLeader extends ApiModel
             ->useLogName("groups")
             ->setDescriptionForEvent(function (string $eventName) use ($leader, $org_name, $role, $group) {
                 if ($eventName == 'created') {
-                    return __("Added organisation leader \":leader\" for organisation \":org_name\" with role \":role\" and for group \":group\"", [
+                    return __("Made \":leader\" a leader of \":group\" in \":org_name\". Role: \":role\"", [
                         "org_name" => $org_name,
                         'role' => $role,
                         'group' => $group,
@@ -85,7 +86,7 @@ class OrganisationGroupLeader extends ApiModel
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated organisation leader \":leader\" for organisation \":org_name\" with role \":role\" and for group \":group\"", [
+                    return __("Updated group leader record for \":leader\" in \":org_name\". Current Role:  \":role\"", [
                         "org_name" => $org_name,
                         'role' => $role,
                         'group' => $group,
@@ -94,7 +95,7 @@ class OrganisationGroupLeader extends ApiModel
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted organisation leader \":leader\" for organisation \":org_name\" with role \":role\" and for group \":group\"", [
+                    return __("Deleted group leader record for \":leader\" in \":org_name\"", [
                         "org_name" => $org_name,
                         'role' => $role,
                         'group' => $group,

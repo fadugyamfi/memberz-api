@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Spatie\Permission\Traits\HasPermissions;
 use NunoMazer\Samehouse\BelongsToTenants;
@@ -10,7 +11,7 @@ use Spatie\Activitylog\LogOptions;
 class OrganisationRole extends ApiModel
 {
 
-    use BelongsToTenants, HasPermissions, SoftDeletesWithActiveFlag;
+    use BelongsToTenants, HasPermissions, SoftDeletesWithActiveFlag, LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -71,7 +72,7 @@ class OrganisationRole extends ApiModel
 
         return LogOptions::defaults()
             ->logAll()
-            ->useLogName("organisation_account")
+            ->useLogName("roles_and_permissions")
             ->setDescriptionForEvent(function (string $eventName) use ($org, $role) {
                 if ($eventName == 'created') {
                     return __("Added role \":role\" to :org_name", [

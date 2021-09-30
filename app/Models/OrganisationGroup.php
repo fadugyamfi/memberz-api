@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
@@ -9,7 +10,7 @@ use Spatie\Activitylog\LogOptions;
 class OrganisationGroup extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithActiveFlag;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -71,7 +72,7 @@ class OrganisationGroup extends ApiModel
             ->useLogName("groups")
             ->setDescriptionForEvent(function (string $eventName) use ($org, $name, $group_type) {
                 if ($eventName == 'created') {
-                    return __("Added organisation group \":name\" for organisation \":org_name\" with group type of \":group_type\"", [
+                    return __("Created group \":name\" in \":group_type\"", [
                         "org_name" => $org->name,
                         'name' => $name,
                         'group_type' => $group_type,
@@ -79,7 +80,7 @@ class OrganisationGroup extends ApiModel
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated organisation group \":name\" for organisation \":org_name\" with group type of \":group_type\"", [
+                    return __("Updated group \":name\" in \":group_type\"", [
                         "org_name" => $org->name,
                         'name' => $name,
                         'group_type' => $group_type,
@@ -87,7 +88,7 @@ class OrganisationGroup extends ApiModel
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted organisation group\":name\" for organisation \":org_name\" with group type of \":group_type\"", [
+                    return __("Deleted group \":name\" from \":group_type\" in \":org_name\"", [
                         "org_name" => $org->name,
                         'name' => $name,
                         'group_type' => $group_type,

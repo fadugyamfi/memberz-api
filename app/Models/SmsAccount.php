@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
@@ -9,7 +10,7 @@ use Spatie\Activitylog\LogOptions;
 class SmsAccount extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithActiveFlag;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -106,15 +107,20 @@ class SmsAccount extends ApiModel
             ->useLogName("sms")
             ->setDescriptionForEvent(function (string $eventName) use ($sender, $org, $account_balance) {
                 if ($eventName == 'created') {
-                    return __("Added sms account with account balance of \":account_balance\" and sender id of \":sender\" for organisation \":org_name\"", [
+                    return __("Created sms account with sender id \":sender\" for \":org_name\"", [
                         "account_balance" => $account_balance,
                         "org_name" => $org,
                         'sender' => $sender,
                     ]);
                 }
 
-                if ($eventName == 'updated') {
-                    return __("Updated sms account with account balance of \":account_balance\" and sender id of \":sender\" for organisation \":org_name\"", [
+                /**
+                 * Added an auth()->check() to prevent logging events when the SMS Account is updated
+                 * via background jobs which send the SMS messages. They will continually update the account
+                 * balance as messages are sent
+                 */
+                if ($eventName == 'updated' && auth()->check()) {
+                    return __("Updated sms account with sender id of \":sender\" for \":org_name\". Account balance: \":account_balance\" ", [
                         "account_balance" => $account_balance,
                         "org_name" => $org,
                         'sender' => $sender,
@@ -122,7 +128,7 @@ class SmsAccount extends ApiModel
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted sms account with account balance of \":account_balance\" and sender id of \":sender\" for organisation \":org_name\"", [
+                    return __("Deleted sms account for \":org_name\"", [
                         "account_balance" => $account_balance,
                         "org_name" => $org,
                         'sender' => $sender,
