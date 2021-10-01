@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
@@ -9,7 +10,7 @@ use Spatie\Activitylog\LogOptions;
 class OrganisationMemberGroup extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithActiveFlag;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -74,7 +75,7 @@ class OrganisationMemberGroup extends ApiModel
             ->useLogName("groups")
             ->setDescriptionForEvent(function (string $eventName) use ($member, $org_name, $group) {
                 if ($eventName == 'created') {
-                    return __("Assigned member \":member\" to group \":group\"", [
+                    return __("Assigned \":member\" to group \":group\"", [
                         "org_name" => $org_name,
                         'group' => $group,
                         'member' => $member
@@ -82,7 +83,7 @@ class OrganisationMemberGroup extends ApiModel
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated group assignment for member \":member\" to \":group\"", [
+                    return __("Updated group assignment for \":member\" to \":group\"", [
                         "org_name" => $org_name,
                         'group' => $group,
                         'member' => $member
@@ -90,7 +91,7 @@ class OrganisationMemberGroup extends ApiModel
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Unassigned member \":member\" from group \":group\"", [
+                    return __("Unassigned \":member\" from group \":group\"", [
                         "org_name" => $org_name,
                         'group' => $group,
                         'member' => $member

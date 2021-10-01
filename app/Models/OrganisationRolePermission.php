@@ -18,10 +18,6 @@ class OrganisationRolePermission extends Permission implements ApiModelInterface
 
     public $primaryKey = 'id';
 
-    protected static $logName = "user_management";
-    protected static $logFillable = true;
-    protected static $logAttributes = '*';
-
     /**
      * Protected columns from mass assignment
      */

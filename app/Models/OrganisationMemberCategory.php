@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Illuminate\Support\Str;
@@ -10,7 +11,7 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class OrganisationMemberCategory extends ApiModel
 {
-    use BelongsToTenants, SoftDeletesWithActiveFlag, HasRecursiveRelationships;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, HasRecursiveRelationships, LogModelActivity;
 
     public $tenantColumns = ['organisation_id'];
 
@@ -107,21 +108,21 @@ class OrganisationMemberCategory extends ApiModel
             ->useLogName("memberships")
             ->setDescriptionForEvent(function (string $eventName) use ($name, $org_name) {
                 if ($eventName == 'created') {
-                    return __("Added membership category \":name\" to organisation \":org_name\"", [
+                    return __("Added membership category \":name\" to \":org_name\"", [
                         "org_name" => $org_name,
                         'name' => $name,
                     ]);
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated membership category \":name\" in organisation \":org_name\"", [
+                    return __("Updated membership category \":name\" in \":org_name\"", [
                         "org_name" => $org_name,
                         'name' => $name,
                     ]);
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted membership category \":name\" from organisation \":org_name\"", [
+                    return __("Deleted membership category \":name\" from \":org_name\"", [
                         "org_name" => $org_name,
                         'name' => $name,
                     ]);

@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelActivity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Spatie\Activitylog\LogOptions;
 
 class Organisation extends ApiModel
 {
+    use LogModelActivity;
 
     protected $table = 'organisations';
-
-    protected static $logTitle = "Organisation";
-    protected static $logName = "organisation";
 
     protected $primaryKey = 'id';
 
@@ -68,8 +67,8 @@ class Organisation extends ApiModel
         }
 
         $this->slug = Str::slug($this->name) . '-' . rand(10000,99999);
-    } 
-    
+    }
+
     /**
     * Format user activities description for organisations
     * @override

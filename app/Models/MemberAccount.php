@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Mail\PasswordReset;
+use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -23,9 +24,6 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     const DELETED_AT = 'active';
 
     protected $table = 'member_accounts';
-
-    protected static $logTitle = "Member Account";
-    protected static $logName = "member_account";
 
     protected $primaryKey = 'id';
 

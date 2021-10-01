@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Database\Eloquent\Model;
 use NunoMazer\Samehouse\BelongsToTenants;
@@ -10,7 +11,7 @@ use Spatie\Activitylog\LogOptions;
 class OrganisationGroupType extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithActiveFlag;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -72,21 +73,21 @@ class OrganisationGroupType extends ApiModel
             ->useLogName("groups")
             ->setDescriptionForEvent(function (string $eventName) use ($org, $name) {
                 if ($eventName == 'created') {
-                    return __("Added organisation type \":name\" for organisation \":org_name\"", [
+                    return __("Added group type \":name\" to \":org_name\"", [
                         "org_name" => $org->name,
                         'name' => $name
                     ]);
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated organisation type \":name\" for organisation \":org_name\"", [
+                    return __("Updated group type \":name\" in \":org_name\"", [
                         "org_name" => $org->name,
                         'name' => $name
                     ]);
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted organisation type \":name\" for organisation \":org_name\"", [
+                    return __("Deleted group type \":name\" from \":org_name\"", [
                         "org_name" => $org->name,
                         'name' => $name
                     ]);

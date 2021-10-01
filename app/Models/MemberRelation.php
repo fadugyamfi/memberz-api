@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelActivity;
 use Spatie\Activitylog\LogOptions;
 
 class MemberRelation extends ApiModel
 {
+    use LogModelActivity;
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
     protected $table = 'member_relations';
-
-    protected static $logTitle = "Member Relation";
-    protected static $logName = "member_relation";
 
     protected $primaryKey = 'id';
 

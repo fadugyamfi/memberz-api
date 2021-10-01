@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-
+use App\Traits\LogModelActivity;
 use NunoMazer\Samehouse\BelongsToTenants;
 
 class OrganisationFileImport extends ApiModel
 {
 
-    use BelongsToTenants;
+    use BelongsToTenants, LogModelActivity;
 
     /**
      * The database table used by the model.

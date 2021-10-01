@@ -11,7 +11,7 @@ class ActivityLogResource extends ApiResource {
     {
         $data = array_merge(parent::toArray($request), [
             'causer' => $this->causer,
-            'log_display_name' => Str::title( Str::replaceArray('_', [' '], $this->log_name))
+            'log_display_name' => Str::title( Str::replace('_', ' ', $this->log_name) )
         ]);
 
         return $data;

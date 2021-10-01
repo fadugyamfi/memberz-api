@@ -4,13 +4,14 @@ namespace App\Models;
 
 use App\Scopes\LatestRecordsScope;
 use App\Scopes\SmsAccountScope;
+use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Spatie\Activitylog\LogOptions;
 
 class SmsBroadcast extends ApiModel
 {
 
-    use SoftDeletesWithActiveFlag;
+    use SoftDeletesWithActiveFlag, LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -80,16 +81,19 @@ class SmsBroadcast extends ApiModel
      */
     public function getActivitylogOptions(): LogOptions
     {
-        $message = $this->message;
+        $message = substr($this->message, 0, 50);
         $for = "";
         $for_name = "";
 
         if ($this->module_sms_broadcast_list_id){
             $for = "broadcast list";
             $for_name = $this->smsBroadcastList->name;
-        } else {
+        } else if( $this->organisation_member_category_id ) {
             $for = "organisation category";
             $for_name = $this->organisationMemberCategory->name;
+        } else {
+            $for = "all members";
+            $for_name = "All Members";
         }
 
         return LogOptions::defaults()
@@ -97,7 +101,7 @@ class SmsBroadcast extends ApiModel
             ->useLogName("sms")
             ->setDescriptionForEvent(function (string $eventName) use ($message, $for, $for_name) {
                 if ($eventName == 'created') {
-                    return __("Scheduled sms broadcast with message \":message\" and for \":for\" with name \":for_name\"", [
+                    return __("Scheduled sms broadcast to \":for_name\". Message: \":message ...\"", [
                         "for" => $for,
                         'for_name' => $for_name,
                         'message' => $message
@@ -105,7 +109,7 @@ class SmsBroadcast extends ApiModel
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated scheduled sms broadcast with message \":message\" and for \":for\" with name \":for_name\"", [
+                    return __("Updated scheduled sms broadcast to \":for_name\". Message: \":message ...\"", [
                         "for" => $for,
                         'for_name' => $for_name,
                         'message' => $message
@@ -113,7 +117,7 @@ class SmsBroadcast extends ApiModel
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted scheduled sms broadcast with message \":message\" and for \":for\" with name \":for_name\"", [
+                    return __("Deleted scheduled sms broadcast to \":for_name\". Message: \":message ...\"", [
                         "for" => $for,
                         'for_name' => $for_name,
                         'message' => $message

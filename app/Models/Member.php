@@ -2,20 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Spatie\Activitylog\LogOptions;
 
 class Member extends ApiModel
 {
 
-    use SoftDeletesWithActiveFlag;
+    use SoftDeletesWithActiveFlag, LogModelActivity;
 
     protected $table = 'members';
 
     protected $primaryKey = 'id';
-
-    protected static $logTitle = "Member";
-    protected static $logName = "member_profile";
 
     protected $guarded = ['id'];
     protected $fillable = ['title', 'first_name', 'middle_name', 'last_name', 'gender', 'dob', 'mobile_number', 'email', 'website', 'occupation', 'profession', 'business_name', 'active'];

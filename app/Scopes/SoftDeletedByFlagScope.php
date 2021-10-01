@@ -46,10 +46,7 @@ class SoftDeletedByFlagScope extends SoftDeletingScope {
 
         $builder->onDelete(function (Builder $builder) {
             $column = $this->getDeletedAtColumn($builder);
-
-            return $builder->update([
-                $column => 0 // $builder->getModel()->freshTimestampString(),
-            ]);
+            return $builder->update([ $column => 0 ]);
         });
     }
 }

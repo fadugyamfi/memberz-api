@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelActivity;
 use Spatie\Activitylog\LogOptions;
 
 class MemberImage extends ApiModel
 {
-    protected static $logTitle = "Member Image";
-    protected static $logName = "member_image";
+    use LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -83,9 +83,6 @@ class MemberImage extends ApiModel
 
     public function getActivitylogOptions(): LogOptions
     {
-        $title = static::$logTitle;
-        $name = static::$logName;
-
         $member = $this->member;
 
         return LogOptions::defaults()
@@ -94,9 +91,11 @@ class MemberImage extends ApiModel
             ->setDescriptionForEvent(function(string $eventName) use($member, $title, $name) {
                 if( $eventName == 'created' ) {
                     return __("Uploaded image to profile of :name", ["name" => $member->full_name]);
-}
+                }
 
-                return ucfirst($eventName) . " {$title} - {$name}";
+                if( $eventName == 'deleted' ) {
+                    return __("Deleted image for profile of :name", ["name" => $member->full_name]);
+                }
             });
     }
 }

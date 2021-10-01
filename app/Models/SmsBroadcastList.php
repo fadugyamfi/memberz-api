@@ -4,13 +4,14 @@ namespace App\Models;
 
 use App\Scopes\LatestRecordsScope;
 use App\Scopes\SmsAccountScope;
+use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Spatie\Activitylog\LogOptions;
 
 class SmsBroadcastList extends ApiModel
 {
 
-    use SoftDeletesWithActiveFlag;
+    use SoftDeletesWithActiveFlag, LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -80,7 +81,7 @@ class SmsBroadcastList extends ApiModel
             ->useLogName("sms")
             ->setDescriptionForEvent(function (string $eventName) use ($smsBdcastList) {
                 if ($eventName == 'created') {
-                    return __("Added sms broadcast list \":name\" with type \":type\" ,size \":size\" and sender id \":sender\"", [
+                    return __("Created broadcast list \":name\" with sender id \":sender\"", [
                         "name" => $smsBdcastList->name,
                         "type" => $smsBdcastList->type,
                         'size' => $smsBdcastList->size,
@@ -89,7 +90,7 @@ class SmsBroadcastList extends ApiModel
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated sms broadcast list \":name\" with type \":type\" ,size \":size\" and sender id \":sender\"", [
+                    return __("Updated broadcast list \":name\" with sender id \":sender\"", [
                         "name" => $smsBdcastList->name,
                         "type" => $smsBdcastList->type,
                         'size' => $smsBdcastList->size,
@@ -98,7 +99,7 @@ class SmsBroadcastList extends ApiModel
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted sms broadcast list \":name\" with type \":type\" ,size \":size\" and sender id \":sender\"", [
+                    return __("Deleted broadcast list \":name\" with sender id \":sender\"", [
                         "name" => $smsBdcastList->name,
                         "type" => $smsBdcastList->type,
                         'size' => $smsBdcastList->size,

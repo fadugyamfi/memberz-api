@@ -5,11 +5,12 @@ namespace App\Models;
 use App\Scopes\LatestRecordsScope;
 use App\Traits\SoftDeletesWithDeletedFlag;
 use App\Scopes\SmsAccountScope;
+use App\Traits\LogModelActivity;
 
 class SmsAccountTopup extends ApiModel
 {
 
-    use SoftDeletesWithDeletedFlag;
+    use SoftDeletesWithDeletedFlag, LogModelActivity;
 
     const DELETED_AT = 'deleted';
 
