@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelActivity;
+use Spatie\Activitylog\LogOptions;
 
-
-class MemberImage extends ApiModel  
+class MemberImage extends ApiModel
 {
+    use LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -51,17 +53,49 @@ class MemberImage extends ApiModel
         return $query->latest()->limit(1);
     }
 
+    public function member() {
+        return $this->belongsTo(Member::class);
+    }
+
     public function getUrlAttribute() {
-        $save_dir_root = config('app.file_upload_root_directory');
-        $host_server = config('app.file_upload_host_server');
+        if ( str_contains($this->file_path, 'storage') ) {
+            return url($this->file_path);
+        }
+
+        // old server implements
+        $save_dir_root = config('app.old_file_upload_root_directory');
+        $host_server = config('app.old_file_upload_host_server');
 
         return "{$host_server}{$save_dir_root}/{$this->file_path}/{$this->file_name}";
     }
 
     public function getThumbUrlAttribute() {
-        $save_dir_root = config('app.file_upload_root_directory');
-        $host_server = config('app.file_upload_host_server');
+        if ( str_contains($this->thumb_path, 'storage') ) {
+            return url($this->thumb_path);
+        }
+
+        // old server implementation
+        $save_dir_root = config('app.old_file_upload_root_directory');
+        $host_server = config('app.old_file_upload_host_server');
 
         return "{$host_server}{$save_dir_root}/{$this->thumb_path}/{$this->file_name}";
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $member = $this->member;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("member_profile")
+            ->setDescriptionForEvent(function(string $eventName) use($member, $title, $name) {
+                if( $eventName == 'created' ) {
+                    return __("Uploaded image to profile of :name", ["name" => $member->full_name]);
+                }
+
+                if( $eventName == 'deleted' ) {
+                    return __("Deleted image for profile of :name", ["name" => $member->full_name]);
+                }
+            });
     }
 }

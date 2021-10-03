@@ -3,7 +3,7 @@
 namespace App\Models;
 
 
-use Torzer\Awesome\Landlord\BelongsToTenants;
+use NunoMazer\Samehouse\BelongsToTenants;
 
 class OrganisationSetting extends ApiModel
 {
@@ -49,7 +49,7 @@ class OrganisationSetting extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisation_setting_type() {
+    public function organisationSettingType() {
         return $this->belongsTo(OrganisationSettingType::class);
     }
 }

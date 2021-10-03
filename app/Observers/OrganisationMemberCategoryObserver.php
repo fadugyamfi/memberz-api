@@ -22,9 +22,9 @@ class OrganisationMemberCategoryObserver
      */
     public function creating(OrganisationMemberCategory $category)
     {
-        $category->slug = Str::slug($category->name);
+        $category->generateSlug();
     }
-    
+
     /**
      * Handle the organisation member category "created" event.
      *
@@ -47,36 +47,5 @@ class OrganisationMemberCategoryObserver
         $this->unflagDefaultForOthers($category);
     }
 
-    /**
-     * Handle the organisation member category "deleted" event.
-     *
-     * @param  \App\OrganisationMemberCategory  $category
-     * @return void
-     */
-    public function deleted(OrganisationMemberCategory $category)
-    {
-        //
-    }
 
-    /**
-     * Handle the organisation member category "restored" event.
-     *
-     * @param  \App\OrganisationMemberCategory  $category
-     * @return void
-     */
-    public function restored(OrganisationMemberCategory $category)
-    {
-        //
-    }
-
-    /**
-     * Handle the organisation member category "force deleted" event.
-     *
-     * @param  \App\OrganisationMemberCategory  $category
-     * @return void
-     */
-    public function forceDeleted(OrganisationMemberCategory $category)
-    {
-        //
-    }
 }

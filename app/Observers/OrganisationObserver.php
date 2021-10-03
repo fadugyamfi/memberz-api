@@ -4,15 +4,14 @@ namespace App\Observers;
 
 use App\Models\Organisation;
 use App\Models\OrganisationAccount;
-use App\Models\OrganisationInvoice;
 use App\Models\OrganisationMember;
 use App\Models\OrganisationMemberCategory;
-use App\Models\OrganisationSubscription;
-use Illuminate\Support\Str;
+use App\Services\SubscriptionManagementService;
+use Ramsey\Uuid\Uuid;
 
 class OrganisationObserver
 {
-    
+
     /**
      * Handle the organisation "created" event.
      *
@@ -21,13 +20,11 @@ class OrganisationObserver
      */
     public function creating(Organisation $organisation)
     {
-        if( !$organisation->slug ) {
-            $organisation->slug = Str::slug($organisation->name) . '-' . rand(10000,99999);
-        }
-
+        $organisation->generateSlug();
+        $organisation->uuid = Uuid::uuid4();
         $organisation->active = 1;
     }
-    
+
     /**
      * Handle the organisation "created" event.
      *
@@ -38,55 +35,15 @@ class OrganisationObserver
     {
         $subscriptionTypeId = intval(request('subscription_type_id'));
         $subscriptionLength = intval(request('subscription_length'));
-        $organisationInvoice = OrganisationInvoice::createSubscriptionInvoice($organisation, $subscriptionTypeId, $subscriptionLength);
 
-        OrganisationSubscription::createNewSubscription($organisation->id, $subscriptionTypeId, $subscriptionLength, $organisationInvoice->id);
+        $subscriptionManagementService = new SubscriptionManagementService();
+        $subscriptionManagementService->createNewSubscription($organisation->id, $subscriptionTypeId, $subscriptionLength);
+
         $account = OrganisationAccount::createDefaultAccount($organisation);
+        $account->sendAccountCreatedNotification();
+
         $category = OrganisationMemberCategory::createDefault($organisation);
         OrganisationMember::createDefaultMember($organisation, $category, $account);
     }
 
-    /**
-     * Handle the organisation "updated" event.
-     *
-     * @param  \App\Organisation  $organisation
-     * @return void
-     */
-    public function updated(Organisation $organisation)
-    {
-        //
-    }
-
-    /**
-     * Handle the organisation "deleted" event.
-     *
-     * @param  \App\Organisation  $organisation
-     * @return void
-     */
-    public function deleted(Organisation $organisation)
-    {
-        //
-    }
-
-    /**
-     * Handle the organisation "restored" event.
-     *
-     * @param  \App\Organisation  $organisation
-     * @return void
-     */
-    public function restored(Organisation $organisation)
-    {
-        //
-    }
-
-    /**
-     * Handle the organisation "force deleted" event.
-     *
-     * @param  \App\Organisation  $organisation
-     * @return void
-     */
-    public function forceDeleted(Organisation $organisation)
-    {
-        //
-    }
 }

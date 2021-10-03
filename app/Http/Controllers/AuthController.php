@@ -2,33 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Member;
 use App\Models\MemberAccount;
-use Illuminate\Http\Request;
+use App\Services\AuthLogService;
 
+/**
+ * @group Auth
+ */
 class AuthController extends Controller
 {
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
+
+    private AuthLogService $authLogger;
+
+    public function __construct(AuthLogService $authLogger)
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->authLogger = $authLogger;
     }
 
     /**
+     * Login
+     *
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse
+     * @unauthenticated
      */
-    public function login()
+    public function login(LoginRequest $request)
     {
-        $credentials = request(['username', 'password']);
+        $credentials = $request->only(['username', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
             return $this->oldLoginAttempt();
         }
+
+        $this->authLogger->logLoginSuccess( auth()->user() );
 
         return $this->respondWithToken($token);
     }
@@ -45,13 +53,18 @@ class AuthController extends Controller
         $credentials['password'] = md5($credentials['password'] . $account->pass_salt);
 
         if (! $token = auth()->attempt($credentials)) {
+            $this->authLogger->logLoginFailure($account);
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+
+        $this->authLogger->logLoginSuccess($account);
 
         return $this->respondWithToken($token, true);
     }
 
     /**
+     * User Profile
+     *
      * Get the authenticated User.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -60,10 +73,8 @@ class AuthController extends Controller
     {
         $user = auth()->user();
         $memberAccount = MemberAccount::with([
-            'member.member_image' => function($q) {
-                $q->recent();
-            },
-            'organisation_account' => function($q) {
+            'member.profilePhoto',
+            'organisationAccounts' => function($q) {
                 $q->active()->with('organisation');
             }
         ])->find($user->id);
@@ -72,15 +83,19 @@ class AuthController extends Controller
     }
 
     /**
+     * Logout
+     *
      * Log the user out (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function logout()
     {
+        $this->authLogger->logLogout( auth()->user() );
+
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => __('Successfully logged out')]);
     }
 
     /**

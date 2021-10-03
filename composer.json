@@ -8,24 +8,33 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2",
-        "fadugyamfi/laravel-api-base": "^0.6.0",
+        "php": "^7.3|^8.0",
+        "doctrine/dbal": "^2.10",
+        "fadugyamfi/laravel-api-base": "dev-master",
         "fideloper/proxy": "^4.0",
-        "jaybizzle/laravel-migrations-organiser": "^4.2",
-        "laravel/framework": "^6.2",
-        "laravel/tinker": "^1.0",
-        "orangehill/iseed": "^2.6",
-        "oscarafdev/migrations-generator": "2.0.13",
-        "torzer/awesome-landlord": "^3.1",
-        "tymon/jwt-auth": "1.0.0-rc.5"
+        "fruitcake/laravel-cors": "^2.0",
+        "guzzlehttp/guzzle": "^7.0.1",
+        "intervention/image": "^2.6",
+        "laravel/framework": "^8.54",
+        "laravel/tinker": "^2.5",
+        "maatwebsite/excel": "4.0.x-dev",
+        "nunomazer/laravel-samehouse": "dev-master",
+        "propaganistas/laravel-phone": "dev-master",
+        "spatie/laravel-activitylog": "4.1.1",
+        "spatie/laravel-permission": "^3.6",
+        "staudenmeir/laravel-adjacency-list": "dev-master",
+        "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {
-        "facade/ignition": "^1.4",
-        "fzaninotto/faker": "^1.4",
+        "facade/ignition": "^2.5",
+        "fakerphp/faker": "1.17.x-dev",
+        "knuckleswtf/scribe": "^3.0",
         "laracademy/generators": "^2.0",
-        "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^3.0",
-        "phpunit/phpunit": "^8.0"
+        "laravel/sail": "^1.0.1",
+        "mockery/mockery": "^1.4.2",
+        "nunomaduro/collision": "^5.0",
+        "orangehill/iseed": "dev-master",
+        "phpunit/phpunit": "^9.3.3"
     },
     "config": {
         "optimize-autoloader": true,
@@ -39,13 +48,10 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
-            
-        },
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ]
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
@@ -53,7 +59,7 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
+    "prefer-stable": false,
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

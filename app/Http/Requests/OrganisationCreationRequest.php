@@ -16,6 +16,8 @@ class OrganisationCreationRequest extends ApiRequest
         return true;
     }
 
+
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,7 +27,7 @@ class OrganisationCreationRequest extends ApiRequest
     {
         return [
             'organisation_type_id' => 'required|numeric',
-            'name' => 'required|string', 
+            'name' => 'required|string',
             'slug' => 'nullable|string',
             'email' => 'required|email',
             'phone' => 'required|string',

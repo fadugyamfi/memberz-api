@@ -2,37 +2,55 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Mail\PasswordReset;
+use App\Traits\LogModelActivity;
+use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use LaravelApiBase\Models\CommonFunctions;
-use LaravelApiBase\Models\CommonModel;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use LaravelApiBase\Models\ApiModelBehavior;
+use LaravelApiBase\Models\ApiModelInterface;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Facades\Password;
+use Spatie\Activitylog\Traits\CausesActivity;
 
-class MemberAccount extends Authenticatable implements CommonModel, JWTSubject
+class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSubject
 {
+    use Notifiable, ApiModelBehavior, SoftDeletesWithActiveFlag, CausesActivity;
 
-    use Notifiable, CommonFunctions;
-
-    const CREATED_AT = 'created';
-    const UPDATED_AT = 'modified';
+    const DELETED_AT = 'active';
 
     protected $table = 'member_accounts';
 
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
-    protected $fillable = ['member_id', 'username', 'password', 'pass_salt', 'timezone', 'account_type', 'reset_requested', 'active', 'deleted'];
+    protected $fillable = ['member_id', 'username', 'password', 'pass_salt', 'timezone', 'account_type', 'reset_requested', 'active', 'deleted', 'email_verification_token'];
 
     protected $hidden = ['password', 'pass_salt'];
 
-    public function member() {
+    public function member()
+    {
         return $this->belongsTo(Member::class);
     }
 
-    public function organisation_account() {
-        return $this->hasMany(OrganisationAccount::class);
+    public function organisationAccounts()
+    {
+        return $this->hasMany(OrganisationAccount::class)->where('organisation_accounts.active', 1);
+    }
+
+    public function memberships() {
+        return $this->member->memberships();
+    }
+
+    public function getOrganisationIds() {
+        $accountIds = $this->organisationAccounts()->get()->pluck('organisation_id');
+        $membershipIds = $this->memberships()->select('organisation_id')->get()->pluck('organisation_id');
+
+        return collect($accountIds)->merge($membershipIds)->unique()->values();
     }
 
     /**
@@ -52,7 +70,11 @@ class MemberAccount extends Authenticatable implements CommonModel, JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        return [
+            'username' => $this->username,
+            'member_id' => $this->member_id,
+            'organisation_ids' => $this->getOrganisationIds(),
+        ];
     }
 
     /**
@@ -68,34 +90,80 @@ class MemberAccount extends Authenticatable implements CommonModel, JWTSubject
     /**
      * Validate if a string is an MD5 Hash
      */
-    function isValidMd5($md5 = '')
+    public function isValidMd5($md5 = '')
     {
         return preg_match('/^[a-f0-9]{32}$/', $md5);
     }
 
-    public function scopeActive($query) {
+    public function scopeActive($query)
+    {
         return $query->where('active', 1);
     }
 
-    public static function createTempAccount(int $member_id) {
+    public function createTempAccount(int $member_id) : self
+    {
         $existingAccount = self::where('member_id', $member_id)->active()->first();
 
-        if( $existingAccount ) {
+        if ($existingAccount) {
             return $existingAccount;
         }
 
         $member = Member::find($member_id);
 
-        if( !$member ) {
+        if (!$member) {
             Log::error("Could not create temporary member account. Member profile does not exist for member_id {$member_id}");
             return false;
         }
 
-        return self::create([
+        $member_account =  self::create([
             'member_id' => $member_id,
             'username' => $member->email,
-            'password' => Hash::make( rand(10000,99999) ),
-            'active' => 1
+            'password' => Hash::make(rand(10000, 99999)),
+            'active' => 1,
+        ]);
+
+        $this->sendSetPasswordNotification($member->email);
+
+        return $member_account;
+    }
+
+    /** Create new member accont */
+    public function createAccount(array $input): MemberAccount
+    {
+        return self::create([
+            'member_id' => $input['member_id'],
+            'username' => $input['username'],
+            'password' => bcrypt($input['password']),
+            'email_verification_token' => Str::random(30),
         ]);
     }
+
+    /**
+     * Send Set password email notification for temporary created accounts
+     */
+    public function sendSetPasswordNotification(string $username) : void {
+        $this->username = $username;
+        Password::sendResetLink(['username' => $username]);
+    }
+
+    /**
+     * Specifies what the email field is
+     */
+    public function getEmailForPasswordReset()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Overrides the default laravel sendPasswordResetNotification
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        Mail::to($this->username)->send(new PasswordReset($token));
+    }
+
+    public function unsentNotifications() {
+        return $this->unreadNotifications()->where('sent', 0);
+    }
+
 }

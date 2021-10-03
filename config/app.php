@@ -54,6 +54,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'web_url' => env('WEB_URL', 'http://localhost'),
+
     'asset_url' => env('ASSET_URL', null),
 
     /*
@@ -166,7 +168,7 @@ return [
          * Package Service Providers...
          */
         LaravelApiBase\Providers\LaravelApiBaseProvider::class,
-        Torzer\Awesome\Landlord\LandlordServiceProvider::class,
+        NunoMazer\Samehouse\LandlordServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -176,6 +178,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class
 
     ],
 
@@ -228,7 +231,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        'Landlord'   => Torzer\Awesome\Landlord\Facades\Landlord::class,
+        'Landlord'   => NunoMazer\Samehouse\Facades\Landlord::class,
+        'Image' => Intervention\Image\Facades\Image::class
 
     ],
 
@@ -236,6 +240,6 @@ return [
     /**
      * Old API Transposed values
      */
-    'file_upload_root_directory' => 'memberz/files',
-    'file_upload_host_server' => 'http://localhost/'
+    'old_file_upload_root_directory' => env('OLD_FILES_UPLOADS_DIRECTORY', 'memberz/files'),
+    'old_file_upload_host_server' => env('OLD_FILES_UPLOADS_DIRECTORY', 'http://localhost/')
 ];

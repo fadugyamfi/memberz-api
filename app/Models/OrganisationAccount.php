@@ -2,13 +2,19 @@
 
 namespace App\Models;
 
+use App\Notifications\AdminUserCreated;
+use App\Notifications\OrganisationAccountRoleChanged;
+use App\Traits\LogModelActivity;
+use App\Traits\SoftDeletesWithDeletedFlag;
+use NunoMazer\Samehouse\BelongsToTenants;
+use Spatie\Activitylog\LogOptions;
 
-use Torzer\Awesome\Landlord\BelongsToTenants;
-
-class OrganisationAccount extends ApiModel  
+class OrganisationAccount extends ApiModel
 {
 
-    use BelongsToTenants;
+    use BelongsToTenants, SoftDeletesWithDeletedFlag, LogModelActivity;
+
+    const DELETED_AT = 'deleted';
 
     /**
      * The database table used by the model.
@@ -45,34 +51,45 @@ class OrganisationAccount extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
-
-    public function organisation() {
+    public function organisation()
+    {
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisation_role() {
+    public function organisationRole()
+    {
         return $this->belongsTo(OrganisationRole::class);
     }
 
-    public function member_account() {
+    public function memberAccount()
+    {
         return $this->belongsTo(MemberAccount::class);
     }
 
-    public function scopeActive($query) {
-        $query->where('active', 1);
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
     }
 
-    public static function memberAccountOrganisationIds(int $member_account_id) {
-        return self::where('member_account_id', $member_account_id)->active()->get()->pluck('organisation_id')->all();
+    public function scopeOrganisationIds($query, int $member_account_id)
+    {
+        return $query->where('member_account_id', $member_account_id)->active()->get()->pluck('organisation_id')->all();
     }
 
     /**
      * Creates a default Administrator Account for the organisation
      */
-    public static function createDefaultAccount(Organisation $organisation) {
+    public static function createDefaultAccount(Organisation $organisation)
+    {
         $defaultRole = OrganisationRole::firstOrCreate(
             ['organisation_id' => $organisation->id, 'name' => 'Administrator'],
-            ['name' => 'Administrator', 'admin_access' => 1, 'weekly_activity_update' => 1, 'birthday_updates' => 1, 'active' => 1]
+            [
+                'name' => 'Administrator',
+                'admin_access' => 1,
+                'weekly_activity_update' => 1,
+                'birthday_updates' => 1,
+                'active' => 1,
+            ]
         );
 
         return self::create([
@@ -82,7 +99,59 @@ class OrganisationAccount extends ApiModel
             'notifications' => 1,
             'weekly_updates' => 1,
             'active' => 1,
-            'deleted' => 0
+            'deleted' => 0,
         ]);
+    }
+
+    public function sendAccountRoleChangedNotification(): void
+    {
+        $member_account = MemberAccount::find($this->member_account_id);
+        $member_account->notify(new OrganisationAccountRoleChanged($this->organisation_role_id, $this->organisation_id));
+    }
+
+    public function sendAccountCreatedNotification(): void
+    {
+        $member_account = MemberAccount::find($this->member_account_id);
+        $member_account->notify(new AdminUserCreated($this->organisation_role_id, $this->organisation_id));
+    }
+
+    /**
+     * Format user activities description for organisation account
+     * @override
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        $member = $this->memberAccount->member;
+        $org = $this->organisation;
+        $role = $this->organisationRole;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("roles_and_permissions")
+            ->setDescriptionForEvent(function (string $eventName) use ($member, $org, $role) {
+                if ($eventName == 'created') {
+                    return __("Created admin account for \":member\" with role \":role\"", [
+                        "member" => $member->name,
+                        "org_name" => $org->name,
+                        'role' => $role->name,
+                    ]);
+                }
+
+                if ($eventName == 'updated') {
+                    return __("Updated admin account of \":member\". Current role: \":role\"", [
+                        "member" => $member->name,
+                        "org_name" => $org->name,
+                        'role' => $role->name,
+                    ]);
+                }
+
+                if ($eventName == 'deleted') {
+                    return __("Deleted admin account of \":member\" from \":org_name\"", [
+                        "member" => $member->name,
+                        "org_name" => $org->name,
+                        'role' => $role->name,
+                    ]);
+                }
+            });
     }
 }

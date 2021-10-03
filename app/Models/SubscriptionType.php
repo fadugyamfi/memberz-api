@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithActiveFlag;
+use Carbon\Carbon;
 
-
-class SubscriptionType extends ApiModel  
+class SubscriptionType extends ApiModel
 {
 
-    
+    use SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.
@@ -21,7 +22,7 @@ class SubscriptionType extends ApiModel
      *
      * @var array
      */
-    protected $fillable = ['name', 'description', 'capacity', 'validity', 'currency_id', 'initial_price', 'renewal_price', 'billing_required', 'initial_sms_credit', 'monthly_sms_bonus', 'accounts', 'reporting', 'revenue_tracking', 'expenditure_tracking', 'events', 'featured', 'created', 'modified', 'promotional', 'active'];
+    protected $fillable = ['id', 'name', 'description', 'capacity', 'validity', 'currency_id', 'initial_price', 'renewal_price', 'billing_required', 'initial_sms_credit', 'monthly_sms_bonus', 'accounts', 'reporting', 'revenue_tracking', 'expenditure_tracking', 'events', 'featured', 'created', 'modified', 'promotional', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -45,7 +46,7 @@ class SubscriptionType extends ApiModel
     protected $dates = ['created', 'modified'];
 
 
-    public function organisation_subscription() {
+    public function organisationSubscriptions() {
         return $this->hasMany(OrganisationSubscription::class);
     }
 
@@ -53,4 +54,19 @@ class SubscriptionType extends ApiModel
         return $this->belongsTo(Currency::class);
     }
 
+    public function getValidityEndDate(): Carbon {
+        $end_dt = new Carbon();
+
+        switch( $this->validity ) {
+            case 'forever':
+                $end_dt->addYears(10);
+                break;
+
+            default:
+                $end_dt->addMonth(1);
+                break;
+        }
+
+        return $end_dt;
+    }
 }

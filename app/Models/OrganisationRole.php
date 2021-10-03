@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelActivity;
+use App\Traits\SoftDeletesWithActiveFlag;
+use Spatie\Permission\Traits\HasPermissions;
+use NunoMazer\Samehouse\BelongsToTenants;
+use Spatie\Activitylog\LogOptions;
 
-use Torzer\Awesome\Landlord\BelongsToTenants;
-
-class OrganisationRole extends ApiModel  
+class OrganisationRole extends ApiModel
 {
 
-    use BelongsToTenants;
+    use BelongsToTenants, HasPermissions, SoftDeletesWithActiveFlag, LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -36,7 +39,7 @@ class OrganisationRole extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['admin_access' => 'boolean', 'weekly_activity_update' => 'boolean', 'birthday_updates' => 'boolean'];
+    protected $casts = ['admin_access' => 'boolean', 'weekly_activity_update' => 'boolean', 'birthday_updates' => 'boolean', 'active' => 'boolean'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -49,4 +52,49 @@ class OrganisationRole extends ApiModel
     public function organisation() {
         return $this->belongsTo(Organisation::class);
     }
+
+    public function organisationAccounts() {
+        return $this->hasMany(OrganisationAccount::class);
+    }
+
+    public function isAdmin() {
+        return $this->admin_access == 1;
+     }
+
+      /**
+     * Format user activities description for organisation role
+     * @override
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        $org = $this->organisation;
+        $role = $this->name;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("roles_and_permissions")
+            ->setDescriptionForEvent(function (string $eventName) use ($org, $role) {
+                if ($eventName == 'created') {
+                    return __("Added role \":role\" to :org_name", [
+                        "org_name" => $org->name,
+                        'role' => $role,
+                    ]);
+                }
+
+                if ($eventName == 'updated') {
+                    return __("Updated role \":role\" in :org_name", [
+                        "org_name" => $org->name,
+                        'role' => $role,
+                    ]);
+                }
+
+                if ($eventName == 'deleted') {
+                    return __("Deleted role \":role\" from :org_name", [
+                        "org_name" => $org->name,
+                        'role' => $role,
+                    ]);
+                }
+            });
+    }
+
 }

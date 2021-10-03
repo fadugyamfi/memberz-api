@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelActivity;
+use NunoMazer\Samehouse\BelongsToTenants;
 
-use Torzer\Awesome\Landlord\BelongsToTenants;
-
-class OrganisationFileImport extends ApiModel  
+class OrganisationFileImport extends ApiModel
 {
 
-    use BelongsToTenants;
+    use BelongsToTenants, LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -44,5 +44,14 @@ class OrganisationFileImport extends ApiModel
      * @var array
      */
     protected $dates = ['created', 'modified'];
+
+
+    public function member_account() {
+        return $this->belongsTo(MemberAccount::class);
+    }
+
+    public function organisation() {
+        return $this->belongsTo(Organisation::class);
+    }
 
 }

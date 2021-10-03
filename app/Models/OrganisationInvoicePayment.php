@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithDeletedFlag;
+use Illuminate\Database\Eloquent\Model;
+use LaravelApiBase\Models\ApiModelBehavior;
+use LaravelApiBase\Models\ApiModelInterface;
 
-use Torzer\Awesome\Landlord\BelongsToTenants;
-
-class OrganisationInvoicePayment extends ApiModel  
+class OrganisationInvoicePayment extends Model implements ApiModelInterface
 {
 
-    use BelongsToTenants;
-    
+    use SoftDeletesWithDeletedFlag, ApiModelBehavior;
+
+    const CREATED_AT = 'created';
+    const UPDATED_AT = 'modified';
+    const DELETED_AT = 'deleted';
 
     /**
      * The database table used by the model.
@@ -46,7 +51,8 @@ class OrganisationInvoicePayment extends ApiModel
      */
     protected $dates = ['payment_date', 'created', 'modified'];
 
-    public function organisation_invoice() {
+    public function organisationInvoice()
+    {
         return $this->belongsTo(OrganisationInvoice::class);
     }
 }

@@ -2,13 +2,19 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithDeletedFlag;
+use Illuminate\Database\Eloquent\Model;
+use LaravelApiBase\Models\ApiModelBehavior;
+use LaravelApiBase\Models\ApiModelInterface;
 
-use Torzer\Awesome\Landlord\BelongsToTenants;
-
-class OrganisationInvoiceItem extends ApiModel  
+class OrganisationInvoiceItem extends Model implements ApiModelInterface
 {
 
-    use BelongsToTenants;
+    use SoftDeletesWithDeletedFlag, ApiModelBehavior;
+
+    const CREATED_AT = 'created';
+    const UPDATED_AT = 'modified';
+    const DELETED_AT = 'deleted';
 
     /**
      * The database table used by the model.
@@ -45,11 +51,13 @@ class OrganisationInvoiceItem extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
-    public function organisation() {
+    public function organisation()
+    {
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisation_invoice() {
+    public function organisationInvoice()
+    {
         return $this->belongsTo(OrganisationInvoice::class);
     }
 }
