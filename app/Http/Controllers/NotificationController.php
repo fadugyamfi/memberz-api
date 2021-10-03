@@ -6,6 +6,9 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 use LaravelApiBase\Http\Controllers\ApiController;
 
+/**
+ * @group Notifications
+ */
 class NotificationController extends ApiController
 {
 
@@ -80,6 +83,9 @@ class NotificationController extends ApiController
         return response()->json(['message' => 'Notifications marked as read']);
     }
 
+    /**
+     * Get Unread
+     */
     public function unread(Request $request) {
         $limit = $request->limit ?? 10;
         $notifications = $request->user()->unreadNotifications()->paginate($limit);

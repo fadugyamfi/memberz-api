@@ -24,7 +24,7 @@ use LaravelApiBase\Http\Requests\ApiRequest;
  * @bodyParam receipt_no string required Receipt no
  * @bodyParam receipt_dt date required  Receipt date
  */
-class MemberContributionRequest extends ApiRequest
+class ContributionRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
