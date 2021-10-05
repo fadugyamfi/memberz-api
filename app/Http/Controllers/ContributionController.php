@@ -36,7 +36,7 @@ class ContributionController extends Controller
      *
      * @apiResourceModel App\Models\Contribution
      */
-    public function update(Request $request, $id)
+    public function update(ContributionRequest $request, $id)
     {
         return $this->apiUpdate($request, $id);
     }
