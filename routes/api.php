@@ -107,6 +107,8 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('contributions', 'ContributionController');
         Route::apiResource('contribution_receipts', 'ContributionReceiptController');
         Route::apiResource('contribution_receipt_settings', 'ContributionReceiptSettingController')->only(['index', 'update']);
+
+        Route::apiResource('organisation_anniversaries', 'OrganisationAnniversaryController');
     });
 
     Route::get('activity_logs/search', 'ActivityLogController@search');
@@ -115,3 +117,4 @@ Route::middleware(['auth:api'])->group(function () {
 
 // Allow for SSE notifications subscription
 Route::get('notifications/subscribe/{member_id}', 'NotificationController@subscribe');
+Route::apiResource('organisation_anniversaries', 'OrganisationAnniversaryController');
