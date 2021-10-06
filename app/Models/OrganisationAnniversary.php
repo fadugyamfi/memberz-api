@@ -65,7 +65,7 @@ class OrganisationAnniversary extends ApiModel
 
         return LogOptions::defaults()
             ->logAll()
-            ->useLogName("roles_and_permissions")
+            ->useLogName("member_profile")
             ->setDescriptionForEvent(function (string $eventName) use ($anniversary) {
                 if ($eventName == 'created') {
                     return __("Created anniversary type \":name\" for \":org\"", [
