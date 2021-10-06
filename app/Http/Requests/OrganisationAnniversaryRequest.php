@@ -25,7 +25,7 @@ class OrganisationAnniversaryRequest extends ApiRequest
     public function rules()
     {
         return [
-            'organisation_id' => 'required|numeric',
+            'organisation_id' => 'required|numeric|exists:organisations,id',
             'name' => 'string|required|max:50|min:5',
             'description' => 'nullable|string|max:100|min:5',
             'organisation_member_anniversary_count' => 'nullable|numeric',

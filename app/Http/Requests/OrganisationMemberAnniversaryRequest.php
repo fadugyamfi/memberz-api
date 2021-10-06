@@ -4,8 +4,8 @@ namespace App\Http\Requests;
 
 use LaravelApiBase\Http\Requests\ApiRequest;
 
-class OrganisationSubscriptionRenewalRequest extends ApiRequest {
-
+class OrganisationMemberAnniversaryRequest extends ApiRequest
+{
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -16,6 +16,7 @@ class OrganisationSubscriptionRenewalRequest extends ApiRequest {
         return true;
     }
 
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,7 +26,10 @@ class OrganisationSubscriptionRenewalRequest extends ApiRequest {
     {
         return [
             'organisation_id' => 'required|numeric|exists:organisations,id',
-            'length' => 'required|numeric',
+            'organisation_member_id' => 'required|numeric|exists:organisation_members,id',
+            'organisation_anniversary_id' => 'required|numeric|exists:organisation_anniversaries,id',
+            'value' => 'nullable|date',
+            'active' => 'nullable|boolean'
         ];
     }
 }

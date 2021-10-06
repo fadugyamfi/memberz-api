@@ -109,6 +109,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('contribution_receipt_settings', 'ContributionReceiptSettingController')->only(['index', 'update']);
 
         Route::apiResource('organisation_anniversaries', 'OrganisationAnniversaryController');
+        Route::apiResource('organisation_member_anniversaries', 'OrganisationMemberAnniversaryController');
     });
 
     Route::get('activity_logs/search', 'ActivityLogController@search');

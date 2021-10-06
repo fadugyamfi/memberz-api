@@ -19,8 +19,7 @@ class OrganisationMember extends ApiModel
 
     protected $guarded = ['id'];
     protected $fillable = [
-        'member_id', 'organisation_id', 'organisation_no', 'organisation_member_category_id', 'status', 'source',
-        'approved', 'approved_by', 'active'
+        'member_id', 'organisation_id', 'organisation_no', 'organisation_member_category_id', 'status', 'source', 'approved', 'approved_by', 'active'
     ];
 
     public function member() {
