@@ -68,25 +68,22 @@ class OrganisationAnniversary extends ApiModel
             ->useLogName("roles_and_permissions")
             ->setDescriptionForEvent(function (string $eventName) use ($anniversary) {
                 if ($eventName == 'created') {
-                    return __("Created anniversary \":name\" with message \":message\" for organisation \":org\"", [
+                    return __("Created anniversary type \":name\" for \":org\"", [
                         "name" => $anniversary->name,
-                        "message" => $anniversary->message,
                         'org' => $$anniversary->organisation->name,
                     ]);
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated anniversary \":name\" with message \":message\" for organisation \":org\"", [
+                    return __("Updated anniversary type \":name\" for \":org\"", [
                         "name" => $anniversary->name,
-                        "message" => $anniversary->message,
                         'org' => $$anniversary->organisation->name,
                     ]);
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted anniversary \":name\" with message \":message\" for organisation \":org\"", [
+                    return __("Deleted anniversary type \":name\" for \":org\"", [
                         "name" => $anniversary->name,
-                        "message" => $anniversary->message,
                         'org' => $$anniversary->organisation->name,
                     ]);
                 }

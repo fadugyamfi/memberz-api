@@ -31,7 +31,7 @@ class OrganisationAnniversaryRequest extends ApiRequest
             'organisation_member_anniversary_count' => 'nullable|numeric',
             'show_on_reg_forms' => 'nullable|boolean',
             'send_anniversary_message' => 'nullable|boolean',
-            'message' => 'message|min:5|string',
+            'message' => 'nullable|min:5|string',
             'notify_on_anniversary' => 'nullable|boolean',
             'active' => 'nullable|boolean'
         ];
