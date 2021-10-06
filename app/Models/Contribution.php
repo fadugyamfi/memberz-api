@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
 
-class MemberContribution extends ApiModel
+class Contribution extends ApiModel
 {
     use BelongsToTenants, SoftDeletesWithActiveFlag;
 

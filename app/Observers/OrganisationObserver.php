@@ -2,6 +2,8 @@
 
 namespace App\Observers;
 
+use App\Models\ContributionReceiptSetting;
+use App\Models\Currency;
 use App\Models\Organisation;
 use App\Models\OrganisationAccount;
 use App\Models\OrganisationMember;
@@ -15,7 +17,7 @@ class OrganisationObserver
     /**
      * Handle the organisation "created" event.
      *
-     * @param  \App\Organisation  $organisation
+     * @param  \App\Models\Organisation  $organisation
      * @return void
      */
     public function creating(Organisation $organisation)
@@ -23,12 +25,16 @@ class OrganisationObserver
         $organisation->generateSlug();
         $organisation->uuid = Uuid::uuid4();
         $organisation->active = 1;
+
+        if( $organisation->country_id ) {
+            $organisation->currency_id = Currency::where('country_id', $organisation->country_id)->first()->id;
+        }
     }
 
     /**
      * Handle the organisation "created" event.
      *
-     * @param  \App\Organisation  $organisation
+     * @param  \App\Models\Organisation  $organisation
      * @return void
      */
     public function created(Organisation $organisation)
@@ -44,6 +50,25 @@ class OrganisationObserver
 
         $category = OrganisationMemberCategory::createDefault($organisation);
         OrganisationMember::createDefaultMember($organisation, $category, $account);
+
+        // do finance module setup
+        $this->setupContributionReceiptSettings($organisation);
     }
 
+    /**
+     * @param \App\Models\Organisation $organisation
+     *
+     * @return \App\Models\ContributionReceiptSetting
+     */
+    public function setupContributionReceiptSettings(Organisation $organisation): ContributionReceiptSetting {
+        return ContributionReceiptSetting::firstOrCreate([
+            'organisation_id' => $organisation->id
+        ],[
+            'receipt_mode' => 'manual',
+            'receipt_counter' => 1,
+            'default_currency' => $organisation->currency_id,
+            'receipt_prefix' => null,
+            'receipt_postfix' => null,
+        ]);
+    }
 }

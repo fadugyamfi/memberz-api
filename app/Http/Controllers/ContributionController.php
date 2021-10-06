@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MemberContributionRequest;
-use App\Models\MemberContribution;
+use App\Http\Requests\ContributionRequest;
+use App\Models\Contribution;
 use Illuminate\Http\Request;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
@@ -17,16 +17,16 @@ class ContributionController extends Controller
         update as apiUpdate;
     }
 
-    public function __construct(MemberContribution $memberContribution) {
-        $this->setApiModel($memberContribution);
+    public function __construct(Contribution $contribution) {
+        $this->setApiModel($contribution);
     }
 
     /**
      * Create Contribution
      *
-     * @apiResourceModel App\Models\MemberContribution
+     * @apiResourceModel App\Models\Contribution
      */
-    public function store(MemberContributionRequest $request)
+    public function store(ContributionRequest $request)
     {
         return $this->apiStore($request);
     }
@@ -34,9 +34,9 @@ class ContributionController extends Controller
     /**
      * Update Contribution
      *
-     * @apiResourceModel App\Models\MemberContribution
+     * @apiResourceModel App\Models\Contribution
      */
-    public function update(Request $request, $id)
+    public function update(ContributionRequest $request, $id)
     {
         return $this->apiUpdate($request, $id);
     }

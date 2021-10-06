@@ -72,6 +72,11 @@ class AuthController extends Controller
     public function me()
     {
         $user = auth()->user();
+
+        if( !$user ) {
+            return response()->json(['message' => __("Unauthenticated")], 404);
+        }
+
         $memberAccount = MemberAccount::with([
             'member.profilePhoto',
             'organisationAccounts' => function($q) {

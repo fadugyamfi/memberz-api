@@ -57,6 +57,6 @@ class ContributionReceipt extends ApiModel
     }
 
     public function contributions() {
-        return $this->hasMany(MemberContribution::class, 'module_contribution_receipt_id');
+        return $this->hasMany(Contribution::class, 'module_contribution_receipt_id');
     }
 }
