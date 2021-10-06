@@ -31,13 +31,13 @@ class NotificationController extends ApiController
             while(true) {
                 $data = null;
                 $data = $user->unsentNotifications()->get();
-
+    
                 echo "retry: 60000\n\n"; // retry connection after 60 seconds
                 echo 'data: ' . json_encode($data) . "\n\n";
                 ob_flush();
                 flush();
                 sleep(5);
-
+    
                 /* update the table rows as sent */
                 if( $data ) {
                     Notification::whereIn('id', $data->pluck('id')->all())->update(['sent' => 1]);
