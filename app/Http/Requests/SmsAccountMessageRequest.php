@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Propaganistas\LaravelPhone\Rules\Phone;
 
 class SmsAccountMessageRequest extends FormRequest
 {
@@ -26,8 +25,8 @@ class SmsAccountMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'module_sms_account_id' => 'required|numeric',
-            'member_id' => ['required', 'numeric'],
+            'module_sms_account_id' => 'required|numeric|exists:module_sms_accounts,id',
+            'member_id' => ['required', 'numeric', 'exists:members,id'],
             'to' => ['required'],
             'message' => ['required', 'string'],
             'sent_by' => ['sometimes', 'numeric', Rule::exists('member_accounts', 'id')]

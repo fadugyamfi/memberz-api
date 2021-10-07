@@ -24,9 +24,9 @@ class OrganisationSubscriptionRequest extends ApiRequest
     public function rules()
     {
         return [
-            'organisation_id' => 'required|numeric',
-            'subscription_type_id' => 'required|numeric',
-            'organisation_invoice_id' => 'numeric',
+            'organisation_id' => 'required|numeric|exists:organisations,id',
+            'subscription_type_id' => 'required|numeric|exists:subscription_types,id',
+            'organisation_invoice_id' => 'numeric|exists:organisation_invoices,id',
             'length' => 'numeric|nullable',
             'current' => 'in:0,1|nullable',
             'start_dt' => 'datetime|nullable',
