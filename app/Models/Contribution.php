@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
+use Illuminate\Database\Eloquent\Builder;
 use NunoMazer\Samehouse\BelongsToTenants;
 
 class Contribution extends ApiModel
@@ -78,6 +79,16 @@ class Contribution extends ApiModel
 
     public function scopeActive($query) {
         return $query->where('active', 1);
+    }
+
+    public function scopeGetSummaryData(Builder $query , string $receipt_dt, Contribution $contribution) : Builder {
+        $receipt_ids = ContributionReceipt::whereDate('receipt_dt', $receipt_dt)->pluck('id');
+
+        return $query->active()->where([
+            ['organisation_id', '=', $contribution->organisation_id],
+            ['module_contribution_type_id', '=', $contribution->module_contribution_type_id],
+            ['currency_id', '=',  $contribution->currency_id],
+        ])->whereIn('module_contribution_receipt_id', $receipt_ids);
     }
 
 }
