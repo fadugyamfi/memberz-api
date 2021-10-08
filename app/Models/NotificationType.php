@@ -5,8 +5,6 @@ namespace App\Models;
 class NotificationType extends ApiModel  
 {
 
-    
-
     /**
      * The database table used by the model.
      *
