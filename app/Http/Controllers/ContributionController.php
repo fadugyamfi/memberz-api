@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ContributionRequest;
 use App\Models\Contribution;
-use Illuminate\Http\Request;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
 /**
@@ -39,5 +38,9 @@ class ContributionController extends Controller
     public function update(ContributionRequest $request, $id)
     {
         return $this->apiUpdate($request, $id);
+    }
+
+    public function getAvailableContributionYears(){
+        return Contribution::latest('year')->distinct()->get();
     }
 }
