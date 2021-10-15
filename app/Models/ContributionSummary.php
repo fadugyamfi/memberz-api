@@ -80,7 +80,7 @@ class ContributionSummary extends ApiModel
         ]);
     }
 
-    public function createSummary(string $receipt_dt, $amount = 0.0, Contribution $contribution) : void {
+    public function createSummary(string $receipt_dt, $amount = 0.0, Contribution $contribution = null) : void {
         $week = $this->getWeeks($receipt_dt, 'Monday');
         $year = date('Y', strtotime($receipt_dt));
         $month = date('m', strtotime($receipt_dt));
