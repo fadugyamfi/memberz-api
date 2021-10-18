@@ -4,9 +4,6 @@ namespace App\Models;
 
 class AccountRole extends ApiModel  
 {
-
-    
-
     /**
      * The database table used by the model.
      *
