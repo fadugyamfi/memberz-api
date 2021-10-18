@@ -41,6 +41,6 @@ class ContributionController extends Controller
     }
 
     public function getAvailableContributionYears(){
-        return Contribution::latest('year')->distinct()->get();
+        return Contribution::select('year')->distinct()->latest('year')->get()->pluck('year');
     }
 }
