@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
 
-class ContributionType extends ApiModel  
+class ContributionType extends ApiModel
 {
     use BelongsToTenants, SoftDeletesWithActiveFlag;
 
@@ -55,6 +55,10 @@ class ContributionType extends ApiModel
 
     public function scopeActive($query) {
         return $query->where('active', 1);
+    }
+
+    public function contribution() {
+        return $this->hasMany(Contribution::class, 'module_contribution_type_id');
     }
 
 }

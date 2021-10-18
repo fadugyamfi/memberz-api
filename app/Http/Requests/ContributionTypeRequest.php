@@ -35,9 +35,9 @@ class ContributionTypeRequest extends ApiRequest
     public function rules()
     {
         return [
-            'organisation_id' => 'required|numeric|exists:organisations',
+            'organisation_id' => 'required|numeric|exists:organisations,id',
             'name' => 'nullable|string|max:50',
-            'member_required' => 'nullable|in:Required, Not Required',
+            'member_required' => 'nullable|in:Required,Not Required',
             'description' => 'nullable|string|max:200',
             'fix_amount_per_period' => 'nullable|boolean',
             'currency_id' => 'nullable|numeric|exits:currencies,id',
