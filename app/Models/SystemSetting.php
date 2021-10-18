@@ -1,12 +1,8 @@
 <?php
 
 namespace App\Models;
-
 class SystemSetting extends ApiModel  
 {
-
-    
-
     /**
      * The database table used by the model.
      *
