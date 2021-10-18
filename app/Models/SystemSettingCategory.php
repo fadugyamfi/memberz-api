@@ -2,13 +2,8 @@
 
 namespace App\Models;
 
-
-
 class SystemSettingCategory extends ApiModel
 {
-
-    
-
     /**
      * The database table used by the model.
      *
