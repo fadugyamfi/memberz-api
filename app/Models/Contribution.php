@@ -81,6 +81,10 @@ class Contribution extends ApiModel
         return $query->where('active', 1);
     }
 
+    public static function getLatestYears() : Builder {
+        return self::select('year')->distinct()->latest('year');
+    }
+
     public function scopeGetSummaryData(Builder $query , string $receipt_dt, Contribution $contribution) : Builder {
         $receipt_ids = ContributionReceipt::whereDate('receipt_dt', $receipt_dt)->pluck('id');
 

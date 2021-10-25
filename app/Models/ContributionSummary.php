@@ -64,59 +64,75 @@ class ContributionSummary extends ApiModel
         return $this->belongsTo(Currency::class);
     }
 
-    public function scopeGetByOrganisation(Builder $query, int $org_id) : Builder {
+    public function scopeGetByOrganisation(Builder $query, int $org_id): Builder
+    {
         return $query->where('organisation_id', $org_id);
     }
 
-    public function scopeGetByContributionTypeId(Builder $query, int $contribution_type_id) : Builder {
+    public function scopeGetByContributionTypeId(Builder $query, int $contribution_type_id): Builder
+    {
         return $query->where('module_contribution_type_id', $contribution_type_id);
     }
 
-    public function scopeGetByYear(Builder $query, int $year) : Builder {
-       return $query->where('year', $year);
+    public function scopeGetByYear(Builder $query, int $year): Builder
+    {
+        return $query->where('year', $year);
     }
 
-    public function scopeGetByMonth(Builder $query, int $month) : Builder {
+    public function scopeGetByMonth(Builder $query, int $month): Builder
+    {
         return $query->where('month', $month);
     }
 
-    public function scopeGetByWeek(Builder $query, int $week) : Builder {
+    public function scopeGetByWeek(Builder $query, int $week): Builder
+    {
         return $query->where('week', $week);
     }
 
-    public function scopeGetByCurrencyId(Builder $query, int $currency_id) : Builder {
+    public function scopeGetByCurrencyId(Builder $query, int $currency_id): Builder
+    {
         return $query->where('currency_id', $currency_id);
     }
 
-    public function scopeGetByReceiptDt(Builder $query, string $receipt_dt) : Builder {
+    public function scopeGetByReceiptDt(Builder $query, string $receipt_dt): Builder
+    {
         return $query->where('receipt_dt', $receipt_dt);
     }
 
-    public function scopeGetExistingSummaryRecord(Builder $builder, string $receipt_dt,  Contribution $contribution) : Builder
+    public function scopeGetExistingSummaryRecord(Builder $builder, string $receipt_dt, Contribution $contribution): Builder
     {
         $week = $this->getWeeks($receipt_dt, 'Monday');
         $year = date('Y', strtotime($receipt_dt));
         $month = date('m', strtotime($receipt_dt));
 
         return $builder
-                ->getByOrganisation($contribution->organisation_id)
-                ->getContributionTypeId($contribution->module_contribution_type_id)
-                ->getByReceiptDt($receipt_dt)
-                ->getByWeek($week)
-                ->getByYear($year)
-                ->getByMonth($month)
-                ->getByCurrencyId($contribution->currency_id);
+            ->getByOrganisation($contribution->organisation_id)
+            ->getContributionTypeId($contribution->module_contribution_type_id)
+            ->getByReceiptDt($receipt_dt)
+            ->getByWeek($week)
+            ->getByYear($year)
+            ->getByMonth($month)
+            ->getByCurrencyId($contribution->currency_id);
     }
 
-    public function scopeGetReportByYear(Builder $query, int $year, int $contribution_type_id) : Builder {
-        return $query->getByOrganisationId(Landlord::getTenants()->first())->getByYear($year)->getByContributionTypeId($contribution_type_id);
+    public function scopeGetReportByYear(Builder $query, int $year, int $contribution_type_id = null): Builder
+    {
+        $query = $query->getByOrganisationId(Landlord::getTenants()->first())->getByYear($year);
+
+        if ($contribution_type_id) {
+            $query = $query->getByContributionTypeId($contribution_type_id);
+        }
+        
+        return $query;
     }
 
-    public function scopeGetReportByMonthYear(Builder $query, int $month, int $year, int $contribution_type_id) : Builder {
-       return $query->getReportByYear($year, $contribution_type_id)->getByMonth($month);
+    public function scopeGetReportByMonthYear(Builder $query, int $month, int $year, int $contribution_type_id = null): Builder
+    {
+        return $query->getReportByYear($year, $contribution_type_id)->getByMonth($month);
     }
 
-    public function createSummary(string $receipt_dt, $amount = 0.0, Contribution $contribution = null) : void {
+    public function createSummary(string $receipt_dt, $amount = 0.0, Contribution $contribution = null): void
+    {
         $week = $this->getWeeks($receipt_dt, 'Monday');
         $year = date('Y', strtotime($receipt_dt));
         $month = date('m', strtotime($receipt_dt));
@@ -124,11 +140,11 @@ class ContributionSummary extends ApiModel
         self::create([
             'organisation_id' => $contribution->organisation_id,
             'receipt_dt' => $contribution->receipt_dt,
-            'module_contribution_type_id' => $contribution->module_contribution_type_id, 
-            'week' => $week, 
-            'month' => $month, 
-            'year' => $year, 
-            'currency_id' => $contribution->currency_id, 
+            'module_contribution_type_id' => $contribution->module_contribution_type_id,
+            'week' => $week,
+            'month' => $month,
+            'year' => $year,
+            'currency_id' => $contribution->currency_id,
             'amount' => $amount,
         ]);
     }

@@ -110,7 +110,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('contribution_receipts', 'ContributionReceiptController');
         Route::apiResource('contribution_receipt_settings', 'ContributionReceiptSettingController')->only(['index', 'update']);
 
-        Route::get('contribution_summaries/report', 'ContributionSummaryReportController');
+        Route::get('contribution_summaries/weekly_breakdown', 'ContributionSummaryReportController@breakdownByWeek');
 
         Route::apiResource('organisation_anniversaries', 'OrganisationAnniversaryController');
         Route::apiResource('organisation_member_anniversaries', 'OrganisationMemberAnniversaryController');
@@ -122,3 +122,4 @@ Route::middleware(['auth:api'])->group(function () {
 
 // Allow for SSE notifications subscription
 Route::get('notifications/subscribe/{member_id}', 'NotificationController@subscribe');
+Route::get('contributions/available_years', 'ContributionController@getAvailableContributionYears');
