@@ -56,7 +56,7 @@ class ContributionSummary extends ApiModel
 
     public function contributionType()
     {
-        return $this->belongsTo(ContributionType::class);
+        return $this->belongsTo(ContributionType::class, 'module_contribution_type_id');
     }
 
     public function currency()
