@@ -124,4 +124,3 @@ Route::middleware(['auth:api'])->group(function () {
 
 // Allow for SSE notifications subscription
 Route::get('notifications/subscribe/{member_id}', 'NotificationController@subscribe');
-Route::get('contributions/available_years', 'ContributionController@getAvailableContributionYears');
