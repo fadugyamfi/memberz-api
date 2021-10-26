@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
-use App\Models\Member;
 use App\Models\MemberAccount;
 use App\Services\AuthLogService;
 
