@@ -5,10 +5,12 @@ namespace App\Models;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Database\Eloquent\Builder;
 use NunoMazer\Samehouse\BelongsToTenants;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Contribution extends ApiModel
 {
-    use BelongsToTenants, SoftDeletesWithActiveFlag;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, LogsActivity;
 
     /**
      * The database table used by the model.
@@ -91,4 +93,39 @@ class Contribution extends ApiModel
         ])->whereIn('module_contribution_receipt_id', $receipt_ids);
     }
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        $contribution = $this;
+        $type = $this->contribution_type;
+        $receipt = $this->contribution_receipt;
+
+        return LogOptions::defaults()
+            ->useLogName('finance')
+            ->logAll()
+            ->setDescriptionForEvent(function($eventName) use($contribution, $type, $receipt) {
+                if( $eventName == 'created' ) {
+                    return __("Recorded ':type_name' contribution of :amount with receipt #:receipt_no", [
+                        'type_name' => $type->name,
+                        'amount' => $contribution->currency->currency_code . ' ' . number_format($contribution->amount, 2),
+                        'receipt_no' => $receipt->receipt_no
+                    ]);
+                }
+
+                if( $eventName == 'updated' ) {
+                    return __("Updated ':type_name' contribution of :amount with receipt #:receipt_no", [
+                        'type_name' => $type->name,
+                        'amount' => $contribution->currency->currency_code . ' ' . number_format($contribution->amount, 2),
+                        'receipt_no' => $receipt->receipt_no
+                    ]);
+                }
+
+                if( $eventName == 'deleted' ) {
+                    return __("Deleted ':type_name' contribution of :amount with receipt #:receipt_no", [
+                        'type_name' => $type->name,
+                        'amount' => $contribution->currency->currency_code . ' ' . number_format($contribution->amount, 2),
+                        'receipt_no' => $receipt->receipt_no
+                    ]);
+                }
+            });
+    }
 }

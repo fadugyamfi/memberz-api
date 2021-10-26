@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ContributionRequest;
+use App\Http\Resources\ContributionResource;
 use App\Models\Contribution;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
@@ -18,12 +19,14 @@ class ContributionController extends Controller
 
     public function __construct(Contribution $contribution) {
         $this->setApiModel($contribution);
+        $this->setApiResource(ContributionResource::class);
     }
 
     /**
      * Create Contribution
      *
      * @apiResourceModel App\Models\Contribution
+     * @apiResource App\Http\Resources\ContributionResource
      */
     public function store(ContributionRequest $request)
     {
@@ -34,12 +37,16 @@ class ContributionController extends Controller
      * Update Contribution
      *
      * @apiResourceModel App\Models\Contribution
+     * @apiResource App\Http\Resources\ContributionResource
      */
     public function update(ContributionRequest $request, $id)
     {
         return $this->apiUpdate($request, $id);
     }
 
+    /**
+     * Get Available Years
+     */
     public function getAvailableContributionYears(){
         return Contribution::select('year')->distinct()->latest('year')->get()->pluck('year');
     }
