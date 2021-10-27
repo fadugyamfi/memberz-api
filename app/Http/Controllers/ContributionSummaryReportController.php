@@ -59,7 +59,7 @@ class ContributionSummaryReportController extends Controller
                 'amount' => $d->amount,
                 'month' => $d->month,
                 'contribution_type_id' => $d->module_contribution_type_id,
-                'contribution_type' => $d->contributionType ? $d->contributionType->name : '',
+                'contribution_type_name' => $d->contributionType ? $d->contributionType->name : '',
                 'currency_id' => $d->currency_id,
                 'currency_code' => $d->currency ? $d->currency->currency_code : '',
             ];
@@ -89,7 +89,7 @@ class ContributionSummaryReportController extends Controller
                 'amount' => $d->amount,
                 'mont' => $d->month,
                 'contribution_type_id' => $d->module_contribution_type_id,
-                'contribution_type' => $d->contributionType ? $d->contributionType->name : '',
+                'contribution_type_name' => $d->contributionType ? $d->contributionType->name : '',
                 'currency_id' => $d->currency_id,
                 'currency_code' => $d->currency ? $d->currency->currency_code : '',
             ];
