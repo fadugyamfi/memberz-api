@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\SoftDeletesWithDeletedFlag;
 
 class Bank extends ApiModel
 {
 
-    use SoftDeletesWithActiveFlag;
+    use SoftDeletesWithDeletedFlag;
 
     const DELETED_AT = 'deleted';
 

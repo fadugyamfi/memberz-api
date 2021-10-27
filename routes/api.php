@@ -103,10 +103,11 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('sms_broadcasts', 'SmsBroadcastController');
         Route::apiResource('sms_broadcast_lists', 'SmsBroadcastListController');
 
-        Route::apiResource('contribution_types', 'ContributionTypeController');
         Route::get('contributions/available_years', 'ContributionController@getAvailableContributionYears');
+        Route::apiResource('contribution_types', 'ContributionTypeController');
+        Route::apiResource('contribution_payment_types', 'ContributionPaymentTypeController');
         Route::apiResource('contributions', 'ContributionController');
-        
+
         Route::apiResource('contribution_receipts', 'ContributionReceiptController');
         Route::apiResource('contribution_receipt_settings', 'ContributionReceiptSettingController')->only(['index', 'update']);
 

@@ -34,7 +34,7 @@ class ContributionObserver
         $existingSummaryRecord = $this->getContributionSummaryRecord($receipt_dt, $contribution);
         $sumAmount = $this->getSumOfContributionAmount($receipt_dt, $contribution);
 
-        if (! $existingSummaryRecord) {
+        if (!$existingSummaryRecord) {
             (new ContributionSummary())->createSummary($receipt_dt, $sumAmount, $contribution);
         } else {
             $existingSummaryRecord->amount = $sumAmount;
@@ -42,11 +42,19 @@ class ContributionObserver
         }
     }
 
+    public function updated(Contribution $contribution) {
+        $contribution->contribution_receipt->fill([
+            'receipt_dt' => request()->receipt_dt,
+            'receipt_no' => request()->receipt_no
+        ]);
+        $contribution->contribution_receipt->save();
+    }
+
     private function getSumOfContributionAmount(string $receipt_dt, Contribution $contribution) : float {
         return Contribution::getSummaryData($receipt_dt, $contribution)->sum('amount');
     }
 
-    private function getContributionSummaryRecord(string $receipt_dt, Contribution $contribution) : ContributionSummary {
+    private function getContributionSummaryRecord(string $receipt_dt, Contribution $contribution): ?ContributionSummary {
         return ContributionSummary::getExistingSummaryRecord($receipt_dt, $contribution)->first();
     }
 
@@ -59,7 +67,7 @@ class ContributionObserver
     private function createReceipt(Contribution $contribution){
         return ContributionReceipt::create([
             'organisation_id' => $contribution->organisation_id,
-            'organisation_account_id' => OrganisationAccount::where('member_account_id', auth()->id)->first()->id,
+            'organisation_account_id' => OrganisationAccount::where('member_account_id', auth()->id())->first()->id,
             'receipt_no' => request()->receipt_no,
             'receipt_dt' => request()->receipt_dt,
             'active' => true
