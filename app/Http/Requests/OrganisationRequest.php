@@ -25,7 +25,7 @@ class OrganisationRequest extends ApiRequest
     public function rules()
     {
         return [
-            'organisation_type_id' => 'required|numeric|exists:organisations,id',
+            'organisation_type_id' => 'required|numeric|exists:organisation_types,id',
             'name' => 'required|string',
             'slug' => 'nullable|string',
             'email' => 'required|email',

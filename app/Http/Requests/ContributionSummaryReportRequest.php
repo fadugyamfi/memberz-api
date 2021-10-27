@@ -29,7 +29,7 @@ class ContributionSummaryReportRequest extends ApiRequest
     public function rules()
     {
         return [
-            'contribution_type_id' => 'required|numeric|exists:module_contribution_types,id',
+            'contribution_type_id' => 'nullable|numeric|exists:module_contribution_types,id',
             'year' => 'required|numeric',
             'month' => 'nullable|numeric',
         ];
