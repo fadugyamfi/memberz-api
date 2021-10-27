@@ -87,7 +87,7 @@ class ContributionSummaryReportController extends Controller
             ->get()->transform(function ($d) {
             return [
                 'amount' => $d->amount,
-                'mont' => $d->month,
+                'month' => $d->month,
                 'contribution_type_id' => $d->module_contribution_type_id,
                 'contribution_type_name' => $d->contributionType ? $d->contributionType->name : '',
                 'currency_id' => $d->currency_id,
