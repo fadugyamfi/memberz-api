@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
-class OrganisationMemberAnniversary extends ApiModel  
+class OrganisationMemberAnniversary extends ApiModel
 {
-    use BelongsToTenants;
+    use BelongsToTenants, SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.
