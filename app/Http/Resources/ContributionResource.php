@@ -15,13 +15,13 @@ class ContributionResource extends JsonResource
     public function toArray($request)
     {
         return array_merge(parent::toArray($request), [
-            'contribution_type' => $this->contribution_type,
-            'member_id' => $this->organisation_member ? $this->organisation_member->member_id : null,
-            'member_name' => $this->organisation_member ? $this->organisation_member->member->full_name : null,
-            'payment_type' => $this->contribution_payment_type->name,
+            'contribution_type' => $this->contributionType,
+            'member_id' => $this->organisationMember ? $this->organisationMember->member_id : null,
+            'member_name' => $this->organisationMember ? $this->organisationMember->member->full_name : null,
+            'payment_type' => $this->contributionPaymentType->name,
             'currency_code' => $this->currency->currency_code,
-            'receipt_no' => $this->contribution_receipt->receipt_no,
-            'receipt_dt' => $this->contribution_receipt->receipt_dt->format('Y-m-d'),
+            'receipt_no' => $this->contributionReceipt->receipt_no,
+            'receipt_dt' => $this->contributionReceipt->receipt_dt->format('Y-m-d'),
             'month_name' => date('F', strtotime("2021-{$this->month}-01")),
             'bank' => $this->bank
         ]);

@@ -51,19 +51,19 @@ class Contribution extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisation_member(){
+    public function organisationMember(){
         return $this->belongsTo(OrganisationMember::class);
     }
 
-    public function contribution_type(){
+    public function contributionType(){
         return $this->belongsTo(ContributionType::class, 'module_contribution_type_id');
     }
 
-    public function organisation_file_import(){
+    public function organisationFileImport(){
         return $this->belongsTo(OrganisationFileImport::class);
     }
 
-    public function contribution_receipt(){
+    public function contributionReceipt(){
         return $this->belongsTo(ContributionReceipt::class, 'module_contribution_receipt_id');
     }
 
@@ -71,7 +71,7 @@ class Contribution extends ApiModel
         return $this->belongsTo(Bank::class);
     }
 
-    public function contribution_payment_type(){
+    public function contributionPaymentType(){
         return $this->belongsTo(ContributionPaymentType::class, 'module_contribution_payment_type_id');
     }
 
@@ -100,35 +100,29 @@ class Contribution extends ApiModel
     public function getActivitylogOptions(): LogOptions
     {
         $contribution = $this;
-        $type = $this->contribution_type;
-        $receipt = $this->contribution_receipt;
+        $type = $this->contributionType;
+        $receipt = $this->contributionReceipt;
 
         return LogOptions::defaults()
             ->useLogName('finance')
             ->logAll()
             ->setDescriptionForEvent(function($eventName) use($contribution, $type, $receipt) {
+                $params = [
+                    'type_name' => $type->name,
+                    'amount' => $contribution->currency->currency_code . ' ' . number_format($contribution->amount, 2),
+                    'receipt_no' => $receipt->receipt_no
+                ];
+
                 if( $eventName == 'created' ) {
-                    return __("Recorded ':type_name' contribution of :amount with receipt #:receipt_no", [
-                        'type_name' => $type->name,
-                        'amount' => $contribution->currency->currency_code . ' ' . number_format($contribution->amount, 2),
-                        'receipt_no' => $receipt->receipt_no
-                    ]);
+                    return __("Recorded ':type_name' contribution of :amount with receipt #:receipt_no", $params);
                 }
 
                 if( $eventName == 'updated' ) {
-                    return __("Updated ':type_name' contribution of :amount with receipt #:receipt_no", [
-                        'type_name' => $type->name,
-                        'amount' => $contribution->currency->currency_code . ' ' . number_format($contribution->amount, 2),
-                        'receipt_no' => $receipt->receipt_no
-                    ]);
+                    return __("Updated ':type_name' contribution of :amount with receipt #:receipt_no", $params);
                 }
 
                 if( $eventName == 'deleted' ) {
-                    return __("Deleted ':type_name' contribution of :amount with receipt #:receipt_no", [
-                        'type_name' => $type->name,
-                        'amount' => $contribution->currency->currency_code . ' ' . number_format($contribution->amount, 2),
-                        'receipt_no' => $receipt->receipt_no
-                    ]);
+                    return __("Deleted ':type_name' contribution of :amount with receipt #:receipt_no", $params);
                 }
             });
     }

@@ -49,7 +49,7 @@ class ContributionReceipt extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisation_account(){
+    public function organisationAccount(){
         return $this->belongsTo(OrganisationAccount::class);
     }
 

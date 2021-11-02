@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class ContributionPaymentType extends ApiModel  
+class ContributionPaymentType extends ApiModel
 {
     /**
      * The database table used by the model.
@@ -39,7 +39,7 @@ class ContributionPaymentType extends ApiModel
      */
     protected $dates = [];
 
-    public function payment_platform(){
+    public function paymentPlatform(){
         return $this->belongsTo(PaymentPlatform::class);
     }
 
