@@ -19,12 +19,16 @@ class ContributionSummaryReportController extends Controller
         $month = null;
         $year = null;
 
-        if (!$request->year && !$request->month) {
-            $month = date('m');
+        if (! $request->year) {
             $year = Contribution::getLatestYears()->first()->year;
         } else {
-            $month = $request->month;
             $year = $request->year;
+        }
+
+        if (! $request->month){
+            $month = date('m');
+        } else {
+            $month = $request->month;
         }
 
         return ContributionSummary::getByYear($year)->getByMonth($month)->with('currency')->selectRaw('week, currency_id, sum(amount) as amount')
@@ -74,12 +78,16 @@ class ContributionSummaryReportController extends Controller
         $month = null;
         $year = null;
 
-        if (!$request->year && !$request->month) {
-            $month = date('m');
+        if (! $request->year) {
             $year = Contribution::getLatestYears()->first()->year;
         } else {
-            $month = $request->month;
             $year = $request->year;
+        }
+
+        if (! $request->month){
+            $month = date('m');
+        } else {
+            $month = $request->month;
         }
 
         return ContributionSummary::getByYear($year)->getByMonth($month)->with('currency', 'contributionType')->selectRaw('module_contribution_type_id, currency_id, sum(amount) as amount')
