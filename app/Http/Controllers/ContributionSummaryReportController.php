@@ -56,12 +56,11 @@ class ContributionSummaryReportController extends Controller
             $year = $request->year;
         }
 
-        return ContributionSummary::getByYear($year)->with('currency', 'contributionType')->selectRaw('module_contribution_type_id, month, currency_id, sum(amount) as amount')
-            ->groupBy('month')->groupBy('module_contribution_type_id')->groupBy('currency_id')->orderBy('month')
+        return ContributionSummary::getByYear($year)->with('currency', 'contributionType')->selectRaw('module_contribution_type_id, currency_id, sum(amount) as amount')
+            ->groupBy('module_contribution_type_id')->groupBy('currency_id')->orderBy('module_contribution_type_id')->orderBy('currency_id')
             ->get()->transform(function ($d) {
             return [
                 'amount' => $d->amount,
-                'month' => $d->month,
                 'contribution_type_id' => $d->module_contribution_type_id,
                 'contribution_type_name' => $d->contributionType ? $d->contributionType->name : '',
                 'currency_id' => $d->currency_id,
