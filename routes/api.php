@@ -114,6 +114,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('contribution_summaries/weekly_breakdown', 'ContributionSummaryReportController@breakdownByWeek');
         Route::get('contribution_summaries/totals_by_category', 'ContributionSummaryReportController@totalsByCategory');
         Route::get('contribution_summaries/category_breakdown', 'ContributionSummaryReportController@categoryBreakdown');
+        Route::get('contribution_summaries/trend_report', 'ContributionSummaryReportController@getTrendReport');
 
         Route::apiResource('organisation_anniversaries', 'OrganisationAnniversaryController');
         Route::apiResource('organisation_member_anniversaries', 'OrganisationMemberAnniversaryController');
