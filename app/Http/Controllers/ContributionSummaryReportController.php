@@ -69,6 +69,27 @@ class ContributionSummaryReportController extends Controller
         });
     }
 
+    public function getTrendReport(Request $request){
+        $year = null;
+
+        if (!$request->year) {
+            $year = Contribution::getLatestYears()->first()->year;
+        } else {
+            $year = $request->year;
+        }
+
+        return ContributionSummary::getByYear($year)->with('currency')->selectRaw('month, currency_id, sum(amount) as amount')
+            ->groupBy('month')->groupBy('currency_id')->orderBy('month')->orderBy('currency_id')
+            ->get()->transform(function ($d) {
+            return [
+                'amount' => $d->amount,
+                'month' => $d->month,
+                'currency_id' => $d->currency_id,
+                'currency_code' => $d->currency ? $d->currency->currency_code : '',
+            ];
+        });
+    }
+
     /**
      * Totals of contribution summaries by category
      */
