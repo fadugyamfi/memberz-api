@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SmsAccountMessageRequest;
 use App\Models\SmsAccountMessage;
-use Illuminate\Http\Request;
-use LaravelApiBase\Http\Controllers\ApiController;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
 /**
