@@ -20,7 +20,7 @@ class OrganisationMember extends ApiModel
 
     protected $guarded = ['id'];
     protected $fillable = [
-        'member_id', 'organisation_id', 'organisation_no', 'organisation_member_category_id', 'status', 'source', 'approved', 'approved_by', 'active'
+        'member_id', 'organisation_id', 'organisation_no', 'organisation_member_category_id', 'organisation_registration_form_id', 'status', 'source', 'approved', 'approved_by', 'custom_attributes', 'active'
     ];
 
     public function member() {
@@ -33,6 +33,10 @@ class OrganisationMember extends ApiModel
 
     public function organisationMemberCategory() {
         return $this->belongsTo(OrganisationMemberCategory::class);
+    }
+
+    public function organisationRegistrationForm(){
+        return $this->belongsTo(OrganisationRegistrationForm::class);
     }
 
     public function scopeInOrganisation($query, $organisaiton_id) {
