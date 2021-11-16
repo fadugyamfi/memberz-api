@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use NunoMazer\Samehouse\BelongsToTenants;
@@ -57,6 +58,11 @@ class OrganisationMember extends ApiModel
 
     public function scopeOrganisationIds($query, int $member_id) {
         return $query->where('member_id', $member_id)->active()->approved()->get()->pluck('organisation_id')->all();
+    }
+
+
+    public function scopeNotInMemberIds(Builder $query, array $memberIds) : Builder {
+        return $query->whereNotIn('member_id', $memberIds);
     }
 
     public function generateMembershipNo() {

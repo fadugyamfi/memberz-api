@@ -97,6 +97,10 @@ class Contribution extends ApiModel
         ])->whereIn('module_contribution_receipt_id', $receipt_ids);
     }
 
+    public function scopeByYear(Builder $query, $year) : Builder {
+        return $query->where('year', $year);
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         $contribution = $this;
