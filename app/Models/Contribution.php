@@ -101,6 +101,10 @@ class Contribution extends ApiModel
         return $query->where('year', $year);
     }
 
+    public function scopeByCurrencyId(Builder $query, $currency_id) : Builder {
+        return $query->where('currency_id', $currency_id);
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         $contribution = $this;

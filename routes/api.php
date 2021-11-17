@@ -119,6 +119,9 @@ Route::middleware(['auth:api'])->group(function () {
 
 
         Route::get('finance_reporting/non_contributing_members', 'Reporting\NonContributingMembersController');
+        Route::get('finance_reporting/income_summary', 'Reporting\IncomeSummaryController');
+        Route::get('finance_reporting/top_contributors', 'Reporting\TopContributorsController');
+        Route::get('finance_reporting/monthly_consolidated_report', 'Reporting\MonthlyConsolidatedReportController');
     });
 
     Route::get('activity_logs/search', 'ActivityLogController@search');

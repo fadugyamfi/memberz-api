@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Reporting;
 
-use Illuminate\Support\Facades\Request;
+use App\Http\Requests\IncomeSummaryRequest;
 
 /**
  * @group Finance Reporting
@@ -10,9 +10,8 @@ use Illuminate\Support\Facades\Request;
 class IncomeSummaryController
 {
 
-    public function __invoke(Request $request)
+    public function __invoke(IncomeSummaryRequest $request)
     {
-        $start_year = null;
-        $end_year = null;
+        return [];
     }
 }
