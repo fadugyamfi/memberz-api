@@ -36,8 +36,8 @@ class MonthlyConsolidatedReportController
         });
 
         return [
-            'byContributionTypes' => $byContributionTypes,
-            'byPaymentTypes' => $byPaymentTypes,
+            'contributionTypesData' => $byContributionTypes,
+            'paymentTypesData' => $byPaymentTypes,
         ];
     }
 }
