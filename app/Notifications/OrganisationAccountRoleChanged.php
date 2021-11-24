@@ -14,20 +14,14 @@ class OrganisationAccountRoleChanged extends BaseNotification
     use Queueable;
 
     /**
-     * @var
-     */
-    private $role_id;
-
-    /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(int $role_id, int $organisation_id)
-    {
-        $this->role_id = $role_id;
-        $this->organisation_id = $organisation_id;
-    }
+    public function __construct(
+        private int $role_id,
+        private int $organisation_id
+    ) {}
 
 
     /**
