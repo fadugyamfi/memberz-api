@@ -14,22 +14,16 @@ class MembershipImported extends BaseNotification
     use Queueable;
 
     /**
-     * @var
-     */
-    private $file_name, $status, $reason;
-
-    /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(string $file_name, int $organisation_id, string $status = "Completed", string $reason = "")
-    {
-        $this->file_name = $file_name;
-        $this->status = $status;
-        $this->reason = $reason;
-        $this->organisation_id = $organisation_id;
-    }
+    public function __construct(
+        private string $file_name,
+        private int $organisation_id,
+        private string $status = "Completed",
+        private string $reason = ""
+    ) {}
 
 
     /**

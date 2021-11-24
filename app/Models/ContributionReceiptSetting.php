@@ -52,6 +52,10 @@ class ContributionReceiptSetting extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
+    public function defaultCurrency(){
+        return $this->belongsTo(Currency::class, 'default_currency');
+    }
+
     public function currency() {
         return $this->belongsTo(Currency::class, 'default_currency');
     }

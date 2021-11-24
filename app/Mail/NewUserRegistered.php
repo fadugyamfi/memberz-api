@@ -11,17 +11,14 @@ class NewUserRegistered extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public string $token;
-
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(string $token)
-    {
-        $this->token  = $token;
-    }
+    public function __construct(
+        public string $token
+    ) {}
 
     /**
      * Build the message.
