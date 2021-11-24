@@ -1,6 +1,4 @@
 <?php
-
-use App\Http\Controllers\MemberImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -118,6 +116,12 @@ Route::middleware(['auth:api'])->group(function () {
 
         Route::apiResource('organisation_anniversaries', 'OrganisationAnniversaryController');
         Route::apiResource('organisation_member_anniversaries', 'OrganisationMemberAnniversaryController');
+
+
+        Route::get('finance_reporting/non_contributing_members', 'Reporting\NonContributingMembersController');
+        Route::get('finance_reporting/income_summary', 'Reporting\IncomeSummaryController');
+        Route::get('finance_reporting/top_contributors', 'Reporting\TopContributorsController');
+        Route::get('finance_reporting/monthly_consolidated_report', 'Reporting\MonthlyConsolidatedReportController');
     });
 
     Route::get('activity_logs/search', 'ActivityLogController@search');

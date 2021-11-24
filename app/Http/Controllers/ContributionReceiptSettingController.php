@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ContributionReceiptSettingRequest;
+use App\Http\Resources\ContributionReceiptSettingResource;
 use App\Models\ContributionReceiptSetting;
 use Illuminate\Http\Request;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
@@ -26,8 +27,8 @@ class ContributionReceiptSettingController extends Controller
      */
     public function index(Request $request) {
         $setting = ContributionReceiptSetting::latest()->first();
-
-        return response()->json($setting);
+        
+        return response()->json(new ContributionReceiptSettingResource($setting));
     }
 
     /**
