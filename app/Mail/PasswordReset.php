@@ -14,13 +14,6 @@ class PasswordReset extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * The password reset token.
-     *
-     * @var string
-     */
-    public $token;
-
-    /**
      * The organisation of the authenticated user.
      *
      * @var string
@@ -32,10 +25,8 @@ class PasswordReset extends Mailable
      *
      * @return void
      */
-    public function __construct(string $token)
+    public function __construct(public string $token)
     {
-        $this->token = $token;
-
         if ($tenantId = request()->header('X-Tenant-Id')){
             $organisation = Organisation::where('uuid', $tenantId)->first();
             $this->organisation = $organisation->name;
