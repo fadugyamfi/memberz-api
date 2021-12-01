@@ -13,7 +13,9 @@ class MonthlyConsolidatedReportController
 
     public function __invoke(MonthlyConsolidatedReportRequest $request)
     {
-        $byContributionTypes = ContributionSummary::getByCurrencyId($request->currency_id)->getByYear($request->year)->with('contributionType')->selectRaw('month, module_contribution_type_id, sum(amount) as amount')
+        $byContributionTypes = ContributionSummary::getByCurrencyId($request->currency_id)->getByYear($request->year)
+            ->with(['contributionType', 'currency'])
+            ->selectRaw('month, module_contribution_type_id, sum(amount) as amount')
             ->groupBy('month')->groupBy('module_contribution_type_id')->orderBy('month')->orderBy('module_contribution_type_id')
             ->get()->transform(function ($d) {
             return [
@@ -21,10 +23,13 @@ class MonthlyConsolidatedReportController
                 'amount' => $d->amount,
                 'contribution_type_id' => $d->module_contribution_type_id,
                 'contribution_type_name' => optional($d->contributionType)->name,
+                'currency_code' => optional($d->currency)->currency_code,
             ];
         });
 
-        $byPaymentTypes = Contribution::byYear($request->year)->byCurrencyId($request->country_id)->with('contributionPaymentType')->selectRaw('month, module_contribution_payment_type_id, sum(amount) as amount')
+        $byPaymentTypes = Contribution::byYear($request->year)->byCurrencyId($request->country_id)
+            ->with(['contributionPaymentType', 'currency'])
+            ->selectRaw('month, module_contribution_payment_type_id, sum(amount) as amount')
             ->groupBy('month')->groupBy('module_contribution_payment_type_id')->orderBy('month')->orderBy('module_contribution_payment_type_id')
             ->get()->transform(function ($d) {
             return [
@@ -32,6 +37,7 @@ class MonthlyConsolidatedReportController
                 'amount' => $d->amount,
                 'payment_type_id' => $d->module_contribution_payment_type_id,
                 'payment_type_name' => optional($d->contributionPaymentType)->name,
+                'currency_code' => optional($d->currency)->currency_code,
             ];
         });
 
