@@ -30,16 +30,11 @@ class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkRea
 
     use Importable;
 
-    private OrganisationFileImport $fileImport;
-    private MemberAccount $memberAccount;
-    private int $org_id;
-
-    public function __construct(OrganisationFileImport $fileImport, MemberAccount $memberAccount, int $org_id)
-    {
-        $this->fileImport = $fileImport;
-        $this->memberAccount = $memberAccount;
-        $this->org_id = $org_id;
-    }
+    public function __construct(
+        public OrganisationFileImport $fileImport,
+        public MemberAccount $memberAccount,
+        public int $org_id
+    ) {}
 
     public function chunkSize(): int
     {
