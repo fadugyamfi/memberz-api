@@ -51,6 +51,8 @@ class OrganisationAccount extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
+    protected $appends = ['membership'];
+
     public function organisation()
     {
         return $this->belongsTo(Organisation::class);
@@ -74,6 +76,10 @@ class OrganisationAccount extends ApiModel
     public function scopeOrganisationIds($query, int $member_account_id)
     {
         return $query->where('member_account_id', $member_account_id)->active()->get()->pluck('organisation_id')->all();
+    }
+
+    public function getMembershipAttribute() {
+        return OrganisationMember::where('member_id', $this->memberAccount->member_id)->first();
     }
 
     /**

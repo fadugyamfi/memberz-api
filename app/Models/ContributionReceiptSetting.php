@@ -46,6 +46,8 @@ class ContributionReceiptSetting extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
+    protected $appends = ['default_currency_code'];
+
     public function organisation() {
         return $this->belongsTo(Organisation::class);
     }
@@ -54,8 +56,15 @@ class ContributionReceiptSetting extends ApiModel
         return $this->belongsTo(Currency::class, 'default_currency');
     }
 
+    public function currency() {
+        return $this->belongsTo(Currency::class, 'default_currency');
+    }
+
     public function scopeOrganisationReceipt(Builder $query, int $organisation_id) {
         return $query->where('organisation_id', $organisation_id);
     }
 
+    public function getDefaultCurrencyCodeAttribute() {
+        return $this->currency?->currency_code;
+    }
 }
