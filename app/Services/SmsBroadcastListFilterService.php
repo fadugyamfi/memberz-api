@@ -1,0 +1,219 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\OrganisationMemberCategory;
+
+class SmsBroadcastListFilterService {
+
+
+    public function getFilters() {
+        return [
+            'fields' => $this->getFields(),
+            // 'conditions' => $this->getConditions()
+        ];
+    }
+
+    public function getFields() {
+        return [
+            [
+                'id' => 'membership__category',
+                'name' => "Membership Category",
+                "table" => "organisation_members",
+                "column" => "organisation_member_category_id",
+                "value_type" => "option",
+                "conditions" => $this->getListConditions(),
+                "options" => OrganisationMemberCategory::select('id', 'name')->orderBy('name')->get()->map(function($category) {
+                    return ['label' => $category->name, 'value' => $category->id];
+                })
+            ],
+            [
+                'id' => 'membership__no',
+                'name' => "Membership No.",
+                "table" => "organisation_members",
+                "column" => "organisation_no",
+                "value_type" => "text",
+                "conditions" => $this->getTextConditions()
+            ],
+            [
+                'id' => 'members__first_name',
+                'name' => "Member First Name",
+                "table" => "members",
+                "column" => "first_name",
+                "value_type" => "text",
+                "conditions" => $this->getTextConditions()
+            ],
+            [
+                'id' => 'members__last_name',
+                'name' => "Member Last Name",
+                "table" => "members",
+                "column" => "last_name",
+                "value_type" => "text",
+                "conditions" => $this->getTextConditions()
+            ],
+            [
+                'id' => 'members__gender',
+                'name' => "Gender",
+                "table" => "members",
+                "column" => "gender",
+                "options" => [
+                    ["label" => "Male", "value" => "male"],
+                    ["label" => "Female", "value" => "female"]
+                ],
+                "value_type" => "option",
+                "conditions" => $this->getListConditions()
+            ],
+            [
+                'id' => 'members__dob',
+                'name' => "Date Of Birth",
+                "table" => "members",
+                "column" => "dob",
+                "value_type" => "date",
+                "conditions" => $this->getDateConditions()
+            ],
+            [
+                'id' => 'members__age',
+                'name' => "Age",
+                "table" => "members",
+                "column" => "dob",
+                "value_type" => "date",
+                "conditions" => $this->getNumberConditions()
+            ],
+            [
+                'id' => 'members__birth_month',
+                'name' => "Birth Month",
+                "table" => "members",
+                "column" => "dob",
+                "value_type" => "option",
+                "conditions" => $this->getListConditions(),
+                "options" => $this->getMonthOptions()
+            ],
+            [
+                'id' => 'members__birth_day_of_week',
+                'name' => "Birth Day Of Week",
+                "table" => "members",
+                "column" => "dob",
+                "value_type" => "option",
+                "conditions" => $this->getListConditions(),
+                "options" => $this->getDayOfWeekOptions()
+            ],
+            [
+                'id' => 'members__mobile_number',
+                'name' => "Mobile Number",
+                "table" => "members",
+                "column" => "mobile_number",
+                "value_type" => "text",
+                "conditions" => $this->getTextConditions()
+            ],
+            [
+                'id' => 'members__email',
+                'name' => "Email",
+                "table" => "members",
+                "column" => "email",
+                "value_type" => "text",
+                "conditions" => $this->getTextConditions()
+            ],
+            [
+                'id' => 'members__occupation',
+                'name' => "Occupation",
+                "table" => "members",
+                "column" => "occupation",
+                "value_type" => "text",
+                "conditions" => $this->getTextConditions()
+            ],
+            [
+                'id' => 'members__business_name',
+                'name' => "Place of Work",
+                "table" => "members",
+                "column" => "business_name",
+                "value_type" => "text",
+                "conditions" => $this->getTextConditions()
+            ],
+        ];
+    }
+
+    public function getAllConditions() {
+        return [
+            ['label' => 'Equals', 'value' => '='],
+            ['label' => 'Greater Than', 'value' => '>'],
+            ['label' => 'Greater Than or Equals', 'value' => '>='],
+            ['label' => 'Less Than', 'value' => '<'],
+            ['label' => 'Less Than or Equals', 'value' => '<='],
+            ['label' => 'Not Equal', 'value' => '!='],
+            ['label' => 'Contains', 'value' => '%{s}%'],
+            ['label' => 'Starts With', 'value' => '{s}%'],
+            ['label' => 'Ends With', 'value' => '%{s}'],
+        ];
+    }
+
+    public function getTextConditions() {
+        return [
+            ['label' => 'Equals', 'value' => '='],
+            ['label' => 'Not Equal', 'value' => '!='],
+            ['label' => 'Contains', 'value' => '%{s}%'],
+            ['label' => 'Starts With', 'value' => '{s}%'],
+            ['label' => 'Ends With', 'value' => '%{s}'],
+        ];
+    }
+
+    public function getNumberConditions() {
+        return [
+            ['label' => 'Equals', 'value' => '='],
+            ['label' => 'Greater Than', 'value' => '>'],
+            ['label' => 'Greater Than or Equals', 'value' => '>='],
+            ['label' => 'Less Than', 'value' => '<'],
+            ['label' => 'Less Than or Equals', 'value' => '<='],
+            ['label' => 'Not Equal', 'value' => '!='],
+            ['label' => 'Contains', 'value' => '%{s}%'],
+            ['label' => 'Starts With', 'value' => '{s}%'],
+            ['label' => 'Ends With', 'value' => '%{s}'],
+        ];
+    }
+
+    public function getListConditions() {
+        return [
+            ['label' => 'Equals', 'value' => '='],
+            ['label' => 'Not Equal', 'value' => '!=']
+        ];
+    }
+
+    public function getDateConditions() {
+        return [
+            ['label' => 'Equals', 'value' => '='],
+            ['label' => 'Greater Than', 'value' => '>'],
+            ['label' => 'Greater Than or Equals', 'value' => '>='],
+            ['label' => 'Less Than', 'value' => '<'],
+            ['label' => 'Less Than or Equals', 'value' => '<='],
+            ['label' => 'Not Equal', 'value' => '!=']
+        ];
+    }
+
+    public function getMonthOptions() {
+        return [
+            ['label' => 'January', 'value' => 1],
+            ['label' => 'February', 'value' => 2],
+            ['label' => 'March', 'value' => 3],
+            ['label' => 'April', 'value' => 4],
+            ['label' => 'May', 'value' => 5],
+            ['label' => 'June', 'value' => 6],
+            ['label' => 'July', 'value' => 7],
+            ['label' => 'August', 'value' => 8],
+            ['label' => 'September', 'value' => 9],
+            ['label' => 'October', 'value' => 10],
+            ['label' => 'November', 'value' => 11],
+            ['label' => 'December', 'value' => 12],
+        ];
+    }
+
+    public function getDayOfWeekOptions() {
+        return [
+            ['label' => 'Sunday', 'value' => 1],
+            ['label' => 'Monday', 'value' => 2],
+            ['label' => 'Tuesday', 'value' => 3],
+            ['label' => 'Wednesday', 'value' => 4],
+            ['label' => 'Thursday', 'value' => 5],
+            ['label' => 'Friday', 'value' => 6],
+            ['label' => 'Saturday', 'value' => 7]
+        ];
+    }
+}

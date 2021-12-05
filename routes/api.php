@@ -79,7 +79,11 @@ Route::middleware(['auth:api'])->group(function () {
 
         Route::apiResource('organisation_accounts', 'OrganisationAccountController');
         Route::apiResource('organisation_file_imports', 'OrganisationFileImportController');
+
+        
+        Route::get('organisation_members_all', 'AllOrganisationMembersController');
         Route::apiResource('organisation_members', 'OrganisationMemberController');
+
         Route::apiResource('organisation_member_categories', 'OrganisationMemberCategoryController');
         Route::apiResource('organisation_member_imports', 'OrganisationMemberImportController');
         Route::apiResource('organisation_invoices', 'OrganisationInvoiceController');
@@ -99,6 +103,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('sms_account_topups', 'SmsAccountTopupController');
         Route::apiResource('sms_credits', 'SmsCreditController');
         Route::apiResource('sms_broadcasts', 'SmsBroadcastController');
+        Route::get('sms_broadcast_lists/filters', 'SmsBroadcastListController@filters');
         Route::apiResource('sms_broadcast_lists', 'SmsBroadcastListController');
 
         Route::get('contributions/available_years', 'ContributionController@getAvailableContributionYears');

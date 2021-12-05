@@ -25,7 +25,7 @@ class SmsBroadcastList extends ApiModel
      *
      * @var array
      */
-    protected $fillable = ['module_sms_account_id', 'name', 'type', 'sender_id', 'size', 'created', 'modified', 'active'];
+    protected $fillable = ['module_sms_account_id', 'name', 'type', 'sender_id', 'size', 'filters', 'created', 'modified', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -39,7 +39,7 @@ class SmsBroadcastList extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['active' => 'boolean'];
+    protected $casts = ['active' => 'boolean', 'filters' => 'array'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -67,6 +67,14 @@ class SmsBroadcastList extends ApiModel
         return $this->hasMany(SmsBroadcast::class);
     }
 
+    public function shouldQualifyColumn($column_name)
+    {
+        if( in_array($column_name, ['sender_id']) ) {
+            return true;
+        }
+
+        return parent::shouldQualifyColumn($column_name);
+    }
 
     /**
      * Format user activities description for Sms Broadcast List
