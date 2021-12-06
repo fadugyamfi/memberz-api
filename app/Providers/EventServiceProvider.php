@@ -13,6 +13,7 @@ use App\Models\OrganisationMemberCategory;
 use App\Models\OrganisationSubscription;
 use App\Models\SmsAccountMessage;
 use App\Models\SmsBroadcast;
+use App\Models\SmsBroadcastList;
 use App\Observers\ContributionObserver;
 use App\Observers\OrganisationAccountObserver;
 use App\Observers\OrganisationFileImportObserver;
@@ -23,6 +24,7 @@ use App\Observers\OrganisationMemberObserver;
 use App\Observers\OrganisationObserver;
 use App\Observers\OrganisationSubscriptionObserver;
 use App\Observers\SmsAccountMessageObserver;
+use App\Observers\SmsBroadcastListObserver;
 use App\Observers\SmsBroadcastObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -61,5 +63,6 @@ class EventServiceProvider extends ServiceProvider
         SmsBroadcast::observe(SmsBroadcastObserver::class);
         OrganisationFileImport::observe(OrganisationFileImportObserver::class);
         Contribution::observe(ContributionObserver::class);
+        SmsBroadcastList::observe(SmsBroadcastListObserver::class);
     }
 }
