@@ -101,7 +101,9 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('sms_account_topups', 'SmsAccountTopupController');
         Route::apiResource('sms_credits', 'SmsCreditController');
         Route::apiResource('sms_broadcasts', 'SmsBroadcastController');
+
         Route::get('sms_broadcast_lists/filters', 'SmsBroadcastListController@filters');
+        Route::get('sms_broadcast_lists/preview/{smsBroadcastList}', 'SmsBroadcastListController@preview');
         Route::apiResource('sms_broadcast_lists', 'SmsBroadcastListController');
 
         Route::get('contributions/available_years', 'ContributionController@getAvailableContributionYears');
