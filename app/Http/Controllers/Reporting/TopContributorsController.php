@@ -17,7 +17,7 @@ class TopContributorsController
             ->byCurrencyId($request->currency_id)
             ->whereNotNull('organisation_member_id')
             ->with(['organisationMember.member', 'currency'])
-            ->selectRaw('currency_id, year, organisation_member_id, sum(amount) as total_amount, avg(amount) as avg_amount')
+            ->selectRaw('currency_id, year, organisation_member_id, sum(amount) as total_amount, avg(amount) as avg_amount, max(created) as last_contribution_date')
             ->groupBy('organisation_member_id')
             ->groupBy('currency_id')
             ->groupBy('year')
@@ -38,6 +38,7 @@ class TopContributorsController
                     'member_name' => $org?->member->name,
                     'mobile_number' => $org?->member->mobile_number,
                     'age' => $org?->member->age,
+                    'last_contribution_date' => $d->last_contribution_date
                 ];
             });
 
