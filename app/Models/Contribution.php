@@ -102,7 +102,7 @@ class Contribution extends ApiModel
     }
 
     public function scopeByCurrencyId(Builder $query, $currency_id) : Builder {
-        return $query->where('currency_id', $currency_id);
+        return $query->where( $this->getTable() . '.currency_id', $currency_id);
     }
 
     public function getActivitylogOptions(): LogOptions
