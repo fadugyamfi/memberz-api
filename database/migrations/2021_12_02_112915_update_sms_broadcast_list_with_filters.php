@@ -70,7 +70,7 @@ class UpdateSmsBroadcastListWithFilters extends Migration
         // deal with the explicit names first
         switch ($oldName) {
             case 'MemberPhoneNumber.number':
-                return 'member__mobile_number';
+                return 'members__mobile_number';
 
             case 'OrganisationMember.organisation_member_category_id':
                 return 'membership__category';
@@ -93,9 +93,9 @@ class UpdateSmsBroadcastListWithFilters extends Migration
         $newName = Str::lower($oldName);
 
         if (stristr($newName, '.')) {
-            return Str::replaceArray('.', ['__'], $newName);
+            $newName = Str::replaceArray('.', ['__'], $newName);
         }
 
-        return $newName;
+        return Str::replace('member__', 'members__', $newName);
     }
 }
