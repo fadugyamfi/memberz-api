@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use LaravelApiBase\Http\Requests\ApiRequest;
 
 class OrganisationRequest extends ApiRequest
@@ -25,7 +24,7 @@ class OrganisationRequest extends ApiRequest
     public function rules()
     {
         return [
-            'organisation_type_id' => 'required|numeric',
+            'organisation_type_id' => 'required|numeric|exists:organisation_types,id',
             'name' => 'required|string',
             'slug' => 'nullable|string',
             'email' => 'required|email',

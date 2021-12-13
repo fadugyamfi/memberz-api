@@ -6,6 +6,9 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 use LaravelApiBase\Http\Controllers\ApiController;
 
+/**
+ * @group Notifications
+ */
 class NotificationController extends ApiController
 {
 
@@ -28,13 +31,13 @@ class NotificationController extends ApiController
             while(true) {
                 $data = null;
                 $data = $user->unsentNotifications()->get();
-
+    
                 echo "retry: 60000\n\n"; // retry connection after 60 seconds
                 echo 'data: ' . json_encode($data) . "\n\n";
                 ob_flush();
                 flush();
                 sleep(5);
-
+    
                 /* update the table rows as sent */
                 if( $data ) {
                     Notification::whereIn('id', $data->pluck('id')->all())->update(['sent' => 1]);
@@ -80,6 +83,9 @@ class NotificationController extends ApiController
         return response()->json(['message' => 'Notifications marked as read']);
     }
 
+    /**
+     * Get Unread
+     */
     public function unread(Request $request) {
         $limit = $request->limit ?? 10;
         $notifications = $request->user()->unreadNotifications()->paginate($limit);

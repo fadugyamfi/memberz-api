@@ -50,7 +50,7 @@ class OrganisationAccountRequest extends ApiRequest
     public function rules()
     {
         return [
-            'organisation_id' => 'required|numeric',
+            'organisation_id' => 'required|numeric|exists:organisations,id',
             'member_id' => 'required_without:member_account_id|numeric',
             'member_account_id' => [
                 'required_without:member_id',

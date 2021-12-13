@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MemberContributionRequest;
-use App\Models\MemberContribution;
-use Illuminate\Http\Request;
+use App\Http\Requests\ContributionRequest;
+use App\Http\Resources\ContributionResource;
+use App\Models\Contribution;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
 /**
@@ -17,16 +17,18 @@ class ContributionController extends Controller
         update as apiUpdate;
     }
 
-    public function __construct(MemberContribution $memberContribution) {
-        $this->setApiModel($memberContribution);
+    public function __construct(Contribution $contribution) {
+        $this->setApiModel($contribution);
+        $this->setApiResource(ContributionResource::class);
     }
 
     /**
      * Create Contribution
      *
-     * @apiResourceModel App\Models\MemberContribution
+     * @apiResourceModel App\Models\Contribution
+     * @apiResource App\Http\Resources\ContributionResource
      */
-    public function store(MemberContributionRequest $request)
+    public function store(ContributionRequest $request)
     {
         return $this->apiStore($request);
     }
@@ -34,10 +36,18 @@ class ContributionController extends Controller
     /**
      * Update Contribution
      *
-     * @apiResourceModel App\Models\MemberContribution
+     * @apiResourceModel App\Models\Contribution
+     * @apiResource App\Http\Resources\ContributionResource
      */
-    public function update(Request $request, $id)
+    public function update(ContributionRequest $request, $id)
     {
         return $this->apiUpdate($request, $id);
+    }
+
+    /**
+     * Get Available Years
+     */
+    public function getAvailableContributionYears(){
+        return Contribution::getLatestYears()->get()->pluck('year');
     }
 }

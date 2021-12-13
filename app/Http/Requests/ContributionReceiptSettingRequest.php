@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use LaravelApiBase\Http\Requests\ApiRequest;
 
 /**
@@ -33,12 +34,15 @@ class ContributionReceiptSettingRequest extends ApiRequest
     public function rules()
     {
         return [
-            'organisation_id' => 'required|numeric|exists:organisations|unique:organisations',
+            'organisation_id' => [
+                'required', 'numeric', 'exists:organisations,id',
+                Rule::unique('module_contribution_receipt_settings', 'organisation_id')->ignore($this->id)
+            ],
             'receipt_mode' => 'required|string|in:auto,manual',
             'receipt_prefix' => 'nullable|string|max:30',
             'receipt_postfix' => 'nullable|string|max:30',
             'receipt_counter' => 'required|numeric',
-            'default_currency' => 'nullable|numeric|exits:currencies,id',
+            'default_currency' => 'nullable|numeric|exists:currencies,id',
             'sms_notify' => 'nullable|boolean'
         ];
     }

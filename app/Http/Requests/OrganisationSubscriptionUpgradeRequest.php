@@ -24,8 +24,8 @@ class OrganisationSubscriptionUpgradeRequest extends ApiRequest {
     public function rules()
     {
         return [
-            'organisation_id' => 'required|numeric',
-            'subscription_type_id' => 'required|numeric',
+            'organisation_id' => 'required|numeric|exists:organisations,id',
+            'subscription_type_id' => 'required|numeric|exists:subscription_types,id',
             'length' => 'required|numeric',
         ];
     }

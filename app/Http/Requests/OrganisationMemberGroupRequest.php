@@ -29,7 +29,7 @@ class OrganisationMemberGroupRequest extends FormRequest implements ApiFormReque
         // TODO: Add multi-select limitation validation
 
         return [
-            'organisation_id' => 'required|numeric',
+            'organisation_id' => 'required|numeric|exists:organisations,id',
             'organisation_member_id' => 'required|numeric|exists:organisation_members,id',
             'organisation_group_id' => [
                 'required', 'numeric',

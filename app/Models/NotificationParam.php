@@ -6,9 +6,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class NotificationParam extends ApiModel  
 {
-
-    
-
     /**
      * The database table used by the model.
      *

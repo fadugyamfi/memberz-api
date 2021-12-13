@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use LaravelApiBase\Http\Requests\ApiFormRequest;
 use LaravelApiBase\Http\Requests\ApiRequest;
 
 class OrganisationFileImportRequest extends ApiRequest
@@ -26,7 +24,7 @@ class OrganisationFileImportRequest extends ApiRequest
     public function rules()
     {
         return [
-            'organisation_id' => 'required|numeric',
+            'organisation_id' => 'required|numeric|exists:organisations,id',
             'import_to_id' => 'required|numeric',
             'import_type' => 'required|in:members,contributions',
             'import_file' => 'required|file|mimes:xls,xlsx'

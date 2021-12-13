@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
@@ -19,8 +21,7 @@ class OrganisationMember extends ApiModel
 
     protected $guarded = ['id'];
     protected $fillable = [
-        'member_id', 'organisation_id', 'organisation_no', 'organisation_member_category_id', 'status', 'source',
-        'approved', 'approved_by', 'active'
+        'member_id', 'organisation_id', 'organisation_no', 'organisation_member_category_id', 'organisation_registration_form_id', 'status', 'source', 'approved', 'approved_by', 'custom_attributes', 'active'
     ];
 
     public function member() {
@@ -33,6 +34,10 @@ class OrganisationMember extends ApiModel
 
     public function organisationMemberCategory() {
         return $this->belongsTo(OrganisationMemberCategory::class);
+    }
+
+    public function organisationRegistrationForm(){
+        return $this->belongsTo(OrganisationRegistrationForm::class);
     }
 
     public function scopeInOrganisation($query, $organisaiton_id) {
@@ -53,6 +58,11 @@ class OrganisationMember extends ApiModel
 
     public function scopeOrganisationIds($query, int $member_id) {
         return $query->where('member_id', $member_id)->active()->approved()->get()->pluck('organisation_id')->all();
+    }
+
+
+    public function scopeNotInMemberIds(Builder $query, array $memberIds) : Builder {
+        return $query->whereNotIn('member_id', $memberIds);
     }
 
     public function generateMembershipNo() {
@@ -77,10 +87,10 @@ class OrganisationMember extends ApiModel
      */
     public function buildSearchParams(Request $request, $builder)
     {
-        $this->fillable = array_merge($this->fillable, ['first_name', 'last_name', 'email', 'mobile_number', 'occupation', 'business_name']);
+        $this->fillable = array_merge($this->fillable, ['first_name', 'last_name', 'email', 'mobile_number', 'occupation', 'business_name', 'dob', 'marital_status']);
         $builder->approved()->active()
             ->join('members', 'members.id', '=', 'organisation_members.member_id')
-            ->select('organisation_members.*');
+            ->select('organisation_members.*', DB::raw("FLOOR(DATEDIFF(NOW(), dob) / 365.25) as age"));
 
         $builder = parent::buildSearchParams($request, $builder);
 
@@ -92,6 +102,62 @@ class OrganisationMember extends ApiModel
                     ->orWhere('members.email', 'like', "%{$term}%")
                     ->orWhere('members.mobile_number', 'like', "%{$term}%")
                     ->orWhere('members.business_name', 'like', "%{$term}%");
+            });
+        }
+
+        $builder = $this->advancedSearch($request, $builder);
+
+        return $builder;
+    }
+
+    public function advancedSearch(Request $request, $builder) {
+        if( $request->age_gte ) {
+            $builder->where('dob', '<=', now()->subYears($request->age_gte));
+        }
+
+        if( $request->age_lte ) {
+            $builder->where('dob', '>=', now()->subYears($request->age_lte));
+        }
+
+        if( $request->gender ) {
+            $builder->where(DB::raw('members.gender'), $request->gender);
+        }
+
+        if( $request->dayname ) {
+            $builder->where(DB::raw('DAYNAME(members.dob)'), $request->dayname);
+        }
+
+        if( $request->monthname ) {
+            $builder->where(DB::raw('MONTHNAME(members.dob)'), $request->monthname);
+        }
+
+        if( $request->organisation_group_type_id || $request->organisation_group_id ) {
+            $builder->join('organisation_member_groups', 'organisation_member_groups.organisation_member_id', '=', 'organisation_members.id')
+                ->join('organisation_groups', function($join) use($request) {
+                    $join->on('organisation_groups.id', 'organisation_member_groups.organisation_group_id');
+
+                    if( $request->organisation_group_type_id ) {
+                        $join->where('organisation_groups.organisation_group_type_id', $request->organisation_group_type_id);
+                    }
+
+                    if( $request->organisation_group_id ) {
+                        $join->where('organisation_groups.id', $request->organisation_group_id);
+                    }
+                });
+        }
+
+        if( $request->organisation_anniversary_id ) {
+            $builder->join('organisation_member_anniversaries', function($join) use($request) {
+                $join->on('organisation_member_anniversaries.organisation_member_id', 'organisation_members.id')
+                    ->where('organisation_member_anniversaries.organisation_anniversary_id', $request->organisation_anniversary_id);
+
+                if( $request->anniversary_start_date ) {
+                    $join->where('organisation_member_anniversaries.value', '>=', $request->anniversary_start_date);
+                }
+
+                if( $request->anniversary_end_date ) {
+                    $join->where('organisation_member_anniversaries.value', '<=', $request->anniversary_end_date);
+                }
             });
         }
 

@@ -20,18 +20,22 @@ class MultiTenant
 
     public function handle(Request $request, Closure $next)
     {
+        if( !$request->hasHeader('X-Tenant-Id') ) {
+            return abort(403, __("No organisation specified"));
+        }
+
         if( $request->hasHeader('X-Tenant-Id') && auth()->check() ) {
             $tenantId = $request->header('X-Tenant-Id');
 
             if( !Uuid::isValid($tenantId) ) {
-                return abort(403, "Invalid Tenant ID header value");
+                return abort(403, __("Invalid organisation identifier specified"));
             }
 
             $organisation_ids = auth()->user()->getOrganisationIds();
             $organisation = Organisation::where('uuid', $tenantId)->first();
 
             if( !$organisation || !collect($organisation_ids)->contains($organisation->id) ) {
-                return abort(404, 'Invalid tenant');
+                return abort(404, __('Access to organisation not permitted'));
             }
 
             Landlord::addTenant($organisation);

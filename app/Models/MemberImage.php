@@ -88,7 +88,7 @@ class MemberImage extends ApiModel
         return LogOptions::defaults()
             ->logAll()
             ->useLogName("member_profile")
-            ->setDescriptionForEvent(function(string $eventName) use($member, $title, $name) {
+            ->setDescriptionForEvent(function(string $eventName) use($member) {
                 if( $eventName == 'created' ) {
                     return __("Uploaded image to profile of :name", ["name" => $member->full_name]);
                 }

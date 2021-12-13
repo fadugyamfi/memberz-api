@@ -1,6 +1,4 @@
 <?php
-
-use App\Http\Controllers\MemberImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -101,12 +99,32 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('sms_account_topups', 'SmsAccountTopupController');
         Route::apiResource('sms_credits', 'SmsCreditController');
         Route::apiResource('sms_broadcasts', 'SmsBroadcastController');
+
+        Route::get('sms_broadcast_lists/filters', 'SmsBroadcastListController@filters');
+        Route::get('sms_broadcast_lists/preview/{smsBroadcastList}', 'SmsBroadcastListController@preview');
         Route::apiResource('sms_broadcast_lists', 'SmsBroadcastListController');
 
+        Route::get('contributions/available_years', 'ContributionController@getAvailableContributionYears');
         Route::apiResource('contribution_types', 'ContributionTypeController');
+        Route::apiResource('contribution_payment_types', 'ContributionPaymentTypeController');
         Route::apiResource('contributions', 'ContributionController');
+
         Route::apiResource('contribution_receipts', 'ContributionReceiptController');
-        Route::apiResource('contribution_receipt_settings', 'ContributionReceiptSettingController');
+        Route::apiResource('contribution_receipt_settings', 'ContributionReceiptSettingController')->only(['index', 'update']);
+
+        Route::get('contribution_summaries/weekly_breakdown', 'ContributionSummaryReportController@breakdownByWeek');
+        Route::get('contribution_summaries/totals_by_category', 'ContributionSummaryReportController@totalsByCategory');
+        Route::get('contribution_summaries/category_breakdown', 'ContributionSummaryReportController@categoryBreakdown');
+        Route::get('contribution_summaries/trend_report', 'ContributionSummaryReportController@getTrendReport');
+
+        Route::apiResource('organisation_anniversaries', 'OrganisationAnniversaryController');
+        Route::apiResource('organisation_member_anniversaries', 'OrganisationMemberAnniversaryController');
+
+
+        Route::get('finance_reporting/non_contributing_members', 'Reporting\NonContributingMembersController');
+        Route::get('finance_reporting/income_summary', 'Reporting\IncomeSummaryController');
+        Route::get('finance_reporting/top_contributors', 'Reporting\TopContributorsController');
+        Route::get('finance_reporting/monthly_consolidated_report', 'Reporting\MonthlyConsolidatedReportController');
     });
 
     Route::get('activity_logs/search', 'ActivityLogController@search');

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Scopes\ActiveScope;
 use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
 

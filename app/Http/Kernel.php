@@ -21,7 +21,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         //custom cors middleware
         \App\Http\Middleware\Cors::class,
-        \App\Http\Middleware\MultiTenant::class
+        // \App\Http\Middleware\MultiTenant::class
     ];
 
     /**
@@ -64,7 +64,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'multi-tenant' => \App\Http\Middleware\RequireTenantIdHeader::class
+        'multi-tenant' => \App\Http\Middleware\MultiTenant::class
     ];
 
     /**

@@ -18,7 +18,9 @@ class Member extends ApiModel
     protected $guarded = ['id'];
     protected $fillable = ['title', 'first_name', 'middle_name', 'last_name', 'gender', 'dob', 'mobile_number', 'email', 'website', 'occupation', 'profession', 'business_name', 'active'];
 
-    protected $appends = ['full_name', 'full_name_with_title'];
+    protected $appends = ['full_name', 'full_name_with_title', 'age'];
+
+    protected $dates = ['dob'];
 
     public function organisationMember()
     {
@@ -62,6 +64,10 @@ class Member extends ApiModel
         return $this->middle_name
         ? "{$this->title} {$this->first_name} {$this->middle_name} {$this->last_name}"
         : "{$this->title} {$this->first_name} {$this->last_name}";
+    }
+
+    public function getAgeAttribute() {
+        return now()->diff($this->dob)->y;
     }
 
     public function getActivitylogOptions(): LogOptions

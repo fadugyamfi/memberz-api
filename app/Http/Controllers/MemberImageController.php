@@ -7,7 +7,9 @@ use App\Models\MemberImage;
 use App\Services\ProfileImageUploadService;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
-
+/**
+ * @group Member Images
+ */
 class MemberImageController extends Controller
 {
     use ApiControllerBehavior {

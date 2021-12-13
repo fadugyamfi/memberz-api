@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
-use App\Models\Member;
 use App\Models\MemberAccount;
 use App\Services\AuthLogService;
 
@@ -72,6 +71,11 @@ class AuthController extends Controller
     public function me()
     {
         $user = auth()->user();
+
+        if( !$user ) {
+            return response()->json(['message' => __("Unauthenticated")], 404);
+        }
+
         $memberAccount = MemberAccount::with([
             'member.profilePhoto',
             'organisationAccounts' => function($q) {

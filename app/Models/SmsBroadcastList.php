@@ -6,12 +6,13 @@ use App\Scopes\LatestRecordsScope;
 use App\Scopes\SmsAccountScope;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
 class SmsBroadcastList extends ApiModel
 {
 
-    use SoftDeletesWithActiveFlag, LogModelActivity;
+    use SoftDeletesWithActiveFlag, LogModelActivity, BelongsToTenants;
 
     /**
      * The database table used by the model.
@@ -25,7 +26,7 @@ class SmsBroadcastList extends ApiModel
      *
      * @var array
      */
-    protected $fillable = ['module_sms_account_id', 'name', 'type', 'sender_id', 'size', 'created', 'modified', 'active'];
+    protected $fillable = ['organisation_id', 'module_sms_account_id', 'name', 'type', 'sender_id', 'size', 'filters', 'created', 'modified', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -39,7 +40,7 @@ class SmsBroadcastList extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['active' => 'boolean'];
+    protected $casts = ['active' => 'boolean', 'filters' => 'array'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -55,7 +56,7 @@ class SmsBroadcastList extends ApiModel
      */
     protected static function booted()
     {
-        static::addGlobalScope(new SmsAccountScope);
+        // static::addGlobalScope(new SmsAccountScope);
         static::addGlobalScope(new LatestRecordsScope);
     }
 
@@ -67,6 +68,14 @@ class SmsBroadcastList extends ApiModel
         return $this->hasMany(SmsBroadcast::class);
     }
 
+    public function shouldQualifyColumn($column_name)
+    {
+        if( in_array($column_name, ['id', 'sender_id']) ) {
+            return true;
+        }
+
+        return parent::shouldQualifyColumn($column_name);
+    }
 
     /**
      * Format user activities description for Sms Broadcast List
@@ -81,7 +90,7 @@ class SmsBroadcastList extends ApiModel
             ->useLogName("sms")
             ->setDescriptionForEvent(function (string $eventName) use ($smsBdcastList) {
                 if ($eventName == 'created') {
-                    return __("Created broadcast list \":name\" with sender id \":sender\"", [
+                    return __("Created broadcast list \":name\"", [
                         "name" => $smsBdcastList->name,
                         "type" => $smsBdcastList->type,
                         'size' => $smsBdcastList->size,
@@ -90,7 +99,7 @@ class SmsBroadcastList extends ApiModel
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated broadcast list \":name\" with sender id \":sender\"", [
+                    return __("Updated broadcast list \":name\"", [
                         "name" => $smsBdcastList->name,
                         "type" => $smsBdcastList->type,
                         'size' => $smsBdcastList->size,
@@ -99,7 +108,7 @@ class SmsBroadcastList extends ApiModel
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted broadcast list \":name\" with sender id \":sender\"", [
+                    return __("Deleted broadcast list \":name\"", [
                         "name" => $smsBdcastList->name,
                         "type" => $smsBdcastList->type,
                         'size' => $smsBdcastList->size,

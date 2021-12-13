@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
+use Illuminate\Database\Eloquent\Builder;
 use NunoMazer\Samehouse\BelongsToTenants;
 class ContributionReceipt extends ApiModel
 {
@@ -48,7 +49,7 @@ class ContributionReceipt extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisation_account(){
+    public function organisationAccount(){
         return $this->belongsTo(OrganisationAccount::class);
     }
 
@@ -57,6 +58,10 @@ class ContributionReceipt extends ApiModel
     }
 
     public function contributions() {
-        return $this->hasMany(MemberContribution::class, 'module_contribution_receipt_id');
+        return $this->hasMany(Contribution::class, 'module_contribution_receipt_id');
+    }
+
+    public function scopeGetReceipt(Builder $query, int $org_id, string $receipt_dt) : Builder {
+        return $query->whereOrganisationId($org_id)->whereDate('receipt_dt',$receipt_dt);
     }
 }

@@ -24,7 +24,7 @@ class OrganisationSubscriptionRenewalRequest extends ApiRequest {
     public function rules()
     {
         return [
-            'organisation_id' => 'required|numeric',
+            'organisation_id' => 'required|numeric|exists:organisations,id',
             'length' => 'required|numeric',
         ];
     }
