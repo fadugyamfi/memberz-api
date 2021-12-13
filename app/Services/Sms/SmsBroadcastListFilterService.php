@@ -8,13 +8,6 @@ use App\Models\OrganisationMemberCategory;
 
 class SmsBroadcastListFilterService {
 
-
-    // public function getFilters() {
-    //     return [
-    //         'groups' => $this->getFields()
-    //     ];
-    // }
-
     public function getFilters(): array {
         return [
             [
