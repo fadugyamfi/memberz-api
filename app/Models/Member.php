@@ -67,7 +67,7 @@ class Member extends ApiModel
     }
 
     public function getAgeAttribute() {
-        return now()->diff($this->dob)->y;
+        return $this->dob ? now()->diff($this->dob)->y : null;
     }
 
     public function getActivitylogOptions(): LogOptions
