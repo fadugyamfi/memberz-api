@@ -35,6 +35,14 @@ class OrganisationGroup extends ApiModel
         return $this->belongsTo(OrganisationGroupType::class);
     }
 
+    public function organisationGroupLeaders() {
+        return $this->hasMany(OrganisationGroupLeader::class);
+    }
+
+    public function organisationGroupMembers() {
+        return $this->hasMany(OrganisationMemberGroup::class);
+    }
+
     /**
      * The attributes excluded from the model's JSON form.
      *
