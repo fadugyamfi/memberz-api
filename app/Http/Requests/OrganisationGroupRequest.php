@@ -28,10 +28,10 @@ class OrganisationGroupRequest extends ApiRequest
             'organisation_group_type_id' => 'required|numeric|exists:organisation_group_types,id',
             'name' => 'required|string',
             'active' => 'tinyint|nullable',
-            'leaders.*.id' => 'sometimes|numeric',
-            'leaders.*.name' => 'sometimes|string',
-            'leaders.*.role' => 'sometimes|string',
-            'leaders.*.organisation_member_id' => 'sometimes|required|numeric|exists:organisation_members,id'
+            'organisation_group_leaders.*.id' => 'sometimes|numeric|nullable',
+            'organisation_group_leaders.*.name' => 'sometimes|string',
+            'organisation_group_leaders.*.role' => 'sometimes|string',
+            'organisation_group_leaders.*.organisation_member_id' => 'sometimes|required|numeric|exists:organisation_members,id'
         ];
     }
 
@@ -54,19 +54,19 @@ class OrganisationGroupRequest extends ApiRequest
                 'description' => 'The active state of this group record',
                 'example' => 1
             ],
-            'leaders.*.id' => [
+            'organisation_group_leaders.*.id' => [
                 'description' => 'The ID of a leader of this group',
                 'example' => 1
             ],
-            'leaders.*.name' => [
+            'organisation_group_leaders.*.name' => [
                 'description' => 'The name of a leader of this group',
                 'example' => "James Ans"
             ],
-            'leaders.*.role' => [
+            'organisation_group_leaders.*.role' => [
                 'description' => 'The role of a leader of this group',
                 'example' => "President"
             ],
-            'leaders.*.organisation_member_id' => [
+            'organisation_group_leaders.*.organisation_member_id' => [
                 'description' => 'The membership ID of a leader of this group',
                 'example' => 1
             ],
