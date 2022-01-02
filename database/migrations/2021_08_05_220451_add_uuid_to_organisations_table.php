@@ -15,9 +15,11 @@ class AddUuidToOrganisationsTable extends Migration
      */
     public function up()
     {
-        Schema::table('organisations', function (Blueprint $table) {
-            $table->uuid('uuid')->nullable()->index()->after('id');
-        });
+        if( !Schema::hasColumn('organisations', 'uuid') ) {
+            Schema::table('organisations', function (Blueprint $table) {
+                $table->uuid('uuid')->nullable()->index()->after('id');
+            });
+        }
 
         Organisation::all()->each(function($organisation) {
             $organisation->uuid = Uuid::uuid4();
