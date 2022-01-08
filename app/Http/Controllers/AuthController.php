@@ -87,7 +87,7 @@ class AuthController extends Controller
 
 
     /**
-     * Get the the validity of two fa code
+     * Get the validity of 2FA code
      *
      * @return \Illuminate\Http\JsonResponse
      */
