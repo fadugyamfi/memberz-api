@@ -72,7 +72,7 @@ class AuthController extends Controller
         $user = auth()->user();
 
         if( !$user ) {
-            return response()->json(['message' => __("Unauthenticated")], 404);
+            return response()->json(["status"=>"error", 'message' => __("Unauthenticated")], 404);
         }
 
         $memberAccount = MemberAccount::with([
