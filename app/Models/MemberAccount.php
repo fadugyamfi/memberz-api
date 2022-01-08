@@ -47,6 +47,10 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         return $this->member->memberships();
     }
 
+    public function memberAccountCode(){
+        return $this->hasOne(MemberAccountCode::class);
+    }
+
     public function getOrganisationIds()
     {
         $accountIds = $this->organisationAccounts()->get()->pluck('organisation_id');
@@ -176,7 +180,12 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     public function emailTwoFa()
     {
         $code = rand(1000, 9999);
-        MemberAccountCode::updateOrCreate(['member_account_id' => auth()->user()->id], ['code' => $code]);
+        
+        MemberAccountCode::updateOrCreate(
+            ['member_account_id' => auth()->user()->id], 
+            ['code' => $code, 'expires_at' => now()->addMinutes(config('auth.twofa.email.expires'))]
+        );
+
         Mail::to($this->username)->send(new Twofa($code));
     }
 

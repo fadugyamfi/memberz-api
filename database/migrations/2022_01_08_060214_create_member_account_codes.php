@@ -17,6 +17,7 @@ class CreateMemberAccountCodes extends Migration
             $table->id();
             $table->foreignId('member_account_id');
             $table->string('code');
+            $table->dateTime('expires_at');
             $table->timestamps();
         });
     }

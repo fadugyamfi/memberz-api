@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\TwoFaCheckRequest;
 use App\Models\MemberAccount;
 use App\Services\AuthLogService;
 use App\Services\TwofaService;
@@ -82,6 +83,24 @@ class AuthController extends Controller
         ])->find($user->id);
 
         return response()->json($memberAccount);
+    }
+
+
+    /**
+     * Get the the validity of two fa code
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function twoFaCheck(TwoFaCheckRequest $request)
+    {
+        $memberAccount = MemberAccount::find(auth()->user()->id);
+        $memberAccountCode = $memberAccount->memberAccountCode;
+
+        if( $request->code != $memberAccountCode->code || $memberAccountCode->expires_at < now()) {
+            return response()->json(['status' => "error", 'message' => __("Invalid 2FA Code or 2FA Code Expired")], 404);
+        }
+
+        return response()->json(["status" => "success", "message" => "2FA code valid"]);
     }
 
     /**
