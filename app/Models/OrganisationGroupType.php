@@ -64,7 +64,7 @@ class OrganisationGroupType extends ApiModel
      */
     public function getActivitylogOptions(): LogOptions
     {
-        $org = $this->organisation->name;
+        $org = $this->organisation;
         $name = $this->name;
 
         return LogOptions::defaults()

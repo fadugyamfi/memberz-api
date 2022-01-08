@@ -29,12 +29,22 @@ class SmsBroadcastListObserver
      * @param  \App\Models\SmsBroadcastList  $smsBroadcastList
      * @return void
      */
+    public function updating(SmsBroadcastList $smsBroadcastList)
+    {
+        if( $smsBroadcastList->isDirty('filters') ) {
+            $smsBroadcastList->size = $this->broadcastListService->getContactsQuery($smsBroadcastList)->count();
+        }
+    }
+
+    /**
+     * Handle the SmsBroadcastList "updated" event.
+     *
+     * @param  \App\Models\SmsBroadcastList  $smsBroadcastList
+     * @return void
+     */
     public function updated(SmsBroadcastList $smsBroadcastList)
     {
-        // if( $smsBroadcastList->isDirty('filters') ) {
-        //     $smsBroadcastList->size = $this->broadcastListService->getContactsQuery($smsBroadcastList)->count();
-        //     $smsBroadcastList->save();
-        // }
+
     }
 
     /**

@@ -13,7 +13,7 @@ class OrganisationSubscriptionObserver
     /**
      * Handle the organisation subscription "creating" event.
      *
-     * @param  \App\OrganisationSubscription  $organisationSubscription
+     * @param  \App\Models\OrganisationSubscription  $organisationSubscription
      * @return void
      */
     public function creating(OrganisationSubscription $organisationSubscription)
@@ -34,7 +34,7 @@ class OrganisationSubscriptionObserver
     /**
      * Handle the organisation subscription "created" event.
      *
-     * @param  \App\OrganisationSubscription  $organisationSubscription
+     * @param  \App\Models\OrganisationSubscription  $organisationSubscription
      * @return void
      */
     public function created(OrganisationSubscription $organisationSubscription)

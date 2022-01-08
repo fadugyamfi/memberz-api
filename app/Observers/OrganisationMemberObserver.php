@@ -29,7 +29,7 @@ class OrganisationMemberObserver
     /**
      * Handle the organisation member "creating" event.
      *
-     * @param  \App\OrganisationMember  $organisationMember
+     * @param  \App\Models\OrganisationMember  $organisationMember
      * @return void
      */
     public function creating(OrganisationMember $organisationMember) {
@@ -39,7 +39,7 @@ class OrganisationMemberObserver
     /**
      * Handle the organisation member "created" event.
      *
-     * @param  \App\OrganisationMember  $organisationMember
+     * @param  \App\Models\OrganisationMember  $organisationMember
      * @return void
      */
     public function created(OrganisationMember $organisationMember)
@@ -52,7 +52,7 @@ class OrganisationMemberObserver
     /**
      * Handle the organisation member "updating" event.
      *
-     * @param  \App\OrganisationMember  $organisationMember
+     * @param  \App\Models\OrganisationMember  $organisationMember
      * @return void
      */
     public function updating(OrganisationMember $organisationMember)

@@ -20,8 +20,10 @@ class AdminUserCreated extends BaseNotification
      */
     public function __construct(
         public int $role_id,
-        public int $organisation_id
-    ) {}
+        int $organisation_id
+    ) {
+        $this->organisation_id = $organisation_id;
+    }
 
 
     /**

@@ -6,6 +6,7 @@ use App\Models\Contribution;
 use App\Models\Organisation;
 use App\Models\OrganisationAccount;
 use App\Models\OrganisationFileImport;
+use App\Models\OrganisationGroup;
 use App\Models\OrganisationInvoice;
 use App\Models\OrganisationInvoiceItem;
 use App\Models\OrganisationMember;
@@ -17,6 +18,7 @@ use App\Models\SmsBroadcastList;
 use App\Observers\ContributionObserver;
 use App\Observers\OrganisationAccountObserver;
 use App\Observers\OrganisationFileImportObserver;
+use App\Observers\OrganisationGroupObserver;
 use App\Observers\OrganisationInvoiceItemObserver;
 use App\Observers\OrganisationInvoiceObserver;
 use App\Observers\OrganisationMemberCategoryObserver;
@@ -64,5 +66,6 @@ class EventServiceProvider extends ServiceProvider
         OrganisationFileImport::observe(OrganisationFileImportObserver::class);
         Contribution::observe(ContributionObserver::class);
         SmsBroadcastList::observe(SmsBroadcastListObserver::class);
+        OrganisationGroup::observe(OrganisationGroupObserver::class);
     }
 }

@@ -43,7 +43,7 @@ class SmsAccountMessageObserver implements ShouldQueue
     /**
      * Handle the sms account message "created" event.
      *
-     * @param  \App\SmsAccountMessage  $smsAccountMessage
+     * @param  \App\Models\SmsAccountMessage  $smsAccountMessage
      * @return void
      */
     public function created(SmsAccountMessage $smsAccountMessage)

@@ -9,7 +9,7 @@ class OrganisationInvoiceObserver
     /**
      * Handle the organisation invoice "created" event.
      *
-     * @param  \App\OrganisationInvoice  $organisationInvoice
+     * @param  \App\Models\OrganisationInvoice  $organisationInvoice
      * @return void
      */
     public function created(OrganisationInvoice $organisationInvoice)
