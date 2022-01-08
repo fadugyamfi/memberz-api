@@ -79,7 +79,9 @@ Route::middleware(['auth:api'])->group(function () {
 
         Route::apiResource('organisation_accounts', 'OrganisationAccountController');
         Route::apiResource('organisation_file_imports', 'OrganisationFileImportController');
+
         Route::apiResource('organisation_members', 'OrganisationMemberController');
+
         Route::apiResource('organisation_member_categories', 'OrganisationMemberCategoryController');
         Route::apiResource('organisation_member_imports', 'OrganisationMemberImportController');
         Route::apiResource('organisation_invoices', 'OrganisationInvoiceController');

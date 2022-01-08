@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\MemberAccount;
 use App\Services\AuthLogService;
+use App\Services\TwofaService;
 
 /**
  * @group Auth
@@ -12,12 +13,7 @@ use App\Services\AuthLogService;
 class AuthController extends Controller
 {
 
-    private AuthLogService $authLogger;
-
-    public function __construct(AuthLogService $authLogger)
-    {
-        $this->authLogger = $authLogger;
-    }
+    public function __construct(private AuthLogService $authLogger, private TwofaService $twoFa){}
 
     /**
      * Login
@@ -36,6 +32,8 @@ class AuthController extends Controller
         }
 
         $this->authLogger->logLoginSuccess( auth()->user() );
+
+        // $this->twoFa(auth()->user());
 
         return $this->respondWithToken($token);
     }
