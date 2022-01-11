@@ -28,7 +28,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
-    protected $fillable = ['member_id', 'username', 'password', 'pass_salt', 'timezone', 'account_type', 'reset_requested', 'active', 'deleted', 'email_verification_token'];
+    protected $fillable = ['member_id', 'username', 'password', 'pass_salt', 'timezone', 'account_type', 'reset_requested', 'active', 'deleted', 'email_verification_token', 'email_2fa'];
 
     protected $hidden = ['password', 'pass_salt'];
 
@@ -193,7 +193,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
      * Check if require email verification is on/off
      */
     public function isEmailTwofaRequired(){
-        return $this->email_twofa_required == 1;
+        return $this->email_2fa == 1;
     }
 
 }
