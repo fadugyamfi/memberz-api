@@ -75,6 +75,14 @@ class SmsBroadcast extends ApiModel
         return $this->belongsTo(OrganisationAccount::class, 'scheduled_by');
     }
 
+    public function scopeSent($query) {
+        return $query->where('sent', 1);
+    }
+
+    public function scopeUnsent($query) {
+        return $query->where('sent', 0);
+    }
+
      /**
      * Format user activities description for Sms Broadcast
      * @override
