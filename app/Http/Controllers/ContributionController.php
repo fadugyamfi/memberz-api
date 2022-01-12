@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContributionRequest;
 use App\Http\Resources\ContributionResource;
 use App\Models\Contribution;
+use App\Models\SmsAccountMessage;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
 /**
@@ -48,6 +49,10 @@ class ContributionController extends Controller
      * Get Available Years
      */
     public function getAvailableContributionYears(){
-        return Contribution::getLatestYears()->get()->pluck('year');
+        return collect(SmsAccountMessage::withoutGlobalScopes()->latestYears()->get()->pluck('year'))
+            ->merge( Contribution::getLatestYears()->get()->pluck('year') )
+            ->unique()
+            ->values()
+            ->all();
     }
 }
