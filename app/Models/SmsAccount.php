@@ -52,6 +52,14 @@ class SmsAccount extends ApiModel
         return self::where('organisation_id', $organisation_id)->first();
     }
 
+    public function getAvailableCreditAttribute() {
+        return intval($this->account_balance) + intval($this->bonus_balance);
+    }
+
+    public function hasCredit() {
+        return $this->available_credit > 0;
+    }
+
     public function deductCredit($credit = 1) {
 
         $credit_remaining = 0;

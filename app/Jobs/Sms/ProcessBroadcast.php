@@ -16,6 +16,8 @@ class ProcessBroadcast implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    private SmsBroadcastListService $smsBroadcastListService;
+
     /**
      * Create a new job instance.
      *
@@ -33,15 +35,35 @@ class ProcessBroadcast implements ShouldQueue
      */
     public function handle(SmsBroadcastListService $smsBroadcastListService)
     {
+        $this->smsBroadcastListService = $smsBroadcastListService;
+
+        $smsAccount = $this->broadcast->smsAccount;
+        $totalContacts = $this->getTotalContacts();
+        $totalMessages = ceil($this->broadcast->message / 160) * $totalContacts;
+        $insufficientCreditForMessages = $smsAccount->available_credit < $totalMessages;
+
+        if( !$smsAccount->hasCredit() || $insufficientCreditForMessages ) {
+            $this->broadcast->scheduler?->notifyInsufficientSmsCreditsForBroadcast($this->broadcast);
+            $this->broadcast->rescheduleForAnHour();
+            return;
+        }
+
+        $this->sentMessagesToBroadcastList();
+        $this->sendMessagesToMembershipCategory();
+    }
+
+    private function sentMessagesToBroadcastList() {
         $job = $this;
 
         if( $this->broadcast->smsBroadcastList ) {
-            $smsBroadcastListService->getContactsQuery($this->broadcast->smsBroadcastList)->chunk(500, function($contacts) use($job) {
+            $this->smsBroadcastListService->getContactsQuery($this->broadcast->smsBroadcastList)->chunk(500, function($contacts) use($job) {
                 $job->messageContacts($contacts);
             });
-
-            return;
         }
+    }
+
+    private function sendMessagesToMembershipCategory() {
+        $job = $this;
 
         if( $this->broadcast->organisationMemberCategory ) {
             $this->broadcast->organisationMemberCategory->organisationMembers()->latest()->chunk(500, function($contacts) use($job) {
@@ -60,5 +82,13 @@ class ProcessBroadcast implements ShouldQueue
 
         $this->broadcast->sent_offset += count($contacts);
         $this->broadcast->save();
+
+        $this->broadcast->scheduler?->notifySmsBroadcastProcessed($this->broadcast);
+    }
+
+    private function getTotalContacts() {
+        return $this->broadcast->smsBroadcastList
+            ? $this->smsBroadcastListService->getContactsQuery($this->broadcast->smsBroadcastList)->count()
+            : $this->broadcast->organisationMemberCategory?->count();
     }
 }

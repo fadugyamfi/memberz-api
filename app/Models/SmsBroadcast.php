@@ -75,6 +75,15 @@ class SmsBroadcast extends ApiModel
         return $this->belongsTo(OrganisationAccount::class, 'scheduled_by');
     }
 
+    public function scheduler() {
+        return $this->belongsTo(OrganisationAccount::class, 'scheduled_by');
+    }
+
+    public function rescheduleForAnHour() {
+        $this->send_at = $this->send_at->addHour();
+        $this->save();
+    }
+
      /**
      * Format user activities description for Sms Broadcast
      * @override
