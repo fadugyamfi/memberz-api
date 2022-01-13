@@ -22,7 +22,7 @@ class SmsAccountMessage extends ApiModel
      *
      * @var array
      */
-    protected $fillable = ['module_sms_account_id', 'member_id', 'to', 'message', 'bday_msg', 'sent_at', 'sent', 'sent_by', 'sent_status', 'created', 'modified', 'active'];
+    protected $fillable = ['module_sms_account_id', 'member_id', 'to', 'message', 'bday_msg', 'sender_id', 'module_sms_account_broadcast_id', 'sent_at', 'sent', 'sent_by', 'sent_status', 'created', 'modified', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -58,11 +58,19 @@ class SmsAccountMessage extends ApiModel
         return $this->belongsTo(OrganisationAccount::class, 'sent_by');
     }
 
+    public function broadcast() {
+        return $this->belongsTo(SmsBroadcast::class, 'module_sms_account_broadcast_id');
+    }
+
     public function updateSentStatus(string $status, int $sentFlag) {
-        $this->send_status = $status;
+        $this->sent_status = $status;
         $this->sent = $sentFlag;
         $this->sent_at = date('Y-m-d H:i:s');
         $this->save();
+    }
+
+    public function getPagesAttribute() {
+        return ceil(strlen($this->message) / 160);
     }
 
     public function buildSearchParams(Request $request, $builder)

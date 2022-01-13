@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Scopes\LatestRecordsScope;
 use App\Scopes\SmsAccountScope;
+use App\Services\Sms\SmsPersonalizer;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Spatie\Activitylog\LogOptions;
@@ -80,8 +81,24 @@ class SmsBroadcast extends ApiModel
     }
 
     public function rescheduleForAnHour() {
-        $this->send_at = $this->send_at->addHour();
+        $this->send_at = now()->addHour();
         $this->save();
+    }
+
+    public function scopeUnsent($query) {
+        return $query->where('sent', 0);
+    }
+
+    public function scopeReadyToSend($query) {
+        return $query->where('send_at', '<=', now()->format('Y-m-d H:i:s'));
+    }
+
+    public function getMessagePagesAttribute() {
+        return ceil(strlen($this->message) / 160);
+    }
+
+    public function getSenderIdAttribute() {
+        return $this->smsBroadcastList?->sender_id ?? $this->smsAccount->sender_id;
     }
 
      /**
@@ -133,5 +150,18 @@ class SmsBroadcast extends ApiModel
                     ]);
                 }
             });
+    }
+
+    public function personalizeMessage(OrganisationMember $membership) {
+        $attributes = [
+            'title' => $membership->member->title,
+            'first_name' => $membership->member->first_name,
+            'last_name' => $membership->member->last_name,
+            'full_name' => $membership->member->full_name,
+            'org_name' => $this->smsAccount->organisation->name,
+            'org_slug' => $this->smsAccount->organisation->slug
+        ];
+
+        return (new SmsPersonalizer)->format($this->message, $attributes);
     }
 }

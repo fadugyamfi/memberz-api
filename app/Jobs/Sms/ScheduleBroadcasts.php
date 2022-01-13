@@ -12,7 +12,7 @@ class ScheduleBroadcasts {
     {
         $broadcasts = SmsBroadcast::withoutGlobalScope(SmsAccountScope::class)
             ->unsent()
-            ->where('send_at', '<=', now()->format('Y-m-d H:i:s'))
+            ->readyToSend()
             ->where(function($query) {
                 $query->where('sent_offset', 0)
                     ->orWhereNull('sent_offset');
@@ -20,6 +20,7 @@ class ScheduleBroadcasts {
             ->get();
 
         $broadcasts->each(function(SmsBroadcast $broadcast) {
+            Log::info("Scheduled SMS Broadcast {$broadcast->id}");
             ProcessBroadcast::dispatch($broadcast);
         });
 

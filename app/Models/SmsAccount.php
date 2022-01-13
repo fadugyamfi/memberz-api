@@ -47,6 +47,9 @@ class SmsAccount extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
+    public function organisation() {
+        return $this->belongsTo(Organisation::class);
+    }
 
     public static function getAccount($organisation_id) {
         return self::where('organisation_id', $organisation_id)->first();

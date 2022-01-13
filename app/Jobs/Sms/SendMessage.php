@@ -3,6 +3,7 @@
 namespace App\Jobs\Sms;
 
 use App\Models\OrganisationMember;
+use App\Models\SmsAccountMessage;
 use App\Models\SmsBroadcast;
 use App\Services\ConnectBindSmsService;
 use Illuminate\Bus\Queueable;
@@ -23,30 +24,28 @@ class SendMessage implements ShouldQueue
      */
     public function __construct(
         public OrganisationMember $membership,
-        public SmsBroadcast $smsBroadcast)
-    {
-        //
-    }
+        public SmsBroadcast $smsBroadcast
+    ) {}
 
     /**
      * Execute the job.
      *
      * @return void
      */
-    public function handle(ConnectBindSmsService $smsService)
+    public function handle()
     {
         $senderId = $this->smsBroadcast->smsBroadcastList?->sender_id ?? $this->smsBroadcast->smsAccount->sender_id;
 
-        $response = $smsService->send(
-            $this->membership->member->mobile_number,
-            $this->smsBroadcast->message,
-            $senderId
-        );
-
-        if( $response['status'] == 'success' ) {
-            $this->smsBroadcast->sent_pages += ceil(strlen($this->smsBroadcast->message) / 160);
-            $this->smsBroadcast->sent_count++;
-            $this->smsBroadcast->save();
-        }
+        // create an instant message which will be scheduled for sending in the SmsAccountMessageObserver
+        return SmsAccountMessage::create([
+            'module_sms_account_id' => $this->smsBroadcast->module_sms_account_id,
+            'organisation_id' => $this->smsBroadcast->organisation_id,
+            'member_id' => $this->membership->member_id,
+            'to' => $this->membership->member->mobile_number,
+            'message' => $this->smsBroadcast->personalizeMessage($this->membership),
+            'sent_by' => $this->smsBroadcast->scheduled_by,
+            'sender_id' => $senderId,
+            'module_sms_account_broadcast_id' => $this->smsBroadcast->id
+        ]);
     }
 }

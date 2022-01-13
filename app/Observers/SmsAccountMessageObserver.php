@@ -27,9 +27,11 @@ class SmsAccountMessageObserver implements ShouldQueue
         if( $response['status_code'] == 1) {
             $sent = 1;
             $send_status = 'Sent Successfully';
-            $pages = ceil($smsAccountMessage->message / 160);
+            $pages =  $smsAccountMessage->pages;
             $smsAccountMessage->smsAccount->deductCredit($pages);
             Log::debug('Sent message successfully to ' . $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
+
+            $this->updateBroadcastSentCounter($smsAccountMessage);
 
         } else {
             $sent = -1;
@@ -48,14 +50,27 @@ class SmsAccountMessageObserver implements ShouldQueue
      */
     public function created(SmsAccountMessage $smsAccountMessage)
     {
-        $smsService = new ConnectBindSmsService();
-        $response = $smsService->send(
-            $smsAccountMessage->to,
-            $smsAccountMessage->message,
-            $smsAccountMessage->sms_account->sender_id
-        );
-
+        $response = $this->sendSmsMessage($smsAccountMessage);
         $this->processResponse($smsAccountMessage, $response);
     }
 
+    public function sendSmsMessage(SmsAccountMessage $smsAccountMessage) {
+        $smsService = new ConnectBindSmsService();
+
+        return $smsService->send(
+            $smsAccountMessage->to,
+            $smsAccountMessage->message,
+            $smsAccountMessage->sender_id
+        );
+    }
+
+    public function updateBroadcastSentCounter(SmsAccountMessage $smsAccountMessage) {
+        if( !$smsAccountMessage->broadcast ) {
+            return;
+        }
+
+        $smsAccountMessage->broadcast->sent_pages += $smsAccountMessage->pages;
+        $smsAccountMessage->broadcast->sent_count++;
+        $smsAccountMessage->broadcast->save();
+    }
 }

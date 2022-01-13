@@ -78,6 +78,10 @@ class SmsBroadcastListService {
     }
 
     public function queryMembershipGroup($query, $filter): Builder {
+        if( !isset($filter['organisation_group_type_id']) ) {
+            return $query;
+        }
+
         $field = $this->filterTypes
             ->where('id', $filter['field'])
             ->where('organisation_group_type_id', $filter['organisation_group_type_id'])
