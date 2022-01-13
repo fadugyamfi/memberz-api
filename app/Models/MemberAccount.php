@@ -28,7 +28,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
-    protected $fillable = ['member_id', 'username', 'password', 'pass_salt', 'timezone', 'account_type', 'reset_requested', 'active', 'deleted', 'email_verification_token'];
+    protected $fillable = ['member_id', 'username', 'password', 'pass_salt', 'timezone', 'account_type', 'reset_requested', 'active', 'deleted', 'email_verification_token', 'email_2fa'];
 
     protected $hidden = ['password', 'pass_salt'];
 
@@ -45,6 +45,11 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     public function memberships()
     {
         return $this->member->memberships();
+    }
+
+    public function memberAccountCode()
+    {
+        return $this->hasOne(MemberAccountCode::class)->latest();
     }
 
     public function getOrganisationIds()
@@ -176,15 +181,22 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     public function emailTwoFa()
     {
         $code = rand(1000, 9999);
-        MemberAccountCode::updateOrCreate(['member_account_id' => auth()->user()->id], ['code' => $code]);
+
+        MemberAccountCode::create([
+            'member_account_id' => auth()->user()->id,
+            'code' => $code,
+            'expires_at' => now()->addMinutes(config('auth.twofa.email.expires')),
+        ]);
+
         Mail::to($this->username)->send(new Twofa($code));
     }
 
     /**
      * Check if require email verification is on/off
      */
-    public function isEmailTwofaRequired(){
-        return $this->email_twofa_required == 1;
+    public function isEmailTwofaRequired()
+    {
+        return $this->email_2fa == 1;
     }
 
 }

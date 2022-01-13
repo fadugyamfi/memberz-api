@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMemberAccountCodes extends Migration
+class AddEmail2faToMemberAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateMemberAccountCodes extends Migration
      */
     public function up()
     {
-        Schema::create('member_account_codes', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('member_account_id');
-            $table->string('code');
-            $table->dateTime('expires_at');
-            $table->timestamps();
+        Schema::table('member_accounts', function (Blueprint $table) {
+            $table->boolean('email_2fa')->default(false)->after('deleted');
         });
     }
 
@@ -29,6 +25,8 @@ class CreateMemberAccountCodes extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('member_account_codes');
+        Schema::table('member_accounts', function (Blueprint $table) {
+            $table->dropColumn('email_2fa');
+        });
     }
 }
