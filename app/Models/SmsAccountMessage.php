@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Scopes\LatestRecordsScope;
+use App\Scopes\SmsAccountScope;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SmsAccountMessage extends ApiModel
 {
@@ -44,6 +47,17 @@ class SmsAccountMessage extends ApiModel
      * @var array
      */
     protected $dates = ['sent_at', 'created', 'modified'];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new SmsAccountScope);
+        static::addGlobalScope(new LatestRecordsScope);
+    }
 
 
     public function smsAccount() {
@@ -93,5 +107,17 @@ class SmsAccountMessage extends ApiModel
 
 
         return $builder;
+    }
+
+    public function scopeSent($query) {
+        return $query->where('sent', 1);
+    }
+
+    public function scopeUnsent($query) {
+        return $query->where('sent', 0);
+    }
+
+    public function scopeLatestYears($query) {
+        return $query->select(DB::raw('YEAR(created) as year'))->distinct()->orderBy('year', 'desc');
     }
 }

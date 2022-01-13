@@ -76,13 +76,8 @@ class SmsBroadcast extends ApiModel
         return $this->belongsTo(OrganisationAccount::class, 'scheduled_by');
     }
 
-    public function scheduler() {
-        return $this->belongsTo(OrganisationAccount::class, 'scheduled_by');
-    }
-
-    public function rescheduleForAnHour() {
-        $this->send_at = now()->addHour();
-        $this->save();
+    public function scopeSent($query) {
+        return $query->where('sent', 1);
     }
 
     public function scopeUnsent($query) {
@@ -91,6 +86,15 @@ class SmsBroadcast extends ApiModel
 
     public function scopeReadyToSend($query) {
         return $query->where('send_at', '<=', now()->format('Y-m-d H:i:s'));
+    }
+
+    public function scheduler() {
+        return $this->belongsTo(OrganisationAccount::class, 'scheduled_by');
+    }
+
+    public function rescheduleForAnHour() {
+        $this->send_at = now()->addHour();
+        $this->save();
     }
 
     public function getMessagePagesAttribute() {
