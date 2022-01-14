@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\SmsBroadcast;
+use NunoMazer\Samehouse\Facades\Landlord;
 
 class SmsBroadcastObserver
 {
@@ -14,8 +15,9 @@ class SmsBroadcastObserver
      */
     public function creating(SmsBroadcast $smsBroadcast)
     {
-        $smsBroadcast->scheduled_by = auth()->user()->id;
+        /** @var MemberAccount $user */
+        $user = auth()->user();
+        $tenantId = Landlord::getTenants()->first();
+        $smsBroadcast->scheduled_by = $user->organisationAccounts()->where('organisation_id', $tenantId)->first()->id;
     }
-
-
 }
