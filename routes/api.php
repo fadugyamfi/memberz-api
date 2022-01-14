@@ -68,6 +68,9 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('notifications/unread', 'NotificationController@unread');
     Route::get('notifications', 'NotificationController@index');
 
+
+    Route::get('2fa/send-code', 'Send2FACodeController');
+
     // User must belong to a valid organisation to access the following routes
     Route::middleware('multi-tenant')->group(function () {
         Route::get('organisations/{id}/memberships/statistics', 'OrganisationMemberController@statistics');
