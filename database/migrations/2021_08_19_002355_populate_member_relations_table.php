@@ -16,6 +16,8 @@ class PopulateMemberRelationsTable extends Migration
      */
     public function up()
     {
+        activity()->disableLogging();
+
         DB::table('member_parents')->orderBy('id')->chunk(100, function($parents) {
             foreach($parents as $parent) {
                 if( !trim($parent->name) ) {
