@@ -27,7 +27,7 @@ class UpdateSmsBroadcastListWithFilters extends Migration
                 }
 
                 $broadcastList->filters = collect($broadcastList->filters ?? [])->push($newRecord)->toArray();
-                $broadcastList->save();
+                $broadcastList->saveQuietly();
             }
         });
     }
