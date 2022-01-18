@@ -70,6 +70,7 @@ Route::middleware(['auth:api'])->group(function () {
 
 
     Route::get('2fa/send-code', 'Send2FACodeController');
+    Route::post("2fa/email-twofa-enable", 'EmailVerificationEnableController');
 
     // User must belong to a valid organisation to access the following routes
     Route::middleware('multi-tenant')->group(function () {
