@@ -16,11 +16,17 @@ class Member extends ApiModel
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
-    protected $fillable = ['title', 'first_name', 'middle_name', 'last_name', 'gender', 'dob', 'mobile_number', 'email', 'website', 'occupation', 'profession', 'business_name', 'active'];
+
+    protected $fillable = [
+        'title', 'first_name', 'middle_name', 'last_name', 'gender', 'dob', 'mobile_number', 'email', 'website', 'occupation', 'profession', 'business_name', 'active',
+        'nationality', 'place_of_birth', 'address'
+    ];
 
     protected $appends = ['full_name', 'full_name_with_title', 'age'];
 
-    protected $dates = ['dob'];
+    protected $casts = [
+        'dob' => 'datetime:Y-m-d'
+    ];
 
     public function organisationMember()
     {
