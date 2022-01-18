@@ -47,9 +47,20 @@ class SmsAccount extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
+    public function organisation() {
+        return $this->belongsTo(Organisation::class);
+    }
 
     public static function getAccount($organisation_id) {
         return self::where('organisation_id', $organisation_id)->first();
+    }
+
+    public function getAvailableCreditAttribute() {
+        return intval($this->account_balance) + intval($this->bonus_balance);
+    }
+
+    public function hasCredit() {
+        return $this->available_credit > 0;
     }
 
     public function deductCredit($credit = 1) {

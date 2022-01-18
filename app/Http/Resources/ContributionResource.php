@@ -17,7 +17,7 @@ class ContributionResource extends JsonResource
         return array_merge(parent::toArray($request), [
             'contribution_type' => $this->contributionType,
             'member_id' => $this->organisationMember?->member_id,
-            'member_name' => $this->organisationMember?->member->full_name,
+            'member_name' => $this->organisationMember?->member->name,
             'payment_type' => $this->contributionPaymentType->name,
             'currency_code' => $this->currency->currency_code,
             'receipt_no' => $this->contributionReceipt->receipt_no,

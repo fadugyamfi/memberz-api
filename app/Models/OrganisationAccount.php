@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use App\Notifications\AdminUserCreated;
+use App\Notifications\InsufficientSmsCredits;
+use App\Notifications\InsufficientSmsCreditsForBroadcast;
 use App\Notifications\OrganisationAccountRoleChanged;
+use App\Notifications\SmsBroadcastScheduled;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithDeletedFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
@@ -119,6 +122,21 @@ class OrganisationAccount extends ApiModel
     {
         $member_account = MemberAccount::find($this->member_account_id);
         $member_account->notify(new AdminUserCreated($this->organisation_role_id, $this->organisation_id));
+    }
+
+    public function notifySmsBroadcastProcessed(SmsBroadcast $broadcast): void
+    {
+        $this->memberAccount?->notify(new SmsBroadcastScheduled($broadcast, $this->organisation));
+    }
+
+    public function notifyInsufficientSmsCredits(): void
+    {
+        $this->memberAccount?->notify(new InsufficientSmsCredits($this->organisation));
+    }
+
+    public function notifyInsufficientSmsCreditsForBroadcast(SmsBroadcast $smsBroadcast): void
+    {
+        $this->memberAccount?->notify(new InsufficientSmsCreditsForBroadcast($smsBroadcast, $this->organisation));
     }
 
     /**

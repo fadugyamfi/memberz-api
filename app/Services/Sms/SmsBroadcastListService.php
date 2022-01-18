@@ -5,6 +5,8 @@ namespace App\Services\Sms;
 use App\Models\OrganisationMember;
 use App\Models\SmsBroadcastList;
 use App\Services\Sms\SmsBroadcastListFilterService;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -16,11 +18,11 @@ class SmsBroadcastListService {
         $this->filterTypes = collect($this->smsBroadcastListFilterService->getFilters())->flatten(2);
     }
 
-    public function getContacts(SmsBroadcastList $smsBroadcastList) {
+    public function getContacts(SmsBroadcastList $smsBroadcastList): Collection {
         return $this->getContactsQuery($smsBroadcastList)->get();
     }
 
-    public function buildContactsQuery() {
+    public function buildContactsQuery(): Builder {
         return OrganisationMember::selectRaw('DISTINCT organisation_members.*, members.*')
             ->selectRaw('organisation_member_categories.name as membership_category_name, organisation_members.id as membership_id')
             ->join('members', 'members.id', '=', 'organisation_members.member_id')
@@ -28,7 +30,7 @@ class SmsBroadcastListService {
             ->orderBy('members.last_name');
     }
 
-    public function getContactsQuery(SmsBroadcastList $smsBroadcastList) {
+    public function getContactsQuery(SmsBroadcastList $smsBroadcastList): Builder {
         $query = $this->buildContactsQuery();
         $filters = $smsBroadcastList->filters;
 
@@ -65,24 +67,28 @@ class SmsBroadcastListService {
         return $query;
     }
 
-    public function queryMembership($query, $filter) {
+    public function queryMembership($query, $filter): Builder {
         $field = $this->filterTypes->where('id', $filter['field'])->first();
 
         if( !$field ) {
-            return;
+            return $query;
         }
 
         return $this->applyFilterConditions($query, $field, $filter);
     }
 
-    public function queryMembershipGroup($query, $filter) {
+    public function queryMembershipGroup($query, $filter): Builder {
+        if( !isset($filter['organisation_group_type_id']) ) {
+            return $query;
+        }
+
         $field = $this->filterTypes
             ->where('id', $filter['field'])
             ->where('organisation_group_type_id', $filter['organisation_group_type_id'])
             ->first();
 
         if( !$field ) {
-            return;
+            return $query;
         }
 
         if( !$this->isJoined($query, 'organisation_member_groups') ) {
@@ -95,11 +101,11 @@ class SmsBroadcastListService {
         return $this->applyFilterConditions($query, $field, $filter);
     }
 
-    function isJoined($query, $table) {
+    function isJoined($query, $table): bool {
         return collect($query->getQuery()->joins)->pluck('table')->contains($table);
     }
 
-    private function applyFilterConditions($query, $field, $filter) {
+    private function applyFilterConditions($query, $field, $filter): Builder {
         $column = isset($field['raw']) && $field['raw'] == true ? DB::raw($field['column']) : "{$field['table']}.{$field['column']}";
 
         switch($filter['condition']) {

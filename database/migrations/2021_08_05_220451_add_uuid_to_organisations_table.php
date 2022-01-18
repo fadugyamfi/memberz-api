@@ -3,6 +3,7 @@
 use App\Models\Organisation;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Ramsey\Uuid\Uuid;
 
@@ -21,9 +22,14 @@ class AddUuidToOrganisationsTable extends Migration
             });
         }
 
-        Organisation::all()->each(function($organisation) {
-            $organisation->uuid = Uuid::uuid4();
-            $organisation->save();
+        activity()->disableLogging();
+
+        DB::table('organisations')->chunkById(50, function($organisations) {
+            foreach($organisations as $organisation) {
+                DB::table('organisations')
+                    ->where('id', $organisation->id)
+                    ->update(['uuid' => Uuid::uuid4()]);
+            }
         });
     }
 

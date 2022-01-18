@@ -17,7 +17,12 @@ class MemberRelation extends ApiModel
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
+
     protected $fillable = ['member_id', 'name', 'gender', 'dob', 'relation_member_id', 'is_alive', 'member_relation_type_id', 'active'];
+
+    protected $casts = [
+        'dob' => 'datetime:Y-m-d'
+    ];
 
     public function member_relation_type(){
         return $this->belongsTo(MemberRelationType::class);
