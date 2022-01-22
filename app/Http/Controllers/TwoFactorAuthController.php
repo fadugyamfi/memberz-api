@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TwoFaCheckRequest;
 use App\Models\MemberAccount;
-use App\Services\TwofactorAuthService;
+use App\Services\TwoFactorAuthService;
 
 /**
  * @group Auth
  */
 class TwoFactorAuthController extends Controller
 {
-    public function __construct(private TwofactorAuthService $twofaService){}
+    public function __construct(private TwoFactorAuthService $twofaService){}
 
     /**
      * 2FA - Send Code

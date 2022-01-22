@@ -6,7 +6,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\TwoFaCheckRequest;
 use App\Models\MemberAccount;
 use App\Services\AuthLogService;
-use App\Services\TwofactorAuthService;
+use App\Services\TwoFactorAuthService;
 
 /**
  * @group Auth
@@ -14,7 +14,7 @@ use App\Services\TwofactorAuthService;
 class AuthController extends Controller
 {
 
-    public function __construct(private AuthLogService $authLogger, private TwofactorAuthService $twofaService){}
+    public function __construct(private AuthLogService $authLogger, private TwoFactorAuthService $twofaService){}
 
     /**
      * Login

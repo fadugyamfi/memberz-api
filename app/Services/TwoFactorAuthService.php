@@ -8,7 +8,7 @@ use App\Models\MemberAccountCode;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
-class TwofactorAuthService {
+class TwoFactorAuthService {
 
     public function handle(MemberAccount $account) {
         if (!$account->isEmailTwofaRequired()) {
