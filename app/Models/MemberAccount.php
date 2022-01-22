@@ -176,22 +176,6 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     }
 
     /**
-     * Create or Update E-mail verification code and send code to email
-     */
-    public function emailTwoFa()
-    {
-        $code = rand(100000, 999999);
-
-        MemberAccountCode::create([
-            'member_account_id' => auth()->user()->id,
-            'code' => $code,
-            'expires_at' => now()->addMinutes(config('auth.twofa.email.expires')),
-        ]);
-
-        Mail::to($this->username)->send(new Twofa($code));
-    }
-
-    /**
      * Check if require email verification is on/off
      */
     public function isEmailTwofaRequired()

@@ -6,7 +6,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\TwoFaCheckRequest;
 use App\Models\MemberAccount;
 use App\Services\AuthLogService;
-use App\Services\TwofaService;
+use App\Services\TwofactorAuthService;
 
 /**
  * @group Auth
@@ -14,7 +14,7 @@ use App\Services\TwofaService;
 class AuthController extends Controller
 {
 
-    public function __construct(private AuthLogService $authLogger, private TwofaService $twofaService){}
+    public function __construct(private AuthLogService $authLogger, private TwofactorAuthService $twofaService){}
 
     /**
      * Login
@@ -95,7 +95,7 @@ class AuthController extends Controller
     {
         $memberAccount = MemberAccount::find(auth()->user()->id);
 
-        if(! $this->twofaService->isValid($memberAccount)){
+        if(! $this->twofaService->isValid($request->code, $memberAccount)){
             return response()->json(['status' => "error", 'message' => __("Invalid 2FA Code or 2FA Code Expired")], 404);
         }
 

@@ -62,15 +62,15 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('system_setting_category', 'SystemSettingCategoryController');
     Route::apiResource('transaction_types', 'TransactionTypeController');
 
-
     Route::post('notifications/{id}/mark_read', 'NotificationController@markRead');
     Route::post('notifications/mark_all_read', 'NotificationController@markAllRead');
     Route::get('notifications/unread', 'NotificationController@unread');
     Route::get('notifications', 'NotificationController@index');
 
 
-    Route::get('2fa/send-code', 'Send2FACodeController');
-    Route::post("2fa/email-twofa-enable", 'EmailVerificationEnableController');
+    Route::get('2fa/send-code', 'TwoFactorAuthController@sendCode');
+    Route::post("2fa/enable", 'TwoFactorAuthController@enable');
+    Route::post("2fa/disable", 'TwoFactorAuthController@disable');
 
     // User must belong to a valid organisation to access the following routes
     Route::middleware('multi-tenant')->group(function () {
