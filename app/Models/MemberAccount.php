@@ -180,7 +180,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
      */
     public function emailTwoFa()
     {
-        $code = rand(1000, 9999);
+        $code = rand(100000, 999999);
 
         MemberAccountCode::create([
             'member_account_id' => auth()->user()->id,
