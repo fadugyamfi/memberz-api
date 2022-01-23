@@ -12,6 +12,7 @@
         "doctrine/dbal": "^2.10",
         "fadugyamfi/laravel-api-base": "dev-master",
         "fideloper/proxy": "^4.0",
+        "flexflux/laravel-elastic-email": "dev-master",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.6",
