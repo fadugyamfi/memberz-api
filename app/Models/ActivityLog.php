@@ -7,7 +7,7 @@ use NunoMazer\Samehouse\BelongsToTenants;
 class ActivityLog extends ApiModel
 {
     use BelongsToTenants;
-    
+
     /**
      * Database table name
      */
@@ -19,10 +19,13 @@ class ActivityLog extends ApiModel
      * Protected columns from mass assignment
      */
     public $guarded  = ['id'];
-    public $fillable = ['id', 'log_name', 'description', 'subject', 'causer', 'causer_id', 'properties', 'created_at'];
+    public $fillable = ['id', 'organisation_id', 'log_name', 'description', 'subject', 'causer', 'causer_id', 'properties', 'created_at'];
 
     public function causer() {
         return $this->belongsTo(MemberAccount::class, 'causer_id');
     }
 
+    public function organisation() {
+        return $this->belongsTo(Organisation::class);
+    }
 }
