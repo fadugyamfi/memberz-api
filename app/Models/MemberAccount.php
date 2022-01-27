@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 use LaravelApiBase\Models\ApiModelBehavior;
 use LaravelApiBase\Models\ApiModelInterface;
 use Spatie\Activitylog\Traits\CausesActivity;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSubject
 {

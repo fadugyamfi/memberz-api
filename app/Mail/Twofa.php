@@ -12,7 +12,7 @@ class Twofa extends Mailable
 {
     use Queueable, SerializesModels;
 
-    
+
 
     /**
      * Create a new message instance.
@@ -28,6 +28,8 @@ class Twofa extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.users.twofa', ['code' => $this->code]);
+        return $this->from('support@memberz.org', 'Memberz.Org Support')
+                    ->subject(__('Two Factor Authentication Verification'))
+                    ->markdown('emails.users.twofa', ['code' => $this->code]);
     }
 }
