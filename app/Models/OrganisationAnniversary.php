@@ -9,6 +9,9 @@ use Spatie\Activitylog\LogOptions;
 class OrganisationAnniversary extends ApiModel  
 {
     use BelongsToTenants, LogModelActivity;
+
+    public $tenantColumns = ['organisation_id'];
+
     /**
      * The database table used by the model.
      *
@@ -70,21 +73,21 @@ class OrganisationAnniversary extends ApiModel
                 if ($eventName == 'created') {
                     return __("Created anniversary type \":name\" for \":org\"", [
                         "name" => $anniversary->name,
-                        'org' => $$anniversary->organisation->name,
+                        'org' => $anniversary->organisation->name,
                     ]);
                 }
 
                 if ($eventName == 'updated') {
                     return __("Updated anniversary type \":name\" for \":org\"", [
                         "name" => $anniversary->name,
-                        'org' => $$anniversary->organisation->name,
+                        'org' => $anniversary->organisation->name,
                     ]);
                 }
 
                 if ($eventName == 'deleted') {
                     return __("Deleted anniversary type \":name\" for \":org\"", [
                         "name" => $anniversary->name,
-                        'org' => $$anniversary->organisation->name,
+                        'org' => $anniversary->organisation->name,
                     ]);
                 }
             });
