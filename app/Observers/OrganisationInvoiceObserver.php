@@ -19,4 +19,17 @@ class OrganisationInvoiceObserver
         }
     }
 
+    public function updated(OrganisationInvoice $organisationInvoice) {
+        if( $organisationInvoice->getOriginal('paid') == 0 && $organisationInvoice->paid == 1 ) {
+            $this->applySmsCreditTopup($organisationInvoice);
+        }
+    }
+
+    public function applySmsCreditTopup(OrganisationInvoice $invoice) {
+        if( !$invoice->smsAccountTopup ) {
+            return;
+        }
+
+        $invoice->smsAccountTopup->credit();
+    }
 }

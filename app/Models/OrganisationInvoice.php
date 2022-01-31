@@ -78,6 +78,10 @@ class OrganisationInvoice extends Model implements ApiModelInterface
         return $this->belongsTo(Currency::class);
     }
 
+    public function smsAccountTopup() {
+        return $this->hasOne(SmsAccountTopup::class, 'organisation_invoice_id');
+    }
+
     public function incrementTotal($amount) {
         $this->total_due += $amount;
         $this->save();
