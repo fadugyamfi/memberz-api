@@ -17,8 +17,7 @@ class TwoFactorAuthController extends Controller
      * 2FA - Send Code
      */
     public function sendCode(){
-        $memberAccount = MemberAccount::find(auth()->user()->id);
-        $this->twofaService->emailTwoFa($memberAccount);
+        $this->twofaService->emailTwoFa(auth()->user());
 
         return response()->json(["status" => "success", "message" => "2FA code sent"]);
     }
@@ -27,26 +26,21 @@ class TwoFactorAuthController extends Controller
      * 2FA - Enable
      */
     public function enable(TwoFaCheckRequest $request){
-        $memberAccount = MemberAccount::find(auth()->user()->id);
-
-        if(! $this->twofaService->isValid($request->code, $memberAccount)){
+        if(! $this->twofaService->isValid($request->code, auth()->user())){
             return response()->json(['status' => "error", 'message' => __("Invalid 2FA Code or 2FA Code Expired")], 404);
         }
 
-        $memberAccount->email_2fa = true;
-        $memberAccount->save();
+        auth()->user()->update([ 'email_2fa' => true ]);
 
-        return response()->json(["status" => "success", "message" => "E-Mail verifidation enabled"]);
+        return response()->json(["status" => "success", "message" => __("E-Mail verifidation enabled")]);
     }
 
     /**
      * 2FA - Disable
      */
     public function disable(){
-        $memberAccount = MemberAccount::find(auth()->user()->id);
-        $memberAccount->email_2fa = false;
-        $memberAccount->save();
+        auth()->user()->update([ 'email_2fa' => false ]);
 
-        return response()->json(["status" => "success", "message" => "E-Mail verifidation disabled"]);
+        return response()->json(["status" => "success", "message" => __("E-Mail verifidation disabled")]);
     }
 }

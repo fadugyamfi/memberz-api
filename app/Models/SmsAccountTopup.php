@@ -66,6 +66,24 @@ class SmsAccountTopup extends ApiModel
     }
 
     public function smsCredit() {
-        return $this->belongsTo(SmsCredit::class);
+        return $this->belongsTo(SmsCredit::class, 'module_sms_credit_id');
+    }
+
+    public function smsAccount() {
+        return $this->belongsTo(SmsAccount::class, 'module_sms_account_id');
+    }
+
+    public function credit() {
+        if( $this->credited ) {
+            return;
+        }
+
+        $this->smsAccount->addCredit($this->credit_amount, $this->is_bonus);
+        $this->markCredited();
+    }
+
+    public function markCredited() {
+        $this->credited = 1;
+        $this->save();
     }
 }

@@ -45,4 +45,8 @@ class SmsCredit extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
+
+    public function currency() {
+        return $this->belongsTo(Currency::class);
+    }
 }

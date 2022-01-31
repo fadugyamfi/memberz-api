@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Member extends ApiModel
 {
@@ -51,6 +52,13 @@ class Member extends ApiModel
     public function profilePhoto()
     {
         return $this->hasOne(MemberImage::class)->latest();
+    }
+
+    public function name(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value, $attributes) => $attributes['first_name'] . ' ' . $attributes['last_name'],
+        );
     }
 
     public function getNameAttribute()
