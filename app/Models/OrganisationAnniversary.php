@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Traits\LogModelActivity;
+use App\Traits\SoftDeletesWithActiveFlag;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
-class OrganisationAnniversary extends ApiModel  
+class OrganisationAnniversary extends ApiModel
 {
-    use BelongsToTenants, LogModelActivity;
+    use BelongsToTenants, LogModelActivity, SoftDeletesWithActiveFlag;
 
     public $tenantColumns = ['organisation_id'];
 
@@ -56,6 +57,10 @@ class OrganisationAnniversary extends ApiModel
     public function organisation()
     {
         return $this->belongsTo(Organisation::class);
+    }
+
+    public function organisationMemberAnniversaries() {
+        return $this->hasMany(OrganisationMemberAnniversary::class);
     }
 
     /**
