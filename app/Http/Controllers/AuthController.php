@@ -14,7 +14,14 @@ use App\Services\TwoFactorAuthService;
 class AuthController extends Controller
 {
 
-    public function __construct(private AuthLogService $authLogger, private TwoFactorAuthService $twofaService){}
+    /**
+     * @var MemberAccount $account
+     */
+    private $account;
+
+    public function __construct(private AuthLogService $authLogger, private TwoFactorAuthService $twofaService){
+        $this->account = auth()->user() ?? null;
+    }
 
     /**
      * Login
@@ -34,7 +41,7 @@ class AuthController extends Controller
 
         $this->authLogger->logLoginSuccess( auth()->user() );
 
-        if (MemberAccount::find(auth()->user()->id)->isEmailTwofaRequired()){
+        if ($this->account->isEmailTwofaRequired()){
             $this->twofaService->handle(auth()->user());
             return response()->json(['status' => '2fa', 'message' => '2FA Code Required']);
         }
@@ -60,7 +67,7 @@ class AuthController extends Controller
 
         $this->authLogger->logLoginSuccess($account);
 
-        if (MemberAccount::find(auth()->user()->id)->isEmailTwofaRequired()){
+        if ($this->account->isEmailTwofaRequired()){
             $this->twofaService->handle(auth()->user());
             return response()->json(['status' => '2fa', 'message' => '2FA Code Required']);
         }
