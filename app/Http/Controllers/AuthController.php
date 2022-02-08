@@ -14,7 +14,14 @@ use App\Services\TwoFactorAuthService;
 class AuthController extends Controller
 {
 
-    public function __construct(private AuthLogService $authLogger, private TwoFactorAuthService $twofaService){}
+    /**
+     * @var MemberAccount $account
+     */
+    private $account;
+
+    public function __construct(private AuthLogService $authLogger, private TwoFactorAuthService $twofaService){
+        $this->account = auth()->user() ?? null;
+    }
 
     /**
      * Login
@@ -34,7 +41,10 @@ class AuthController extends Controller
 
         $this->authLogger->logLoginSuccess( auth()->user() );
 
-        // $this->twoFa(auth()->user());
+        if ($this->account->isEmailTwofaRequired()){
+            $this->twofaService->handle(auth()->user());
+            return response()->json(['status' => '2fa', 'message' => '2FA Code Required']);
+        }
 
         return $this->respondWithToken($token);
     }
@@ -56,6 +66,11 @@ class AuthController extends Controller
         }
 
         $this->authLogger->logLoginSuccess($account);
+
+        if ($this->account->isEmailTwofaRequired()){
+            $this->twofaService->handle(auth()->user());
+            return response()->json(['status' => '2fa', 'message' => '2FA Code Required']);
+        }
 
         return $this->respondWithToken($token, true);
     }
@@ -91,15 +106,17 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function twoFaCheck(TwoFaCheckRequest $request)
+    public function twoFaValidate(TwoFaCheckRequest $request)
     {
-        $memberAccount = MemberAccount::find(auth()->user()->id);
+        $memberAccount = MemberAccount::where('username', $request->username)->where('active', 1)->first();
 
         if(! $this->twofaService->isValid($request->code, $memberAccount)){
             return response()->json(['status' => "error", 'message' => __("Invalid 2FA Code or 2FA Code Expired")], 404);
         }
 
-        return response()->json(["status" => "success", "message" => "2FA code valid"]);
+        $token = auth()->attempt(request(['username', 'password']));
+
+        return $this->respondWithToken($token, true);
     }
 
     /**

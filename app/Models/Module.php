@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\HasCakephpTimestamps;
 use Illuminate\Database\Eloquent\Model;
 
 class Module extends ApiModel
 {
+    use HasCakephpTimestamps;
 
     /** 
      * Will not log any activity on []

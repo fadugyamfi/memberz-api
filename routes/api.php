@@ -19,6 +19,7 @@ Route::prefix('auth')->group(function () {
     Route::post('register', 'RegisterController');
     Route::post('login', 'AuthController@login');
     Route::get('verify/{token}', 'VerifyEmailController');
+    Route::post('2fa-validate', 'AuthController@twoFaValidate');
 });
 
 /** Authenticated auth routes */

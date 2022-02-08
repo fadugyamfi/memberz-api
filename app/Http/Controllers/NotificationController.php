@@ -44,7 +44,6 @@ class NotificationController extends ApiController
                 if ($data) {
                     Notification::whereIn('id', $data->pluck('id')->all())->update(['sent' => 1]);
                 }
-
             }
 
         }, 200, [
