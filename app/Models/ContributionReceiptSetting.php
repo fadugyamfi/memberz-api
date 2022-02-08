@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasCakephpTimestamps;
 use Illuminate\Database\Eloquent\Builder;
 use NunoMazer\Samehouse\BelongsToTenants;
 
 class ContributionReceiptSetting extends ApiModel
 {
 
-    use BelongsToTenants;
+    use BelongsToTenants, HasCakephpTimestamps;
 
 
     /**

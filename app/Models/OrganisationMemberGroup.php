@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
 use Illuminate\Http\Request;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
@@ -11,7 +12,7 @@ use Spatie\Activitylog\LogOptions;
 class OrganisationMemberGroup extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithActiveFlag, LogModelActivity;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity;
 
     /**
      * The database table used by the model.

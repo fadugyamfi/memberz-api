@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\LogModelActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Traits\HasPermissions;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
@@ -10,7 +11,7 @@ use Spatie\Activitylog\LogOptions;
 class OrganisationRegistrationForm extends ApiModel
 {
 
-    use BelongsToTenants, HasPermissions, LogModelActivity;
+    use BelongsToTenants, HasPermissions, LogModelActivity, SoftDeletes;
 
     /**
      * Attributes that should be mass-assignable.
@@ -31,7 +32,7 @@ class OrganisationRegistrationForm extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['form_enabled' => 'boolean'];
+    protected $casts = ['form_enabled' => 'boolean', 'excluded_stardard_fields' => 'array', 'custom_fields' => 'array'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -43,6 +44,10 @@ class OrganisationRegistrationForm extends ApiModel
 
     public function organisation() {
         return $this->belongsTo(Organisation::class);
+    }
+
+    public function organisationMembers() {
+        return $this->hasMany(OrganisationMember::class);
     }
 
       /**

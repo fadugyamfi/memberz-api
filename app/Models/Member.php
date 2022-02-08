@@ -4,13 +4,14 @@ namespace App\Models;
 
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Member extends ApiModel
 {
 
-    use SoftDeletesWithActiveFlag, LogModelActivity;
+    use SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity;
 
     protected $table = 'members';
 

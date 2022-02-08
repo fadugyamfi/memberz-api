@@ -4,12 +4,13 @@ namespace App\Models;
 
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
 class OrganisationAnniversary extends ApiModel
 {
-    use BelongsToTenants, LogModelActivity, SoftDeletesWithActiveFlag;
+    use BelongsToTenants, LogModelActivity, SoftDeletesWithActiveFlag, HasCakephpTimestamps;
 
     public $tenantColumns = ['organisation_id'];
 

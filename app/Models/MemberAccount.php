@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Mail\PasswordReset;
 use App\Mail\Twofa;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +20,7 @@ use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSubject
 {
-    use Notifiable, ApiModelBehavior, SoftDeletesWithActiveFlag, CausesActivity;
+    use Notifiable, ApiModelBehavior, SoftDeletesWithActiveFlag, HasCakephpTimestamps, CausesActivity;
 
     const DELETED_AT = 'active';
 

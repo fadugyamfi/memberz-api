@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasCakephpTimestamps;
 use App\Traits\LogModelActivity;
+use App\Traits\SoftDeletesWithActiveFlag;
 use Spatie\Activitylog\LogOptions;
 
 class MemberImage extends ApiModel
 {
-    use LogModelActivity;
+    use LogModelActivity, HasCakephpTimestamps, SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.

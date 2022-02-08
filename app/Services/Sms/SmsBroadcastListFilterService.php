@@ -218,26 +218,21 @@ class SmsBroadcastListFilterService {
     }
 
     public function getGroupFields() {
-        $fields = [];
-        $groupTypes = OrganisationGroupType::with('organisationGroups')->get();
+        $self = $this;
 
-        foreach($groupTypes as $type) {
-            $field = [
+        return OrganisationGroupType::with('organisationGroups')->get()->map(function($type) use($self) {
+            return [
                 'id' => "membership__group_{$type->id}",
                 "organisation_group_type_id" => $type->id,
                 'name' => $type->name,
                 "table" => "organisation_member_groups",
                 "column" => "organisation_group_id",
                 "value_type" => "option",
-                "conditions" => $this->getListConditions(),
+                "conditions" => $self->getListConditions(),
                 "options" => $type->organisationGroups->map(function($group) {
                     return ['label' => $group->name, 'value' => $group->id];
                 })
             ];
-
-            array_push($fields, $field);
-        }
-
-        return $fields;
+        });
     }
 }

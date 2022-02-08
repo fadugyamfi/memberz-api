@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
-class NotificationType extends ApiModel  
+use App\Traits\HasCakephpTimestamps;
+use App\Traits\SoftDeletesWithActiveFlag;
+
+class NotificationType extends ApiModel
 {
+
+    use HasCakephpTimestamps, SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.

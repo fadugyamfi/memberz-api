@@ -4,13 +4,14 @@ namespace App\Models;
 
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
 class SmsAccount extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithActiveFlag, LogModelActivity;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity;
 
     /**
      * The database table used by the model.

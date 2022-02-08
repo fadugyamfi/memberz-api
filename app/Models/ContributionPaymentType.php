@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithActiveFlag;
+
 class ContributionPaymentType extends ApiModel
 {
+    use SoftDeletesWithActiveFlag;
+
     /**
      * The database table used by the model.
      *

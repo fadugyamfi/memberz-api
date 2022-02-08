@@ -4,13 +4,14 @@ namespace App\Models;
 
 use App\Scopes\LatestRecordsScope;
 use App\Traits\SoftDeletesWithDeletedFlag;
+use App\Traits\HasCakephpTimestamps;
 use App\Scopes\SmsAccountScope;
 use App\Traits\LogModelActivity;
 
 class SmsAccountTopup extends ApiModel
 {
 
-    use SoftDeletesWithDeletedFlag, LogModelActivity;
+    use SoftDeletesWithDeletedFlag, HasCakephpTimestamps, LogModelActivity;
 
     const DELETED_AT = 'deleted';
 

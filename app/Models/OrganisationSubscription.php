@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasCakephpTimestamps;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -11,10 +12,7 @@ use LaravelApiBase\Models\ApiModelInterface;
 class OrganisationSubscription extends Model implements ApiModelInterface
 {
 
-    use BelongsToTenants, ApiModelBehavior;
-
-    const CREATED_AT = 'created';
-    const UPDATED_AT = 'modified';
+    use BelongsToTenants, ApiModelBehavior, HasCakephpTimestamps;
 
     /**
      * The database table used by the model.

@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
 use NunoMazer\Samehouse\BelongsToTenants;
 
 class OrganisationModule extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithActiveFlag;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestamps;
 
     /**
      * The database table used by the model.

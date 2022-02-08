@@ -7,12 +7,13 @@ use App\Scopes\SmsAccountScope;
 use App\Services\Sms\SmsPersonalizer;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
 use Spatie\Activitylog\LogOptions;
 
 class SmsBroadcast extends ApiModel
 {
 
-    use SoftDeletesWithActiveFlag, LogModelActivity;
+    use SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity;
 
     /**
      * The database table used by the model.

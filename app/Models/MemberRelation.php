@@ -3,14 +3,12 @@
 namespace App\Models;
 
 use App\Traits\LogModelActivity;
+use App\Traits\SoftDeletesWithActiveFlag;
 use Spatie\Activitylog\LogOptions;
 
 class MemberRelation extends ApiModel
 {
-    use LogModelActivity;
-
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
+    use LogModelActivity, SoftDeletesWithActiveFlag;
 
     protected $table = 'member_relations';
 

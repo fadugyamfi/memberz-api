@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
-class AuthApp extends ApiModel  
+use App\Traits\HasCakephpTimestamps;
+
+class AuthApp extends ApiModel
 {
+
+    use HasCakephpTimestamps;
+
     /**
      * The database table used by the model.
      *

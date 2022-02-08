@@ -5,13 +5,14 @@ namespace App\Models;
 use App\Scopes\LatestRecordsScope;
 use App\Scopes\SmsAccountScope;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class SmsAccountMessage extends ApiModel
 {
 
-    use SoftDeletesWithActiveFlag;
+    use SoftDeletesWithActiveFlag, HasCakephpTimestamps;
 
     /**
      * The database table used by the model.

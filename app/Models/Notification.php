@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Database\Eloquent\Builder;
 
 class Notification extends ApiModel
 {
 
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
-    
+    use SoftDeletesWithActiveFlag;
+
     protected $fillable = [
         'type', 'notifiable_type', 'notifiable_id', 'data', 'read_at', 'notification_type_id', 'organisation_id', 'member_account_id', 'source_id', 'target_id', 'active', 'sent'
     ];

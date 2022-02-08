@@ -56,4 +56,8 @@ trait SoftDeletesWithDeletedFlag {
 
         $this->syncOriginalAttributes(array_keys($columns));
     }
+
+    public function getDeletedAtColumn() {
+        return 'deleted';
+    }
 }

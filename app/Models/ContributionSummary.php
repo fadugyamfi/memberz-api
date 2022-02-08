@@ -4,13 +4,14 @@ namespace App\Models;
 
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithDeletedFlag;
+use App\Traits\HasCakephpTimestamps;
 use Illuminate\Database\Eloquent\Builder;
 use NunoMazer\Samehouse\BelongsToTenants;
 use NunoMazer\Samehouse\Facades\Landlord;
 
 class ContributionSummary extends ApiModel
 {
-    use BelongsToTenants, LogModelActivity, SoftDeletesWithDeletedFlag;
+    use BelongsToTenants, LogModelActivity, SoftDeletesWithDeletedFlag, HasCakephpTimestamps;
 
     const DELETED_AT = 'deleted';
 
@@ -122,7 +123,7 @@ class ContributionSummary extends ApiModel
         if ($contribution_type_id) {
             $query = $query->getByContributionTypeId($contribution_type_id);
         }
-        
+
         return $query;
     }
 

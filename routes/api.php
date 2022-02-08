@@ -99,6 +99,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('organisation_group_types', 'OrganisationGroupTypeController');
         Route::apiResource('organisation_group_leaders', 'OrganisationGroupLeaderController');
         Route::apiResource('organisation_member_groups', 'OrganisationMemberGroupController');
+        Route::apiResource('organisation_registration_forms', 'OrganisationRegistrationFormController');
 
         Route::get('sms/summary', 'Sms\SummaryController');
         Route::apiResource('sms_accounts', 'SmsAccountController');

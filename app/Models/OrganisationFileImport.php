@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasCakephpTimestamps;
 use App\Traits\LogModelActivity;
 use NunoMazer\Samehouse\BelongsToTenants;
 
 class OrganisationFileImport extends ApiModel
 {
 
-    use BelongsToTenants, LogModelActivity;
+    use BelongsToTenants, LogModelActivity, HasCakephpTimestamps;
 
     /**
      * The database table used by the model.

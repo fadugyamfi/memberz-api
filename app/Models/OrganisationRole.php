@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
 use Spatie\Permission\Traits\HasPermissions;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
@@ -11,7 +12,7 @@ use Spatie\Activitylog\LogOptions;
 class OrganisationRole extends ApiModel
 {
 
-    use BelongsToTenants, HasPermissions, SoftDeletesWithActiveFlag, LogModelActivity;
+    use BelongsToTenants, HasPermissions, SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity;
 
     /**
      * The database table used by the model.

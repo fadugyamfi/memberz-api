@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithDeletedFlag;
+use App\Traits\HasCakephpTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use LaravelApiBase\Models\ApiModelBehavior;
 use LaravelApiBase\Models\ApiModelInterface;
@@ -11,7 +12,7 @@ use NunoMazer\Samehouse\BelongsToTenants;
 class OrganisationInvoice extends Model implements ApiModelInterface
 {
 
-    use BelongsToTenants, SoftDeletesWithDeletedFlag, ApiModelBehavior;
+    use BelongsToTenants, SoftDeletesWithDeletedFlag, HasCakephpTimestamps, ApiModelBehavior;
 
     // override default soft delete column
     const CREATED_AT = 'created';

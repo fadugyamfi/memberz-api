@@ -9,13 +9,14 @@ use App\Notifications\OrganisationAccountRoleChanged;
 use App\Notifications\SmsBroadcastScheduled;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithDeletedFlag;
+use App\Traits\HasCakephpTimestamps;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
 class OrganisationAccount extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithDeletedFlag, LogModelActivity;
+    use BelongsToTenants, SoftDeletesWithDeletedFlag, HasCakephpTimestamps, LogModelActivity;
 
     const DELETED_AT = 'deleted';
 

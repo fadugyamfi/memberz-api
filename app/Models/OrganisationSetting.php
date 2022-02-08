@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-
+use App\Traits\HasCakephpTimestamps;
 use NunoMazer\Samehouse\BelongsToTenants;
 
 class OrganisationSetting extends ApiModel
 {
 
-    use BelongsToTenants;
+    use BelongsToTenants, HasCakephpTimestamps;
 
     /**
      * The database table used by the model.

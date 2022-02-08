@@ -6,13 +6,14 @@ use App\Scopes\LatestRecordsScope;
 use App\Scopes\SmsAccountScope;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
 class SmsBroadcastList extends ApiModel
 {
 
-    use SoftDeletesWithActiveFlag, LogModelActivity, BelongsToTenants;
+    use SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity, BelongsToTenants;
 
     /**
      * The database table used by the model.

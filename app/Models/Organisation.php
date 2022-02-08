@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\HasCakephpTimestamps;
 use App\Traits\LogModelActivity;
+use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Spatie\Activitylog\LogOptions;
 
 class Organisation extends ApiModel
 {
-    use LogModelActivity;
+    use LogModelActivity, HasCakephpTimestamps, SoftDeletesWithActiveFlag;
 
     protected $table = 'organisations';
 
