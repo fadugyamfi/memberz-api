@@ -11,10 +11,6 @@ use Illuminate\Support\Facades\Mail;
 class TwoFactorAuthService {
 
     public function handle(MemberAccount $account) {
-        if (!$account->isEmailTwofaRequired()) {
-            return;
-        }
-
         $this->emailTwoFa($account);
     }
 
@@ -49,6 +45,10 @@ class TwoFactorAuthService {
             ->performedOn($account)
             ->event('2FA')
             ->log(__("2FA code sent to :email", ['email' => $account->username]));
+    }
+
+    public function isTwoFaEnabled(MemberAccount $account) : bool{
+        return $account->isEmailTwofaRequired();
     }
 
     public function isValid(string $code, MemberAccount $account){

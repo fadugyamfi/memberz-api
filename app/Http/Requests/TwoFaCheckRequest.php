@@ -25,7 +25,7 @@ class TwoFaCheckRequest extends ApiRequest
     public function rules()
     {
         return [
-            'code' => 'required|numeric|exists:member_account_codes,code',
+            'code' => 'required|exists:member_account_codes,code',
         ];
     }
 }

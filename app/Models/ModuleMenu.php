@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\HasCakephpTimestamps;
+
 class ModuleMenu extends ApiModel
 {
+    use HasCakephpTimestamps;
+    
      /** 
      * Will not log any activity on []
      */

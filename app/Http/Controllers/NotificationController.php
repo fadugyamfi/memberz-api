@@ -30,21 +30,22 @@ class NotificationController extends ApiController
 
             $user = MemberAccount::find($member_account_id);
 
-            while (true) {
-                $data = null;
-                $data = $user->unsentNotifications()->get();
+            // while (true) {
+            
+            // }
 
-                echo "retry: 60000\n\n"; // retry connection after 60 seconds
-                echo 'data: ' . json_encode($data) . "\n\n";
-                ob_flush();
-                flush();
-                sleep(5);
+            $data = null;
+            $data = $user->unsentNotifications()->get();
 
-                /* update the table rows as sent */
-                if ($data) {
-                    Notification::whereIn('id', $data->pluck('id')->all())->update(['sent' => 1]);
-                }
+            echo "retry: 60000\n\n"; // retry connection after 60 seconds
+            echo 'data: ' . json_encode($data) . "\n\n";
+            ob_flush();
+            flush();
+            sleep(5);
 
+            /* update the table rows as sent */
+            if ($data) {
+                Notification::whereIn('id', $data->pluck('id')->all())->update(['sent' => 1]);
             }
 
         }, 200, [
