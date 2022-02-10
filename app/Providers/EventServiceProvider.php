@@ -12,6 +12,7 @@ use App\Models\OrganisationInvoice;
 use App\Models\OrganisationInvoiceItem;
 use App\Models\OrganisationMember;
 use App\Models\OrganisationMemberCategory;
+use App\Models\OrganisationRegistrationForm;
 use App\Models\OrganisationSubscription;
 use App\Models\SmsAccountMessage;
 use App\Models\SmsAccountTopup;
@@ -27,6 +28,7 @@ use App\Observers\OrganisationInvoiceObserver;
 use App\Observers\OrganisationMemberCategoryObserver;
 use App\Observers\OrganisationMemberObserver;
 use App\Observers\OrganisationObserver;
+use App\Observers\OrganisationRegistrationFormObserver;
 use App\Observers\OrganisationSubscriptionObserver;
 use App\Observers\SmsAccountMessageObserver;
 use App\Observers\SmsAccountTopupObserver;
@@ -73,5 +75,6 @@ class EventServiceProvider extends ServiceProvider
         OrganisationGroup::observe(OrganisationGroupObserver::class);
         MemberAccount::observe(MemberAccountObserver::class);
         SmsAccountTopup::observe(SmsAccountTopupObserver::class);
+        OrganisationRegistrationForm::observe(OrganisationRegistrationFormObserver::class);
     }
 }

@@ -25,6 +25,7 @@ class OrganisationRegistrationFormRequest extends ApiRequest
     {
         return [
             'organisation_id' => 'required|numeric|exists:organisations,id',
+            'organisation_member_category_id' => 'required|numeric|exists:organisation_member_categories,id',
             'name' => 'required|string',
             'description' => 'nullable|string',
             'expiration_dt' => 'nullable|date',
