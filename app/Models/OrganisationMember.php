@@ -21,9 +21,12 @@ class OrganisationMember extends ApiModel
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
+
     protected $fillable = [
         'member_id', 'organisation_id', 'organisation_no', 'organisation_member_category_id', 'organisation_registration_form_id', 'status', 'source', 'approved', 'approved_by', 'custom_attributes', 'active'
     ];
+
+    protected $casts = ['custom_attributes' => 'array'];
 
     public function member() {
         return $this->belongsTo(Member::class);

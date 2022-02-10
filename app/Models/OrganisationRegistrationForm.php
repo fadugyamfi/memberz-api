@@ -18,7 +18,7 @@ class OrganisationRegistrationForm extends ApiModel
      *
      * @var array
      */
-    protected $fillable = ['organisation_id', 'name', 'description', 'expiration_dt', 'excluded_standard_fields', 'custom_fields', 'deleted_at'];
+    protected $fillable = ['uuid', 'slug', 'organisation_id', 'organisation_member_category_id', 'name', 'description', 'expiration_dt', 'excluded_standard_fields', 'custom_fields', 'deleted_at'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -46,8 +46,16 @@ class OrganisationRegistrationForm extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
-    public function organisationMembers() {
+    public function registrants() {
         return $this->hasMany(OrganisationMember::class);
+    }
+
+    public function approvedRegistrants() {
+        return $this->hasMany(OrganisationMember::class)->where('approved', 1)->where('active', 1);
+    }
+
+    public function unapprovedRegistrants() {
+        return $this->hasMany(OrganisationMember::class)->where('approved', 0)->where('active', 1);
     }
 
       /**
