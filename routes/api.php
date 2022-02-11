@@ -42,6 +42,18 @@ Route::group([
 //     Route::post('cache/clear', 'Support\SystemController@cacheClear');
 // });
 
+/**
+ * Public organisation routes for fetching data without an authentication token
+ */
+Route::prefix('organisations/{org_slug}')->middleware('multi-tenant-no-auth')->group(function() {
+    Route::get('/', 'OrganisationController@getBySlug')->withoutMiddleware('multi-tenant-no-auth');
+    Route::get('/organisation_registration_forms/{slug}', 'OrganisationRegistrationFormController@getBySlug');
+    Route::post('/members', 'MemberController@store');
+    Route::post('/member_accounts', 'MemberAccountController@store');
+    Route::post('/organisation_members', 'OrganisationMemberController@store');
+});
+
+
 Route::middleware(['auth:api'])->group(function () {
 
     Route::get('member_accounts/{id}/organisations', 'MemberAccountController@organisations');
