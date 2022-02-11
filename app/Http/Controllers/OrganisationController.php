@@ -39,4 +39,14 @@ class OrganisationController extends Controller
     {
         return $this->apiUpdate($request, $id);
     }
+
+    public function getBySlug($slug) {
+        $organisation = Organisation::where('slug', $slug)->first();
+
+        if( !$organisation ) {
+            return response()->json(['message' => 'Organisation not found'], 404);
+        }
+
+        return new OrganisationResource($organisation);
+    }
 }
