@@ -67,4 +67,8 @@ class OrganisationMemberController extends ApiController
 
         return $this->Resource::collection($members);
     }
+
+    public function registrant($org_slug, $membership_id, Request $request) {
+        return $this->show($request, $membership_id);
+    }
 }
