@@ -42,6 +42,8 @@ Route::group([
 //     Route::post('cache/clear', 'Support\SystemController@cacheClear');
 // });
 
+Route::get('organisations/slugs', 'OrganisationController@slugs');
+
 /**
  * Public organisation routes for fetching data without an authentication token
  */
@@ -51,6 +53,7 @@ Route::prefix('organisations/{org_slug}')->middleware('multi-tenant-no-auth')->g
     Route::post('/members', 'MemberController@store');
     Route::post('/member_accounts', 'MemberAccountController@store');
     Route::post('/organisation_members', 'OrganisationMemberController@store');
+    Route::get('/organisation_members/{id}', 'OrganisationMemberController@registrant');
 });
 
 

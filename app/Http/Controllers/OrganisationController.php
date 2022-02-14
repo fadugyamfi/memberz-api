@@ -49,4 +49,10 @@ class OrganisationController extends Controller
 
         return new OrganisationResource($organisation);
     }
+
+    public function slugs() {
+        $slugs = Organisation::where('active', 1)->select('slug')->get()->pluck('slug');
+
+        return response()->json(['data' => $slugs]);
+    }
 }
