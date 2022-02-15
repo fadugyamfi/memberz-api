@@ -33,7 +33,7 @@ class TwoFactorAuthService {
     {
         $code = $this->generateCode($account);
 
-        Mail::to($account->username)->send(new Twofa($code));
+        Mail::to($account->username)->queue(new Twofa($code));
 
         $this->log2FACodeSent($account);
     }

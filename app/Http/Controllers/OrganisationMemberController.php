@@ -62,7 +62,7 @@ class OrganisationMemberController extends ApiController
         $limit = $request->limit ?? 15;
 
         $members = OrganisationMember::unapproved()
-            ->with(['member', 'organisationMemberCategory'])
+            ->with(['member', 'organisationMemberCategory', 'organisationRegistrationForm'])
             ->paginate($limit);
 
         return $this->Resource::collection($members);
