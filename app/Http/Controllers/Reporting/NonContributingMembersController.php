@@ -14,6 +14,9 @@ use App\Models\OrganisationMember;
 class NonContributingMembersController extends Controller
 {
 
+    /**
+     * Non Contributing Members Report
+     */
     public function __invoke(NonContributingMembersRequest $request)
     {
 

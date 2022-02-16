@@ -6,6 +6,9 @@ use App\Models\OrganisationPaymentPlatform;
 use App\Http\Resources\OrganisationPaymentPlatformResource;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
+/**
+ * @group Organisation Payment Platforms
+ */
 class OrganisationPaymentPlatformController extends Controller
 {
     use ApiControllerBehavior;

@@ -11,7 +11,7 @@ use Spatie\Activitylog\LogOptions;
 class OrganisationGroupLeader extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestampsLogModelActivity;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity;
 
     /**
      * The database table used by the model.

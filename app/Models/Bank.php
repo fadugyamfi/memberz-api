@@ -5,12 +5,11 @@ namespace App\Models;
 use App\Traits\SoftDeletesWithActiveFlag;
 use App\Traits\HasCakephpTimestamps;
 use App\Traits\SoftDeletesWithDeletedFlag;
-use App\Traits\HasCakephpTimestamps;
 
 class Bank extends ApiModel
 {
 
-    use SoftDeletesWithDeletedFlag;
+    use SoftDeletesWithDeletedFlag, HasCakephpTimestamps;
 
     const DELETED_AT = 'deleted';
 
