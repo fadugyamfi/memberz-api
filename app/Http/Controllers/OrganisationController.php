@@ -40,6 +40,11 @@ class OrganisationController extends Controller
         return $this->apiUpdate($request, $id);
     }
 
+    /**
+     * Get Organisation By Slug
+     *
+     * @group Membership Registration
+     */
     public function getBySlug($slug) {
         $organisation = Organisation::where('slug', $slug)->first();
 
@@ -50,6 +55,9 @@ class OrganisationController extends Controller
         return new OrganisationResource($organisation);
     }
 
+    /**
+     * Get Organisation Slugs
+     */
     public function slugs() {
         $slugs = Organisation::where('active', 1)->select('slug')->get()->pluck('slug');
 

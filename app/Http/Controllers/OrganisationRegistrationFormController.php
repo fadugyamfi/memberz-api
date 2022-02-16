@@ -30,7 +30,11 @@ class OrganisationRegistrationFormController extends Controller
         return $this->apiStore($request);
     }
 
-
+    /**
+     * Get Registration Form By Slug
+     *
+     * @group Membership Registration
+     */
     public function getBySlug($org_slug, $slug) {
 
         $registrationForm = OrganisationRegistrationForm::where('slug', $slug)

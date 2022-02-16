@@ -17,6 +17,9 @@ class OrganisationMemberController extends ApiController
         parent::__construct($organisationMember);
     }
 
+    /**
+     * Delete Membership
+     */
     public function destroy($id)
     {
         $model = $this->Model::find($id);
@@ -68,6 +71,11 @@ class OrganisationMemberController extends ApiController
         return $this->Resource::collection($members);
     }
 
+    /**
+     * Registration Form Registrants
+     *
+     * @group Membership Registration
+     */
     public function registrant($org_slug, $membership_id, Request $request) {
         return $this->show($request, $membership_id);
     }

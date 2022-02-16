@@ -1,13 +1,16 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasCakephpTimestamps;
+use App\Traits\SoftDeletesWithDeletedFlag;
+use LaravelApiBase\Models\ApiModel;
+use NunoMazer\Samehouse\BelongsToTenants;
 
-class OrganisationPaymentPlatform extends ApiModel  
+class OrganisationPaymentPlatform extends ApiModel
 {
 
-    
+    use HasCakephpTimestamps, BelongsToTenants, SoftDeletesWithDeletedFlag;
 
     /**
      * The database table used by the model.
@@ -35,7 +38,7 @@ class OrganisationPaymentPlatform extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['system_generated' => 'boolean', 'deleted' => 'boolean'];
+    protected $casts = ['system_generated' => 'boolean', 'deleted' => 'boolean', 'config' => 'array'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -44,4 +47,23 @@ class OrganisationPaymentPlatform extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
+
+    /**
+     * Relationships
+     */
+    public function organisation() {
+        return $this->belongsTo(Organisation::class);
+    }
+
+    public function paymentPlatform() {
+        return $this->belongsTo(PaymentPlatform::class);
+    }
+
+    public function currency() {
+        return $this->belongsTo(Currency::class);
+    }
+
+    public function country() {
+        return $this->belongsTo(Country::class);
+    }
 }

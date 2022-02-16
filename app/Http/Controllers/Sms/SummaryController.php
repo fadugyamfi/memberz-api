@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use NunoMazer\Samehouse\Facades\Landlord;
 
+/**
+ * @group SMS Summary
+ */
 class SummaryController extends Controller {
 
     public function __invoke(Request $request)

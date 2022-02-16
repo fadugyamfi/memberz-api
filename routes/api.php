@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\OrganisationPaymentPlatformController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -116,6 +118,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('organisation_group_leaders', 'OrganisationGroupLeaderController');
         Route::apiResource('organisation_member_groups', 'OrganisationMemberGroupController');
         Route::apiResource('organisation_registration_forms', 'OrganisationRegistrationFormController');
+        Route::apiResource('organisation_payment_platforms', 'OrganisationPaymentPlatformController');
 
         Route::get('sms/summary', 'Sms\SummaryController');
         Route::apiResource('sms_accounts', 'SmsAccountController');
