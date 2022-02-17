@@ -33,7 +33,7 @@ class PaymentPlatformRequest extends ApiRequest
     public function rules()
     {
         return [
-            'name' => 'nullable|string|max:100',
+            'name' => 'required|string|max:100',
             'method_name' => 'nullable|string|max:30',
             'config_keys' => 'nullable|string|max:100',
             'description' => 'nullable|string|max:150',
