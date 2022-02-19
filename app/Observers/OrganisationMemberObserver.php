@@ -83,7 +83,7 @@ class OrganisationMemberObserver
      */
     public function updated(OrganisationMember $organisationMember)
     {
-        if( $organisationMember->isDirty('approved') && $organisationMember->isDirty('active') && $organisationMember->member->email ) {
+        if( $organisationMember->isDirty('approved') && $organisationMember->member->email ) {
             Mail::to($organisationMember->member->email)->send(new MemberRegistrationStatusUpdated($organisationMember));
         }
     }
