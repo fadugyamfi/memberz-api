@@ -1,9 +1,9 @@
 @component('mail::message')
-# Hello and Welcome to Memberz.org.
+# Hello {{ $member_name }},
 
-You are receiving this email because you have completed a registration form for an account on Memberz.org. 
-You registration is pending an approval by an Administrator and you would be notified when your account is approved.
+You have successfully completed registration with <b>{{ $organisation_name }}</b> on Memberz.org.
+You registration is pending approval by an administrator and you will be notified when your application is processed.
 
 Thanks,<br>
-{{ config('app.name') }}
+{{ config('mail.from.name') }}
 @endcomponent

@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\MemberAccount;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -17,7 +18,7 @@ class NewUserRegistered extends Mailable implements ShouldQueue
      * @return void
      */
     public function __construct(
-        public string $token
+        public MemberAccount $memberAccount
     ) {}
 
     /**
@@ -27,6 +28,12 @@ class NewUserRegistered extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->markdown('emails.users.created', ['url' => config('app.web_url').'/'. $this->token]);
+        $token = $this->memberAccount->email_verification_token;
+        $member_name = $this->memberAccount->member->first_name;
+
+        return $this->markdown('emails.users.created', [
+            'url' => config('app.web_url') . '/' . $token,
+            'member_name' => $member_name
+        ]);
     }
 }

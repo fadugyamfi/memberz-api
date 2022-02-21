@@ -29,11 +29,10 @@ class MemberRegistrationStatusUpdated extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        $message = "We are sorry to let you know that your registration for membership into the organisation, {$this->organisationMember->organisation->name}, on Memberz.org has been rejected.";
+        $approved = $this->organisationMember->approved == 1 && $this->organisationMember->active == 1;
+        $organisation_name = $this->organisationMember->organisation->name;
+        $member_name = $this->organisationMember->member->first_name;
 
-        if ( $this->organisationMember->approved == 1 && $this->organisationMember->active == 1) {
-            $message = "We are glad to let you know that your registration for membership into the organisation, {$this->organisationMember->organisation->name}, on Memberz.org has been approved.";
-        }
-        return $this->markdown('emails.users.memberregistrationupdated', [compact('message')]);
+        return $this->markdown('emails.users.memberregistrationupdated', compact('approved', 'organisation_name', 'member_name'));
     }
 }

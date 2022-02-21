@@ -40,6 +40,6 @@ class MemberAccountObserver
     public function created(MemberAccount $member_account) {
         $this->logger->logNewAccountRegistered($member_account);
 
-        Mail::to($member_account->username)->queue(new NewUserRegistered($member_account->email_verification_token));
+        Mail::to($member_account->username)->queue(new NewUserRegistered($member_account));
     }
 }

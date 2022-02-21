@@ -52,10 +52,10 @@ class OrganisationMemberObserver
         }
 
         if( $organisationMember->source == 'registration' && $organisationMember->member->email ) {
-            Mail::to($organisationMember->member->email)->send(new MemberFormRegistrationCompleted());
+            Mail::to($organisationMember->member->email)->send(new MemberFormRegistrationCompleted($organisationMember));
         }
     }
-    
+
 
     /**
      * Handle the organisation member "updating" event.
@@ -83,10 +83,18 @@ class OrganisationMemberObserver
      */
     public function updated(OrganisationMember $organisationMember)
     {
-        if( $organisationMember->isDirty('approved') && $organisationMember->member->email ) {
-            Mail::to($organisationMember->member->email)->send(new MemberRegistrationStatusUpdated($organisationMember));
-        }
+        $this->notifyRegistrationUpdate($organisationMember);
     }
 
+    private function notifyRegistrationUpdate(OrganisationMember $organisationMember) {
+        $registrationApproved = $organisationMember->isDirty('approved') && $organisationMember->approved == 1 && $organisationMember->active == 1;
+        $registrationRejected = $organisationMember->isDirty('active') && $organisationMember->approved == 0 && $organisationMember->active == 0;
+        $membershipDeleted = $organisationMember->isDirty('active') && $organisationMember->approved == 1 && $organisationMember->active == 0;
 
+        if( ($registrationApproved|| $registrationRejected) && $organisationMember->member->email ) {
+            Mail::to($organisationMember->member->email)->send(new MemberRegistrationStatusUpdated($organisationMember));
+        }
+
+        // TODO: Notify membership deleted
+    }
 }

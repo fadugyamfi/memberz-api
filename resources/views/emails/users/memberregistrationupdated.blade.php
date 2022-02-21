@@ -1,8 +1,12 @@
 @component('mail::message')
-# Hello and Welcome to Memberz.org.
+# Hello {{ $member_name }},
 
-{{ $message }}
+@if ($approved)
+We are glad to let you know that your registration for membership into the organisation, <b>{{ $organisation_name }}</b>, on Memberz.org has been <b>approved</b>.
+@else
+We are sorry to let you know that your registration for membership into the organisation, <b>{{ $organisation_name }}</b>, on Memberz.org has been <b>rejected</b>.
+@endif
 
 Thanks,<br>
-{{ config('app.name') }}
+{{ config('mail.from.name') }}
 @endcomponent
