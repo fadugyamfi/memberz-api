@@ -74,6 +74,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('permissions', 'PermissionController');
     Route::apiResource('organisations', 'OrganisationController');
     Route::apiResource('organisation_types', 'OrganisationTypeController');
+    Route::apiResource('payment_platforms', 'PaymentPlatformController');
 
     Route::apiResource('subscription_types', 'SubscriptionTypeController');
     Route::apiResource('system_settings', 'SystemSettingController');
