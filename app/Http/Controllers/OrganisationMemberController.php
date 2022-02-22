@@ -63,9 +63,11 @@ class OrganisationMemberController extends ApiController
     public function unapproved(Request $request)
     {
         $limit = $request->limit ?? 15;
+        $registration_form_id = $request->input('registration_form_id');
 
-        $members = OrganisationMember::unapproved()
+        $members = OrganisationMember::unapproved()->registeredWith($registration_form_id)
             ->with(['member', 'organisationMemberCategory', 'organisationRegistrationForm'])
+            ->orderBy('created', 'desc')
             ->paginate($limit);
 
         return $this->Resource::collection($members);

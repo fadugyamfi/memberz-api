@@ -64,9 +64,14 @@ class OrganisationMember extends ApiModel
         return $query->where('member_id', $member_id)->active()->approved()->get()->pluck('organisation_id')->all();
     }
 
-
     public function scopeNotInMemberIds(Builder $query, array $memberIds) : Builder {
         return $query->whereNotIn('member_id', $memberIds);
+    }
+
+    public function scopeRegisteredWith($query, $registration_form_id = null) {
+        return $query->when($registration_form_id, function($iquery) use($registration_form_id) {
+            $iquery->where('organisation_registration_form_id', $registration_form_id);
+        });
     }
 
     public function generateMembershipNo() {
