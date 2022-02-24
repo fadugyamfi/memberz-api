@@ -29,7 +29,7 @@ class OrganisationPaymentPlatformRequest extends FormRequest
             'payment_platform_id' => ['required', 'numeric', Rule::exists('payment_platforms', 'id')],
             'currency_id' => ['required', 'numeric'],
             'country_id' => ['required', 'numeric'],
-            'config' => ['required', 'json'],
+            'config' => ['required'],
             'platform_mode' => ['required', 'string', Rule::in(['live', 'sandbox', 'dev'])],
             'member_registration_instruction' => ['nullable', 'string'],
             'event_registration_instruction' => ['nullable', 'string'],

@@ -12,7 +12,10 @@ use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
  */
 class OrganisationPaymentPlatformController extends Controller
 {
-    use ApiControllerBehavior;
+    use ApiControllerBehavior {
+        store as apiStore;
+        update as apiUpdate;
+    }
 
     public function __construct(OrganisationPaymentPlatform $paymentPlatform)
     {

@@ -43,14 +43,18 @@ class OrganisationMemberController extends ApiController
     public function statistics(int $organisation_id)
     {
 
-        $data = $this->Model::join('organisation_member_categories', 'organisation_member_categories.id', '=', 'organisation_members.organisation_member_category_id')
-            ->select(
-                DB::raw('organisation_member_categories.name as category_name'),
-                DB::raw('count(organisation_members.id) as total')
-            )
-            ->groupBy('category_name')
-            ->where('organisation_members.organisation_id', $organisation_id)
-            ->get();
+        $data = $this->Model::join(
+            'organisation_member_categories',
+            'organisation_member_categories.id', '=',
+            'organisation_members.organisation_member_category_id'
+        )
+        ->select(
+            DB::raw('organisation_member_categories.name as category_name'),
+            DB::raw('count(organisation_members.id) as total')
+        )
+        ->groupBy('category_name')
+        ->where('organisation_members.organisation_id', $organisation_id)
+        ->get();
 
         return response()->json(['data' => $data]);
     }
