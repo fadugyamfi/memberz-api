@@ -8,6 +8,8 @@ use App\Models\Organisation;
 use App\Models\OrganisationAccount;
 use App\Models\OrganisationMember;
 use App\Models\OrganisationMemberCategory;
+use App\Models\OrganisationPaymentPlatform;
+use App\Models\PaymentPlatform;
 use App\Services\SubscriptionManagementService;
 use Ramsey\Uuid\Uuid;
 
@@ -53,6 +55,8 @@ class OrganisationObserver
 
         // do finance module setup
         $this->setupContributionReceiptSettings($organisation);
+
+        OrganisationPaymentPlatform::createSystemGeneratedCashPaymentPlatform($organisation);
     }
 
     /**

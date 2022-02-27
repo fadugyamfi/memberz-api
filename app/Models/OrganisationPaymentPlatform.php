@@ -66,4 +66,16 @@ class OrganisationPaymentPlatform extends ApiModel
     public function country() {
         return $this->belongsTo(Country::class);
     }
+
+    public static function createSystemGeneratedCashPaymentPlatform(Organisation $organisation) {
+        return OrganisationPaymentPlatform::firstOrCreate([
+            'organisation_id' => $organisation->id,
+            'system_generated' => 1,
+            'payment_platform_id' => PaymentPlatform::CASH
+        ],[
+            'country_id' => $organisation->country_id,
+            'currency_id' => $organisation->currency_id,
+            'platform_mode' => 'live'
+        ]);
+    }
 }
