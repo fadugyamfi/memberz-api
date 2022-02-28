@@ -11,6 +11,7 @@ use App\Models\OrganisationMemberCategory;
 use App\Models\OrganisationPaymentPlatform;
 use App\Models\PaymentPlatform;
 use App\Services\SubscriptionManagementService;
+use NunoMazer\Samehouse\Facades\Landlord;
 use Ramsey\Uuid\Uuid;
 
 class OrganisationObserver
@@ -41,6 +42,9 @@ class OrganisationObserver
      */
     public function created(Organisation $organisation)
     {
+        Landlord::addTenant($organisation);
+        Landlord::applyTenantScopesToDeferredModels();
+
         $subscriptionTypeId = intval(request('subscription_type_id'));
         $subscriptionLength = intval(request('subscription_length'));
 
