@@ -100,6 +100,8 @@ Route::middleware(['auth:api'])->group(function () {
         Route::post('organisation_subscriptions/{id}/renew', 'OrganisationSubscriptionController@renew');
         Route::post('organisation_subscriptions/{id}/upgrade', 'OrganisationSubscriptionController@upgrade');
 
+        Route::get('organisation_accounts/{organisation_id}/{member_account_id}', 'OrganisationAccountController@userAccount');
+
         Route::apiResource('organisation_accounts', 'OrganisationAccountController');
         Route::apiResource('organisation_file_imports', 'OrganisationFileImportController');
 

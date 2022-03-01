@@ -38,4 +38,21 @@ class OrganisationAccountController extends Controller
     {
         return $this->apiUpdate($request, $id);
     }
+
+    /**
+     * Get User Specific Account
+     */
+    public function userAccount(int $organisation_id, int $member_account_id) {
+        $account = OrganisationAccount::with('organisationRole.permissions')
+            ->where([
+                'organisation_id' => $organisation_id,
+                'member_account_id' => $member_account_id
+            ])->first();
+
+        if( !$account ) {
+            return response()->json(['message' => 'Account not found'], 404);
+        }
+
+        return new OrganisationAccountResource($account);
+    }
 }

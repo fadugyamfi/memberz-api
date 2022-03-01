@@ -38,9 +38,17 @@ class PermissionsTableSeeder extends Seeder
         Permission::findOrCreate('settings:notifications:weekly_activity_update','api');
         Permission::findOrCreate('settings:notifications:daily_birthday_update','api');
 
-        Permission::findOrCreate('memberships:categories:view','api');
-        Permission::findOrCreate('memberships:categories:manage','api');
-        Permission::findOrCreate('memberships:categories:delete','api');
+        Permission::findOrCreate('settings:categories:view','api');
+        Permission::findOrCreate('settings:categories:manage','api');
+        Permission::findOrCreate('settings:categories:delete','api');
+
+        Permission::findOrCreate('settings:groups:view','api');
+        Permission::findOrCreate('settings:groups:manage','api');
+        Permission::findOrCreate('settings:groups:delete','api');
+
+        Permission::findOrCreate('settings:anniversaries:view','api');
+        Permission::findOrCreate('settings:anniversaries:manage','api');
+        Permission::findOrCreate('settings:anniversaries:delete','api');
 
         Permission::findOrCreate('memberships:profiles:add','api');
         Permission::findOrCreate('memberships:profiles:edit','api');
@@ -57,6 +65,8 @@ class PermissionsTableSeeder extends Seeder
         Permission::findOrCreate('messaging:settings:view','api');
         Permission::findOrCreate('messaging:history:view','api');
         Permission::findOrCreate('messaging:broadcast:view','api');
+        Permission::findOrCreate('messaging:broadcast-lists:view','api');
+        Permission::findOrCreate('messaging:purchase-credits:view','api');
 
         Permission::findOrCreate('finance:dashboard:view','api');
         Permission::findOrCreate('finance:settings:view','api');
