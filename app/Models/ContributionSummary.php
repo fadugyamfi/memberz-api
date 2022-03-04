@@ -108,7 +108,7 @@ class ContributionSummary extends ApiModel
 
         return $builder
             ->getByOrganisation($contribution->organisation_id)
-            ->getContributionTypeId($contribution->module_contribution_type_id)
+            ->getByContributionTypeId($contribution->module_contribution_type_id)
             ->getByReceiptDt($receipt_dt)
             ->getByWeek($week)
             ->getByYear($year)

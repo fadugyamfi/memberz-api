@@ -140,7 +140,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('contributions', 'ContributionController');
 
         Route::apiResource('contribution_receipts', 'ContributionReceiptController');
-        Route::apiResource('contribution_receipt_settings', 'ContributionReceiptSettingController')->only(['index', 'update']);
+        Route::apiResource('contribution_receipt_settings', 'ContributionReceiptSettingController')->only(['index', 'store', 'update']);
 
         Route::get('contribution_summaries/weekly_breakdown', 'ContributionSummaryReportController@breakdownByWeek');
         Route::get('contribution_summaries/totals_by_category', 'ContributionSummaryReportController@totalsByCategory');

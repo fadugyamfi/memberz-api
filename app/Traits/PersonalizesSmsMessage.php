@@ -1,9 +1,24 @@
 <?php
 
-namespace App\Services\Sms;
+namespace App\Traits;
 
+use App\Models\OrganisationMember;
+use App\Models\SmsAccount;
 
-class SmsPersonalizer {
+trait PersonalizesSmsMessage {
+
+    public function personalize(OrganisationMember $membership, SmsAccount $smsAccount, string $message = null) {
+        $attributes = [
+            'title' => $membership->member->title,
+            'first_name' => $membership->member->first_name,
+            'last_name' => $membership->member->last_name,
+            'full_name' => $membership->member->full_name,
+            'org_name' => $smsAccount->organisation->name,
+            'org_slug' => $smsAccount->organisation->slug
+        ];
+
+        return $this->format($message ?? $this->message, $attributes);
+    }
 
     public function format($message, $format_values = array()) {
         $default = array(

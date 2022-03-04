@@ -8,7 +8,7 @@ use NunoMazer\Samehouse\BelongsToTenants;
 
 class ContributionType extends ApiModel
 {
-    use BelongsToTenants, SoftDeletesWithActiveFlag;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestamps;
 
     /**
      * The database table used by the model.

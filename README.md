@@ -14,7 +14,7 @@ This is the API backend for the Memberz.Org Angular application.
 ## Packages Requiring PHP8
 The following packages require PHP8 and it recommended you use it as a minimum for best result
 
-- spatie/laravel-activity-log:^4.0.0
+    spatie/laravel-activity-log:^4.0.0
 
 
 ## Setup Virtual Host

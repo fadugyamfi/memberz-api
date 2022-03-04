@@ -4,16 +4,16 @@ namespace App\Models;
 
 use App\Scopes\LatestRecordsScope;
 use App\Scopes\SmsAccountScope;
-use App\Services\Sms\SmsPersonalizer;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use App\Traits\HasCakephpTimestamps;
+use App\Traits\PersonalizesSmsMessage;
 use Spatie\Activitylog\LogOptions;
 
 class SmsBroadcast extends ApiModel
 {
 
-    use SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity;
+    use SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity, PersonalizesSmsMessage;
 
     /**
      * The database table used by the model.
@@ -155,18 +155,5 @@ class SmsBroadcast extends ApiModel
                     ]);
                 }
             });
-    }
-
-    public function personalizeMessage(OrganisationMember $membership) {
-        $attributes = [
-            'title' => $membership->member->title,
-            'first_name' => $membership->member->first_name,
-            'last_name' => $membership->member->last_name,
-            'full_name' => $membership->member->full_name,
-            'org_name' => $this->smsAccount->organisation->name,
-            'org_slug' => $this->smsAccount->organisation->slug
-        ];
-
-        return (new SmsPersonalizer)->format($this->message, $attributes);
     }
 }

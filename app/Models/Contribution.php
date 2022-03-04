@@ -106,6 +106,15 @@ class Contribution extends ApiModel
         return $query->where( $this->getTable() . '.currency_id', $currency_id);
     }
 
+    public function summarize() : Builder {
+        $receipt_ids = ContributionReceipt::whereDate('receipt_dt', $this->contributionReceipt->receipt_dt)->pluck('id');
+
+        return $this->query()
+            ->byCurrencyId($this->currency_id)
+            ->where('module_contribution_type_id', $this->module_contribution_type_id)
+            ->whereIn('module_contribution_receipt_id', $receipt_ids);
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         $contribution = $this;

@@ -42,7 +42,7 @@ class SendMessage implements ShouldQueue
             'organisation_id' => $this->smsBroadcast->organisation_id,
             'member_id' => $this->membership->member_id,
             'to' => $this->membership->member->mobile_number,
-            'message' => $this->smsBroadcast->personalizeMessage($this->membership),
+            'message' => $this->smsBroadcast->personalize($this->membership, $this->smsBroadcast->smsAccount, $this->smsBroadcast->message),
             'sent_by' => $this->smsBroadcast->scheduled_by,
             'sender_id' => $senderId,
             'module_sms_account_broadcast_id' => $this->smsBroadcast->id

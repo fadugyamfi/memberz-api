@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use LaravelApiBase\Models\ApiModelBehavior;
 use LaravelApiBase\Models\ApiModelInterface;
+use NunoMazer\Samehouse\Facades\Landlord;
 use Spatie\Activitylog\Traits\CausesActivity;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
@@ -41,6 +42,10 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     public function organisationAccounts()
     {
         return $this->hasMany(OrganisationAccount::class)->where('organisation_accounts.active', 1);
+    }
+
+    public function tenantAccount() {
+        return $this->hasOne(OrganisationAccount::class)->where('organisation_id', Landlord::getTenants()->first());
     }
 
     public function memberships()

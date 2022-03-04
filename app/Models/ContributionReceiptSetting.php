@@ -68,4 +68,12 @@ class ContributionReceiptSetting extends ApiModel
     public function getDefaultCurrencyCodeAttribute() {
         return $this->currency?->currency_code;
     }
+
+    public function nextReceiptNo() {
+        return $this->receipt_prefix . $this->receipt_counter . $this->receipt_suffix;
+    }
+
+    public function incrementCounter() {
+        return $this->increment('receipt_counter');
+    }
 }

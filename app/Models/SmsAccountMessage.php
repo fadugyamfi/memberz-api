@@ -6,13 +6,15 @@ use App\Scopes\LatestRecordsScope;
 use App\Scopes\SmsAccountScope;
 use App\Traits\SoftDeletesWithActiveFlag;
 use App\Traits\HasCakephpTimestamps;
+use App\Traits\PersonalizesSmsMessage;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class SmsAccountMessage extends ApiModel
 {
 
-    use SoftDeletesWithActiveFlag, HasCakephpTimestamps;
+    use SoftDeletesWithActiveFlag, HasCakephpTimestamps, PersonalizesSmsMessage;
 
     /**
      * The database table used by the model.
@@ -120,5 +122,31 @@ class SmsAccountMessage extends ApiModel
 
     public function scopeLatestYears($query) {
         return $query->select(DB::raw('YEAR(created) as year'))->distinct()->orderBy('year', 'desc');
+    }
+
+    public function send(OrganisationMember $membership, string $message) {
+        /**
+         * @var MemberAccount $user
+         */
+        $user = auth()->user();
+        $smsAccount = SmsAccount::getAccount($membership->organisation_id);
+
+        if( !$smsAccount ) {
+            throw new Exception('SMS Account not setup');
+        }
+
+        if( !$user->tenantAccount ) {
+            throw new Exception('User admin account for organisation not found');
+        }
+
+        $this->create([
+            'module_sms_account_id' => $smsAccount->id,
+            'organisation_id' => $smsAccount->organisation_id,
+            'member_id' => $membership->member_id,
+            'to' => $membership->member->mobile_number,
+            'message' => $this->personalize($membership, $smsAccount, $message),
+            'sent_by' => $user->tenantAccount->id,
+            'sender_id' => $smsAccount->sender_id
+        ]);
     }
 }
