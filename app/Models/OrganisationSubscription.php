@@ -63,7 +63,7 @@ class OrganisationSubscription extends Model implements ApiModelInterface
     }
 
     public function subscriptionType() {
-        return $this->belongsTo(SubscriptionType::class);
+        return $this->belongsTo(SubscriptionType::class)->withTrashed();
     }
 
     public function organisationInvoice() {
