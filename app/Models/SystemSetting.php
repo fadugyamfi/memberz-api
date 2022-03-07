@@ -1,8 +1,13 @@
 <?php
 
 namespace App\Models;
-class SystemSetting extends ApiModel  
+
+use App\Traits\HasCakephpTimestamps;
+
+class SystemSetting extends ApiModel
 {
+    use HasCakephpTimestamps;
+
     /**
      * The database table used by the model.
      *

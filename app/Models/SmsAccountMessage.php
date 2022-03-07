@@ -124,7 +124,7 @@ class SmsAccountMessage extends ApiModel
         return $query->select(DB::raw('YEAR(created) as year'))->distinct()->orderBy('year', 'desc');
     }
 
-    public function send(OrganisationMember $membership, string $message) {
+    public static function createNew(OrganisationMember $membership, string $message) {
         /**
          * @var MemberAccount $user
          */
@@ -139,12 +139,12 @@ class SmsAccountMessage extends ApiModel
             throw new Exception('User admin account for organisation not found');
         }
 
-        $this->create([
+        self::create([
             'module_sms_account_id' => $smsAccount->id,
             'organisation_id' => $smsAccount->organisation_id,
             'member_id' => $membership->member_id,
             'to' => $membership->member->mobile_number,
-            'message' => $this->personalize($membership, $smsAccount, $message),
+            'message' => (new static)->personalize($membership, $smsAccount, $message),
             'sent_by' => $user->tenantAccount->id,
             'sender_id' => $smsAccount->sender_id
         ]);

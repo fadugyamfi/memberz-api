@@ -76,4 +76,21 @@ class ContributionReceiptSetting extends ApiModel
     public function incrementCounter() {
         return $this->increment('receipt_counter');
     }
+
+    /**
+     * @param \App\Models\Organisation $organisation
+     *
+     * @return \App\Models\ContributionReceiptSetting
+     */
+    public static function setup(Organisation $organisation): ContributionReceiptSetting {
+        return self::firstOrCreate([
+            'organisation_id' => $organisation->id
+        ],[
+            'receipt_mode' => 'manual',
+            'receipt_counter' => 1,
+            'default_currency' => $organisation->currency_id,
+            'receipt_prefix' => null,
+            'receipt_postfix' => null,
+        ]);
+    }
 }

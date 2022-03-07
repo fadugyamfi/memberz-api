@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\Contribution;
 use App\Models\ContributionReceiptSetting;
 use App\Models\Currency;
 use App\Models\Organisation;
@@ -58,25 +59,7 @@ class OrganisationObserver
         OrganisationMember::createDefaultMember($organisation, $category, $account);
 
         // do finance module setup
-        $this->setupContributionReceiptSettings($organisation);
-
+        ContributionReceiptSetting::setup($organisation);
         OrganisationPaymentPlatform::createSystemGeneratedCashPaymentPlatform($organisation);
-    }
-
-    /**
-     * @param \App\Models\Organisation $organisation
-     *
-     * @return \App\Models\ContributionReceiptSetting
-     */
-    public function setupContributionReceiptSettings(Organisation $organisation): ContributionReceiptSetting {
-        return ContributionReceiptSetting::firstOrCreate([
-            'organisation_id' => $organisation->id
-        ],[
-            'receipt_mode' => 'manual',
-            'receipt_counter' => 1,
-            'default_currency' => $organisation->currency_id,
-            'receipt_prefix' => null,
-            'receipt_postfix' => null,
-        ]);
     }
 }
