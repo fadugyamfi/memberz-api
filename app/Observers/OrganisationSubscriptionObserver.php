@@ -39,15 +39,7 @@ class OrganisationSubscriptionObserver
      */
     public function created(OrganisationSubscription $organisationSubscription)
     {
-        OrganisationSubscription::where([
-            'organisation_id' => $organisationSubscription->organisation_id,
-            'current' => 1
-        ])->update([
-            'current' => 0
-        ]);
-
-        $organisationSubscription->current = 1;
-        $organisationSubscription->save();
+        $organisationSubscription->setAsCurrent();
     }
 
 }

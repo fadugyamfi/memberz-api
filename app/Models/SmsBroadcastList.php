@@ -71,11 +71,7 @@ class SmsBroadcastList extends ApiModel
 
     public function shouldQualifyColumn($column_name)
     {
-        if( in_array($column_name, ['id', 'sender_id']) ) {
-            return true;
-        }
-
-        return parent::shouldQualifyColumn($column_name);
+        return in_array($column_name, ['id', 'sender_id']) ? true : parent::shouldQualifyColumn($column_name);
     }
 
     /**

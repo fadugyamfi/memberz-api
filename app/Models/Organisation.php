@@ -40,7 +40,7 @@ class Organisation extends ApiModel
     }
 
     public function scopeActive($query) {
-        $query->where('active', 1);
+        return $query->where('active', 1);
     }
 
     public function organisationType() {

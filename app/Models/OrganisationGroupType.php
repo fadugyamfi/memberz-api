@@ -27,16 +27,6 @@ class OrganisationGroupType extends ApiModel
      */
     protected $fillable = ['organisation_id', 'name', 'description', 'show_on_reg_forms','allow_multi_select','created', 'modified', 'active'];
 
-
-    public function organisation(){
-        return $this->belongsTo(Organisation::class);
-    }
-
-    public function organisationGroups(){
-        return $this->hasMany(OrganisationGroup::class);
-    }
-
-
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -58,6 +48,14 @@ class OrganisationGroupType extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
+
+    public function organisation(){
+        return $this->belongsTo(Organisation::class);
+    }
+
+    public function organisationGroups(){
+        return $this->hasMany(OrganisationGroup::class);
+    }
 
      /**
      * Format user activities description for organisation group type

@@ -14,6 +14,6 @@ class OrganisationInvoiceItemObserver
      */
     public function created(OrganisationInvoiceItem $organisationInvoiceItem)
     {
-        $organisationInvoiceItem->organisationInvoice->incrementTotal($organisationInvoiceItem->total);
+        $organisationInvoiceItem->addTotalToInvoice();
     }
 }

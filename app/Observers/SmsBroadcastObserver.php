@@ -17,7 +17,6 @@ class SmsBroadcastObserver
     {
         /** @var MemberAccount $user */
         $user = auth()->user();
-        $tenantId = Landlord::getTenants()->first();
-        $smsBroadcast->scheduled_by = $user->organisationAccounts()->where('organisation_id', $tenantId)->first()->id;
+        $smsBroadcast->scheduled_by = $user->tenantAccount->id;
     }
 }

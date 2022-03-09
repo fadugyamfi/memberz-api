@@ -13,10 +13,6 @@ class OrganisationInvoiceItem extends Model implements ApiModelInterface
 
     use SoftDeletesWithDeletedFlag, HasCakephpTimestamps, ApiModelBehavior;
 
-    const CREATED_AT = 'created';
-    const UPDATED_AT = 'modified';
-    const DELETED_AT = 'deleted';
-
     /**
      * The database table used by the model.
      *
@@ -60,5 +56,9 @@ class OrganisationInvoiceItem extends Model implements ApiModelInterface
     public function organisationInvoice()
     {
         return $this->belongsTo(OrganisationInvoice::class);
+    }
+
+    public function addTotalToInvoice() {
+        $this->organisationInvoice->incrementTotal($this->total);
     }
 }

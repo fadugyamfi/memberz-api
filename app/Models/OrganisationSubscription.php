@@ -122,4 +122,16 @@ class OrganisationSubscription extends Model implements ApiModelInterface
         return $this->subscriptionType->billing_required == 'yes'
             && $this->remaining_balance > OrganisationSubscription::MIN_ALLOWED_PRORATE_DAYS;
     }
+
+    public function setAsCurrent() {
+        $this->newQuery()->where([
+            'organisation_id' => $this->organisation_id,
+            'current' => 1
+        ])->update([
+            'current' => 0
+        ]);
+
+        $this->current = 1;
+        $this->save();
+    }
 }

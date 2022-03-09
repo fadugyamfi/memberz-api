@@ -14,9 +14,7 @@ class OrganisationInvoiceObserver
      */
     public function created(OrganisationInvoice $organisationInvoice)
     {
-        if( !$organisationInvoice->hasInvoiceNumber() ) {
-            $organisationInvoice->generateInvoiceNumber();
-        }
+        $organisationInvoice->generateInvoiceNumber();
     }
 
     public function updated(OrganisationInvoice $organisationInvoice) {

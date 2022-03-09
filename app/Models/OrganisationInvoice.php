@@ -14,11 +14,6 @@ class OrganisationInvoice extends Model implements ApiModelInterface
 
     use BelongsToTenants, SoftDeletesWithDeletedFlag, HasCakephpTimestamps, ApiModelBehavior;
 
-    // override default soft delete column
-    const CREATED_AT = 'created';
-    const UPDATED_AT = 'modified';
-    const DELETED_AT = 'deleted';
-
     /**
      * The database table used by the model.
      *
@@ -89,6 +84,8 @@ class OrganisationInvoice extends Model implements ApiModelInterface
     }
 
     public function generateInvoiceNumber() {
+        if( $this->hasInvoiceNumber() ) return;
+
         $this->invoice_no = $this->organisation_id . str_pad($this->id, 5, '0', STR_PAD_LEFT);
         $this->save();
     }
