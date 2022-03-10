@@ -37,7 +37,7 @@ class OrganisationFileImportObserver
     public function created(OrganisationFileImport $import)
     {
         $org_id = Landlord::getTenants()->first();
-        Excel::import( new OrganisationMembersImport($import, auth()->user(), $org_id), request()->file('import_file') );
+        Excel::queueImport( new OrganisationMembersImport($import, auth()->user(), $org_id), request()->file('import_file') );
     }
 
     /**

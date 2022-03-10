@@ -9,10 +9,11 @@ use Illuminate\Notifications\Notification;
 abstract class BaseNotification extends Notification
 {
 
-    /**
-     * @var
-     */
-    protected $title, $message, $organisation_id, $notification_type_id, $replace_words_arr = [];
+    protected string $title;
+    protected string $message;
+    protected int $organisation_id;
+    protected int $notification_type_id;
+    protected array $replace_words_arr = [];
 
     /**
      * Get the notification's delivery channels.

@@ -4,10 +4,7 @@ namespace App\Notifications;
 
 use App\Models\NotificationType;
 use App\Models\Organisation;
-use App\Models\OrganisationRole;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 
 class MembershipImported extends BaseNotification
 {
@@ -19,10 +16,10 @@ class MembershipImported extends BaseNotification
      * @return void
      */
     public function __construct(
-        private string $file_name,
-        private int $organisation_id,
-        private string $status = "Completed",
-        private string $reason = ""
+        protected string $file_name,
+        protected int $organisation_id,
+        protected string $status = "Completed",
+        protected string $reason = ""
     ) {}
 
 

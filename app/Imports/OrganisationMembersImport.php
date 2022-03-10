@@ -13,6 +13,7 @@ use App\Models\OrganisationMemberImport;
 use App\Notifications\MembershipImported;
 use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
@@ -28,12 +29,12 @@ use Propaganistas\LaravelPhone\PhoneNumber;
 class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkReading, WithEvents, ShouldQueue
 {
 
-    use Importable;
+    use Importable, SerializesModels;
 
     public function __construct(
         public OrganisationFileImport $fileImport,
         public MemberAccount $memberAccount,
-        public int $org_id
+        public int $organisation_id
     ) {}
 
     public function chunkSize(): int
@@ -138,13 +139,13 @@ class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkRea
             AfterImport::class => function(AfterImport $event) {
                 $this->fileImport->import_status = 'completed';
                 $this->fileImport->save();
-                $this->memberAccount->notify(new MembershipImported($this->fileImport->file_name, $this->org_id));
+                $this->memberAccount->notify(new MembershipImported($this->fileImport->file_name, $this->organisation_id));
             },
 
             ImportFailed::class => function(ImportFailed $event) {
                 $this->fileImport->import_status = 'failed';
                 $this->fileImport->save();
-                $this->memberAccount->notify(new MembershipImported($this->fileImport->file_name, $this->org_id, 'Failed'));
+                $this->memberAccount->notify(new MembershipImported($this->fileImport->file_name, $this->organisation_id, 'Failed'));
             },
         ];
     }

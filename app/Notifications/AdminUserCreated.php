@@ -6,8 +6,6 @@ use App\Models\NotificationType;
 use App\Models\Organisation;
 use App\Models\OrganisationRole;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 
 class AdminUserCreated extends BaseNotification
 {
