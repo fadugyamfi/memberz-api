@@ -19,7 +19,8 @@ class AuthController extends Controller
      */
     private $account;
 
-    public function __construct(private AuthLogService $authLogger, private TwoFactorAuthService $twofaService){
+    public function __construct(private AuthLogService $authLogger, private TwoFactorAuthService $twofaService)
+    {
         $this->account = auth()->user() ?? null;
     }
 
@@ -33,17 +34,17 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        $credentials = $request->only(['username', 'password']);
+        $credentials  = $this->getLoginCredentials();
 
-        if (! $token = auth()->attempt($credentials)) {
+        if (!$token = auth()->attempt($credentials)) {
             return $this->oldLoginAttempt();
         }
 
         $this->account = auth()->user();
 
-        $this->authLogger->logLoginSuccess( $this->account );
+        $this->authLogger->logLoginSuccess($this->account);
 
-        if ($this->account->isEmailTwofaRequired()){
+        if ($this->account->isEmailTwofaRequired()) {
             $this->twofaService->handle($this->account);
             return response()->json(['status' => '2fa', 'message' => '2FA Code Required']);
         }
@@ -51,18 +52,27 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
+    private function getLoginCredentials() : array
+    {
+        if (filter_var(request()->get('username'), FILTER_VALIDATE_EMAIL)) {
+            return ['username' => request()->get('email'), 'password' => request()->get('password')];
+        }
+        
+        return ['mobile_number' => request()->get('username'), 'password' => request()->get('password')];
+    }
+
     public function oldLoginAttempt()
     {
         $credentials = request(['username', 'password']);
         $account = MemberAccount::where('username', $credentials['username'])->where('active', 1)->first();
 
-        if( !$account ) {
+        if (!$account) {
             return response()->json(['error' => 'Unauthorized', 'message' => 'Account not found'], 404);
         }
 
         $credentials['password'] = md5($credentials['password'] . $account->pass_salt);
 
-        if (! $token = auth()->attempt($credentials)) {
+        if (!$token = auth()->attempt($credentials)) {
             $this->authLogger->logLoginFailure($account);
             return response()->json(['error' => 'Unauthorized'], 401);
         }
@@ -71,7 +81,7 @@ class AuthController extends Controller
 
         $this->account = auth()->user();
 
-        if ($this->account->isEmailTwofaRequired()){
+        if ($this->account->isEmailTwofaRequired()) {
             $this->twofaService->handle($this->account);
             return response()->json(['status' => '2fa', 'message' => '2FA Code Required']);
         }
@@ -90,13 +100,13 @@ class AuthController extends Controller
     {
         $user = auth()->user();
 
-        if( !$user ) {
-            return response()->json(["status"=>"error", 'message' => __("Unauthenticated")], 404);
+        if (!$user) {
+            return response()->json(["status" => "error", 'message' => __("Unauthenticated")], 404);
         }
 
         $memberAccount = MemberAccount::with([
             'member.profilePhoto',
-            'organisationAccounts' => function($q) {
+            'organisationAccounts' => function ($q) {
                 $q->active()->with('organisation');
             }
         ])->find($user->id);
@@ -114,7 +124,7 @@ class AuthController extends Controller
     {
         $memberAccount = MemberAccount::where('username', $request->username)->where('active', 1)->first();
 
-        if(! $this->twofaService->isValid($request->code, $memberAccount)){
+        if (!$this->twofaService->isValid($request->code, $memberAccount)) {
             return response()->json(['status' => "error", 'message' => __("Invalid 2FA Code or 2FA Code Expired")], 404);
         }
 
@@ -132,7 +142,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        $this->authLogger->logLogout( auth()->user() );
+        $this->authLogger->logLogout(auth()->user());
 
         auth()->logout();
 
