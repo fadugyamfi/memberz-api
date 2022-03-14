@@ -64,8 +64,13 @@ class AuthController extends Controller
     public function oldLoginAttempt()
     {
         $credentials = request(['username', 'password']);
-        $account = MemberAccount::where('username', $credentials['username'])->where('active', 1)->first();
 
+        if ( filter_var($credentials['username'], FILTER_VALIDATE_EMAIL) ){
+            $account = MemberAccount::where('username', $credentials['username'])->where('active', 1)->first();
+        } else {
+            $account = MemberAccount::where('mobile_number', $credentials['username'])->where('active', 1)->first();
+        }
+       
         if (!$account) {
             return response()->json(['error' => 'Unauthorized', 'message' => 'Account not found'], 404);
         }
