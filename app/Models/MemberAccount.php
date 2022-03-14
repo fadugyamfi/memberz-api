@@ -30,7 +30,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
-    protected $fillable = ['member_id', 'username', 'password', 'pass_salt', 'timezone', 'account_type', 'reset_requested', 'active', 'deleted', 'email_verification_token', 'email_2fa'];
+    protected $fillable = ['member_id', 'username', 'password', 'pass_salt', 'timezone', 'account_type', 'reset_requested', 'active', 'deleted', 'email_verification_token', 'email_2fa', 'mobile_number'];
 
     protected $hidden = ['password', 'pass_salt'];
 
@@ -131,6 +131,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         $member_account = self::create([
             'member_id' => $member_id,
             'username' => $member->email,
+            'mobile_number' => $member->mobile_number,
             'password' => Hash::make(rand(10000, 99999)),
             'active' => 1,
         ]);
@@ -146,6 +147,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         return self::create([
             'member_id' => $input['member_id'],
             'username' => $input['username'],
+            'mobile_number' =>  $input['mobile_number'],
             'password' => bcrypt($input['password']),
             'email_verification_token' => Str::random(30),
         ]);
