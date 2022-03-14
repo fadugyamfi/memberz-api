@@ -28,6 +28,7 @@
         "staudenmeir/laravel-adjacency-list": "^1.9.5"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "2.12.x-dev",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.17",
         "knuckleswtf/scribe": "3.23",

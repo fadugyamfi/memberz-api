@@ -19,8 +19,8 @@ class OrganisationAccountRoleChanged extends BaseNotification
      * @return void
      */
     public function __construct(
-        private int $role_id,
-        private int $organisation_id
+        protected int $role_id,
+        protected int $organisation_id
     ) {}
 
 
