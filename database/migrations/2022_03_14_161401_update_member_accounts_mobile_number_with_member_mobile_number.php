@@ -12,15 +12,9 @@ class UpdateMemberAccountsMobileNumberWithMemberMobileNumber extends Migration
      */
     public function up()
     {
-        DB::table('members')->where('active', 1)->latest()->chunk(100, function($members) {
-            foreach($members as $member) {
-                DB::table('member_accounts')
-                    ->where('member_id', $member->id)
-                    ->whereNull('mobile_number')
-                    ->update([
-                        'mobile_number' => $member->mobile_number
-                    ]);
-            }
-        });
+        DB::table('member_accounts')
+            ->join('members', 'members.id', '=', 'member_accounts.member_id')
+            ->whereNull('member_accounts.mobile_number')
+            ->update(['member_accounts.mobile_number' => DB::raw('members.mobile_number')]);
     }
 }
