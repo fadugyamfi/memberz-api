@@ -6,8 +6,6 @@ use App\Models\ContributionReceipt;
 use App\Models\Contribution;
 use App\Models\ContributionReceiptSetting;
 use App\Models\ContributionSummary;
-use App\Models\ContributionType;
-use App\Models\OrganisationAccount;
 use App\Models\SmsAccount;
 use App\Models\SmsAccountMessage;
 use Exception;
