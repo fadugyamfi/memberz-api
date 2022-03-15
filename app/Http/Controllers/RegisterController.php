@@ -27,7 +27,12 @@ class RegisterController extends Controller
     {
         $member = (new Member())->store($request);
 
-        $member_account_data = ['member_id' => $member->id, 'username' => $request->email, 'password' => $request->password];
+        $member_account_data = [
+            'member_id' => $member->id, 
+            'username' => $request->email, 
+            'password' => $request->password, 
+            'mobile_number' => $request->mobile_number
+        ];
 
         $member_account = (new MemberAccount)->createAccount($member_account_data);
 

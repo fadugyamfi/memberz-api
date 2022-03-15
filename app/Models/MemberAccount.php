@@ -131,7 +131,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         $member_account = self::create([
             'member_id' => $member_id,
             'username' => $member->email,
-            'mobile_number' => $member->mobile_number,
+            'mobile_number' => preg_replace('#[^\d]#', '', $member->mobile_number),
             'password' => Hash::make(rand(10000, 99999)),
             'active' => 1,
         ]);
@@ -147,7 +147,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         return self::create([
             'member_id' => $input['member_id'],
             'username' => $input['username'],
-            'mobile_number' =>  $input['mobile_number'],
+            'mobile_number' =>  preg_replace('#[^\d]#', '', $input['mobile_number']),
             'password' => bcrypt($input['password']),
             'email_verification_token' => Str::random(30),
         ]);

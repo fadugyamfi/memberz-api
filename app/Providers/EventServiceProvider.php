@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Contribution;
+use App\Models\Member;
 use App\Models\MemberAccount;
 use App\Models\Organisation;
 use App\Models\OrganisationAccount;
@@ -21,6 +22,7 @@ use App\Models\SmsBroadcast;
 use App\Models\SmsBroadcastList;
 use App\Observers\ContributionObserver;
 use App\Observers\MemberAccountObserver;
+use App\Observers\MemberObserver;
 use App\Observers\OrganisationAccountObserver;
 use App\Observers\OrganisationFileImportObserver;
 use App\Observers\OrganisationGroupObserver;
@@ -79,5 +81,6 @@ class EventServiceProvider extends ServiceProvider
         SmsAccountTopup::observe(SmsAccountTopupObserver::class);
         OrganisationRegistrationForm::observe(OrganisationRegistrationFormObserver::class);
         OrganisationPaymentPlatform::observe(OrganisationPaymentPlatformObserver::class);
+        Member::observe(MemberObserver::class);
     }
 }
