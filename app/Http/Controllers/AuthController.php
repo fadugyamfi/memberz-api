@@ -55,10 +55,10 @@ class AuthController extends Controller
     private function getLoginCredentials() : array
     {
         if (filter_var(request()->get('username'), FILTER_VALIDATE_EMAIL)) {
-            return ['username' => request()->get('email'), 'password' => request()->get('password')];
+            return request()->only(['username', 'password']);
         }
         
-        return ['mobile_number' => request()->get('username'), 'password' => request()->get('password')];
+        return ['mobile_number' => request()->username, 'password' => request()->password];
     }
 
     public function oldLoginAttempt()

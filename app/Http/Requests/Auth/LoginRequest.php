@@ -39,7 +39,7 @@ class LoginRequest extends ApiRequest
         return [
             'username' => [
                 'description' => 'An email address to login with',
-                'example' => 'joe@example.com'
+                'example' => 'joe@example.com | 23324095888'
             ],
             'password' => [
                 'description' => "User's password for authentication",
