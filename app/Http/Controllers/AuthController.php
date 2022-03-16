@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\TwoFaCheckRequest;
+use App\Models\Member;
 use App\Models\MemberAccount;
 use App\Services\AuthLogService;
 use App\Services\TwoFactorAuthService;
+use Log;
 
 /**
  * @group Auth
@@ -54,23 +56,21 @@ class AuthController extends Controller
 
     private function getLoginCredentials() : array
     {
-        if (filter_var(request()->get('username'), FILTER_VALIDATE_EMAIL)) {
-            return request()->only(['username', 'password']);
+        $username = request()->username;
+        if (!filter_var(request()->username, FILTER_VALIDATE_EMAIL)) {
+            $memberAccount = MemberAccount::where('mobile_number', $username)->orWhere('mobile_number', 'like', '%' . $username)->first();
+            $username = optional($memberAccount)->username ?? null;
         }
         
-        return ['mobile_number' => request()->username, 'password' => request()->password];
+        return ['username' => $username, 'password' => request()->password, 'active' => 1];
     }
 
     public function oldLoginAttempt()
     {
-        $credentials = request(['username', 'password']);
+        $credentials  = $this->getLoginCredentials();
 
-        if ( filter_var($credentials['username'], FILTER_VALIDATE_EMAIL) ){
-            $account = MemberAccount::where('username', $credentials['username'])->where('active', 1)->first();
-        } else {
-            $account = MemberAccount::where('mobile_number', $credentials['username'])->where('active', 1)->first();
-        }
-       
+        $account = MemberAccount::where('username', $credentials['username'])->where('active', 1)->first();
+        
         if (!$account) {
             return response()->json(['error' => 'Unauthorized', 'message' => 'Account not found'], 404);
         }

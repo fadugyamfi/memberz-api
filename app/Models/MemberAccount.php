@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Mail\PasswordReset;
-use App\Mail\Twofa;
 use App\Traits\SoftDeletesWithActiveFlag;
 use App\Traits\HasCakephpTimestamps;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -85,6 +84,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     {
         return [
             'username' => $this->username,
+            'mobile_number' => $this->mobile_number,
             'member_id' => $this->member_id,
             'organisation_ids' => $this->getOrganisationIds(),
         ];
