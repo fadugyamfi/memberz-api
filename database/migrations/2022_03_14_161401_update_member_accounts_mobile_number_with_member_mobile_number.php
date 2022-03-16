@@ -14,7 +14,12 @@ class UpdateMemberAccountsMobileNumberWithMemberMobileNumber extends Migration
     {
         DB::table('member_accounts')
             ->join('members', 'members.id', '=', 'member_accounts.member_id')
-            ->where('member_accounts.mobile_number', '=', '')
+            ->whereNotNull('members.mobile_number')
+            ->where('members.mobile_number', '!=', '')
             ->update(['member_accounts.mobile_number' => DB::raw('members.mobile_number')]);
+    }
+
+    public function down() {
+        DB::table('member_accounts')->update(['mobile_number' => null]);
     }
 }

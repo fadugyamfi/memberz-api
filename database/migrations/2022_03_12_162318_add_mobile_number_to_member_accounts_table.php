@@ -14,7 +14,7 @@ class AddMobileNumberToMemberAccountsTable extends Migration
     public function up()
     {
         Schema::table('member_accounts', function (Blueprint $table) {
-            $table->string('mobile_number', 20)->index()->after('email_2fa');
+            $table->string('mobile_number', 20)->nullable()->index()->after('password');
         });
     }
 
