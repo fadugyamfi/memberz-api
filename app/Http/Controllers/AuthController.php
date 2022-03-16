@@ -57,7 +57,7 @@ class AuthController extends Controller
         $username = request()->username;
         if (!filter_var(request()->username, FILTER_VALIDATE_EMAIL)) {
             $memberAccount = MemberAccount::where('mobile_number', $username)->orWhere('mobile_number', 'like', '%' . $username)->first();
-            $username = optional($memberAccount)->username ?? null;
+            $username = $memberAccount?->username;
         }
         
         return ['username' => $username, 'password' => request()->password, 'active' => 1];
