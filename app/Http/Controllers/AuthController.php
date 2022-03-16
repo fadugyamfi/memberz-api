@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\TwoFaCheckRequest;
-use App\Models\Member;
 use App\Models\MemberAccount;
 use App\Services\AuthLogService;
 use App\Services\TwoFactorAuthService;
-use Log;
 
 /**
  * @group Auth
@@ -70,7 +68,7 @@ class AuthController extends Controller
         $credentials  = $this->getLoginCredentials();
 
         $account = MemberAccount::where('username', $credentials['username'])->where('active', 1)->first();
-        
+
         if (!$account) {
             return response()->json(['error' => 'Unauthorized', 'message' => 'Account not found'], 404);
         }
