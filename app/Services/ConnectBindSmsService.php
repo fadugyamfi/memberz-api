@@ -70,7 +70,6 @@ class ConnectBindSmsService {
             $this->setSender($sender_id);
 
             $response = [];
-            $options = [];
             $params = [
                 "username" => $this->settings['username'],
                 "password" => $this->settings['password'],
@@ -81,7 +80,7 @@ class ConnectBindSmsService {
                 "message" => $text
             ];
 
-            $responseObj = Http::get( ConnectBindSmsService::CB_SEND_URL, $params, $options);
+            $responseObj = Http::get( ConnectBindSmsService::CB_SEND_URL, $params);
 
             Log::debug("SMS Request: " . ConnectBindSmsService::CB_SEND_URL . "?" . http_build_query($params));
             Log::debug($responseObj->body());
@@ -119,11 +118,11 @@ class ConnectBindSmsService {
                 'response' => $response,
                 'failures' => $failures,
                 'status_code' => $last_status_group_id,
-                'message' => $this->getCodeMessage($response_code)
+                'response_message' => $this->getCodeMessage($response_code)
             );
 
         } catch (\Exception $ex) {
-            return array('status' => 'error', 'message' => $ex->getMessage(), 'error' => $ex->getTraceAsString());
+            return array('status' => 'error', 'response_message' => 'API Internal Error', 'message' => $ex->getMessage(), 'error' => $ex->getTraceAsString());
         }
     }
 

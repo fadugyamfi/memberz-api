@@ -54,7 +54,7 @@ class SmsAccountMessageObserver implements ShouldQueue
         return $smsService->send(
             $smsAccountMessage->to,
             $smsAccountMessage->message,
-            $smsAccountMessage->sender_id
+            $smsAccountMessage->sender_id ?? $smsAccountMessage->smsAccount?->sender_id
         );
     }
 
