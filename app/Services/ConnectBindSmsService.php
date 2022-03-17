@@ -80,9 +80,10 @@ class ConnectBindSmsService {
                 "message" => $text
             ];
 
-            $responseObj = Http::get( ConnectBindSmsService::CB_SEND_URL, $params);
+            $responseObj = Http::get(ConnectBindSmsService::CB_SEND_URL, $params);
 
-            Log::debug("SMS Request: " . ConnectBindSmsService::CB_SEND_URL . "?" . http_build_query($params));
+            $maskedParams = collect($params)->merge(['password' => '*****']);
+            Log::debug("SMS Request: " . ConnectBindSmsService::CB_SEND_URL . "?" . http_build_query($maskedParams));
             Log::debug($responseObj->body());
 
             $parts = explode("|", $responseObj->body());
@@ -92,13 +93,12 @@ class ConnectBindSmsService {
                 'message_id' => $parts[2] ?? null
             ];
 
-            $response_code = null;
-            $last_status = null;
+            $last_message_id = null;
             $last_status_group_id = null;
             $failures = array();
 
             if( $response['code'] == '1701' ) {
-                $response_code = $response['message_id'];
+                $last_message_id = $response['message_id'];
                 $last_status_group_id = 1;
 
             } else {
@@ -109,20 +109,20 @@ class ConnectBindSmsService {
                 ];
             }
 
-            SmsLog::logMsg($sender_id, $to, $text, $response_code, $last_status_group_id);
+            SmsLog::logMsg($sender_id, $to, $text, $last_message_id, $last_status_group_id);
 
             return array(
                 'status' => 'success',
-                'response_code' => $response_code,
-                'last_status' => $last_status,
+                'response_code' => $response['code'],
+                'last_message_id' => $last_message_id,
                 'response' => $response,
                 'failures' => $failures,
                 'status_code' => $last_status_group_id,
-                'response_message' => $this->getCodeMessage($response_code)
+                'response_message' => $this->getCodeMessage($response['code'])
             );
 
         } catch (\Exception $ex) {
-            return array('status' => 'error', 'response_message' => 'API Internal Error', 'message' => $ex->getMessage(), 'error' => $ex->getTraceAsString());
+            return array('status' => 'error', 'response_message' => 'Internal API Error', 'message' => $ex->getMessage(), 'error' => $ex->getTraceAsString());
         }
     }
 
