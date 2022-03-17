@@ -14,32 +14,27 @@ class SmsAccountMessageObserver implements ShouldQueue
     protected function processResponse(SmsAccountMessage $smsAccountMessage, $response) {
         $sent = 0;
         $send_status = '';
+        $date = date('Y-m-d H:i:s');
 
-        if( $response['status'] != 'success' ) {
+        if( $response['status'] != 'success' || $response['response_code'] != '1701' || $response['status_code'] != 1 ) {
             // TODO: determine what todo if no credit present
             $sent = -1;
-            $send_status = "Send Failed. Not enough credits available.";
-            Log::debug('Failed to send message to ' .  $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
+            $send_status = "Send Failed. ({$response['message']})";
+            Log::debug("Failed to send message to {$smsAccountMessage->to} at {$date}. Error: {$response['message']}");
 
             return $smsAccountMessage->updateSentStatus($send_status, $sent);
         }
 
-        if( $response['status_code'] == 1) {
-            $sent = 1;
-            $send_status = 'Sent Successfully';
-            $pages =  $smsAccountMessage->pages;
-            $smsAccountMessage->smsAccount->deductCredit($pages);
-            Log::debug('Sent message successfully to ' . $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
 
-            $this->updateBroadcastSentCounter($smsAccountMessage);
-
-        } else {
-            $sent = -1;
-            $send_status = "Send Failed. ({$response['last_status']})";
-            Log::debug('Message not sent to ' .  $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
-        }
-
+        $sent = 1;
+        $send_status = 'Sent Successfully';
+        $pages =  $smsAccountMessage->pages;
+        $smsAccountMessage->smsAccount->deductCredit($pages);
         $smsAccountMessage->updateSentStatus($send_status, $sent);
+
+        $this->updateBroadcastSentCounter($smsAccountMessage);
+
+        Log::debug('Sent message successfully to ' . $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
     }
 
     /**
