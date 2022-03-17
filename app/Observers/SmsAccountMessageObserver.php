@@ -19,8 +19,8 @@ class SmsAccountMessageObserver implements ShouldQueue
         if( $response['status'] != 'success' || $response['response_code'] != '1701' || $response['status_code'] != 1 ) {
             // TODO: determine what todo if no credit present
             $sent = -1;
-            $send_status = "Send Failed. ({$response['message']})";
-            Log::debug("Failed to send message to {$smsAccountMessage->to} at {$date}. Error: {$response['message']}");
+            $send_status = "Send Failed. ({$response['response_message']})";
+            Log::debug("Failed to send message to {$smsAccountMessage->to} at {$date}. Error: {$response['response_message']}");
 
             return $smsAccountMessage->updateSentStatus($send_status, $sent);
         }
