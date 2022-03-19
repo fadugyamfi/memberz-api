@@ -7,6 +7,7 @@ use App\Http\Requests\TwoFaCheckRequest;
 use App\Models\MemberAccount;
 use App\Services\AuthLogService;
 use App\Services\TwoFactorAuthService;
+use Log;
 
 /**
  * @group Auth
@@ -34,10 +35,10 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        $credentials  = $this->getLoginCredentials();
+        $credentials  = $this->getLoginCredentials($request);
 
         if (!$token = auth()->attempt($credentials)) {
-            return $this->oldLoginAttempt();
+            return $this->oldLoginAttempt($request);
         }
 
         $this->account = auth()->user();
@@ -52,20 +53,23 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
-    private function getLoginCredentials() : array
+    private function getLoginCredentials($request) : array
     {
-        $username = request()->username;
-        if (!filter_var(request()->username, FILTER_VALIDATE_EMAIL)) {
+        $username = $request->username;
+
+        if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
             $memberAccount = MemberAccount::where('mobile_number', $username)->orWhere('mobile_number', 'like', '%' . $username)->first();
-            $username = optional($memberAccount)->username ?? null;
+            if( $memberAccount ) {
+                $username = $memberAccount->username;
+            }
         }
-        
-        return ['username' => $username, 'password' => request()->password, 'active' => 1];
+
+        return ['username' => $username, 'password' => $request->password, 'active' => 1];
     }
 
-    public function oldLoginAttempt()
+    public function oldLoginAttempt($request)
     {
-        $credentials  = $this->getLoginCredentials();
+        $credentials  = $this->getLoginCredentials($request);
 
         $account = MemberAccount::where('username', $credentials['username'])->where('active', 1)->first();
 
@@ -77,7 +81,7 @@ class AuthController extends Controller
 
         if (!$token = auth()->attempt($credentials)) {
             $this->authLogger->logLoginFailure($account);
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'Unauthorized', 'message' => 'Old login credentials invalid'], 401);
         }
 
         $this->authLogger->logLoginSuccess($account);
@@ -131,7 +135,17 @@ class AuthController extends Controller
             return response()->json(['status' => "error", 'message' => __("Invalid 2FA Code or 2FA Code Expired")], 404);
         }
 
-        $token = auth()->attempt(request(['username', 'password']));
+        $credentials = request(['username', 'password']);
+
+        if (!$token = auth()->attempt($credentials)) {
+            $account = MemberAccount::where('username', $credentials['username'])->where('active', 1)->first();
+            $credentials['password'] = md5($credentials['password'] . $account->pass_salt);
+            $token = auth()->attempt($credentials);
+
+            if( !$token ) {
+                return response()->json(['message' => 'Invalid login with both old and new credentials'], 401);
+            }
+        }
 
         return $this->respondWithToken($token, true);
     }
