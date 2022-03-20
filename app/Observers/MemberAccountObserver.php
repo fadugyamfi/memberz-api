@@ -18,26 +18,23 @@ class MemberAccountObserver
         $this->logger = $logger;
     }
 
-    /**
-     * Handle the member account "updated" event.
-     *
-     * @param  \App\Models\MemberAccount  $memberAccount
-     * @return void
-     */
-    public function updated(MemberAccount $memberAccount)
-    {
 
+    public function updating(MemberAccount $memberAccount)
+    {
+        $memberAccount->mobile_number = preg_replace('#[^\d]#', '', request()->mobile_number);
     }
 
-    public function creating(MemberAccount $memberAccount) {
-        if( $memberAccount->password && !preg_match('/^\$2y\$/', $memberAccount->password) ) {
+    public function creating(MemberAccount $memberAccount)
+    {
+        if ($memberAccount->password && !preg_match('/^\$2y\$/', $memberAccount->password)) {
             $memberAccount->password = bcrypt($memberAccount->password);
         }
 
         $memberAccount->email_verification_token = Str::random(30);
     }
 
-    public function created(MemberAccount $member_account) {
+    public function created(MemberAccount $member_account)
+    {
         $this->logger->logNewAccountRegistered($member_account);
 
         Mail::to($member_account->username)->queue(new NewUserRegistered($member_account));
