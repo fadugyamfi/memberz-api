@@ -5,7 +5,6 @@ namespace App\Observers;
 use App\Models\OrganisationInvoice;
 use App\Models\OrganisationInvoiceItem;
 use App\Models\SmsAccountTopup;
-use App\Models\SubscriptionType;
 use App\Models\TransactionType;
 
 class SmsAccountTopupObserver
