@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\SmsBroadcast;
-use NunoMazer\Samehouse\Facades\Landlord;
 
 class SmsBroadcastObserver
 {

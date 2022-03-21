@@ -4,7 +4,6 @@ namespace App\Observers;
 
 use App\Models\SubscriptionType;
 use App\Models\OrganisationSubscription;
-use Carbon\Carbon;
 use Exception;
 
 class OrganisationSubscriptionObserver
