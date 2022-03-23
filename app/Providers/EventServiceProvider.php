@@ -81,6 +81,5 @@ class EventServiceProvider extends ServiceProvider
         SmsAccountTopup::observe(SmsAccountTopupObserver::class);
         OrganisationRegistrationForm::observe(OrganisationRegistrationFormObserver::class);
         OrganisationPaymentPlatform::observe(OrganisationPaymentPlatformObserver::class);
-        Member::observe(MemberObserver::class);
     }
 }

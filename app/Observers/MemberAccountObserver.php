@@ -18,12 +18,6 @@ class MemberAccountObserver
         $this->logger = $logger;
     }
 
-
-    public function updating(MemberAccount $memberAccount)
-    {
-        $memberAccount->mobile_number = preg_replace('#[^\d]#', '', request()->mobile_number);
-    }
-
     public function creating(MemberAccount $memberAccount)
     {
         if ($memberAccount->password && !preg_match('/^\$2y\$/', $memberAccount->password)) {

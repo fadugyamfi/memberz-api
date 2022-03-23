@@ -7,7 +7,6 @@ use App\Http\Requests\TwoFaCheckRequest;
 use App\Models\MemberAccount;
 use App\Services\AuthLogService;
 use App\Services\TwoFactorAuthService;
-use Log;
 
 /**
  * @group Auth
