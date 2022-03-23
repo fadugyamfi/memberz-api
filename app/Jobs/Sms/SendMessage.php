@@ -21,10 +21,11 @@ class SendMessage implements ShouldQueue
 
     /**
      * The number of times the job may be attempted.
+     * We only want to attempt to send an SMS message once, even if an error occurred
      *
      * @var int
      */
-    public $tries = 5;
+    public $tries = 1;
 
     /**
      * Create a new job instance.
