@@ -131,7 +131,7 @@ class SmsAccount extends ApiModel
                  * via background jobs which send the SMS messages. They will continually update the account
                  * balance as messages are sent
                  */
-                if ($eventName == 'updated' && auth()->check()) {
+                if ($eventName == 'updated') {
                     return __("Updated sms account with sender id of \":sender\" for \":org_name\". Account balance: \":account_balance\" ", [
                         "account_balance" => $account_balance,
                         "org_name" => $org,

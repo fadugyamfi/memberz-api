@@ -2,7 +2,9 @@
 
 namespace App\Jobs\Sms;
 
+use App\Models\ActivityLog;
 use App\Models\OrganisationMember;
+use App\Models\SmsAccount;
 use App\Models\SmsAccountMessage;
 use App\Models\SmsBroadcast;
 use App\Services\ConnectBindSmsService;
@@ -16,6 +18,13 @@ use Illuminate\Queue\SerializesModels;
 class SendMessage implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 5;
 
     /**
      * Create a new job instance.

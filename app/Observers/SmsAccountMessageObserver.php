@@ -45,7 +45,11 @@ class SmsAccountMessageObserver implements ShouldQueue
      */
     public function created(SmsAccountMessage $smsAccountMessage)
     {
-        $this->processResponse($smsAccountMessage, $this->sendSmsMessage($smsAccountMessage));
+        $obs = $this;
+
+        activity()->withoutLogs(function() use($obs, $smsAccountMessage) {
+            $obs->processResponse($smsAccountMessage, $obs->sendSmsMessage($smsAccountMessage));
+        });
     }
 
     public function sendSmsMessage(SmsAccountMessage $smsAccountMessage) {
