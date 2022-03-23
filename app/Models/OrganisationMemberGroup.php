@@ -66,9 +66,9 @@ class OrganisationMemberGroup extends ApiModel
     {
         $builder = parent::buildSearchParams($request, $builder);
 
-        $builder->join('organisation_members', 'organisation_members.id', '=', 'organisation_member_groups.organisation_member_id')
-            ->join('members', 'members.id', '=', 'organisation_members.member_id')
-            ->orderBy('members.last_name');
+        // $builder->join('organisation_members', 'organisation_members.id', '=', 'organisation_member_groups.organisation_member_id')
+        //     ->join('members', 'members.id', '=', 'organisation_members.member_id')
+        //     ->orderBy('members.last_name');
 
         return $builder;
     }

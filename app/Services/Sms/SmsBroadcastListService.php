@@ -22,7 +22,7 @@ class SmsBroadcastListService {
         return $this->getContactsQuery($smsBroadcastList)->get();
     }
 
-    public function buildContactsQuery(): Builder {
+    public function buildContactsQuery() {
         return OrganisationMember::selectRaw('DISTINCT organisation_members.*, members.*')
             ->selectRaw('organisation_member_categories.name as membership_category_name, organisation_members.id as membership_id')
             ->join('members', 'members.id', '=', 'organisation_members.member_id')
@@ -30,7 +30,7 @@ class SmsBroadcastListService {
             ->orderBy('members.last_name');
     }
 
-    public function getContactsQuery(SmsBroadcastList $smsBroadcastList): Builder {
+    public function getContactsQuery(SmsBroadcastList $smsBroadcastList) {
         $query = $this->buildContactsQuery();
         $filters = $smsBroadcastList->filters;
 
@@ -78,14 +78,7 @@ class SmsBroadcastListService {
     }
 
     public function queryMembershipGroup($query, $filter): Builder {
-        if( !isset($filter['organisation_group_type_id']) ) {
-            return $query;
-        }
-
-        $field = $this->filterTypes
-            ->where('id', $filter['field'])
-            ->where('organisation_group_type_id', $filter['organisation_group_type_id'])
-            ->first();
+        $field = $this->filterTypes->where('id', $filter['field'])->first();
 
         if( !$field ) {
             return $query;
