@@ -4,16 +4,41 @@ namespace App\Notifications;
 
 use App\Channels\MemberzDbNotification;
 use App\Models\MemberAccount;
+use App\Models\NotificationType;
+use App\Models\Organisation;
 use Illuminate\Notifications\Notification;
 
 abstract class BaseNotification extends Notification
 {
 
-    protected string $title;
-    protected string $message;
-    protected int $organisation_id;
-    protected int $notification_type_id;
-    protected array $replace_words_arr = [];
+    protected array $notificationParams = [];
+    public NotificationType $notificationType;
+    public Organisation $organisation;
+
+
+    public function setNotificationTypeByName(string $name) {
+        return $this->setNotificationType(
+            NotificationType::whereName($name)->first()
+        );
+    }
+
+    public function withParameters(array $parameters) {
+        return $this->setNotificationParameters($parameters);
+    }
+
+    public function setNotificationType(NotificationType $notificationType) {
+        $this->notificationType = $notificationType;
+        return $this;
+    }
+
+    public function getNotificationType(): NotificationType {
+        return $this->notificationType;
+    }
+
+    public function setNotificationParameters(array $parameters) {
+        $this->notificationParams = $parameters;
+        return $this;
+    }
 
     /**
      * Get the notification's delivery channels.
@@ -35,26 +60,22 @@ abstract class BaseNotification extends Notification
      */
     public function toArray($notifiable)
     {
-    }
-
-    public function formatMessage() : void {
-        foreach($this->replace_words_arr as $key => $value){
-            $this->message = str_ireplace($key, $value, $this->message);
-        }
-    }
-
-    public function getData() : array {
         return [
-            'message' => __($this->message),
-            'title' => __($this->title),
-            'organisation_id' => $this->organisation_id,
-            'notification_type_id' => $this->notification_type_id,
+            'message' => $this->getFormattedMessage(),
+            'title' => $this->getNotificationType()?->email_subject,
+            'organisation_id' => $this->organisation?->id,
+            'notification_type_id' => $this->getNotificationType()?->id,
         ];
     }
 
-    public function getNotifiaBy(){
-        $auth_member = MemberAccount::find(auth()->user()->id);
-        return $auth_member->member->first_name. ' '. $auth_member->member->last_name;
+    public function getFormattedMessage() {
+        $message = $this->getNotificationType()?->template;
+
+        return str_replace(array_keys($this->notificationParams), array_values($this->notificationParams), $message);
+    }
+
+    public function getMemberName($notifiable) {
+        return $notifiable->member->first_name . ' '. $notifiable->member->last_name;
     }
 
     public function toDatabase($notifiable) {

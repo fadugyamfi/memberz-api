@@ -33,8 +33,7 @@ class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkRea
 
     public function __construct(
         public OrganisationFileImport $fileImport,
-        public MemberAccount $memberAccount,
-        public int $organisation_id
+        public MemberAccount $memberAccount
     ) {}
 
     public function chunkSize(): int
@@ -139,13 +138,13 @@ class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkRea
             AfterImport::class => function(AfterImport $event) {
                 $this->fileImport->import_status = 'completed';
                 $this->fileImport->save();
-                $this->memberAccount->notify(new MembershipImported($this->fileImport->file_name, $this->organisation_id));
+                $this->memberAccount->notify(new MembershipImported($this->fileImport));
             },
 
             ImportFailed::class => function(ImportFailed $event) {
                 $this->fileImport->import_status = 'failed';
                 $this->fileImport->save();
-                $this->memberAccount->notify(new MembershipImported($this->fileImport->file_name, $this->organisation_id, 'Failed'));
+                $this->memberAccount->notify(new MembershipImported($this->fileImport, 'Failed'));
             },
         ];
     }

@@ -19,36 +19,18 @@ class OrganisationAccountRoleChanged extends BaseNotification
      * @return void
      */
     public function __construct(
-        protected int $role_id,
-        protected int $organisation_id
+        protected Organisation $organisation,
+        protected OrganisationRole $organisationRole
     ) {}
 
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
     public function toArray($notifiable)
     {
-        $organisation = Organisation::find($this->organisation_id)->name;
-        $role = OrganisationRole::find($this->role_id)->name;
-        $notification_type = NotificationType::whereName('organisation_account_role_changed')->first();
-        $this->notification_type_id = $notification_type->id;
+        $this->setNotificationTypeByName('organisation_account_role_changed')->withParameters([
+            '{member_name}' => $this->getMemberName($notifiable),
+            '{org_name}' => $this->organisation->name,
+            '{role_name}' => $this->role->name
+        ]);
 
-        $this->message = $notification_type->template;
-        $this->title = $notification_type->email_subject;
-
-        $this->replace_words_arr = [
-            '{member_name}' =>  $this->getNotifiaBy(),
-            '{org_name}' => $organisation,
-            '{role_name}' => $role
-        ];
-
-        $this->formatMessage();
-
-        return $this->getData();
+        return parent::toArray($notifiable);
     }
-
 }

@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\Models\NotificationType;
 use App\Models\Organisation;
+use App\Models\OrganisationFileImport;
 use Illuminate\Bus\Queueable;
 
 class MembershipImported extends BaseNotification
@@ -16,38 +17,24 @@ class MembershipImported extends BaseNotification
      * @return void
      */
     public function __construct(
-        protected string $file_name,
-        protected int $organisation_id,
+        public OrganisationFileImport $fileImport,
         protected string $status = "Completed",
         protected string $reason = ""
-    ) {}
+    ) {
+        $this->organisation = $this->fileImport->organisation;
+    }
 
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
     public function toArray($notifiable)
     {
-        $organisation = Organisation::find($this->organisation_id)->name;
-        $notification_type = NotificationType::whereName('bulk_member_import_status')->first();
-        $this->notification_type_id = $notification_type->id;
+        $this->setNotificationTypeByName('bulk_member_import_status')
+            ->withParameters([
+                '{file_name}' =>  $this->fileImport->file_name,
+                '{org_name}' => $this->organisation->name,
+                '{status}' => $this->status,
+                '{reason}' => $this->reason
+            ]);
 
-        $this->message = $notification_type->template;
-        $this->title = $notification_type->email_subject;
-
-        $this->replace_words_arr = [
-            '{file_name}' =>  $this->file_name,
-            '{org_name}' => $organisation,
-            '{status}' => $this->status,
-            '{reason}' => $this->reason
-        ];
-
-        $this->formatMessage();
-
-        return $this->getData();
+        return parent::toArray($notifiable);
     }
 
 }

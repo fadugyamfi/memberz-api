@@ -115,19 +115,17 @@ class OrganisationAccount extends ApiModel
 
     public function sendAccountRoleChangedNotification(): void
     {
-        $member_account = MemberAccount::find($this->member_account_id);
-        $member_account->notify(new OrganisationAccountRoleChanged($this->organisation_role_id, $this->organisation_id));
+        $this->memberAccount?->notify(new OrganisationAccountRoleChanged($this->organisation, $this->organisationRole));
     }
 
     public function sendAccountCreatedNotification(): void
     {
-        $member_account = MemberAccount::find($this->member_account_id);
-        $member_account->notify(new AdminUserCreated($this->organisation_role_id, $this->organisation_id));
+        $this->memberAccount?->notify(new AdminUserCreated($this->organisation, $this->organisationRole));
     }
 
     public function notifySmsBroadcastProcessed(SmsBroadcast $broadcast): void
     {
-        $this->memberAccount?->notify(new SmsBroadcastScheduled($broadcast, $this->organisation));
+        $this->memberAccount?->notify(new SmsBroadcastScheduled($this->organisation, $broadcast));
     }
 
     public function notifyInsufficientSmsCredits(): void
@@ -137,7 +135,7 @@ class OrganisationAccount extends ApiModel
 
     public function notifyInsufficientSmsCreditsForBroadcast(SmsBroadcast $smsBroadcast): void
     {
-        $this->memberAccount?->notify(new InsufficientSmsCreditsForBroadcast($smsBroadcast, $this->organisation));
+        $this->memberAccount?->notify(new InsufficientSmsCreditsForBroadcast($this->organisation, $smsBroadcast));
     }
 
     /**

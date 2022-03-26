@@ -141,24 +141,29 @@ class OrganisationMember extends ApiModel
         }
 
         if( $request->organisation_group_type_id || $request->organisation_group_id ) {
-            $builder->join('organisation_member_groups', 'organisation_member_groups.organisation_member_id', '=', 'organisation_members.id')
-                ->join('organisation_groups', function($join) use($request) {
-                    $join->on('organisation_groups.id', 'organisation_member_groups.organisation_group_id');
+            $builder->join('organisation_member_groups', function($join) {
+                $join->on('organisation_member_groups.organisation_member_id', 'organisation_members.id')
+                    ->where('organisation_member_groups.active', 1);
+            })
+            ->join('organisation_groups', function($join) use($request) {
+                $join->on('organisation_groups.id', 'organisation_member_groups.organisation_group_id')
+                    ->where('organisation_groups.active', 1);
 
-                    if( $request->organisation_group_type_id ) {
-                        $join->where('organisation_groups.organisation_group_type_id', $request->organisation_group_type_id);
-                    }
+                if( $request->organisation_group_type_id ) {
+                    $join->where('organisation_groups.organisation_group_type_id', $request->organisation_group_type_id);
+                }
 
-                    if( $request->organisation_group_id ) {
-                        $join->where('organisation_groups.id', $request->organisation_group_id);
-                    }
-                });
+                if( $request->organisation_group_id ) {
+                    $join->where('organisation_groups.id', $request->organisation_group_id);
+                }
+            });
         }
 
         if( $request->organisation_anniversary_id ) {
             $builder->join('organisation_member_anniversaries', function($join) use($request) {
                 $join->on('organisation_member_anniversaries.organisation_member_id', 'organisation_members.id')
-                    ->where('organisation_member_anniversaries.organisation_anniversary_id', $request->organisation_anniversary_id);
+                    ->where('organisation_member_anniversaries.organisation_anniversary_id', $request->organisation_anniversary_id)
+                    ->where('organisation_member_anniversaries.active', 1);
 
                 if( $request->anniversary_start_date ) {
                     $join->where('organisation_member_anniversaries.value', '>=', $request->anniversary_start_date);

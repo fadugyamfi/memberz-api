@@ -108,22 +108,29 @@ class ProcessBroadcast implements ShouldQueue
      * Dispatch Sms Messages to the supplied contacts and mark the broacast as incremented
      */
     private function messageContacts($contacts) {
-        Log::info("Sending messages to " . count($contacts) . " with sender_id {$this->broadcast->sender_id}");
+        Log::info("Sending messages to " . count($contacts) . " contacts with sender_id {$this->broadcast->sender_id}");
+        $membership = null;
 
         foreach($contacts as $contact) {
-            SendMessage::dispatch($contact, $this->broadcast);
+            $membership = $contact;
+
+            if( $contact->membership_id != null ) {
+                $membership = OrganisationMember::find($contact->membership_id);
+            }
+
+            SendMessage::dispatch($membership, $this->broadcast);
         }
 
         $this->broadcast->sent_offset += count($contacts);
         $this->broadcast->save();
 
-        Log::info("Sent messages to " . count($contacts) . " with sender_id {$this->broadcast->sender_id}");
+        Log::info("Sent messages to " . count($contacts) . " contacts with sender_id {$this->broadcast->sender_id}");
     }
 
     private function getTotalContacts() {
         return $this->broadcast->smsBroadcastList
             ? $this->smsBroadcastListService->getContactsQuery($this->broadcast->smsBroadcastList)->count()
-            : $this->broadcast->organisationMemberCategory?->count();
+            : $this->broadcast->organisationMemberCategory?->organisationMembers()->count();
     }
 
     private function markBroadcastProcessedAsUnsent() {
