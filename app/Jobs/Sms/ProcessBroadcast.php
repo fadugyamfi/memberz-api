@@ -3,6 +3,7 @@
 namespace App\Jobs\Sms;
 
 use App\Models\OrganisationMember;
+use App\Models\SmsAccountMessage;
 use App\Models\SmsBroadcast;
 use App\Services\Sms\SmsBroadcastListService;
 use Illuminate\Bus\Queueable;
@@ -118,7 +119,17 @@ class ProcessBroadcast implements ShouldQueue
                 $membership = OrganisationMember::find($contact->membership_id);
             }
 
-            SendMessage::dispatch($membership, $this->broadcast);
+            // create an instant message which will be scheduled for sending in the SmsAccountMessageObserver
+            SmsAccountMessage::create([
+                'module_sms_account_broadcast_id' => $this->broadcast->id,
+                'module_sms_account_id' => $this->broadcast->module_sms_account_id,
+                'organisation_id' => $this->broadcast->organisation_id,
+                'member_id' => $membership->member_id,
+                'to' => $membership->member->mobile_number,
+                'message' => $this->broadcast->personalize($membership, $this->broadcast->smsAccount, $this->broadcast->message),
+                'sent_by' => $this->broadcast->scheduled_by,
+                'sender_id' => $this->broadcast->sender_id,
+            ]);
         }
 
         $this->broadcast->sent_offset += count($contacts);

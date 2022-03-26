@@ -14,13 +14,12 @@ class ScheduleBroadcasts {
             ->unsent()
             ->readyToSend()
             ->where(function($query) {
-                $query->where('sent_offset', 0)
-                    ->orWhereNull('sent_offset');
+                $query->where('sent_offset', 0)->orWhereNull('sent_offset');
             })
             ->get();
 
         $broadcasts->each(function(SmsBroadcast $broadcast) {
-            Log::info("Scheduled SMS Broadcast {$broadcast->id}");
+            Log::info("Scheduled SMS Broadcast {$broadcast->id} to {$broadcast->list_name}");
             ProcessBroadcast::dispatch($broadcast);
         });
 

@@ -106,6 +106,10 @@ class SmsBroadcast extends ApiModel
         return $this->smsBroadcastList?->sender_id ?? $this->smsAccount->sender_id;
     }
 
+    public function getListNameAttribute() {
+        return $this->smsBroadcastList?->name ?? $this->organisationMemberCategory?->name;
+    }
+
      /**
      * Format user activities description for Sms Broadcast
      * @override

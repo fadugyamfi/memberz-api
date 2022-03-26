@@ -82,7 +82,7 @@ class ConnectBindSmsService {
 
             $responseObj = Http::get(ConnectBindSmsService::CB_SEND_URL, $params);
 
-            $maskedParams = collect($params)->merge(['password' => '*****']);
+            $maskedParams = collect($params)->merge(['password' => 'x_x_x'])->toArray();
             Log::debug("SMS Request: " . ConnectBindSmsService::CB_SEND_URL . "?" . http_build_query($maskedParams));
             Log::debug($responseObj->body());
 

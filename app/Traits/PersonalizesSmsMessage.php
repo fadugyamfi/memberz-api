@@ -14,7 +14,10 @@ trait PersonalizesSmsMessage {
             'last_name' => $membership->member->last_name,
             'full_name' => $membership->member->full_name,
             'org_name' => $smsAccount->organisation->name,
-            'org_slug' => $smsAccount->organisation->slug
+            'organisation_name' => $smsAccount->organisation->name,
+            'org_slug' => $smsAccount->organisation->slug,
+            'organisation_slug' => $smsAccount->organisation->slug,
+            'membership_no' => $membership->organisation_no
         ];
 
         return $this->format($message ?? $this->message, $attributes);
@@ -29,10 +32,13 @@ trait PersonalizesSmsMessage {
             'last_name' => '',
             'full_name' => '',
             'org_slug' => '',
+            'organisation_slug' => '',
             'org_name' => '',
+            'organisation_name' => '',
             'anniv_date' => '',
             'anniv_year' => '',
-            'years_since' => ''
+            'years_since' => '',
+            'membership_no' => ''
         );
 
         if( is_array($format_values) ) {
