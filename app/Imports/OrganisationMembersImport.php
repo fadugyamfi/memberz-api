@@ -4,7 +4,6 @@ namespace App\Imports;
 
 use App\Models\Member;
 use App\Models\MemberAccount;
-use App\Models\Organisation;
 use App\Models\OrganisationAccount;
 use App\Models\OrganisationFileImport;
 use App\Models\OrganisationMember;
@@ -14,9 +13,7 @@ use App\Notifications\MembershipImported;
 use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithEvents;
@@ -25,11 +22,12 @@ use Maatwebsite\Excel\Events\AfterImport;
 use Maatwebsite\Excel\Events\ImportFailed;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Propaganistas\LaravelPhone\PhoneNumber;
+use romanzipp\QueueMonitor\Traits\IsMonitored;
 
 class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkReading, WithEvents, ShouldQueue
 {
 
-    use Importable, SerializesModels;
+    use Importable, SerializesModels, IsMonitored;
 
     public function __construct(
         public OrganisationFileImport $fileImport,
