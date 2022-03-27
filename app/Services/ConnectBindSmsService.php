@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Support\SmsLog;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class ConnectBindSmsService {
 
@@ -80,18 +81,13 @@ class ConnectBindSmsService {
                 "message" => $text
             ];
 
-            $responseObj = Http::get(ConnectBindSmsService::CB_SEND_URL, $params);
+            $response = [];
 
-            $maskedParams = collect($params)->merge(['password' => 'x_x_x'])->toArray();
-            Log::debug("SMS Request: " . ConnectBindSmsService::CB_SEND_URL . "?" . http_build_query($maskedParams));
-            Log::debug($responseObj->body());
-
-            $parts = explode("|", $responseObj->body());
-            $response = [
-                'code' => $parts[0],
-                'number' => $parts[1] ?? null,
-                'message_id' => $parts[2] ?? null
-            ];
+            if( config('sms.connectbind.fake_requests') ) {
+                $response = $this->fakeRequest($params);
+            } else {
+                $response = $this->makeRequest($params);
+            }
 
             $last_message_id = null;
             $last_status_group_id = null;
@@ -122,8 +118,39 @@ class ConnectBindSmsService {
             );
 
         } catch (\Exception $ex) {
+            Log::debug($ex->getTraceAsString());
             return array('status' => 'error', 'response_message' => 'Internal API Error', 'message' => $ex->getMessage(), 'error' => $ex->getTraceAsString());
         }
+    }
+
+    public function fakeRequest($params) {
+        $response = "1701|{$params['destination']}|" . Str::uuid() . "|fake-response";
+        Log::info($response);
+
+        $parts = explode("|", $response);
+
+        return [
+            'fake' => true,
+            'code' => $parts[0],
+            'number' => $parts[1] ?? null,
+            'message_id' => $parts[2] ?? null
+        ];
+    }
+
+    public function makeRequest($params) {
+        $responseObj = Http::get(ConnectBindSmsService::CB_SEND_URL, $params);
+
+        $maskedParams = collect($params)->merge(['password' => 'x_x_x'])->toArray();
+        Log::debug("SMS Request: " . ConnectBindSmsService::CB_SEND_URL . "?" . http_build_query($maskedParams));
+        Log::debug($responseObj->body());
+
+        $parts = explode("|", $responseObj->body());
+
+        return [
+            'code' => $parts[0],
+            'number' => $parts[1] ?? null,
+            'message_id' => $parts[2] ?? null
+        ];
     }
 
     public function getCodeMessage($code) {

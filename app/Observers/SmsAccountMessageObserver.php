@@ -7,9 +7,12 @@ use App\Models\SmsAccountMessage;
 use App\Services\ConnectBindSmsService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
+use romanzipp\QueueMonitor\Traits\IsMonitored;
 
 class SmsAccountMessageObserver implements ShouldQueue
 {
+
+    use IsMonitored;
 
     protected function processResponse(SmsAccountMessage $smsAccountMessage, $response) {
         $sent = 0;
