@@ -23,6 +23,7 @@
         "nunomazer/laravel-samehouse": "dev-master",
         "php-open-source-saver/jwt-auth": "dev-main",
         "propaganistas/laravel-phone": "dev-master",
+        "rap2hpoutre/laravel-log-viewer": "dev-master",
         "romanzipp/laravel-queue-monitor": "dev-master",
         "spatie/laravel-activitylog": "4.1.1",
         "spatie/laravel-permission": "^3.6",
