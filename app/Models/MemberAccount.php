@@ -191,4 +191,14 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         return $this->email_2fa == 1;
     }
 
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return array|string
+     */
+    public function routeNotificationForMail($notification)
+    {
+        return [$this->username => $this->member->name];
+    }
 }

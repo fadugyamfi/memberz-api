@@ -49,14 +49,17 @@ class ProcessBroadcast implements ShouldQueue
         $insufficientCreditForMessages = $smsAccount->available_credit < $totalMessages;
 
         if( !$smsAccount->hasCredit() || $insufficientCreditForMessages ) {
-            $this->broadcast->scheduler?->notifyInsufficientSmsCreditsForBroadcast($this->broadcast);
+            $this->broadcast->notifyInsufficientCredits();
             $this->broadcast->rescheduleForAnHour();
             Log::info("Insufficient Sms Account Credits for {$organisation->name}. Broadcast Rescheduled For +1 hours");
             return;
         }
 
-        $this->sentMessagesToBroadcastList();
-        $this->sendMessagesToMembershipCategory();
+        if( $this->broadcast->organisationMemberCategory ) {
+            $this->sendMessagesToMembershipCategory();
+        } else {
+            $this->sentMessagesToBroadcastList();
+        }
     }
 
     private function sentMessagesToBroadcastList() {
@@ -152,7 +155,7 @@ class ProcessBroadcast implements ShouldQueue
         $this->broadcast->sent = 1;
         $this->broadcast->save();
 
-        $this->broadcast->scheduler?->notifySmsBroadcastProcessed($this->broadcast);
+        $this->broadcast->notifyProcessed();
         Log::info("Broadcast {$this->broadcast->id} not sent. No contacts to messge");
     }
 
@@ -160,7 +163,7 @@ class ProcessBroadcast implements ShouldQueue
         $this->broadcast->sent = 1;
         $this->broadcast->save();
 
-        $this->broadcast->scheduler?->notifySmsBroadcastProcessed($this->broadcast);
+        $this->broadcast->notifyProcessed();
         Log::info("All messages for Broadcast {$this->broadcast->id} scheduled to be sent.");
     }
 }

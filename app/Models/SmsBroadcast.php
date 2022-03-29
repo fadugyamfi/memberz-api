@@ -98,6 +98,14 @@ class SmsBroadcast extends ApiModel
         $this->save();
     }
 
+    public function notifyInsufficientCredits() {
+        $this->scheduler?->notifyInsufficientSmsCreditsForBroadcast($this);
+    }
+
+    public function notifyProcessed() {
+        $this->scheduler?->notifySmsBroadcastProcessed($this);
+    }
+
     public function getMessagePagesAttribute() {
         return ceil(strlen($this->message) / 160);
     }
