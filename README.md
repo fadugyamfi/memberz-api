@@ -65,4 +65,6 @@ Ensure to set the value of `SCRIBE_AUTH_KEY` in your `.env` file to a valid API 
 be authenticated to generate valid examples for the various endpoints.
 
 ## SMS Messaging Testing
-By default the API is configured with live credentials for sending SMS messages through the ConnectBind SMS Gateway service. To prevent sending actual SMS messages during localtesting, set the `CONNECT_BIND_FAKER_ENABLED` property to `true` in your `.env` file to fake the HTTP requests and return dummy `SUCCESS` results for local testing.
+By default the API is configured with live credentials for sending SMS messages through the ConnectBind SMS Gateway service.
+To prevent sending actual SMS messages during localtesting, set the `CONNECT_BIND_FAKER_ENABLED` property to `true` in your `.env` file to
+fake the HTTP requests and return dummy `SUCCESS` results for local testing.
