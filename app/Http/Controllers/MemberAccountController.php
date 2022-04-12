@@ -44,7 +44,10 @@ class MemberAccountController extends ApiController
                 return $query->with(['subscriptionType', 'organisationInvoice.transactionType']);
             },
             'organisationType'
-        ])->orderBy('name', 'asc')->paginate($limit);
+        ])
+        ->withCount(['organisationMembers'])
+        ->orderBy('name', 'asc')
+        ->paginate($limit);
 
         return $this->Resource::collection($organisations);
     }
