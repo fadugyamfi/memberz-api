@@ -125,6 +125,13 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('organisation_registration_forms', 'OrganisationRegistrationFormController');
         Route::apiResource('organisation_payment_platforms', 'OrganisationPaymentPlatformController');
 
+        Route::apiResource('calendars', 'Events\\CalendarController');
+        Route::apiResource('events', 'Events\\EventController');
+        Route::apiResource('event_attendees', 'Events\\EventAttendeeController');
+        Route::apiResource('event_sessions', 'Events\\EventSessionController');
+        Route::apiResource('event_reminders', 'Events\\EventReminderController');
+        Route::apiResource('event_reminder_broadcasts', 'Events\\EventReminderBroadcastController');
+
         Route::get('sms/summary', 'Sms\SummaryController');
         Route::apiResource('sms_accounts', 'SmsAccountController');
         Route::apiResource('sms_account_messages', 'SmsAccountMessageController');

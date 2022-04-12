@@ -17,7 +17,7 @@ class PaymentPlatformController extends Controller
     public function __construct(PaymentPlatform $paymentPlatform)
     {
         $this->setApiModel($paymentPlatform);
-        // $this->setApiResource(PaymentPlatformResource::class);
+        $this->setApiResource(PaymentPlatformResource::class);
     }
 
     /**

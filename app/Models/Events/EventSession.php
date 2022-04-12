@@ -1,13 +1,17 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models\Events;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\ApiModel;
+use App\Traits\HasCakephpTimestamps;
+use App\Traits\LogModelActivity;
+use App\Traits\SoftDeletesWithDeletedFlag;
+use NunoMazer\Samehouse\BelongsToTenants;
 
-class OrganisationEventSession extends ApiModel  
+class EventSession extends ApiModel
 {
 
-    
+    use BelongsToTenants, HasCakephpTimestamps, LogModelActivity, SoftDeletesWithDeletedFlag;
 
     /**
      * The database table used by the model.
@@ -44,4 +48,15 @@ class OrganisationEventSession extends ApiModel
      */
     protected $dates = ['session_dt', 'created', 'modified'];
 
+    public function organisation() {
+        return $this->belongsTo(Organisation::class);
+    }
+
+    public function event() {
+        return $this->belongsTo(Event::class, 'organisation_event_id');
+    }
+
+    public function attendees() {
+        return $this->hasMany(EventAttendee::class, 'organisation_event_session_id');
+    }
 }

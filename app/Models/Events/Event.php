@@ -1,13 +1,18 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models\Events;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\ApiModel;
+use App\Models\Organisation;
+use App\Traits\HasCakephpTimestamps;
+use App\Traits\LogModelActivity;
+use App\Traits\SoftDeletesWithActiveFlag;
+use NunoMazer\Samehouse\BelongsToTenants;
 
-class OrganisationEvent extends ApiModel  
+class Event extends ApiModel
 {
 
-    
+    use BelongsToTenants, HasCakephpTimestamps, LogModelActivity, SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.
@@ -44,4 +49,27 @@ class OrganisationEvent extends ApiModel
      */
     protected $dates = ['start_dt', 'end_dt', 'created', 'modified'];
 
+    public function organisation() {
+        return $this->belongsTo(Organisation::class);
+    }
+
+    public function calendar() {
+        return $this->belongsTo(Calendar::class, 'organisation_calendar_id');
+    }
+
+    public function sessions() {
+        return $this->hasMany(EventSession::class, 'organisation_event_id');
+    }
+
+    public function attendees() {
+        return $this->hasMany(EventAttendee::class, 'organisation_event_id');
+    }
+
+    public function registrations() {
+        return $this->hasMany(EventRegistration::class, 'organisation_event_id');
+    }
+
+    public function reminders() {
+        return $this->hasMany(EventReminder::class, 'organisation_event_id');
+    }
 }

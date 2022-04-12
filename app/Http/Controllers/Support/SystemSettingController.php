@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\SystemSetting;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
+/**
+ * @group System Settings
+ */
 class SystemSettingController extends Controller
 {
     use ApiControllerBehavior;

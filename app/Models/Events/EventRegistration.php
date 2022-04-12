@@ -1,13 +1,17 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models\Events;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\ApiModel;
+use App\Models\Member;
+use App\Traits\HasCakephpTimestamps;
+use App\Traits\LogModelActivity;
+use App\Traits\SoftDeletesWithDeletedFlag;
 
-class OrganisationEventRegistration extends ApiModel  
+class EventRegistration extends ApiModel
 {
 
-    
+    use HasCakephpTimestamps, LogModelActivity, SoftDeletesWithDeletedFlag;
 
     /**
      * The database table used by the model.
@@ -44,4 +48,12 @@ class OrganisationEventRegistration extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
+
+    public function member() {
+        return $this->belongsTo(Member::class);
+    }
+
+    public function event() {
+        return $this->belongsTo(Event::class, 'organisation_event_id');
+    }
 }

@@ -1,13 +1,16 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models\Events;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\ApiModel;
+use App\Models\SmsBroadcast;
+use App\Traits\HasCakephpTimestamps;
+use App\Traits\LogModelActivity;
 
-class OrganisationEventReminderBroadcast extends ApiModel  
+class EventReminderBroadcast extends ApiModel
 {
 
-    
+    use HasCakephpTimestamps, LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -44,4 +47,12 @@ class OrganisationEventReminderBroadcast extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
+
+    public function eventReminder() {
+        return $this->belongsTo(EventReminder::class, 'organisation_event_reminder_id');
+    }
+
+    public function smsBroadcast() {
+        return $this->belongsTo(SmsBroadcast::class, 'module_sms_account_broadcast_id');
+    }
 }
