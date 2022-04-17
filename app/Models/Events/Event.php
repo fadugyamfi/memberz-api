@@ -7,6 +7,7 @@ use App\Models\Organisation;
 use App\Traits\HasCakephpTimestamps;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use Carbon\Carbon;
 use NunoMazer\Samehouse\BelongsToTenants;
 
 class Event extends ApiModel

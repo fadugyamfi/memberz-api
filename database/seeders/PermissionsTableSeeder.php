@@ -68,6 +68,14 @@ class PermissionsTableSeeder extends Seeder
         Permission::findOrCreate('messaging:broadcast-lists:view','api');
         Permission::findOrCreate('messaging:purchase-credits:view','api');
 
+        Permission::findOrCreate('events:dashboard:view','api');
+        Permission::findOrCreate('events:calendar:view','api');
+        Permission::findOrCreate('events:upcoming:view','api');
+        Permission::findOrCreate('events:manage:add','api');
+        Permission::findOrCreate('events:manage:edit','api');
+        Permission::findOrCreate('events:manage:delete','api');
+        Permission::findOrCreate('events:birthdays:view','api');
+
         Permission::findOrCreate('finance:dashboard:view','api');
         Permission::findOrCreate('finance:settings:view','api');
         Permission::findOrCreate('finance:income:view','api');
