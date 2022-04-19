@@ -11,7 +11,8 @@ class EventResource extends ApiResource {
     {
         $data = array_merge(parent::toArray($request), [
             'organisation_calendar' => $this->calendar,
-            'session_count' => $this->sessions()->count()
+            'session_count' => $this->sessions()->count(),
+            'attendee_count' => $this->attendees()->count()
         ]);
 
         return $data;
