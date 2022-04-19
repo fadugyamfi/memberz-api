@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasCakephpTimestamps;
+use Illuminate\Database\Eloquent\Builder;
 use NunoMazer\Samehouse\BelongsToTenants;
 
 class OrganisationSetting extends ApiModel
@@ -51,5 +52,9 @@ class OrganisationSetting extends ApiModel
 
     public function organisationSettingType() {
         return $this->belongsTo(OrganisationSettingType::class);
+    }
+
+    public function scopeAutoBirthdaySetting(Builder $builder): Builder {
+        return $builder->where(['organisation_setting_type_id' => 12, 'value' => 1]);
     }
 }

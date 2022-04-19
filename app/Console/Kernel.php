@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\Sms\ScheduleBirthdayMessages;
 use App\Jobs\Sms\ScheduleBroadcasts;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -26,6 +27,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call( new ScheduleBroadcasts )->everyMinute();
+        $schedule->call( new ScheduleBirthdayMessages )->daily();
 
         $schedule->command('activitylog:clean')->quarterly();
     }

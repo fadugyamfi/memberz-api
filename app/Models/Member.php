@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use App\Traits\HasCakephpTimestamps;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
@@ -83,6 +85,16 @@ class Member extends ApiModel
 
     public function getAgeAttribute() {
         return $this->dob ? now()->diff($this->dob)->y : null;
+    }
+
+    public function scopeActive(Builder $builder) : Builder {
+        return $builder->where('active', 1);
+    }
+
+    public function scopeMembersBirthdayToday(Builder $builder, array $member_ids = []) : Builder {
+        return $builder->whereIn('id', $member_ids)
+            ->whereMonth('dob', '=', Carbon::now()->format('m'))
+            ->whereDay('dob', '=', Carbon::now()->format('d'));
     }
 
     public function getActivitylogOptions(): LogOptions
