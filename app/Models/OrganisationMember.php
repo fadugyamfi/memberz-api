@@ -69,7 +69,7 @@ class OrganisationMember extends ApiModel
         return $query->where('organisation_id', $organisaiton_id)->active()->approved()->get()->pluck('member_id')->all();
     }
 
-    public function scopeMembersCelebratingBirthdayToday(Builder $builder, $organisation_id) : Builder {
+    public function scopeBirthdayCelebrants(Builder $builder, $organisation_id) : Builder {
         return $builder->active()->approved()
            ->join('members', 'members.id', '=', 'organisation_member.member_id')
            ->where('organisation_member.organisation_id', $organisation_id)

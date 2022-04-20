@@ -46,7 +46,7 @@ class ScheduleBirthMessages extends Command
             ->all();
         
         foreach($organisation_ids as $organisation_id) {
-            $membersBirthdayToday = OrganisationMember::membersCelebratingBirthdayToday($organisation_id)->get();
+            $membersBirthdayToday = OrganisationMember::birthdayCelebrants($organisation_id)->get();
 
             $membersBirthdayToday->each(function($member) use ($organisation_id) {
                 $smsAccount = SmsAccount::activeAccount($organisation_id)->first();
@@ -55,11 +55,12 @@ class ScheduleBirthMessages extends Command
                 // create an instant message which will be scheduled for sending in the SmsAccountMessageObserver
                 SmsAccountMessage::create([
                     'module_sms_account_id' => $smsAccount->id,
-                    'organisation_id' => $$organisation_id,
+                    'organisation_id' => $organisation_id,
                     'member_id' => $member->id,
                     'to' => $member->mobile_number,
                     'message' => $message,
                     'sender_id' => $smsAccount->sender_id,
+                    'bday_msg' => true
                 ]);
             });
         }
