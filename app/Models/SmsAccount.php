@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use App\Traits\HasCakephpTimestamps;
+use Illuminate\Database\Eloquent\Builder;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
@@ -54,6 +55,10 @@ class SmsAccount extends ApiModel
 
     public static function getAccount($organisation_id) {
         return self::where('organisation_id', $organisation_id)->first();
+    }
+
+    public function scopeActiveAccount(Builder $builder, $organisation_id) : Builder {
+        return $builder->where('organisation_id', $organisation_id)->where('active', 1);
     }
 
     public function getAvailableCreditAttribute() {

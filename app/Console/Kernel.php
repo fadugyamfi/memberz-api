@@ -27,8 +27,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call( new ScheduleBroadcasts )->everyMinute();
-        $schedule->call( new ScheduleBirthdayMessages )->daily();
 
+        $schedule->command('sms:schedule-birthday-messages')->dailyAt("00:00");
         $schedule->command('activitylog:clean')->quarterly();
     }
 

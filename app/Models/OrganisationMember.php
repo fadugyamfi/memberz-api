@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use App\Traits\HasCakephpTimestamps;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -67,6 +68,15 @@ class OrganisationMember extends ApiModel
     public function scopeMemberIds(Builder $query, int $organisaiton_id) {
         return $query->where('organisation_id', $organisaiton_id)->active()->approved()->get()->pluck('member_id')->all();
     }
+
+    public function scopeMembersCelebratingBirthdayToday(Builder $builder, $organisation_id) : Builder {
+        return $builder->active()->approved()
+           ->join('members', 'members.id', '=', 'organisation_member.member_id')
+           ->where('organisation_member.organisation_id', $organisation_id)
+           ->whereMonth('dob', '=', Carbon::now()->format('m'))
+           ->whereDay('dob', '=', Carbon::now()->format('d'))
+           ->select('members.*');
+     }
 
     public function scopeNotInMemberIds(Builder $query, array $memberIds) : Builder {
         return $query->whereNotIn('member_id', $memberIds);

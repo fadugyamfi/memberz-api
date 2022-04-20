@@ -54,7 +54,17 @@ class OrganisationSetting extends ApiModel
         return $this->belongsTo(OrganisationSettingType::class);
     }
 
-    public function scopeAutoBirthdaySetting(Builder $builder): Builder {
+    public function scopeAutoBirthdayMessagingEnabled(Builder $builder): Builder {
         return $builder->where(['organisation_setting_type_id' => 12, 'value' => 1]);
+    }
+
+    public function scopeBirthdayMessage(Builder $builder, $organisation_id): string {
+        $birthdayMessage =  $builder->where(['organisation_setting_type_id' => 13, 'organisation_id' => $organisation_id])->get();
+        if (!$birthdayMessage->value){
+            $org = Organisation::where('id', $organisation_id)->first();
+            return "{$org->name} wishes you a very happy birthday.";
+        }
+
+        return $birthdayMessage->value;
     }
 }

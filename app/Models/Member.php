@@ -91,12 +91,6 @@ class Member extends ApiModel
         return $builder->where('active', 1);
     }
 
-    public function scopeMembersBirthdayToday(Builder $builder, array $member_ids = []) : Builder {
-        return $builder->whereIn('id', $member_ids)
-            ->whereMonth('dob', '=', Carbon::now()->format('m'))
-            ->whereDay('dob', '=', Carbon::now()->format('d'));
-    }
-
     public function getActivitylogOptions(): LogOptions
     {
         $member = $this;
