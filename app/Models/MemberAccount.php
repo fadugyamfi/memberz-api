@@ -186,7 +186,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     /**
      * Check if require email verification is on/off
      */
-    public function isEmailTwofaRequired()
+    public function isTwoFARequired()
     {
         return $this->email_2fa == 1;
     }

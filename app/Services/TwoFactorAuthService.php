@@ -5,13 +5,14 @@ namespace App\Services;
 use App\Mail\Twofa;
 use App\Models\MemberAccount;
 use App\Models\MemberAccountCode;
-use Illuminate\Support\Facades\Log;
+use App\Models\SmsAccount;
+use App\Models\SmsAccountMessage;
 use Illuminate\Support\Facades\Mail;
 
 class TwoFactorAuthService {
 
     public function handle(MemberAccount $account) {
-        $this->emailTwoFa($account);
+        $this->handleTwoFa($account);
     }
 
     public function generateCode(MemberAccount $account) {
@@ -29,22 +30,54 @@ class TwoFactorAuthService {
     /**
      * Create or Update E-mail verification code and send code to email
      */
-    public function emailTwoFa(MemberAccount $account)
+    public function handleTwoFa(MemberAccount $account): void
     {
         $code = $this->generateCode($account);
 
-        Mail::to($account->username)->queue(new Twofa($code));
-
-        $this->log2FACodeSent($account);
+        if (filter_var(request()->username, FILTER_VALIDATE_EMAIL)) {
+            Mail::to($account->username)->queue(new Twofa($code));
+            $this->log2FACodeSent($account);
+        } else {
+            $this->sendTwoFaSsmsCode($account, $code);
+            $this->log2FACodeSent($account, 'phone');
+        }
+        
     }
 
-    public function log2FACodeSent(MemberAccount $account) {
+
+    /**
+     * Send 2FA code via sms
+     */
+    public function sendTwoFaSsmsCode(MemberAccount $account, string $code): void {
+        $memberzSmsAccountId = 1;
+        $smsAccount = SmsAccount::find( $memberzSmsAccountId);
+        
+        SmsAccountMessage::create([
+            'module_sms_account_id' => $memberzSmsAccountId,
+            'organisation_id' => $smsAccount->organisation_id,
+            'member_id' => $account->id,
+            'to' => $account->mobile_number,
+            'message' => __("[Memberz.org] Your login verfication code is {$code}."),
+            'sender_id' => $smsAccount->sender_id
+        ]);
+
+    }
+
+    public function log2FACodeSent(MemberAccount $account, $type = 'email') {
+
+        $log = [];
+        if ($type == 'email'){
+            $log['email'] = $account->username;
+        } else {
+            $log['mobile_number'] = $account->mobile_number;
+        }
+
         activity()
             ->inLog("Auth")
             ->causedBy($account)
             ->performedOn($account)
             ->event('2FA')
-            ->log(__("2FA code sent to :email", ['email' => $account->username]));
+            ->log(__("2FA code sent to :address", $log));
     }
 
     public function isTwoFaEnabled(MemberAccount $account) : bool{
@@ -53,7 +86,6 @@ class TwoFactorAuthService {
 
     public function isValid(string $code, MemberAccount $account){
         $memberAccountCode = $account->memberAccountCode;
-
         return $code == $memberAccountCode->code && $memberAccountCode->expires_at > now();
     }
 }
