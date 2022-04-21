@@ -38,7 +38,7 @@ class TwoFactorAuthService {
             Mail::to($account->username)->queue(new Twofa($code));
             $this->log2FACodeSent($account);
         } else {
-            $this->sendTwoFaSsmsCode($account, $code);
+            $this->sendTwoFaSmsCode($account, $code);
             $this->log2FACodeSent($account, 'phone');
         }
         
@@ -48,7 +48,7 @@ class TwoFactorAuthService {
     /**
      * Send 2FA code via sms
      */
-    public function sendTwoFaSsmsCode(MemberAccount $account, string $code): void {
+    public function sendTwoFaSmsCode(MemberAccount $account, string $code): void {
         $memberzSmsAccountId = 1;
         $smsAccount = SmsAccount::find( $memberzSmsAccountId);
         
