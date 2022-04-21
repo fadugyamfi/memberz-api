@@ -35,13 +35,21 @@ class TwoFactorAuthService {
         $code = $this->generateCode($account);
 
         if (filter_var(request()->username, FILTER_VALIDATE_EMAIL)) {
-            Mail::to($account->username)->queue(new Twofa($code));
+            $this->sendTwoFaEmailCode($account, $code);
             $this->log2FACodeSent($account);
         } else {
             $this->sendTwoFaSmsCode($account, $code);
             $this->log2FACodeSent($account, 'phone');
         }
         
+    }
+
+
+    /**
+     * Send 2FA code via email
+     */
+    public function sendTwoFaEmailCode(MemberAccount $account, string $code): void {
+        Mail::to($account->username)->queue(new Twofa($code));
     }
 
 
