@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Models\SmsAccount;
 use App\Models\SmsAccountMessage;
 use App\Services\ConnectBindSmsService;
 use Illuminate\Contracts\Queue\ShouldQueue;
