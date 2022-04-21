@@ -55,7 +55,7 @@ class TwoFactorAuthService {
         SmsAccountMessage::create([
             'module_sms_account_id' => $memberzSmsAccountId,
             'organisation_id' => $smsAccount->organisation_id,
-            'member_id' => $account->id,
+            'member_id' => $account->member_id,
             'to' => $account->mobile_number,
             'message' => __("[Memberz.org] Your login verfication code is {$code}."),
             'sender_id' => $smsAccount->sender_id
@@ -65,11 +65,10 @@ class TwoFactorAuthService {
 
     public function log2FACodeSent(MemberAccount $account, $type = 'email') {
 
-        $log = [];
-        if ($type == 'email'){
-            $log['email'] = $account->username;
-        } else {
-            $log['mobile_number'] = $account->mobile_number;
+        $address = $account->username;
+
+        if ($type == 'phone') {
+            $address = $account->mobile_number;
         }
 
         activity()
@@ -77,7 +76,7 @@ class TwoFactorAuthService {
             ->causedBy($account)
             ->performedOn($account)
             ->event('2FA')
-            ->log(__("2FA code sent to :address", $log));
+            ->log(__("2FA code sent to :address", ['address' => $address]));
     }
 
     public function isTwoFaEnabled(MemberAccount $account) : bool{
