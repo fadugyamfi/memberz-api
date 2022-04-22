@@ -7,7 +7,6 @@ use App\Http\Requests\TwoFaCheckRequest;
 use App\Models\MemberAccount;
 use App\Services\AuthLogService;
 use App\Services\TwoFactorAuthService;
-use Log;
 
 /**
  * @group Auth
@@ -63,8 +62,7 @@ class AuthController extends Controller
                 $username = $memberAccount->username;
             }
         }
-        
-        Log::info($username);
+
         return ['username' => $username, 'password' => $request->password, 'active' => 1];
     }
 
