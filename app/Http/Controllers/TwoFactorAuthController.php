@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TwoFaCheckRequest;
+use App\Http\Requests\TwoFASendCodeRequest;
 use App\Services\TwoFactorAuthService;
 
 /**
@@ -15,10 +16,15 @@ class TwoFactorAuthController extends Controller
     /**
      * 2FA - Send Code
      */
-    public function sendCode(){
+    public function sendCode(TwoFASendCodeRequest $request){
         $code = $this->twofaService->generateCode(auth()->user());
-        $this->twofaService->sendTwoFaEmailCode(auth()->user(), $code);
         
+        if ($request->verification_type == 'email') {
+            $this->twofaService->sendTwoFaEmailCode(auth()->user(), $code);
+        } else if ($request->verification_type == 'mobile_number'){
+            $this->twofaService->sendTwoFaSmsCode(auth()->user(), $code);
+        }
+
         return response()->json(["status" => "success", "message" => "2FA code sent"]);
     }
 
