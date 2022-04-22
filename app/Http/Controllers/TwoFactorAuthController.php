@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TwoFaCheckRequest;
-use App\Models\MemberAccount;
+use App\Http\Requests\TwoFASendCodeRequest;
 use App\Services\TwoFactorAuthService;
 
 /**
@@ -16,8 +16,14 @@ class TwoFactorAuthController extends Controller
     /**
      * 2FA - Send Code
      */
-    public function sendCode(){
-        $this->twofaService->emailTwoFa(auth()->user());
+    public function sendCode(TwoFASendCodeRequest $request){
+        $code = $this->twofaService->generateCode(auth()->user());
+        
+        if ($request->verification_type == 'email') {
+            $this->twofaService->sendTwoFaEmailCode(auth()->user(), $code);
+        } else if ($request->verification_type == 'mobile_number'){
+            $this->twofaService->sendTwoFaSmsCode(auth()->user(), $code);
+        }
 
         return response()->json(["status" => "success", "message" => "2FA code sent"]);
     }
@@ -32,7 +38,7 @@ class TwoFactorAuthController extends Controller
 
         auth()->user()->update([ 'email_2fa' => true ]);
 
-        return response()->json(["status" => "success", "message" => __("E-Mail verifidation enabled")]);
+        return response()->json(["status" => "success", "message" => __("Two Factor Authentication Enabled")]);
     }
 
     /**
@@ -41,6 +47,6 @@ class TwoFactorAuthController extends Controller
     public function disable(){
         auth()->user()->update([ 'email_2fa' => false ]);
 
-        return response()->json(["status" => "success", "message" => __("E-Mail verifidation disabled")]);
+        return response()->json(["status" => "success", "message" => __("Two Factor Authentication Disabled.")]);
     }
 }

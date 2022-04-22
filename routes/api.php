@@ -89,7 +89,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('notifications', 'NotificationController@index');
 
 
-    Route::get('2fa/send-code', 'TwoFactorAuthController@sendCode');
+    Route::post('2fa/send-code', 'TwoFactorAuthController@sendCode');
     Route::post("2fa/enable", 'TwoFactorAuthController@enable');
     Route::post("2fa/disable", 'TwoFactorAuthController@disable');
 
