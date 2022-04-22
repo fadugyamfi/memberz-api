@@ -7,6 +7,7 @@ use App\Mail\MemberRegistrationStatusUpdated;
 use App\Models\OrganisationMember;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class OrganisationMemberObserver
 {
@@ -36,6 +37,7 @@ class OrganisationMemberObserver
      * @return void
      */
     public function creating(OrganisationMember $organisationMember) {
+        $organisationMember->uuid = Str::uuid();
         $this->autoGenerateMembershipNo($organisationMember);
     }
 

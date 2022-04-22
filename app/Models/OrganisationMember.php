@@ -24,7 +24,8 @@ class OrganisationMember extends ApiModel
     protected $guarded = ['id'];
 
     protected $fillable = [
-        'member_id', 'organisation_id', 'organisation_no', 'organisation_member_category_id', 'organisation_registration_form_id', 'status', 'source', 'approved', 'approved_by', 'custom_attributes', 'active'
+        'uuid', 'member_id', 'organisation_id', 'organisation_no', 'organisation_member_category_id', 'organisation_registration_form_id', 'status', 'source',
+        'approved', 'approved_by', 'custom_attributes', 'active'
     ];
 
     protected $casts = ['custom_attributes' => 'array'];

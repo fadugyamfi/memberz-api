@@ -35,6 +35,10 @@ class OrganisationMemberController extends ApiController
         return response()->json(['error' => 'Could not find member record to delete'], 404);
     }
 
+    // public function showByUuid(Request $request, $uuid) {
+    //     $membership = OrganisationMember::where('uuid', $uuid)->first();
+    // }
+
     /**
      * Basic Statistics
      *
