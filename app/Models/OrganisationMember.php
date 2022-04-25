@@ -67,7 +67,7 @@ class OrganisationMember extends ApiModel
     }
 
     public function scopeMemberIds(Builder $query, int $organisaiton_id) {
-        return $query->where('organisation_id', $organisaiton_id)->active()->approved()->get()->pluck('member_id')->all();
+        return $query->where('organisation_members.organisation_id', $organisaiton_id)->active()->approved()->get()->pluck('member_id')->all();
     }
 
     public function scopeBirthdayCelebrants(Builder $builder, $organisation_id) : Builder {
@@ -111,7 +111,10 @@ class OrganisationMember extends ApiModel
      */
     public function buildSearchParams(Request $request, $builder)
     {
-        $this->fillable = array_merge($this->fillable, ['first_name', 'last_name', 'email', 'mobile_number', 'occupation', 'business_name', 'dob', 'marital_status']);
+        $this->fillable = array_merge($this->fillable, [
+            'first_name', 'last_name', 'email', 'mobile_number', 'occupation', 'business_name', 'dob', 'marital_status'
+        ]);
+
         $builder->approved()->active()
             ->join('members', 'members.id', '=', 'organisation_members.member_id')
             ->select('organisation_members.*', DB::raw("FLOOR(DATEDIFF(NOW(), dob) / 365.25) as age"));
@@ -237,5 +240,14 @@ class OrganisationMember extends ApiModel
                     ]);
                 }
             });
+    }
+
+    public function shouldQualifyColumn($column_name)
+    {
+        if( in_array($column_name, ['organisation_id']) ) {
+            return true;
+        }
+
+        return parent::shouldQualifyColumn($column_name);
     }
 }
