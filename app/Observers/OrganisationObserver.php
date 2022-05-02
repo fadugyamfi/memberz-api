@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Models\Contribution;
 use App\Models\ContributionReceiptSetting;
 use App\Models\Currency;
 use App\Models\Organisation;
@@ -10,7 +9,6 @@ use App\Models\OrganisationAccount;
 use App\Models\OrganisationMember;
 use App\Models\OrganisationMemberCategory;
 use App\Models\OrganisationPaymentPlatform;
-use App\Models\PaymentPlatform;
 use App\Services\SubscriptionManagementService;
 use NunoMazer\Samehouse\Facades\Landlord;
 use Ramsey\Uuid\Uuid;
@@ -29,6 +27,10 @@ class OrganisationObserver
         $organisation->generateSlug();
         $organisation->uuid = Uuid::uuid4();
         $organisation->active = 1;
+
+        if( !$organisation->member_account_id && auth()->check() ) {
+            $organisation->member_account_id = auth()->id();
+        }
 
         if( $organisation->country_id ) {
             $organisation->currency_id = Currency::where('country_id', $organisation->country_id)->first()->id;

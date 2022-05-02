@@ -59,6 +59,10 @@ class Organisation extends ApiModel
         return $this->hasMany(OrganisationSubscription::class);
     }
 
+    public function creator() {
+        return $this->belongsTo(MemberAccount::class, 'member_account_id');
+    }
+
     public function activeSubscription() {
         return $this->hasOne(OrganisationSubscription::class)->where(['current' => 1]);
     }

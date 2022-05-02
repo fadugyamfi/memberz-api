@@ -104,7 +104,7 @@ class OrganisationAccount extends ApiModel
 
         return self::create([
             'organisation_id' => $organisation->id,
-            'member_account_id' => auth()->user()->id,
+            'member_account_id' => $organisation->creator->id, // auth()->user()->id,
             'organisation_role_id' => $defaultRole->id,
             'notifications' => 1,
             'weekly_updates' => 1,

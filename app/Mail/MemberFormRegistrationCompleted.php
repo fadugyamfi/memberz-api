@@ -18,7 +18,7 @@ class MemberFormRegistrationCompleted extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(public OrganisationMember $organisationMember)
+    public function __construct(public OrganisationMember $membership)
     {
         //
     }
@@ -30,8 +30,8 @@ class MemberFormRegistrationCompleted extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        $organisation_name = $this->organisationMember->organisation->name;
-        $member_name = $this->organisationMember->member->first_name;
+        $organisation_name = $this->membership->organisation->name;
+        $member_name = $this->membership->member->first_name;
 
         return $this->markdown('emails.users.memberformregistrationcompleted', compact('organisation_name', 'member_name'));
     }

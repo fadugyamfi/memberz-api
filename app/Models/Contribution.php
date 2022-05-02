@@ -84,7 +84,7 @@ class Contribution extends ApiModel
         return $query->where('active', 1);
     }
 
-    public static function getLatestYears() : Builder {
+    public static function getLatestYears() {
         return self::select('year')->distinct()->latest('year');
     }
 

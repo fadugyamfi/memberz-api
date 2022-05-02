@@ -15,46 +15,46 @@ class OrganisationMemberObserver
     /**
      * Auto generate a membership ID for the membership
      */
-    public function autoGenerateMembershipNo(OrganisationMember $organisationMember) {
-        if( !$organisationMember->approved ) {
+    public function autoGenerateMembershipNo(OrganisationMember $membership) {
+        if( !$membership->approved ) {
             return;
         }
 
-        $organisationMember->generateMembershipNo();
+        $membership->generateMembershipNo();
     }
 
     /**
      * Incremember the counter for membership IDs on the category for the membership
      */
-    public function incrementMembershipIDCounter(OrganisationMember $organisationMember) {
-        $organisationMember->organisationMemberCategory->incrementIdCounter();
+    public function incrementMembershipIDCounter(OrganisationMember $membership) {
+        $membership->organisationMemberCategory->incrementIdCounter();
     }
 
     /**
      * Handle the organisation member "creating" event.
      *
-     * @param  \App\Models\OrganisationMember  $organisationMember
+     * @param  \App\Models\OrganisationMember  $membership
      * @return void
      */
-    public function creating(OrganisationMember $organisationMember) {
-        $organisationMember->uuid = Str::uuid();
-        $this->autoGenerateMembershipNo($organisationMember);
+    public function creating(OrganisationMember $membership) {
+        $membership->uuid = Str::uuid();
+        $this->autoGenerateMembershipNo($membership);
     }
 
     /**
      * Handle the organisation member "created" event.
      *
-     * @param  \App\Models\OrganisationMember  $organisationMember
+     * @param  \App\Models\OrganisationMember  $membership
      * @return void
      */
-    public function created(OrganisationMember $organisationMember)
+    public function created(OrganisationMember $membership)
     {
-        if( $organisationMember->isDirty('organisation_no') ) {
-            $this->incrementMembershipIDCounter($organisationMember);
+        if( $membership->isDirty('organisation_no') ) {
+            $this->incrementMembershipIDCounter($membership);
         }
 
-        if( $organisationMember->source == 'registration' && $organisationMember->member->email ) {
-            Mail::to($organisationMember->member->email)->send(new MemberFormRegistrationCompleted($organisationMember));
+        if( $membership->source == 'registration' && $membership->member->email ) {
+            Mail::to($membership->member->email)->send(new MemberFormRegistrationCompleted($membership));
         }
     }
 
@@ -62,17 +62,17 @@ class OrganisationMemberObserver
     /**
      * Handle the organisation member "updating" event.
      *
-     * @param  \App\Models\OrganisationMember  $organisationMember
+     * @param  \App\Models\OrganisationMember  $membership
      * @return void
      */
-    public function updating(OrganisationMember $organisationMember)
+    public function updating(OrganisationMember $membership)
     {
-        if( $organisationMember->isDirty('approved') && $organisationMember->approved == 1 ) {
-            $this->autoGenerateMembershipNo($organisationMember);
+        if( $membership->isDirty('approved') && $membership->approved == 1 ) {
+            $this->autoGenerateMembershipNo($membership);
 
             // we update the counter immediately after auto generating the number in the case of an update
             // since we can't determine if an update to the organisation_no was manual or auto generated.
-            $this->incrementMembershipIDCounter($organisationMember);
+            $this->incrementMembershipIDCounter($membership);
         }
     }
 
@@ -80,21 +80,21 @@ class OrganisationMemberObserver
     /**
      * Handle the organisation member "updated" event.
      *
-     * @param  \App\Models\OrganisationMember  $organisationMember
+     * @param  \App\Models\OrganisationMember  $membership
      * @return void
      */
-    public function updated(OrganisationMember $organisationMember)
+    public function updated(OrganisationMember $membership)
     {
-        $this->notifyRegistrationUpdate($organisationMember);
+        $this->notifyRegistrationUpdate($membership);
     }
 
-    private function notifyRegistrationUpdate(OrganisationMember $organisationMember) {
-        $registrationApproved = $organisationMember->isDirty('approved') && $organisationMember->approved == 1 && $organisationMember->active == 1;
-        $registrationRejected = $organisationMember->isDirty('active') && $organisationMember->approved == 0 && $organisationMember->active == 0;
-        $membershipDeleted = $organisationMember->isDirty('active') && $organisationMember->approved == 1 && $organisationMember->active == 0;
+    private function notifyRegistrationUpdate(OrganisationMember $membership) {
+        $registrationApproved = $membership->isDirty('approved') && $membership->approved == 1 && $membership->active == 1;
+        $registrationRejected = $membership->isDirty('active') && $membership->approved == 0 && $membership->active == 0;
+        $membershipDeleted = $membership->isDirty('active') && $membership->approved == 1 && $membership->active == 0;
 
-        if( ($registrationApproved|| $registrationRejected) && $organisationMember->member->email ) {
-            Mail::to($organisationMember->member->email)->send(new MemberRegistrationStatusUpdated($organisationMember));
+        if( ($registrationApproved|| $registrationRejected) && $membership->member->email ) {
+            Mail::to($membership->member->email)->send(new MemberRegistrationStatusUpdated($membership));
         }
 
         // TODO: Notify membership deleted

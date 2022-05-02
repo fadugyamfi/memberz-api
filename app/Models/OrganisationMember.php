@@ -199,7 +199,7 @@ class OrganisationMember extends ApiModel
     public static function createDefaultMember(Organisation $organisation, OrganisationMemberCategory $category, OrganisationAccount $defaultAccount) {
         return self::create([
             'organisation_id' => $organisation->id,
-            'member_id' => auth()->user()->member_id,
+            'member_id' => $organisation->creator->member_id, // auth()->user()->member_id,
             'organisation_member_category_id' => $category->id,
             'approved' => 1,
             'approved_by' => $defaultAccount->id,
