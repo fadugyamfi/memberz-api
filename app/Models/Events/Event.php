@@ -9,6 +9,7 @@ use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Carbon\Carbon;
 use NunoMazer\Samehouse\BelongsToTenants;
+use Spatie\Activitylog\LogOptions;
 
 class Event extends ApiModel
 {
@@ -72,5 +73,34 @@ class Event extends ApiModel
 
     public function reminders() {
         return $this->hasMany(EventReminder::class, 'organisation_event_id');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $sessions = $this->sessions;
+        $event = $this;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("events")
+            ->setDescriptionForEvent(function(string $eventName) use($event) {
+                if( $eventName == 'created' ) {
+                    return __("Created event :event_name", [
+                        "event_name" => $event->event_name
+                    ]);
+                }
+
+                if( $eventName == 'updated' ) {
+                    return __("Updated event :event_name", [
+                        "event_name" => $event->event_name
+                    ]);
+                }
+
+                if( $eventName == 'deleted' ) {
+                    return __("Delete event :event_name", [
+                        "event_name" => $event->event_name
+                    ]);
+                }
+            });
     }
 }

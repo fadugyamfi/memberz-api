@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PaymentPlatformRequest;
 use App\Models\PaymentPlatform;
-// use App\Http\Resources\PaymentPlatformResource;
+use App\Http\Resources\PaymentPlatformResource;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
 /**

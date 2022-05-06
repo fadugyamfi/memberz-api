@@ -13,11 +13,12 @@ use Illuminate\Http\Request;
 use Landlord;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Schema;
+use Spatie\Activitylog\LogOptions;
 
 class EventAttendee extends ApiModel
 {
 
-    use BelongsToTenants, HasCakephpTimestamps, LogModelActivity, SoftDeletesWithDeletedFlag;
+    use BelongsToTenants, HasCakephpTimestamps, LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -73,5 +74,33 @@ class EventAttendee extends ApiModel
 
     public function membership() {
         return $this->hasOne(OrganisationMember::class, 'member_id', 'member_id')->where(['active' => 1, 'approved' => 1]);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $member = $this->member;
+        $session = $this->session;
+        $event = $this->event;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("events")
+            ->setDescriptionForEvent(function(string $eventName) use($member, $session, $event) {
+                if( $eventName == 'created' ) {
+                    return __("Marked :name as an attendee to the :session_name session of :event_name event", [
+                        "session_name" => $session->session_name,
+                        "name" => $member->name,
+                        "event_name" => $event->event_name
+                    ]);
+                }
+
+                if( $eventName == 'deleted' ) {
+                    return __("Unmarked :name as an attendee to the :session_name session of :event_name event", [
+                        "session_name" => $session->session_name,
+                        "name" => $member->name,
+                        "event_name" => $event->event_name
+                    ]);
+                }
+            });
     }
 }
