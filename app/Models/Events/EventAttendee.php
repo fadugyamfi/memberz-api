@@ -4,10 +4,15 @@ namespace App\Models\Events;
 
 use App\Models\ApiModel;
 use App\Models\Member;
+use App\Models\OrganisationMember;
 use App\Traits\HasCakephpTimestamps;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithDeletedFlag;
+use DB;
+use Illuminate\Http\Request;
+use Landlord;
 use NunoMazer\Samehouse\BelongsToTenants;
+use Schema;
 
 class EventAttendee extends ApiModel
 {
@@ -64,5 +69,9 @@ class EventAttendee extends ApiModel
 
     public function member() {
         return $this->belongsTo(Member::class);
+    }
+
+    public function membership() {
+        return $this->hasOne(OrganisationMember::class, 'member_id', 'member_id')->where(['active' => 1, 'approved' => 1]);
     }
 }

@@ -126,6 +126,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('organisation_registration_forms', 'OrganisationRegistrationFormController');
         Route::apiResource('organisation_payment_platforms', 'OrganisationPaymentPlatformController');
 
+        Route::get('events/{event}/attendees', 'Events\\EventController@attendees');
         Route::apiResource('calendars', 'Events\\CalendarController');
         Route::apiResource('events', 'Events\\EventController');
         Route::apiResource('event_attendees', 'Events\\EventAttendeeController');

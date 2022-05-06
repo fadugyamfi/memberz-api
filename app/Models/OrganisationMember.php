@@ -42,6 +42,10 @@ class OrganisationMember extends ApiModel
         return $this->belongsTo(OrganisationMemberCategory::class);
     }
 
+    public function category() {
+        return $this->belongsTo(OrganisationMemberCategory::class, 'organisation_member_category_id');
+    }
+
     public function organisationRegistrationForm(){
         return $this->belongsTo(OrganisationRegistrationForm::class);
     }

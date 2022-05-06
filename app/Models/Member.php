@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 class Member extends ApiModel
 {
 
-    use SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity;
+    use HasCakephpTimestamps, LogModelActivity; // SoftDeletesWithActiveFlag,
 
     protected $table = 'members';
 
