@@ -108,6 +108,8 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('organisation_file_imports', 'OrganisationFileImportController');
 
         // Route::get('organisation_members/{uuid}', 'OrganisationMemberController@showByUuid')->whereUuid('uuid');
+        Route::get('organisation_members/birthdays', 'Membership\BirthdayController@index');
+        Route::get('organisation_members/birthdays/summary', 'Membership\BirthdayController@summary');
         Route::apiResource('organisation_members', 'OrganisationMemberController');
 
         Route::apiResource('organisation_member_categories', 'OrganisationMemberCategoryController');
@@ -127,6 +129,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('organisation_payment_platforms', 'OrganisationPaymentPlatformController');
 
         Route::get('events/{event}/attendees', 'Events\\EventController@attendees');
+        Route::get('events/statistics', 'Events\\EventController@attendanceStatistics');
         Route::apiResource('calendars', 'Events\\CalendarController');
         Route::apiResource('events', 'Events\\EventController');
         Route::apiResource('event_attendees', 'Events\\EventAttendeeController');
