@@ -124,11 +124,8 @@ class SmsAccountMessage extends ApiModel
         return $query->select(DB::raw('YEAR(created) as year'))->distinct()->orderBy('year', 'desc');
     }
 
-    public static function createNew(OrganisationMember $membership, string $message) {
-        /**
-         * @var MemberAccount $user
-         */
-        $user = auth()->user();
+    public static function createNew(MemberAccount $user, OrganisationMember $membership, string $message) {
+
         $smsAccount = SmsAccount::getAccount($membership->organisation_id);
 
         if( !$smsAccount ) {

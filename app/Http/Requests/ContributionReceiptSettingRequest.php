@@ -36,7 +36,8 @@ class ContributionReceiptSettingRequest extends ApiRequest
         return [
             'organisation_id' => [
                 'required', 'numeric', 'exists:organisations,id',
-                Rule::unique('module_contribution_receipt_settings', 'organisation_id')->ignore($this->id)
+                // temporarily disable due to bad data. Re-enable after fixing excess duplicated data
+                //  Rule::unique('module_contribution_receipt_settings', 'organisation_id')->ignore($this->id)
             ],
             'receipt_mode' => 'required|string|in:auto,manual',
             'receipt_prefix' => 'nullable|string|max:30',

@@ -115,6 +115,6 @@ class ContributionObserver
             . "Date: " . date('d M, Y', strtotime($receipt->receipt_dt)) . "\n\n"
             . "Thank you!";
 
-        SmsAccountMessage::createNew($contribution->organisationMember, $message);
+        SmsAccountMessage::createNew(auth()->user(), $contribution->organisationMember, $message);
     }
 }

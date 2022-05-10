@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use App\Traits\HasCakephpTimestamps;
+use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithDeletedFlag;
 use LaravelApiBase\Models\ApiModel;
 use NunoMazer\Samehouse\BelongsToTenants;
+use Spatie\Activitylog\LogOptions;
 
 class OrganisationPaymentPlatform extends ApiModel
 {
 
-    use HasCakephpTimestamps, BelongsToTenants, SoftDeletesWithDeletedFlag;
+    use HasCakephpTimestamps, BelongsToTenants, SoftDeletesWithDeletedFlag, LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -77,5 +79,33 @@ class OrganisationPaymentPlatform extends ApiModel
             'currency_id' => $organisation->currency_id,
             'platform_mode' => 'live'
         ]);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $paymentPlatform = $this->paymentPlatform;
+        $organisation = $this->organisation;
+
+        return LogOptions::defaults()
+            ->useLogName('finance')
+            ->logAll()
+            ->setDescriptionForEvent(function($eventName) use($paymentPlatform, $organisation) {
+                $params = [
+                    'platform_name' => $paymentPlatform->name,
+                    'org_name' => $organisation->name
+                ];
+
+                if( $eventName == 'created' ) {
+                    return __("Created payment platform ':platform_name' for :org_name ", $params);
+                }
+
+                if( $eventName == 'updated' ) {
+                    return __("Updated payment platform ':platform_name' for :org_name ", $params);
+                }
+
+                if( $eventName == 'deleted' ) {
+                    return __("Deleted payment platform ':platform_name' for :org_name ", $params);
+                }
+            });
     }
 }

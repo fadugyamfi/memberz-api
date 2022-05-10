@@ -11,7 +11,7 @@ use NunoMazer\Samehouse\Facades\Landlord;
 
 class ContributionSummary extends ApiModel
 {
-    use BelongsToTenants, LogModelActivity, SoftDeletesWithDeletedFlag, HasCakephpTimestamps;
+    use BelongsToTenants, SoftDeletesWithDeletedFlag, HasCakephpTimestamps;
 
     const DELETED_AT = 'deleted';
 

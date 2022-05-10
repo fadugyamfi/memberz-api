@@ -26,7 +26,7 @@ class ContributionReceiptSettingController extends Controller
      * Get Settings
      */
     public function index(Request $request) {
-        $setting = ContributionReceiptSetting::latest()->first();
+        $setting = ContributionReceiptSetting::orderBy('id', 'desc')->first();
 
         if( !$setting ) {
             return response()->json(['message' => 'Settings not configured'], 404);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Organisation;
 use App\Models\OrganisationMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

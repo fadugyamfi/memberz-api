@@ -63,6 +63,7 @@ Route::prefix('organisations/{org_slug}')->middleware('multi-tenant-no-auth')->g
 Route::middleware(['auth:api'])->group(function () {
 
     Route::get('member_accounts/{id}/organisations', 'MemberAccountController@organisations');
+    Route::get('members/{id}/organisations', 'MemberController@organisations');
     Route::post('organisations/{id}/logo', 'OrganisationLogoController@update');
 
     Route::apiResource('banks', 'BankController');
