@@ -94,6 +94,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post("2fa/enable", 'TwoFactorAuthController@enable');
     Route::post("2fa/disable", 'TwoFactorAuthController@disable');
 
+    Route::get('organisation_accounts/{organisation_id}/{member_account_id}', 'OrganisationAccountController@userAccount');
+
     // User must belong to a valid organisation to access the following routes
     Route::middleware('multi-tenant')->group(function () {
         Route::get('organisations/{id}/memberships/statistics', 'OrganisationMemberController@statistics');
@@ -102,8 +104,6 @@ Route::middleware(['auth:api'])->group(function () {
         Route::post('organisation_roles/{id}/permissions', 'OrganisationRoleController@syncPermissions');
         Route::post('organisation_subscriptions/{id}/renew', 'OrganisationSubscriptionController@renew');
         Route::post('organisation_subscriptions/{id}/upgrade', 'OrganisationSubscriptionController@upgrade');
-
-        Route::get('organisation_accounts/{organisation_id}/{member_account_id}', 'OrganisationAccountController@userAccount');
 
         Route::apiResource('organisation_accounts', 'OrganisationAccountController');
         Route::apiResource('organisation_file_imports', 'OrganisationFileImportController');
