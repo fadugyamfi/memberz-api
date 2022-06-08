@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Events\EventAttendee;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use App\Traits\HasCakephpTimestamps;
@@ -48,6 +49,14 @@ class OrganisationMember extends ApiModel
 
     public function organisationRegistrationForm(){
         return $this->belongsTo(OrganisationRegistrationForm::class);
+    }
+
+    public function lastEventAttendance() {
+        return $this->hasOne(EventAttendee::class, 'member_id', 'member_id')->latest();
+    }
+
+    public function lastContribution() {
+        return $this->hasOne(Contribution::class)->latest();
     }
 
     public function scopeInOrganisation($query, $organisaiton_id) {
