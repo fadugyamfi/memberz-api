@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContributionSummaryReportController;
 use App\Http\Controllers\OrganisationPaymentPlatformController;
 use Illuminate\Support\Facades\Route;
 
@@ -157,6 +158,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('contribution_receipts', 'ContributionReceiptController');
         Route::apiResource('contribution_receipt_settings', 'ContributionReceiptSettingController')->only(['index', 'store', 'update']);
 
+        Route::get('contribution_summaries', [ContributionSummaryReportController::class, 'index']);
         Route::get('contribution_summaries/weekly_breakdown', 'ContributionSummaryReportController@breakdownByWeek');
         Route::get('contribution_summaries/totals_by_category', 'ContributionSummaryReportController@totalsByCategory');
         Route::get('contribution_summaries/category_breakdown', 'ContributionSummaryReportController@categoryBreakdown');

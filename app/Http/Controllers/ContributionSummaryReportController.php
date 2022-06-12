@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contribution;
+use App\Models\ContributionReceiptSetting;
 use App\Models\ContributionSummary;
+use App\Models\Currency;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
@@ -11,6 +14,31 @@ use Illuminate\Http\Request;
  */
 class ContributionSummaryReportController extends Controller
 {
+
+    public function index(Request $request) {
+
+        $year = $request->year ?? date('Y');
+        $month = date('m');
+        $week = Carbon::now()->weekOfMonth;
+        $receiptSettings = ContributionReceiptSetting::latest()->first();
+        $currency = $receiptSettings?->defaultCurrency ?? Currency::find(80);
+
+        $baseQuery = ContributionSummary::getByYear($year)->getByCurrencyId($currency->id);
+
+        $yearTotal = $baseQuery->sum('amount');
+        $monthTotal = $baseQuery->getByMonth($month)->sum('amount');
+        $weekTotal = $baseQuery->getByMonth($month)->getByWeek($week)->sum('amount');
+        $todayTotal = ContributionSummary::whereDate('receipt_dt', date('Y-m-d'))->sum('amount');
+
+        return response()->json([
+            'currency' => $currency,
+            'year' => $yearTotal,
+            'month' => $monthTotal,
+            'week' => $weekTotal,
+            'today' => $todayTotal
+        ]);
+    }
+
     /**
      * Report by Weekly Breakdown
      */
@@ -116,8 +144,12 @@ class ContributionSummaryReportController extends Controller
             $month = $request->month;
         }
 
-        return ContributionSummary::getByYear($year)->getByMonth($month)->with('currency', 'contributionType')->selectRaw('module_contribution_type_id, currency_id, sum(amount) as amount')
-            ->groupBy('module_contribution_type_id')->groupBy('currency_id')->orderBy('module_contribution_type_id')
+        return ContributionSummary::getByYear($year)
+            ->getByMonth($month)->with('currency', 'contributionType')
+            ->selectRaw('module_contribution_type_id, currency_id, sum(amount) as amount')
+            ->groupBy('module_contribution_type_id')
+            ->groupBy('currency_id')
+            ->orderBy('module_contribution_type_id')
             ->get()->transform(function ($d) {
             return [
                 'amount' => $d->amount,
