@@ -10,7 +10,9 @@ class OrganisationMemberResource extends ApiResource {
     {
         $data = array_merge(parent::toArray($request), [
             'member' => $this->when($this->member, new MemberResource($this->member)),
-            'organisation_member_category' => $this->organisationMemberCategory
+            'organisation_member_category' => $this->organisationMemberCategory,
+            'last_attendance' => $this->lastEventAttendance,
+            'last_contribution' => $this->lastContribution
         ]);
 
         return $data;

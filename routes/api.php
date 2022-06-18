@@ -1,4 +1,7 @@
 <?php
+
+use App\Http\Controllers\ContributionSummaryReportController;
+use App\Http\Controllers\OrganisationPaymentPlatformController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +22,7 @@ Route::prefix('auth')->group(function () {
     Route::post('register', 'RegisterController');
     Route::post('login', 'AuthController@login');
     Route::get('verify/{token}', 'VerifyEmailController');
+    Route::post('2fa-validate', 'AuthController@twoFaValidate');
 });
 
 /** Authenticated auth routes */
@@ -32,18 +36,36 @@ Route::group([
 });
 
 // System management routes. Disabled temporarily
-// Route::group(['middleware' => ['api'], 'prefix' => 'system'], function ($router) {
-//     Route::post('database/migrate', 'Support\SystemController@migrate');
-//     Route::post('database/rollback', 'Support\SystemController@rollback');
-//     Route::post('database/seed', 'Support\SystemController@seed');
-//     Route::post('cache/routes', 'Support\SystemController@cacheRoutes');
-//     Route::post('cache/config', 'Support\SystemController@cacheConfig');
-//     Route::post('cache/clear', 'Support\SystemController@cacheClear');
-// });
+Route::group(['middleware' => ['api'], 'prefix' => 'system'], function ($router) {
+    Route::get('/settings', 'Support\SystemSettingController@index');
+    // Route::post('database/migrate', 'Support\SystemController@migrate');
+    // Route::post('database/rollback', 'Support\SystemController@rollback');
+    // Route::post('database/seed', 'Support\SystemController@seed');
+    // Route::post('cache/routes', 'Support\SystemController@cacheRoutes');
+    // Route::post('cache/config', 'Support\SystemController@cacheConfig');
+    // Route::post('cache/clear', 'Support\SystemController@cacheClear');
+});
+
+Route::get('organisations/slugs', 'OrganisationController@slugs');
+
+/**
+ * Public organisation routes for fetching data without an authentication token
+ */
+Route::prefix('organisations/{org_slug}')->middleware('multi-tenant-no-auth')->group(function() {
+    Route::get('/', 'OrganisationController@getBySlug')->withoutMiddleware('multi-tenant-no-auth');
+    Route::get('/organisation_registration_forms/{slug}', 'OrganisationRegistrationFormController@getBySlug');
+    Route::post('/members', 'MemberController@store');
+    Route::post('/member_accounts', 'MemberAccountController@store');
+    Route::post('/organisation_members', 'OrganisationMemberController@store');
+    Route::get('/organisation_members/{id}', 'OrganisationMemberController@registrant');
+});
+
 
 Route::middleware(['auth:api'])->group(function () {
 
     Route::get('member_accounts/{id}/organisations', 'MemberAccountController@organisations');
+    Route::get('members/{id}/organisations', 'MemberController@organisations');
+    Route::post('organisations/{id}/logo', 'OrganisationLogoController@update');
 
     Route::apiResource('banks', 'BankController');
     Route::apiResource('countries', 'CountryController');
@@ -56,17 +78,24 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('permissions', 'PermissionController');
     Route::apiResource('organisations', 'OrganisationController');
     Route::apiResource('organisation_types', 'OrganisationTypeController');
+    Route::apiResource('payment_platforms', 'PaymentPlatformController');
 
     Route::apiResource('subscription_types', 'SubscriptionTypeController');
     Route::apiResource('system_settings', 'SystemSettingController');
     Route::apiResource('system_setting_category', 'SystemSettingCategoryController');
     Route::apiResource('transaction_types', 'TransactionTypeController');
 
-
     Route::post('notifications/{id}/mark_read', 'NotificationController@markRead');
     Route::post('notifications/mark_all_read', 'NotificationController@markAllRead');
     Route::get('notifications/unread', 'NotificationController@unread');
     Route::get('notifications', 'NotificationController@index');
+
+
+    Route::post('2fa/send-code', 'TwoFactorAuthController@sendCode');
+    Route::post("2fa/enable", 'TwoFactorAuthController@enable');
+    Route::post("2fa/disable", 'TwoFactorAuthController@disable');
+
+    Route::get('organisation_accounts/{organisation_id}/{member_account_id}', 'OrganisationAccountController@userAccount');
 
     // User must belong to a valid organisation to access the following routes
     Route::middleware('multi-tenant')->group(function () {
@@ -79,7 +108,12 @@ Route::middleware(['auth:api'])->group(function () {
 
         Route::apiResource('organisation_accounts', 'OrganisationAccountController');
         Route::apiResource('organisation_file_imports', 'OrganisationFileImportController');
+
+        // Route::get('organisation_members/{uuid}', 'OrganisationMemberController@showByUuid')->whereUuid('uuid');
+        Route::get('organisation_members/birthdays', 'Membership\BirthdayController@index');
+        Route::get('organisation_members/birthdays/summary', 'Membership\BirthdayController@summary');
         Route::apiResource('organisation_members', 'OrganisationMemberController');
+
         Route::apiResource('organisation_member_categories', 'OrganisationMemberCategoryController');
         Route::apiResource('organisation_member_imports', 'OrganisationMemberImportController');
         Route::apiResource('organisation_invoices', 'OrganisationInvoiceController');
@@ -93,7 +127,19 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('organisation_group_types', 'OrganisationGroupTypeController');
         Route::apiResource('organisation_group_leaders', 'OrganisationGroupLeaderController');
         Route::apiResource('organisation_member_groups', 'OrganisationMemberGroupController');
+        Route::apiResource('organisation_registration_forms', 'OrganisationRegistrationFormController');
+        Route::apiResource('organisation_payment_platforms', 'OrganisationPaymentPlatformController');
 
+        Route::get('events/{event}/attendees', 'Events\\EventController@attendees');
+        Route::get('events/statistics', 'Events\\EventController@attendanceStatistics');
+        Route::apiResource('calendars', 'Events\\CalendarController');
+        Route::apiResource('events', 'Events\\EventController');
+        Route::apiResource('event_attendees', 'Events\\EventAttendeeController');
+        Route::apiResource('event_sessions', 'Events\\EventSessionController');
+        Route::apiResource('event_reminders', 'Events\\EventReminderController');
+        Route::apiResource('event_reminder_broadcasts', 'Events\\EventReminderBroadcastController');
+
+        Route::get('sms/summary', 'Sms\SummaryController');
         Route::apiResource('sms_accounts', 'SmsAccountController');
         Route::apiResource('sms_account_messages', 'SmsAccountMessageController');
         Route::apiResource('sms_account_topups', 'SmsAccountTopupController');
@@ -110,8 +156,9 @@ Route::middleware(['auth:api'])->group(function () {
         Route::apiResource('contributions', 'ContributionController');
 
         Route::apiResource('contribution_receipts', 'ContributionReceiptController');
-        Route::apiResource('contribution_receipt_settings', 'ContributionReceiptSettingController')->only(['index', 'update']);
+        Route::apiResource('contribution_receipt_settings', 'ContributionReceiptSettingController')->only(['index', 'store', 'update']);
 
+        Route::get('contribution_summaries', [ContributionSummaryReportController::class, 'index']);
         Route::get('contribution_summaries/weekly_breakdown', 'ContributionSummaryReportController@breakdownByWeek');
         Route::get('contribution_summaries/totals_by_category', 'ContributionSummaryReportController@totalsByCategory');
         Route::get('contribution_summaries/category_breakdown', 'ContributionSummaryReportController@categoryBreakdown');

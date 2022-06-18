@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
 
 class SmsCredit extends ApiModel
 {
 
-    use SoftDeletesWithActiveFlag;
+    use SoftDeletesWithActiveFlag, HasCakephpTimestamps;
 
 
     /**
@@ -45,4 +46,8 @@ class SmsCredit extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
+
+    public function currency() {
+        return $this->belongsTo(Currency::class);
+    }
 }

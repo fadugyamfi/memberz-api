@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
+use App\Traits\LogModelActivity;
 use NunoMazer\Samehouse\BelongsToTenants;
+use Spatie\Activitylog\LogOptions;
 
 class ContributionType extends ApiModel
 {
-    use BelongsToTenants, SoftDeletesWithActiveFlag;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -61,4 +64,29 @@ class ContributionType extends ApiModel
         return $this->hasMany(Contribution::class, 'module_contribution_type_id');
     }
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        $type = $this;
+
+        return LogOptions::defaults()
+            ->useLogName('finance')
+            ->logAll()
+            ->setDescriptionForEvent(function($eventName) use($type) {
+                $params = [
+                    'type_name' => $type->name
+                ];
+
+                if( $eventName == 'created' ) {
+                    return __("Created contribution type ':type_name' ", $params);
+                }
+
+                if( $eventName == 'updated' ) {
+                    return __("Updated contribution type ':type_name' ", $params);
+                }
+
+                if( $eventName == 'deleted' ) {
+                    return __("Deleted contribution type ':type_name' ", $params);
+                }
+            });
+    }
 }

@@ -3,21 +3,24 @@
 namespace App\Models;
 
 use App\Traits\LogModelActivity;
+use App\Traits\SoftDeletesWithActiveFlag;
 use Spatie\Activitylog\LogOptions;
 
 class MemberRelation extends ApiModel
 {
-    use LogModelActivity;
-
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
+    use LogModelActivity, SoftDeletesWithActiveFlag;
 
     protected $table = 'member_relations';
 
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
+
     protected $fillable = ['member_id', 'name', 'gender', 'dob', 'relation_member_id', 'is_alive', 'member_relation_type_id', 'active'];
+
+    protected $casts = [
+        'dob' => 'datetime:Y-m-d'
+    ];
 
     public function member_relation_type(){
         return $this->belongsTo(MemberRelationType::class);

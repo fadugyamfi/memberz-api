@@ -12,7 +12,8 @@ use LaravelApiBase\Http\Controllers\ApiController;
 class NotificationController extends ApiController
 {
 
-    public function __construct(Notification $notification) {
+    public function __construct(Notification $notification)
+    {
         parent::__construct($notification);
     }
 
@@ -22,28 +23,28 @@ class NotificationController extends ApiController
      * Subscribe to Server Sent Events (SSEs) for real time notification of new notification
      * messages that come through for the logged in user
      */
-    public function subscribe(Request $request, $member_account_id) {
+    public function subscribe(Request $request, $member_account_id)
+    {
 
-        return response()->stream(function() use($member_account_id, $request) {
+        return response()->stream(function () use ($member_account_id, $request) {
 
             $user = MemberAccount::find($member_account_id);
 
-            while(true) {
+            while (true) {
                 $data = null;
                 $data = $user->unsentNotifications()->get();
-    
+
                 echo "retry: 60000\n\n"; // retry connection after 60 seconds
                 echo 'data: ' . json_encode($data) . "\n\n";
                 ob_flush();
                 flush();
                 sleep(5);
-    
+
                 /* update the table rows as sent */
-                if( $data ) {
+                if ($data) {
                     Notification::whereIn('id', $data->pluck('id')->all())->update(['sent' => 1]);
                 }
             }
-
 
         }, 200, [
             'Access-Control-Allow-Origin' => $request->headers->get('origin'),
@@ -60,10 +61,11 @@ class NotificationController extends ApiController
      *
      * Mark a specific notification as read
      */
-    public function markRead(Request $request, $id) {
+    public function markRead(Request $request, $id)
+    {
         $notification = $request->user()->unreadNotifications()->where('id', $id)->first();
 
-        if( $notification ) {
+        if ($notification) {
             $notification->markAsRead();
 
             return response()->json(['message' => 'Notification marked as read']);
@@ -77,7 +79,8 @@ class NotificationController extends ApiController
      *
      * Mark all unread notifications as read
      */
-    public function markAllRead(Request $request) {
+    public function markAllRead(Request $request)
+    {
         $request->user()->unreadNotifications->markAsRead();
 
         return response()->json(['message' => 'Notifications marked as read']);
@@ -86,7 +89,8 @@ class NotificationController extends ApiController
     /**
      * Get Unread
      */
-    public function unread(Request $request) {
+    public function unread(Request $request)
+    {
         $limit = $request->limit ?? 10;
         $notifications = $request->user()->unreadNotifications()->paginate($limit);
 

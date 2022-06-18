@@ -2,14 +2,16 @@
 
 namespace App\Mail;
 
+use App\Models\MemberAccount;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use romanzipp\QueueMonitor\Traits\IsMonitored;
 
-class NewUserRegistered extends Mailable
+class NewUserRegistered extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable, SerializesModels, IsMonitored;
 
     /**
      * Create a new message instance.
@@ -17,7 +19,7 @@ class NewUserRegistered extends Mailable
      * @return void
      */
     public function __construct(
-        public string $token
+        public MemberAccount $memberAccount
     ) {}
 
     /**
@@ -27,6 +29,12 @@ class NewUserRegistered extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.users.created', ['url' => config('app.web_url').'/'. $this->token]);
+        $token = $this->memberAccount->email_verification_token;
+        $member_name = $this->memberAccount->member->first_name;
+
+        return $this->markdown('emails.users.created', [
+            'url' => config('app.web_url') . '/' . $token,
+            'member_name' => $member_name
+        ]);
     }
 }

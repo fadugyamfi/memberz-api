@@ -3,16 +3,20 @@
 namespace App\Models;
 
 use App\Notifications\AdminUserCreated;
+use App\Notifications\InsufficientSmsCredits;
+use App\Notifications\InsufficientSmsCreditsForBroadcast;
 use App\Notifications\OrganisationAccountRoleChanged;
+use App\Notifications\SmsBroadcastScheduled;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithDeletedFlag;
+use App\Traits\HasCakephpTimestamps;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
 class OrganisationAccount extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithDeletedFlag, LogModelActivity;
+    use BelongsToTenants, SoftDeletesWithDeletedFlag, HasCakephpTimestamps, LogModelActivity;
 
     const DELETED_AT = 'deleted';
 
@@ -100,7 +104,7 @@ class OrganisationAccount extends ApiModel
 
         return self::create([
             'organisation_id' => $organisation->id,
-            'member_account_id' => auth()->user()->id,
+            'member_account_id' => $organisation->creator->id, // auth()->user()->id,
             'organisation_role_id' => $defaultRole->id,
             'notifications' => 1,
             'weekly_updates' => 1,
@@ -111,14 +115,27 @@ class OrganisationAccount extends ApiModel
 
     public function sendAccountRoleChangedNotification(): void
     {
-        $member_account = MemberAccount::find($this->member_account_id);
-        $member_account->notify(new OrganisationAccountRoleChanged($this->organisation_role_id, $this->organisation_id));
+        $this->memberAccount?->notify(new OrganisationAccountRoleChanged($this->organisation, $this->organisationRole));
     }
 
     public function sendAccountCreatedNotification(): void
     {
-        $member_account = MemberAccount::find($this->member_account_id);
-        $member_account->notify(new AdminUserCreated($this->organisation_role_id, $this->organisation_id));
+        $this->memberAccount?->notify(new AdminUserCreated($this->organisation, $this->organisationRole));
+    }
+
+    public function notifySmsBroadcastProcessed(SmsBroadcast $broadcast): void
+    {
+        $this->memberAccount?->notify(new SmsBroadcastScheduled($this->organisation, $broadcast));
+    }
+
+    public function notifyInsufficientSmsCredits(): void
+    {
+        $this->memberAccount?->notify(new InsufficientSmsCredits($this->organisation));
+    }
+
+    public function notifyInsufficientSmsCreditsForBroadcast(SmsBroadcast $smsBroadcast): void
+    {
+        $this->memberAccount?->notify(new InsufficientSmsCreditsForBroadcast($this->organisation, $smsBroadcast));
     }
 
     /**

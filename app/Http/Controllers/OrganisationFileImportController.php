@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OrganisationFileImportRequest;
 use App\Http\Resources\OrganisationFileImportResource;
 use App\Models\OrganisationFileImport;
+use Error;
+use Exception;
 use Illuminate\Http\Request;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
@@ -28,7 +30,11 @@ class OrganisationFileImportController extends Controller
      */
     public function store(OrganisationFileImportRequest $request)
     {
-        return $this->apiStore($request);
+        try {
+            return $this->apiStore($request);
+        } catch(Exception | Error $e) {
+            return response()->json(['stack' => $e->getTraceAsString()], 500);
+        }
     }
 
     /**

@@ -2,8 +2,15 @@
 
 namespace App\Models;
 
-class PaymentPlatform extends ApiModel  
+use App\Traits\HasCakephpTimestamps;
+use App\Traits\SoftDeletesWithDeletedFlag;
+
+class PaymentPlatform extends ApiModel
 {
+
+    use HasCakephpTimestamps, SoftDeletesWithDeletedFlag;
+
+    const CASH = 3;
 
     /**
      * The database table used by the model.

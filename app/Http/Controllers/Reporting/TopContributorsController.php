@@ -11,6 +11,9 @@ use App\Models\Contribution;
 class TopContributorsController
 {
 
+    /**
+     * Top Contributors
+     */
     public function __invoke(TopContributorsRequest $request)
     {
         return Contribution::byYear($request->year)

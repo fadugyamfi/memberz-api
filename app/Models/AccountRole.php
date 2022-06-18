@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
-class AccountRole extends ApiModel  
+use App\Traits\HasCakephpTimestamps;
+use App\Traits\SoftDeletesWithActiveFlag;
+
+class AccountRole extends ApiModel
 {
+    use HasCakephpTimestamps, SoftDeletesWithActiveFlag, HasCakephpTimestamps;
+
     /**
      * The database table used by the model.
      *

@@ -14,3 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// TODO: create a support.memberz.org domain and put all the web routes behind
+// an authentication system
+Route::prefix('jobs')->group(function () {
+    Route::queueMonitor();
+});
+
+Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);

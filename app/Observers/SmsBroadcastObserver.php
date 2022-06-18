@@ -14,8 +14,8 @@ class SmsBroadcastObserver
      */
     public function creating(SmsBroadcast $smsBroadcast)
     {
-        $smsBroadcast->scheduled_by = auth()->user()->id;
+        /** @var MemberAccount $user */
+        $user = auth()->user();
+        $smsBroadcast->scheduled_by = $user->tenantAccount->id;
     }
-
-
 }

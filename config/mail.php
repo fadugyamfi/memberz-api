@@ -70,6 +70,12 @@ return [
         'array' => [
             'transport' => 'array',
         ],
+
+        'elastic_email' => [
+            'transport' => 'elasticemail',
+            'key' => env('ELASTIC_KEY'),
+            'account' => env('ELASTIC_ACCOUNT')
+        ],
     ],
 
     /*

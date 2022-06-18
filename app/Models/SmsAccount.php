@@ -4,13 +4,15 @@ namespace App\Models;
 
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
+use Illuminate\Database\Eloquent\Builder;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
 class SmsAccount extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithActiveFlag, LogModelActivity;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -47,9 +49,24 @@ class SmsAccount extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
+    public function organisation() {
+        return $this->belongsTo(Organisation::class);
+    }
 
     public static function getAccount($organisation_id) {
         return self::where('organisation_id', $organisation_id)->first();
+    }
+
+    public function scopeActiveAccount(Builder $builder, $organisation_id) : Builder {
+        return $builder->where('organisation_id', $organisation_id)->where('active', 1);
+    }
+
+    public function getAvailableCreditAttribute() {
+        return intval($this->account_balance) + intval($this->bonus_balance);
+    }
+
+    public function hasCredit() {
+        return $this->available_credit > 0;
     }
 
     public function deductCredit($credit = 1) {
@@ -119,7 +136,7 @@ class SmsAccount extends ApiModel
                  * via background jobs which send the SMS messages. They will continually update the account
                  * balance as messages are sent
                  */
-                if ($eventName == 'updated' && auth()->check()) {
+                if ($eventName == 'updated') {
                     return __("Updated sms account with sender id of \":sender\" for \":org_name\". Account balance: \":account_balance\" ", [
                         "account_balance" => $account_balance,
                         "org_name" => $org,

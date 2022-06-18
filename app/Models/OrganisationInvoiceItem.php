@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithDeletedFlag;
+use App\Traits\HasCakephpTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use LaravelApiBase\Models\ApiModelBehavior;
 use LaravelApiBase\Models\ApiModelInterface;
@@ -10,11 +11,7 @@ use LaravelApiBase\Models\ApiModelInterface;
 class OrganisationInvoiceItem extends Model implements ApiModelInterface
 {
 
-    use SoftDeletesWithDeletedFlag, ApiModelBehavior;
-
-    const CREATED_AT = 'created';
-    const UPDATED_AT = 'modified';
-    const DELETED_AT = 'deleted';
+    use SoftDeletesWithDeletedFlag, HasCakephpTimestamps, ApiModelBehavior;
 
     /**
      * The database table used by the model.
@@ -59,5 +56,9 @@ class OrganisationInvoiceItem extends Model implements ApiModelInterface
     public function organisationInvoice()
     {
         return $this->belongsTo(OrganisationInvoice::class);
+    }
+
+    public function addTotalToInvoice() {
+        $this->organisationInvoice->incrementTotal($this->total);
     }
 }

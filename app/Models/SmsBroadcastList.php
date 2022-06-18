@@ -6,13 +6,14 @@ use App\Scopes\LatestRecordsScope;
 use App\Scopes\SmsAccountScope;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
 class SmsBroadcastList extends ApiModel
 {
 
-    use SoftDeletesWithActiveFlag, LogModelActivity, BelongsToTenants;
+    use SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity, BelongsToTenants;
 
     /**
      * The database table used by the model.
@@ -70,11 +71,7 @@ class SmsBroadcastList extends ApiModel
 
     public function shouldQualifyColumn($column_name)
     {
-        if( in_array($column_name, ['id', 'sender_id']) ) {
-            return true;
-        }
-
-        return parent::shouldQualifyColumn($column_name);
+        return in_array($column_name, ['id', 'sender_id']) ? true : parent::shouldQualifyColumn($column_name);
     }
 
     /**

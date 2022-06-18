@@ -36,10 +36,10 @@ class RegisterRequest extends ApiRequest
     {
         return [
             'first_name' => 'required|min:3|max:30|string',
-            'last_name' => 'required|min:3|max:30|string',
+            'last_name' => 'required|min:3|max:50|string',
             'email' => 'email|required|unique:members',
-            'gender' => 'required|in:male,female',
-            'dob' => 'required|date',
+            'gender' => 'nullable|in:male,female',
+            'dob' => 'nullable|date',
             'mobile_number' => 'required|string|min:6|max:25|unique:members',
             'password' => [
                 'required',

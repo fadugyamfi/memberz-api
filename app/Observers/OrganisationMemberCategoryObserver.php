@@ -17,7 +17,7 @@ class OrganisationMemberCategoryObserver
     /**
      * Handle the organisation member category "creating" event.
      *
-     * @param  \App\OrganisationMemberCategory  $category
+     * @param  \App\Models\OrganisationMemberCategory  $category
      * @return void
      */
     public function creating(OrganisationMemberCategory $category)
@@ -28,7 +28,7 @@ class OrganisationMemberCategoryObserver
     /**
      * Handle the organisation member category "created" event.
      *
-     * @param  \App\OrganisationMemberCategory  $category
+     * @param  \App\Models\OrganisationMemberCategory  $category
      * @return void
      */
     public function created(OrganisationMemberCategory $category)
@@ -39,7 +39,7 @@ class OrganisationMemberCategoryObserver
     /**
      * Handle the organisation member category "updated" event.
      *
-     * @param  \App\OrganisationMemberCategory  $category
+     * @param  \App\Models\OrganisationMemberCategory  $category
      * @return void
      */
     public function updated(OrganisationMemberCategory $category)

@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasCakephpTimestamps;
 use Illuminate\Database\Eloquent\Builder;
 use NunoMazer\Samehouse\BelongsToTenants;
 
 class ContributionReceiptSetting extends ApiModel
 {
 
-    use BelongsToTenants;
+    use BelongsToTenants, HasCakephpTimestamps;
 
 
     /**
@@ -66,5 +67,30 @@ class ContributionReceiptSetting extends ApiModel
 
     public function getDefaultCurrencyCodeAttribute() {
         return $this->currency?->currency_code;
+    }
+
+    public function nextReceiptNo() {
+        return $this->receipt_prefix . $this->receipt_counter . $this->receipt_suffix;
+    }
+
+    public function incrementCounter() {
+        return $this->increment('receipt_counter');
+    }
+
+    /**
+     * @param \App\Models\Organisation $organisation
+     *
+     * @return \App\Models\ContributionReceiptSetting
+     */
+    public static function setup(Organisation $organisation): ContributionReceiptSetting {
+        return self::firstOrCreate([
+            'organisation_id' => $organisation->id
+        ],[
+            'receipt_mode' => 'manual',
+            'receipt_counter' => 1,
+            'default_currency' => $organisation->currency_id,
+            'receipt_prefix' => null,
+            'receipt_postfix' => null,
+        ]);
     }
 }

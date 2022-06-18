@@ -2,17 +2,34 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Database\Eloquent\Builder;
 
 class Notification extends ApiModel
 {
 
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
-    
+    use SoftDeletesWithActiveFlag;
+
+    /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
+
     protected $fillable = [
         'type', 'notifiable_type', 'notifiable_id', 'data', 'read_at', 'notification_type_id', 'organisation_id', 'member_account_id', 'source_id', 'target_id', 'active', 'sent'
     ];
+
+    protected $casts = ['data' => 'array'];
 
     public function scopeActive(Builder $query) {
         $query->where('active', 1);

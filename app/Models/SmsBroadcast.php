@@ -6,12 +6,14 @@ use App\Scopes\LatestRecordsScope;
 use App\Scopes\SmsAccountScope;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
+use App\Traits\PersonalizesSmsMessage;
 use Spatie\Activitylog\LogOptions;
 
 class SmsBroadcast extends ApiModel
 {
 
-    use SoftDeletesWithActiveFlag, LogModelActivity;
+    use SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity, PersonalizesSmsMessage;
 
     /**
      * The database table used by the model.
@@ -73,6 +75,47 @@ class SmsBroadcast extends ApiModel
 
     public function scheduledBy() {
         return $this->belongsTo(OrganisationAccount::class, 'scheduled_by');
+    }
+
+    public function scopeSent($query) {
+        return $query->where('sent', 1);
+    }
+
+    public function scopeUnsent($query) {
+        return $query->where('sent', 0);
+    }
+
+    public function scopeReadyToSend($query) {
+        return $query->where('send_at', '<=', now()->format('Y-m-d H:i:s'));
+    }
+
+    public function scheduler() {
+        return $this->belongsTo(OrganisationAccount::class, 'scheduled_by');
+    }
+
+    public function rescheduleForAnHour() {
+        $this->send_at = now()->addHour();
+        $this->save();
+    }
+
+    public function notifyInsufficientCredits() {
+        $this->scheduler?->notifyInsufficientSmsCreditsForBroadcast($this);
+    }
+
+    public function notifyProcessed() {
+        $this->scheduler?->notifySmsBroadcastProcessed($this);
+    }
+
+    public function getMessagePagesAttribute() {
+        return ceil(strlen($this->message) / 160);
+    }
+
+    public function getSenderIdAttribute() {
+        return $this->smsBroadcastList?->sender_id ?? $this->smsAccount->sender_id;
+    }
+
+    public function getListNameAttribute() {
+        return $this->smsBroadcastList?->name ?? $this->organisationMemberCategory?->name;
     }
 
      /**

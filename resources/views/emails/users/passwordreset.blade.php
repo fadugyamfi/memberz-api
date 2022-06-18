@@ -13,5 +13,5 @@ This password reset link will expire in {{ config('auth.passwords.' . config('au
 If you did not request a password reset, no further action is required.
 
 Thanks,<br>
-{{ config('app.name') }}
+{{ config('mail.from.name') }}
 @endcomponent

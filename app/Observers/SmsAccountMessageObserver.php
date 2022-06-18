@@ -2,60 +2,75 @@
 
 namespace App\Observers;
 
-use App\Models\SmsAccount;
 use App\Models\SmsAccountMessage;
 use App\Services\ConnectBindSmsService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
+use romanzipp\QueueMonitor\Traits\IsMonitored;
 
 class SmsAccountMessageObserver implements ShouldQueue
 {
 
+    use IsMonitored;
+
     protected function processResponse(SmsAccountMessage $smsAccountMessage, $response) {
         $sent = 0;
         $send_status = '';
+        $date = date('Y-m-d H:i:s');
 
-        if( $response['status'] != 'success' ) {
+        if( $response['status'] != 'success' || $response['response_code'] != '1701' || $response['status_code'] != 1 ) {
             // TODO: determine what todo if no credit present
             $sent = -1;
-            $send_status = "Send Failed. Not enough credits available.";
-            Log::debug('Failed to send message to ' .  $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
+            $send_status = "Send Failed. ({$response['response_message']})";
+            Log::debug("Failed to send message to {$smsAccountMessage->to} at {$date}. Error: {$response['response_message']}");
 
             return $smsAccountMessage->updateSentStatus($send_status, $sent);
         }
 
-        if( $response['status_code'] == 1) {
-            $sent = 1;
-            $send_status = 'Sent Successfully';
-            $pages = ceil($smsAccountMessage->message / 160);
-            $smsAccountMessage->smsAccount->deductCredit($pages);
-            Log::debug('Sent message successfully to ' . $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
 
-        } else {
-            $sent = -1;
-            $send_status = "Send Failed. ({$response['last_status']})";
-            Log::debug('Message not sent to ' .  $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
-        }
-
+        $sent = 1;
+        $send_status = 'Sent Successfully';
+        $pages =  $smsAccountMessage->pages;
+        $smsAccountMessage->smsAccount->deductCredit($pages);
         $smsAccountMessage->updateSentStatus($send_status, $sent);
+
+        $this->updateBroadcastSentCounter($smsAccountMessage);
+
+        Log::debug('Sent message successfully to ' . $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
     }
 
     /**
      * Handle the sms account message "created" event.
      *
-     * @param  \App\SmsAccountMessage  $smsAccountMessage
+     * @param  \App\Models\SmsAccountMessage  $smsAccountMessage
      * @return void
      */
     public function created(SmsAccountMessage $smsAccountMessage)
     {
-        $smsService = new ConnectBindSmsService();
-        $response = $smsService->send(
-            $smsAccountMessage->to,
-            $smsAccountMessage->message,
-            $smsAccountMessage->sms_account->sender_id
-        );
+        $obs = $this;
 
-        $this->processResponse($smsAccountMessage, $response);
+        activity()->withoutLogs(function() use($obs, $smsAccountMessage) {
+            $obs->processResponse($smsAccountMessage, $obs->sendSmsMessage($smsAccountMessage));
+        });
     }
 
+    public function sendSmsMessage(SmsAccountMessage $smsAccountMessage) {
+        $smsService = new ConnectBindSmsService();
+
+        return $smsService->send(
+            $smsAccountMessage->to,
+            $smsAccountMessage->message,
+            $smsAccountMessage->sender_id ?? $smsAccountMessage->smsAccount?->sender_id
+        );
+    }
+
+    public function updateBroadcastSentCounter(SmsAccountMessage $smsAccountMessage) {
+        if( !$smsAccountMessage->broadcast ) {
+            return;
+        }
+
+        $smsAccountMessage->broadcast->sent_pages += $smsAccountMessage->pages;
+        $smsAccountMessage->broadcast->sent_count++;
+        $smsAccountMessage->broadcast->save();
+    }
 }

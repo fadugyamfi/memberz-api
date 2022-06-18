@@ -9,14 +9,25 @@ class OrganisationInvoiceObserver
     /**
      * Handle the organisation invoice "created" event.
      *
-     * @param  \App\OrganisationInvoice  $organisationInvoice
+     * @param  \App\Models\OrganisationInvoice  $organisationInvoice
      * @return void
      */
     public function created(OrganisationInvoice $organisationInvoice)
     {
-        if( !$organisationInvoice->hasInvoiceNumber() ) {
-            $organisationInvoice->generateInvoiceNumber();
+        $organisationInvoice->generateInvoiceNumber();
+    }
+
+    public function updated(OrganisationInvoice $organisationInvoice) {
+        if( $organisationInvoice->getOriginal('paid') == 0 && $organisationInvoice->paid == 1 ) {
+            $this->applySmsCreditTopup($organisationInvoice);
         }
     }
 
+    public function applySmsCreditTopup(OrganisationInvoice $invoice) {
+        if( !$invoice->smsAccountTopup ) {
+            return;
+        }
+
+        $invoice->smsAccountTopup->credit();
+    }
 }

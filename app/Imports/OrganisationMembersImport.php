@@ -4,7 +4,6 @@ namespace App\Imports;
 
 use App\Models\Member;
 use App\Models\MemberAccount;
-use App\Models\Organisation;
 use App\Models\OrganisationAccount;
 use App\Models\OrganisationFileImport;
 use App\Models\OrganisationMember;
@@ -13,9 +12,8 @@ use App\Models\OrganisationMemberImport;
 use App\Notifications\MembershipImported;
 use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Queue\SerializesModels;
 use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithEvents;
@@ -24,16 +22,16 @@ use Maatwebsite\Excel\Events\AfterImport;
 use Maatwebsite\Excel\Events\ImportFailed;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Propaganistas\LaravelPhone\PhoneNumber;
+use romanzipp\QueueMonitor\Traits\IsMonitored;
 
 class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkReading, WithEvents, ShouldQueue
 {
 
-    use Importable;
+    use Importable, SerializesModels, IsMonitored;
 
     public function __construct(
         public OrganisationFileImport $fileImport,
-        public MemberAccount $memberAccount,
-        public int $org_id
+        public MemberAccount $memberAccount
     ) {}
 
     public function chunkSize(): int
@@ -138,13 +136,13 @@ class OrganisationMembersImport implements ToModel, WithHeadingRow, WithChunkRea
             AfterImport::class => function(AfterImport $event) {
                 $this->fileImport->import_status = 'completed';
                 $this->fileImport->save();
-                $this->memberAccount->notify(new MembershipImported($this->fileImport->file_name, $this->org_id));
+                $this->memberAccount->notify(new MembershipImported($this->fileImport));
             },
 
             ImportFailed::class => function(ImportFailed $event) {
                 $this->fileImport->import_status = 'failed';
                 $this->fileImport->save();
-                $this->memberAccount->notify(new MembershipImported($this->fileImport->file_name, $this->org_id, 'Failed'));
+                $this->memberAccount->notify(new MembershipImported($this->fileImport, 'Failed'));
             },
         ];
     }

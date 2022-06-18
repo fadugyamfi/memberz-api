@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\HasCakephpTimestamps;
 use App\Traits\LogModelActivity;
+use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Spatie\Activitylog\LogOptions;
 
 class Organisation extends ApiModel
 {
-    use LogModelActivity;
+    use LogModelActivity, HasCakephpTimestamps, SoftDeletesWithActiveFlag;
 
     protected $table = 'organisations';
 
@@ -38,7 +40,7 @@ class Organisation extends ApiModel
     }
 
     public function scopeActive($query) {
-        $query->where('active', 1);
+        return $query->where('active', 1);
     }
 
     public function organisationType() {
@@ -55,6 +57,10 @@ class Organisation extends ApiModel
 
     public function organisationSubscriptions() {
         return $this->hasMany(OrganisationSubscription::class);
+    }
+
+    public function creator() {
+        return $this->belongsTo(MemberAccount::class, 'member_account_id');
     }
 
     public function activeSubscription() {

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Illuminate\Support\Str;
 use Spatie\Activitylog\LogOptions;
@@ -11,7 +12,7 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class OrganisationMemberCategory extends ApiModel
 {
-    use BelongsToTenants, SoftDeletesWithActiveFlag, HasRecursiveRelationships, LogModelActivity;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestamps, HasRecursiveRelationships, LogModelActivity;
 
     public $tenantColumns = ['organisation_id'];
 

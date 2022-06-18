@@ -28,6 +28,10 @@ trait LogModelActivity {
      */
     public function tapActivity(Activity $activity, string $eventName)
     {
+        if( !$this->getTenantOrganisationId() || !isset($_SERVER['REMOTE_ADDR']) ) {
+            return;
+        }
+
         $activity->ip_address = $_SERVER['REMOTE_ADDR'];
         $activity->user_agent = $_SERVER['HTTP_USER_AGENT'];
         $activity->organisation_id = $this->getTenantOrganisationId();

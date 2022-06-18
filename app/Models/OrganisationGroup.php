@@ -4,13 +4,14 @@ namespace App\Models;
 
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
 class OrganisationGroup extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithActiveFlag, LogModelActivity;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -33,6 +34,14 @@ class OrganisationGroup extends ApiModel
 
     public function organisationGroupType(){
         return $this->belongsTo(OrganisationGroupType::class);
+    }
+
+    public function organisationGroupLeaders() {
+        return $this->hasMany(OrganisationGroupLeader::class);
+    }
+
+    public function organisationGroupMembers() {
+        return $this->hasMany(OrganisationMemberGroup::class);
     }
 
     /**

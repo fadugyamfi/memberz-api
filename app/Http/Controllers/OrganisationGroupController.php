@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrganisationGroupRequest;
+use App\Http\Resources\OrganisationGroupResource;
 use App\Models\OrganisationGroup;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
@@ -19,6 +20,7 @@ class OrganisationGroupController extends Controller
     public function __construct(OrganisationGroup $OrganisationGroup)
     {
         $this->setApiModel($OrganisationGroup);
+        $this->setApiResource(OrganisationGroupResource::class);
     }
 
     /**

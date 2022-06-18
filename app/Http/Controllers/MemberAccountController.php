@@ -34,17 +34,22 @@ class MemberAccountController extends ApiController
             return response()->json(['error' => 'Member Account Not Found'], 404);
         }
 
-        $organisationAccountOrgIds = OrganisationAccount::organisationIds($memberAccount->id);
-        $organisationMemberOrgIds = OrganisationMember::organisationIds($memberAccount->member_id);
+        $organisation_ids = $memberAccount->organisationAccounts->pluck('organisation_id');
 
-        $uniqueIds = collect($organisationAccountOrgIds)->merge($organisationMemberOrgIds)->unique()->all();
+        // $organisationAccountOrgIds = OrganisationAccount::organisationIds($memberAccount->id);
+        // $organisationMemberOrgIds = OrganisationMember::organisationIds($memberAccount->member_id);
 
-        $organisations = Organisation::whereIn('id', $uniqueIds)->with([
+        // $uniqueIds = collect($organisationAccountOrgIds)->merge($organisationMemberOrgIds)->unique()->all();
+
+        $organisations = Organisation::whereIn('id', $organisation_ids)->with([
             'activeSubscription' => function($query) {
                 return $query->with(['subscriptionType', 'organisationInvoice.transactionType']);
             },
             'organisationType'
-        ])->orderBy('name', 'asc')->paginate($limit);
+        ])
+        ->withCount(['organisationMembers'])
+        ->orderBy('name', 'asc')
+        ->paginate($limit);
 
         return $this->Resource::collection($organisations);
     }

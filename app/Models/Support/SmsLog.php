@@ -3,6 +3,7 @@
 namespace App\Models\Support;
 
 use App\Traits\SoftDeletesWithDeletedFlag;
+use App\Traits\HasCakephpTimestamps;
 
 class SmsLog extends SupportModel
 {
@@ -49,22 +50,12 @@ class SmsLog extends SupportModel
 
     public static function logMsg($sender_id, $to, $message, $message_id, $status_code) {
 
-        if( is_array($to) ) {
-            foreach($to as $number) {
-                self::create(array(
-                    'sender_id' => $sender_id,
-                    'to' => $number,
-                    'message' => $message,
-                    'message_id' => $message_id,
-                    'status_code' => $status_code
-                ));
-            }
-        }
+        $to = !is_array($to) ? [$to] : $to;
 
-        else {
+        foreach($to as $number) {
             self::create(array(
                 'sender_id' => $sender_id,
-                'to' => $to,
+                'to' => $number,
                 'message' => $message,
                 'message_id' => $message_id,
                 'status_code' => $status_code

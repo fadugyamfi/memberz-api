@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\HasCakephpTimestamps;
+use App\Traits\SoftDeletesWithActiveFlag;
 use Illuminate\Database\Eloquent\Builder;
 
-class NotificationParam extends ApiModel  
+class NotificationParam extends ApiModel
 {
+
+    use HasCakephpTimestamps, SoftDeletesWithActiveFlag;
+
     /**
      * The database table used by the model.
      *

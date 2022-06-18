@@ -4,7 +4,6 @@ namespace App\Observers;
 
 use App\Models\SubscriptionType;
 use App\Models\OrganisationSubscription;
-use Carbon\Carbon;
 use Exception;
 
 class OrganisationSubscriptionObserver
@@ -13,7 +12,7 @@ class OrganisationSubscriptionObserver
     /**
      * Handle the organisation subscription "creating" event.
      *
-     * @param  \App\OrganisationSubscription  $organisationSubscription
+     * @param  \App\Models\OrganisationSubscription  $organisationSubscription
      * @return void
      */
     public function creating(OrganisationSubscription $organisationSubscription)
@@ -34,20 +33,12 @@ class OrganisationSubscriptionObserver
     /**
      * Handle the organisation subscription "created" event.
      *
-     * @param  \App\OrganisationSubscription  $organisationSubscription
+     * @param  \App\Models\OrganisationSubscription  $organisationSubscription
      * @return void
      */
     public function created(OrganisationSubscription $organisationSubscription)
     {
-        OrganisationSubscription::where([
-            'organisation_id' => $organisationSubscription->organisation_id,
-            'current' => 1
-        ])->update([
-            'current' => 0
-        ]);
-
-        $organisationSubscription->current = 1;
-        $organisationSubscription->save();
+        $organisationSubscription->setAsCurrent();
     }
 
 }

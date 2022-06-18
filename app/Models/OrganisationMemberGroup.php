@@ -4,13 +4,15 @@ namespace App\Models;
 
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
+use Illuminate\Http\Request;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
 class OrganisationMemberGroup extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithActiveFlag, LogModelActivity;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity;
 
     /**
      * The database table used by the model.
@@ -58,6 +60,17 @@ class OrganisationMemberGroup extends ApiModel
 
     public function organisationGroup() {
         return $this->belongsTo(OrganisationGroup::class);
+    }
+
+    public function buildSearchParams(Request $request, $builder)
+    {
+        $builder = parent::buildSearchParams($request, $builder);
+
+        // $builder->join('organisation_members', 'organisation_members.id', '=', 'organisation_member_groups.organisation_member_id')
+        //     ->join('members', 'members.id', '=', 'organisation_members.member_id')
+        //     ->orderBy('members.last_name');
+
+        return $builder;
     }
 
     /**

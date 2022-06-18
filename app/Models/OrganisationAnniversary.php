@@ -3,12 +3,17 @@
 namespace App\Models;
 
 use App\Traits\LogModelActivity;
+use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
-class OrganisationAnniversary extends ApiModel  
+class OrganisationAnniversary extends ApiModel
 {
-    use BelongsToTenants, LogModelActivity;
+    use BelongsToTenants, LogModelActivity, SoftDeletesWithActiveFlag, HasCakephpTimestamps;
+
+    public $tenantColumns = ['organisation_id'];
+
     /**
      * The database table used by the model.
      *
@@ -55,6 +60,10 @@ class OrganisationAnniversary extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
+    public function organisationMemberAnniversaries() {
+        return $this->hasMany(OrganisationMemberAnniversary::class);
+    }
+
     /**
      * Format user activities description for organisation account
      * @override
@@ -70,21 +79,21 @@ class OrganisationAnniversary extends ApiModel
                 if ($eventName == 'created') {
                     return __("Created anniversary type \":name\" for \":org\"", [
                         "name" => $anniversary->name,
-                        'org' => $$anniversary->organisation->name,
+                        'org' => $anniversary->organisation->name,
                     ]);
                 }
 
                 if ($eventName == 'updated') {
                     return __("Updated anniversary type \":name\" for \":org\"", [
                         "name" => $anniversary->name,
-                        'org' => $$anniversary->organisation->name,
+                        'org' => $anniversary->organisation->name,
                     ]);
                 }
 
                 if ($eventName == 'deleted') {
                     return __("Deleted anniversary type \":name\" for \":org\"", [
                         "name" => $anniversary->name,
-                        'org' => $$anniversary->organisation->name,
+                        'org' => $anniversary->organisation->name,
                     ]);
                 }
             });

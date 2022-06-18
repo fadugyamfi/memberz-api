@@ -11,6 +11,9 @@ use App\Models\Contribution;
 class IncomeSummaryController
 {
 
+    /**
+     * Income Summary Report
+     */
     public function __invoke(IncomeSummaryRequest $request)
     {
         return Contribution::whereBetween('module_member_contributions.created', [$request->start_date, $request->end_date])

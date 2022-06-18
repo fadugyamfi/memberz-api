@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Channels\MemberzDbNotification;
 use App\Models\NotificationType;
 use App\Models\Organisation;
 use App\Models\OrganisationRole;
@@ -9,7 +10,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class AdminUserCreated extends BaseNotification
+class AdminUserCreated extends BaseNotification implements ShouldQueue
 {
     use Queueable;
 
@@ -19,36 +20,47 @@ class AdminUserCreated extends BaseNotification
      * @return void
      */
     public function __construct(
-        public int $role_id,
-        public int $organisation_id
+        public Organisation $organisation,
+        public OrganisationRole $organisationRole
     ) {}
 
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
+    public function via($notifiable)
     {
-        $organisation = Organisation::find($this->organisation_id)->name;
-        $role = OrganisationRole::find($this->role_id)->name;
-        $notification_type = NotificationType::whereName('organisation_account_access_granted')->first();
-        $this->notification_type_id = $notification_type->id;
-
-        $this->message = $notification_type->template;
-        $this->title = $notification_type->email_subject;
-
-        $this->replace_words_arr = [
-            '{member_name}' =>  $this->getNotifiaBy(),
-            '{org_name}' => $organisation,
-            '{role_name}' => $role
-        ];
-
-        $this->formatMessage();
-
-        return $this->getData();
+        return ['mail', MemberzDbNotification::class];
     }
 
+    public function setupNotification($notifiable) {
+        $this->setNotificationTypeByName('organisation_account_access_granted')
+            ->withParameters([
+                '{member_name}' => $this->getMemberName($notifiable),
+                '{org_name}' => $this->organisation->name,
+                '{role_name}' => $this->role->name
+            ]);
+    }
+
+    public function toArray($notifiable)
+    {
+        $this->setupNotification($notifiable);
+
+        return parent::toArray($notifiable);
+    }
+
+    /**
+     * Get the mail representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
+    public function toMail($notifiable)
+    {
+        $this->setupNotification($notifiable);
+
+        $url = url( config('app.web_url') . '/portal/notifications');
+
+        return (new MailMessage)
+                    ->greeting(__("Hi {$notifiable->member->first_name}"))
+                    ->line($this->getFormattedMessage())
+                    ->action(__('Activate Account'), $url)
+                    ->line(__('Thank you for using our application!'));
+    }
 }

@@ -11,6 +11,9 @@ use App\Models\ContributionSummary;
 class MonthlyConsolidatedReportController
 {
 
+    /**
+     * Monthly Consolidated Report
+     */
     public function __invoke(MonthlyConsolidatedReportRequest $request)
     {
         $byContributionTypes = ContributionSummary::getByCurrencyId($request->currency_id)

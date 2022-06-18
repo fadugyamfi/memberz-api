@@ -4,23 +4,33 @@ namespace App\Models;
 
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Member extends ApiModel
 {
 
-    use SoftDeletesWithActiveFlag, LogModelActivity;
+    use HasCakephpTimestamps, LogModelActivity; // SoftDeletesWithActiveFlag,
 
     protected $table = 'members';
 
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
-    protected $fillable = ['title', 'first_name', 'middle_name', 'last_name', 'gender', 'dob', 'mobile_number', 'email', 'website', 'occupation', 'profession', 'business_name', 'active'];
+
+    protected $fillable = [
+        'title', 'first_name', 'middle_name', 'last_name', 'gender', 'dob', 'mobile_number', 'email', 'website', 'occupation', 'profession', 'business_name', 'active',
+        'nationality', 'place_of_birth', 'address'
+    ];
 
     protected $appends = ['full_name', 'full_name_with_title', 'age'];
 
-    protected $dates = ['dob'];
+    protected $casts = [
+        'dob' => 'datetime:Y-m-d'
+    ];
 
     public function organisationMember()
     {
@@ -47,6 +57,13 @@ class Member extends ApiModel
         return $this->hasOne(MemberImage::class)->latest();
     }
 
+    public function name(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value, $attributes) => $attributes['first_name'] . ' ' . $attributes['last_name'],
+        );
+    }
+
     public function getNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
@@ -67,7 +84,11 @@ class Member extends ApiModel
     }
 
     public function getAgeAttribute() {
-        return now()->diff($this->dob)->y;
+        return $this->dob ? now()->diff($this->dob)->y : null;
+    }
+
+    public function scopeActive(Builder $builder) : Builder {
+        return $builder->where('active', 1);
     }
 
     public function getActivitylogOptions(): LogOptions

@@ -3,23 +3,24 @@
 namespace App\Models;
 
 use App\Mail\PasswordReset;
-use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use App\Traits\HasCakephpTimestamps;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use LaravelApiBase\Models\ApiModelBehavior;
 use LaravelApiBase\Models\ApiModelInterface;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Support\Facades\Password;
+use NunoMazer\Samehouse\Facades\Landlord;
 use Spatie\Activitylog\Traits\CausesActivity;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSubject
 {
-    use Notifiable, ApiModelBehavior, SoftDeletesWithActiveFlag, CausesActivity;
+    use Notifiable, ApiModelBehavior, SoftDeletesWithActiveFlag, HasCakephpTimestamps, CausesActivity;
 
     const DELETED_AT = 'active';
 
@@ -28,7 +29,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
-    protected $fillable = ['member_id', 'username', 'password', 'pass_salt', 'timezone', 'account_type', 'reset_requested', 'active', 'deleted', 'email_verification_token'];
+    protected $fillable = ['member_id', 'username', 'password', 'pass_salt', 'timezone', 'account_type', 'reset_requested', 'active', 'deleted', 'email_verification_token', 'email_2fa', 'mobile_number'];
 
     protected $hidden = ['password', 'pass_salt'];
 
@@ -42,11 +43,22 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         return $this->hasMany(OrganisationAccount::class)->where('organisation_accounts.active', 1);
     }
 
-    public function memberships() {
+    public function tenantAccount() {
+        return $this->hasOne(OrganisationAccount::class)->where('organisation_id', Landlord::getTenants()->first());
+    }
+
+    public function memberships()
+    {
         return $this->member->memberships();
     }
 
-    public function getOrganisationIds() {
+    public function memberAccountCode()
+    {
+        return $this->hasOne(MemberAccountCode::class)->latest();
+    }
+
+    public function getOrganisationIds()
+    {
         $accountIds = $this->organisationAccounts()->get()->pluck('organisation_id');
         $membershipIds = $this->memberships()->select('organisation_id')->get()->pluck('organisation_id');
 
@@ -72,6 +84,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     {
         return [
             'username' => $this->username,
+            'mobile_number' => $this->mobile_number,
             'member_id' => $this->member_id,
             'organisation_ids' => $this->getOrganisationIds(),
         ];
@@ -100,7 +113,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         return $query->where('active', 1);
     }
 
-    public function createTempAccount(int $member_id) : self
+    public function createTempAccount(int $member_id): self
     {
         $existingAccount = self::where('member_id', $member_id)->active()->first();
 
@@ -115,9 +128,10 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
             return false;
         }
 
-        $member_account =  self::create([
+        $member_account = self::create([
             'member_id' => $member_id,
             'username' => $member->email,
+            'mobile_number' => $member->mobile_number,
             'password' => Hash::make(rand(10000, 99999)),
             'active' => 1,
         ]);
@@ -133,6 +147,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         return self::create([
             'member_id' => $input['member_id'],
             'username' => $input['username'],
+            'mobile_number' => $input['mobile_number'],
             'password' => bcrypt($input['password']),
             'email_verification_token' => Str::random(30),
         ]);
@@ -141,7 +156,8 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     /**
      * Send Set password email notification for temporary created accounts
      */
-    public function sendSetPasswordNotification(string $username) : void {
+    public function sendSetPasswordNotification(string $username): void
+    {
         $this->username = $username;
         Password::sendResetLink(['username' => $username]);
     }
@@ -162,8 +178,27 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         Mail::to($this->username)->send(new PasswordReset($token));
     }
 
-    public function unsentNotifications() {
+    public function unsentNotifications()
+    {
         return $this->unreadNotifications()->where('sent', 0);
     }
 
+    /**
+     * Check if require email verification is on/off
+     */
+    public function isTwoFARequired()
+    {
+        return $this->email_2fa == 1;
+    }
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return array|string
+     */
+    public function routeNotificationForMail($notification)
+    {
+        return [$this->username => $this->member->name];
+    }
 }

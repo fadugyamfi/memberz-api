@@ -27,14 +27,15 @@ class RegisterController extends Controller
     {
         $member = (new Member())->store($request);
 
-        $member_account_data = ['member_id' => $member->id, 'username' => $request->email, 'password' => $request->password];
+        $member_account_data = [
+            'member_id' => $member->id, 
+            'username' => $request->email, 
+            'password' => $request->password, 
+            'mobile_number' => $request->mobile_number
+        ];
 
         $member_account = (new MemberAccount)->createAccount($member_account_data);
 
-        $logger->logNewAccountRegistered($member_account);
-
-        Mail::to($member_account->username)->send(new NewUserRegistered($member_account->email_verification_token));
-
-        return response()->json(['message' => 'Successfully created account']);
+        return response()->json(['message' => 'Successfully created account', 'account' => $member_account]);
     }
 }

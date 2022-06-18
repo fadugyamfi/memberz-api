@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateMemberRelationTypes extends Migration
@@ -18,6 +19,12 @@ class CreateMemberRelationTypes extends Migration
             $table->string('name');
             $table->timestamps();
         });
+
+        DB::table('member_relation_types')->insert([
+            ['id' => 1, 'name' => 'Child'],
+            ['id' => 2, 'name' => 'Parent'],
+            ['id' => 3, 'name' => 'Spouse']
+        ]);
     }
 
     /**

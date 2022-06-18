@@ -29,7 +29,7 @@ class LoginRequest extends ApiRequest
     public function rules()
     {
         return [
-            'username' => 'required|email',
+            'username' => 'required',
             'password' => 'required|string'
         ];
     }
@@ -39,7 +39,7 @@ class LoginRequest extends ApiRequest
         return [
             'username' => [
                 'description' => 'An email address to login with',
-                'example' => 'joe@example.com'
+                'example' => 'joe@example.com | 23324095888'
             ],
             'password' => [
                 'description' => "User's password for authentication",

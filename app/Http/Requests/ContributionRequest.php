@@ -59,8 +59,8 @@ class ContributionRequest extends ApiRequest
             'cheque_status' => 'nullable|in:Cleared,Not Cleared',
             'cheque_number' => 'nullable|string|max:11',
             'amount' => 'required|numeric',
-            'receipt_no' => 'required|string|max:50',
-            'receipt_dt' => 'required|date',
+            'receipt_no' => 'nullable|string|max:50',
+            'receipt_dt' => 'nullable|date',
             'active' => 'nullable|boolean'
         ];
     }

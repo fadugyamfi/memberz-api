@@ -29,10 +29,10 @@ class OrganisationGroupTypeRequest extends ApiRequest
     public function rules()
     {
         return [
-            'organisation_type_id' => 'required|numeric|exists:organisation_types,id',
+            'organisation_id' => 'required|numeric|exists:organisations,id',
             'name' => 'required|string',
-            'active' => 'tinyint|nullable'
-
+            'description' => 'nullable|string',
+            'active' => 'tinyint|nullable',
         ];
     }
 

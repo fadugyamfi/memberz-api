@@ -8,7 +8,9 @@ use App\Models\Organisation;
 use App\Models\OrganisationAccount;
 use App\Models\OrganisationMember;
 use App\Models\OrganisationMemberCategory;
+use App\Models\OrganisationPaymentPlatform;
 use App\Services\SubscriptionManagementService;
+use NunoMazer\Samehouse\Facades\Landlord;
 use Ramsey\Uuid\Uuid;
 
 class OrganisationObserver
@@ -26,6 +28,10 @@ class OrganisationObserver
         $organisation->uuid = Uuid::uuid4();
         $organisation->active = 1;
 
+        if( !$organisation->member_account_id && auth()->check() ) {
+            $organisation->member_account_id = auth()->id();
+        }
+
         if( $organisation->country_id ) {
             $organisation->currency_id = Currency::where('country_id', $organisation->country_id)->first()->id;
         }
@@ -39,6 +45,9 @@ class OrganisationObserver
      */
     public function created(Organisation $organisation)
     {
+        Landlord::addTenant($organisation);
+        Landlord::applyTenantScopesToDeferredModels();
+
         $subscriptionTypeId = intval(request('subscription_type_id'));
         $subscriptionLength = intval(request('subscription_length'));
 
@@ -52,23 +61,7 @@ class OrganisationObserver
         OrganisationMember::createDefaultMember($organisation, $category, $account);
 
         // do finance module setup
-        $this->setupContributionReceiptSettings($organisation);
-    }
-
-    /**
-     * @param \App\Models\Organisation $organisation
-     *
-     * @return \App\Models\ContributionReceiptSetting
-     */
-    public function setupContributionReceiptSettings(Organisation $organisation): ContributionReceiptSetting {
-        return ContributionReceiptSetting::firstOrCreate([
-            'organisation_id' => $organisation->id
-        ],[
-            'receipt_mode' => 'manual',
-            'receipt_counter' => 1,
-            'default_currency' => $organisation->currency_id,
-            'receipt_prefix' => null,
-            'receipt_postfix' => null,
-        ]);
+        ContributionReceiptSetting::setup($organisation);
+        OrganisationPaymentPlatform::createSystemGeneratedCashPaymentPlatform($organisation);
     }
 }

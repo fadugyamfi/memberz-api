@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SoftDeletesWithDeletedFlag;
+use App\Traits\HasCakephpTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use LaravelApiBase\Models\ApiModelBehavior;
 use LaravelApiBase\Models\ApiModelInterface;
@@ -11,12 +12,7 @@ use NunoMazer\Samehouse\BelongsToTenants;
 class OrganisationInvoice extends Model implements ApiModelInterface
 {
 
-    use BelongsToTenants, SoftDeletesWithDeletedFlag, ApiModelBehavior;
-
-    // override default soft delete column
-    const CREATED_AT = 'created';
-    const UPDATED_AT = 'modified';
-    const DELETED_AT = 'deleted';
+    use BelongsToTenants, SoftDeletesWithDeletedFlag, HasCakephpTimestamps, ApiModelBehavior;
 
     /**
      * The database table used by the model.
@@ -78,12 +74,18 @@ class OrganisationInvoice extends Model implements ApiModelInterface
         return $this->belongsTo(Currency::class);
     }
 
+    public function smsAccountTopup() {
+        return $this->hasOne(SmsAccountTopup::class, 'organisation_invoice_id');
+    }
+
     public function incrementTotal($amount) {
         $this->total_due += $amount;
         $this->save();
     }
 
     public function generateInvoiceNumber() {
+        if( $this->hasInvoiceNumber() ) return;
+
         $this->invoice_no = $this->organisation_id . str_pad($this->id, 5, '0', STR_PAD_LEFT);
         $this->save();
     }

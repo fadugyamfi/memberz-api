@@ -177,6 +177,8 @@ return [
          */
         LaravelApiBase\Providers\LaravelApiBaseProvider::class,
         NunoMazer\Samehouse\LandlordServiceProvider::class,
+        \FlexFlux\LaravelElasticEmail\LaravelElasticEmailServiceProvider::class,
+        // Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -249,5 +251,5 @@ return [
      * Old API Transposed values
      */
     'old_file_upload_root_directory' => env('OLD_FILES_UPLOADS_DIRECTORY', 'memberz/files'),
-    'old_file_upload_host_server' => env('OLD_FILES_UPLOADS_DIRECTORY', 'http://localhost/')
+    'old_file_upload_host_server' => env('OLD_FILES_UPLOAD_HOST', 'http://localhost/')
 ];
