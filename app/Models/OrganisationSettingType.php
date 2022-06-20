@@ -6,6 +6,7 @@ class OrganisationSettingType extends ApiModel
 {
 
     const AUTO_BIRTHDAY_MESSAGE = 13;
+    const AUTO_BIRTHDAY_TIME = 14;
 
     /**
      * The database table used by the model.
