@@ -5,6 +5,8 @@ namespace App\Models;
 class OrganisationSettingType extends ApiModel
 {
 
+    const AUTO_BIRTHDAY_MESSAGE = 13;
+
     /**
      * The database table used by the model.
      *

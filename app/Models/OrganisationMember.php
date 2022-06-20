@@ -25,8 +25,8 @@ class OrganisationMember extends ApiModel
     protected $guarded = ['id'];
 
     protected $fillable = [
-        'uuid', 'member_id', 'organisation_id', 'organisation_no', 'organisation_member_category_id', 'organisation_registration_form_id', 'status', 'source',
-        'approved', 'approved_by', 'custom_attributes', 'active'
+        'uuid', 'member_id', 'organisation_id', 'organisation_no', 'organisation_member_category_id', 'organisation_registration_form_id',
+        'status', 'source', 'approved', 'approved_by', 'custom_attributes', 'active'
     ];
 
     protected $casts = ['custom_attributes' => 'array'];
@@ -85,8 +85,8 @@ class OrganisationMember extends ApiModel
 
     public function scopeBirthdayCelebrants(Builder $builder, $organisation_id) : Builder {
         return $builder->active()->approved()
-           ->join('members', 'members.id', '=', 'organisation_member.member_id')
-           ->where('organisation_member.organisation_id', $organisation_id)
+           ->join('members', 'members.id', '=', 'organisation_members.member_id')
+           ->where('organisation_members.organisation_id', $organisation_id)
            ->whereMonth('dob', '=', Carbon::now()->format('m'))
            ->whereDay('dob', '=', Carbon::now()->format('d'))
            ->select('members.*');

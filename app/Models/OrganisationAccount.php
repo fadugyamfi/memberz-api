@@ -83,7 +83,7 @@ class OrganisationAccount extends ApiModel
     }
 
     public function getMembershipAttribute() {
-        return OrganisationMember::where('member_id', $this->memberAccount->member_id)->first();
+        return OrganisationMember::where('member_id', $this->memberAccount?->member_id)->first();
     }
 
     /**
