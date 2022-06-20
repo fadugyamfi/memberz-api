@@ -58,8 +58,8 @@ class OrganisationSetting extends ApiModel
         return $builder->where(['organisation_setting_type_id' => 12, 'value' => 1]);
     }
 
-    public function scopeBirthdayMessage(Builder $builder, $organisation_id): string {
-        $birthdayMessage =  $builder->where([
+    public static function getAutomatedBirthdayMessage($organisation_id): string {
+        $birthdayMessage =  self::where([
             'organisation_setting_type_id' => OrganisationSettingType::AUTO_BIRTHDAY_MESSAGE,
             'organisation_id' => $organisation_id
         ])->latest()->first();
@@ -70,5 +70,14 @@ class OrganisationSetting extends ApiModel
         }
 
         return $birthdayMessage->value;
+    }
+
+    public static function getAutomatedBirthdayMessageSendTime($organisation_id): string {
+        $setting =  self::where([
+            'organisation_setting_type_id' => OrganisationSettingType::AUTO_BIRTHDAY_TIME,
+            'organisation_id' => $organisation_id
+        ])->latest()->first();
+
+        return $setting->value ?? "05:00";
     }
 }

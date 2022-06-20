@@ -52,14 +52,15 @@ class ScheduleBirthdayMessages extends Command
             Landlord::applyTenantScopesToDeferredModels();
 
             $smsAccount = SmsAccount::activeAccount($organisation_id)->first();
-            $message = OrganisationSetting::birthdayMessage($organisation_id);
+            $message = OrganisationSetting::getAutomatedBirthdayMessage($organisation_id);
+            $messageTime = OrganisationSetting::getAutomatedBirthdayMessageSendTime($organisation_id);
 
             $membersBirthdayToday = OrganisationMember::birthdayCelebrants($organisation_id)->get();
 
 
-            $membersBirthdayToday->each(function($member) use ($smsAccount, $message) {
-                if( !$member->mobile_number ) {
-                    Log::info("Skipping Birthday Message To Member Without Phone number: {$smsAccount->organisation_id}: {$member->first_name} {$member->last_name}");
+            $membersBirthdayToday->each(function($member) use ($smsAccount, $message, $messageTime) {
+                if( !$member->mobile_number || strlen($member->mobile_number) < 9  ) {
+                    Log::info("Birthday Message: Skipping Empty/Invalid Phone number: {$smsAccount->organisation_id}: {$member->first_name} {$member->last_name}, {$member->mobile_number}");
                     return;
                 }
 
@@ -72,7 +73,7 @@ class ScheduleBirthdayMessages extends Command
                     ->first();
 
                 if( $messagedToday ) {
-                    Log::info("Message already messaged today for their birthday: {$smsAccount->organisation_id}: {$member->first_name} {$member->last_name}");
+                    Log::info("Birthday Message: Already sent/scheduled: {$smsAccount->organisation_id}: {$member->first_name} {$member->last_name}, {$member->mobile_number}");
                     return;
                 }
 
@@ -83,7 +84,8 @@ class ScheduleBirthdayMessages extends Command
                     'to' => $member->mobile_number,
                     'message' => $message,
                     'sender_id' => $smsAccount->sender_id,
-                    'bday_msg' => true
+                    'bday_msg' => true,
+                    'sent_at' => now()->format('Y-m-d') . " ${messageTime}:00"
                 ]);
             });
         }
