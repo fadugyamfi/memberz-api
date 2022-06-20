@@ -59,10 +59,14 @@ class OrganisationSetting extends ApiModel
     }
 
     public function scopeBirthdayMessage(Builder $builder, $organisation_id): string {
-        $birthdayMessage =  $builder->where(['organisation_setting_type_id' => 13, 'organisation_id' => $organisation_id])->get();
-        if (!$birthdayMessage->value){
+        $birthdayMessage =  $builder->where([
+            'organisation_setting_type_id' => OrganisationSettingType::AUTO_BIRTHDAY_MESSAGE,
+            'organisation_id' => $organisation_id
+        ])->latest()->first();
+
+        if (!$birthdayMessage?->value){
             $org = Organisation::where('id', $organisation_id)->first();
-            return "{$org->name} wishes you a very happy birthday.";
+            return __("{$org->name} wishes you a very happy birthday.");
         }
 
         return $birthdayMessage->value;
