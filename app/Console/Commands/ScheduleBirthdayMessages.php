@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Organisation;
 use App\Models\OrganisationMember;
 use App\Models\OrganisationSetting;
 use App\Models\SmsAccount;
@@ -43,14 +44,40 @@ class ScheduleBirthdayMessages extends Command
      */
     public function handle()
     {
+        Log::info("Processing Birthday Messages");
+
         $organisation_ids = OrganisationSetting::autoBirthdayMessagingEnabled()
             ->pluck('organisation_id')
             ->all();
 
         foreach ($organisation_ids as $organisation_id) {
-            Landlord::addTenant('organisation_id', $organisation_id);
+            $organisation = Organisation::find($organisation_id);
+
+            if( !$organisation ) {
+                Log::info("Birthday SMS: NOT ACTIVE - Skipping organisation '{$organisation_id}' ");
+                continue;
+            }
+
+            // apply tenant scopes
+            Landlord::addTenant($organisation);
             Landlord::applyTenantScopesToDeferredModels();
 
+            if( !$organisation->smsAccount ) {
+                Log::info("Birthday SMS: NO SMS ACCOUNT - Skipping '{$organisation->name}.' ");
+                continue;
+            }
+
+            if( !$organisation->smsAccount->hasCredit() ) {
+                Log::info("Birthday SMS: NO CREDIT - Skipping '{$organisation->name}.' ");
+                continue;
+            }
+
+            if( $organisation->activeSubscription->isExpired ) {
+                Log::info("Birthday SMS: SUBSCRIPTION EXPIRED - Skipping '{$organisation->name}.' ");
+                continue;
+            }
+
+            Log::info("Processing Birthdays for {$organisation->name}");
             $this->messageBirthdayCelebrants($organisation_id);
         }
     }
@@ -64,8 +91,10 @@ class ScheduleBirthdayMessages extends Command
         $membersBirthdayToday = OrganisationMember::birthdayCelebrants($organisation_id)->get();
 
         $membersBirthdayToday->each(function ($member) use ($smsAccount, $message, $messageTime) {
+            $profileLog = "{$smsAccount->organisation_id}: {$member->first_name} {$member->last_name}, {$member->mobile_number}";
+
             if (!$member->mobile_number || strlen($member->mobile_number) < 9) {
-                Log::info("Birthday Message: Skipping Empty/Invalid Phone number: {$smsAccount->organisation_id}: {$member->first_name} {$member->last_name}, {$member->mobile_number}");
+                Log::info("Birthday Message: Skipping Empty/Invalid Phone number: {$profileLog}");
                 return;
             }
 
@@ -77,8 +106,10 @@ class ScheduleBirthdayMessages extends Command
                 ])
                 ->first();
 
+
+
             if ($messagedToday) {
-                Log::info("Birthday Message: Already sent/scheduled: {$smsAccount->organisation_id}: {$member->first_name} {$member->last_name}, {$member->mobile_number}");
+                Log::info("Birthday Message: Already sent/scheduled: {$profileLog}");
                 return;
             }
 
@@ -92,6 +123,8 @@ class ScheduleBirthdayMessages extends Command
                 'bday_msg' => true,
                 'sent_at' => now()->format('Y-m-d') . " ${messageTime}:00",
             ]);
+
+            Log::info("Birthday Message: Scheduled: {$profileLog}");
         });
     }
 }

@@ -43,6 +43,10 @@ class Organisation extends ApiModel
         return $query->where('active', 1);
     }
 
+    public function scopeNotTrashed($query) {
+        return $query->where('trashed', 0);
+    }
+
     public function organisationType() {
         return $this->belongsTo(OrganisationType::class);
     }
@@ -65,6 +69,10 @@ class Organisation extends ApiModel
 
     public function activeSubscription() {
         return $this->hasOne(OrganisationSubscription::class)->where(['current' => 1]);
+    }
+
+    public function smsAccount() {
+        return $this->hasOne(SmsAccount::class, 'organisation_id');
     }
 
     public function generateSlug($force = false) {
