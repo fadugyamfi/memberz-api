@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasCakephpTimestamps;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use LaravelApiBase\Models\ApiModelBehavior;
 use LaravelApiBase\Models\ApiModelInterface;
@@ -133,5 +134,9 @@ class OrganisationSubscription extends Model implements ApiModelInterface
 
         $this->current = 1;
         $this->save();
+    }
+
+    public function isExpired(): bool {
+        return $this->end_dt->isBefore(now());
     }
 }

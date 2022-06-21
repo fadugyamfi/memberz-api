@@ -66,7 +66,7 @@ class SmsAccount extends ApiModel
     }
 
     public function hasCredit() {
-        return $this->available_credit > 0;
+        return (intval($this->account_balance) + intval($this->bonus_balance)) > 0;
     }
 
     public function deductCredit($credit = 1) {
