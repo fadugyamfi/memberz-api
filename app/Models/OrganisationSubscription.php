@@ -136,9 +136,7 @@ class OrganisationSubscription extends Model implements ApiModelInterface
         $this->save();
     }
 
-    public function isExpired(): Attribute {
-        return new Attribute(
-            get: fn() => $this->end_dt->isBefore(now())
-        );
+    public function isExpired(): bool {
+        return $this->end_dt->isBefore(now());
     }
 }

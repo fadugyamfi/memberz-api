@@ -72,7 +72,7 @@ class ScheduleBirthdayMessages extends Command
                 continue;
             }
 
-            if( $organisation->activeSubscription->isExpired ) {
+            if( $organisation->activeSubscription->isExpired() ) {
                 Log::info("Birthday SMS: SUBSCRIPTION EXPIRED - Skipping '{$organisation->name}.' ");
                 continue;
             }
