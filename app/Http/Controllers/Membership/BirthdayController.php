@@ -4,12 +4,10 @@ namespace App\Http\Controllers\Membership;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrganisationMemberResource;
-use App\Models\ActivityLog;
 use App\Models\OrganisationMember;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
 /**
  * @group Birthdays
@@ -39,7 +37,7 @@ class BirthdayController extends Controller
 
         // week of year
         if( $request->week ) {
-            $query->where(DB::raw('WEEK(dob)'), $request->day);
+            $query->where(DB::raw('WEEK(dob)'), $request->week);
         }
 
         if( $request->as_count ) {
