@@ -29,7 +29,8 @@ class OrganisationMemberAnniversaryRequest extends ApiRequest
             'organisation_member_id' => 'required|numeric|exists:organisation_members,id',
             'organisation_anniversary_id' => 'required|numeric|exists:organisation_anniversaries,id',
             'value' => 'nullable|date',
-            'active' => 'nullable|boolean'
+            'active' => 'nullable|boolean',
+            'note' => 'nullable'
         ];
     }
 }
