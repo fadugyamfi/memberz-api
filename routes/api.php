@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContributionSummaryReportController;
+use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\OrganisationPaymentPlatformController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +48,7 @@ Route::group(['middleware' => ['api'], 'prefix' => 'system'], function ($router)
 });
 
 Route::get('organisations/slugs', 'OrganisationController@slugs');
+Route::get('organisations/recommended', [OrganisationController::class, 'recommended']);
 
 /**
  * Public organisation routes for fetching data without an authentication token
@@ -80,6 +82,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('organisation_types', 'OrganisationTypeController');
     Route::apiResource('payment_platforms', 'PaymentPlatformController');
 
+    Route::apiResource('organisation_members', 'OrganisationMemberController');
+
     Route::apiResource('subscription_types', 'SubscriptionTypeController');
     Route::apiResource('system_settings', 'SystemSettingController');
     Route::apiResource('system_setting_category', 'SystemSettingCategoryController');
@@ -112,7 +116,7 @@ Route::middleware(['auth:api'])->group(function () {
         // Route::get('organisation_members/{uuid}', 'OrganisationMemberController@showByUuid')->whereUuid('uuid');
         Route::get('organisation_members/birthdays', 'Membership\BirthdayController@index');
         Route::get('organisation_members/birthdays/summary', 'Membership\BirthdayController@summary');
-        Route::apiResource('organisation_members', 'OrganisationMemberController');
+        // Route::apiResource('organisation_members', 'OrganisationMemberController');
 
         Route::apiResource('organisation_member_categories', 'OrganisationMemberCategoryController');
         Route::apiResource('organisation_member_imports', 'OrganisationMemberImportController');

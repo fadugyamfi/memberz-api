@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Mail\PasswordReset;
 use App\Traits\SoftDeletesWithActiveFlag;
 use App\Traits\HasCakephpTimestamps;
+use Exception;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use LaravelApiBase\Models\ApiModelBehavior;
 use LaravelApiBase\Models\ApiModelInterface;
+use Propaganistas\LaravelPhone\PhoneNumber;
 use NunoMazer\Samehouse\Facades\Landlord;
 use Spatie\Activitylog\Traits\CausesActivity;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
@@ -111,6 +113,22 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
     public function scopeActive($query)
     {
         return $query->where('active', 1);
+    }
+
+    public function scopeByUsername($query, $username) {
+        $mobileNumber = $this->phoneNumberToE164($username);
+
+        return $query->where(function($q) use($username, $mobileNumber) {
+            $q->where('username', $username)->orWhere('mobile_number', $mobileNumber);
+        });
+    }
+
+    function phoneNumberToE164($phoneNumber, $country = 'GH') {
+        try {
+            return (string) PhoneNumber::make($phoneNumber)->ofCountry($country)->formatE164();
+        } catch(Exception $e) {
+            return $phoneNumber;
+        }
     }
 
     public function createTempAccount(int $member_id): self

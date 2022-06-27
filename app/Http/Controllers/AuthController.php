@@ -7,6 +7,7 @@ use App\Http\Requests\TwoFaCheckRequest;
 use App\Models\MemberAccount;
 use App\Services\AuthLogService;
 use App\Services\TwoFactorAuthService;
+use Log;
 
 /**
  * @group Auth
@@ -128,16 +129,17 @@ class AuthController extends Controller
      */
     public function twoFaValidate(TwoFaCheckRequest $request)
     {
-        $memberAccount = MemberAccount::where('username', $request->username)->where('active', 1)->first();
+        $memberAccount = MemberAccount::byUsername($request->username)->first();
 
         if (!$this->twofaService->isValid($request->code, $memberAccount)) {
             return response()->json(['status' => "error", 'message' => __("Invalid 2FA Code or 2FA Code Expired")], 404);
         }
 
-        $credentials = request(['username', 'password']);
+        $credentials = $this->getLoginCredentials($request);
 
         if (!$token = auth()->attempt($credentials)) {
-            $account = MemberAccount::where('username', $credentials['username'])->where('active', 1)->first();
+            $account = MemberAccount::byUsername($credentials['username'])->first();
+
             $credentials['password'] = md5($credentials['password'] . $account->pass_salt);
             $token = auth()->attempt($credentials);
 

@@ -23,7 +23,7 @@ class OrganisationMemberAnniversary extends ApiModel
      *
      * @var array
      */
-    protected $fillable = ['organisation_id', 'organisation_member_id', 'organisation_anniversary_id', 'value', 'created', 'modified', 'active'];
+    protected $fillable = ['organisation_id', 'organisation_member_id', 'organisation_anniversary_id', 'value', 'note', 'created', 'modified', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.

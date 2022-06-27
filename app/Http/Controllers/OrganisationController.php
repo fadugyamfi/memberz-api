@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OrganisationCreationRequest;
 use App\Http\Requests\OrganisationRequest;
 use App\Http\Resources\OrganisationResource;
+use App\Models\MemberAccount;
 use App\Models\Organisation;
+use DB;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
 /**
@@ -62,5 +64,36 @@ class OrganisationController extends Controller
         $slugs = Organisation::where('active', 1)->select('slug')->get()->pluck('slug');
 
         return response()->json(['data' => $slugs]);
+    }
+
+    /**
+     * Get Recommended Organisations
+     *
+     * Returns a short list of organisations that one can join. Current criteria is to
+     * return the 10 most recently updated organisations with more than 25 members
+     */
+    public function recommended() {
+        /** @var MemberAccount $user */
+        $user = auth()->user();
+
+        $threshold = now()->subDays(365)->format('Y-m-d');
+        $userOrganisationIds = $user->memberships()->get()->pluck('organisation_id');
+
+        $organisations = Organisation::query()
+            ->join('organisation_members', 'organisation_members.organisation_id', '=', 'organisations.id')
+            ->select(
+                'organisations.*',
+                DB::raw('count(organisation_members.id) as membership_count'),
+                DB::raw('max(organisation_members.modified) as recent_membership')
+            )
+            ->whereNotIn('organisation_members.organisation_id', $userOrganisationIds)
+            ->groupBy(DB::raw('organisations.id'))
+            ->having('membership_count', '>', 15)
+            // ->havingRaw(DB::raw("DATE(recent_membership) > '{$threshold}'"))
+            ->limit(10)
+            ->with(['organisationType'])
+            ->get();
+
+        return response()->json($organisations);
     }
 }

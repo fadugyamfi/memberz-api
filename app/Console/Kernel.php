@@ -28,7 +28,10 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call( new ScheduleBroadcasts )->everyMinute();
 
-        $schedule->command('sms:schedule-birthday-messages')->timezone('UTC')->daily();
+        $schedule->command('sms:schedule-birthday-messages')
+            ->daily()
+            ->appendOutputTo(storage_path('logs/birthday-messages.log'));
+
         $schedule->command('activitylog:clean')->quarterly();
     }
 

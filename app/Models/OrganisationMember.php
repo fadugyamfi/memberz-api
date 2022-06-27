@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Events\EventAttendee;
+use App\Scopes\InActiveOrganisationScope;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use App\Traits\HasCakephpTimestamps;
@@ -30,6 +31,16 @@ class OrganisationMember extends ApiModel
     ];
 
     protected $casts = ['custom_attributes' => 'array'];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new InActiveOrganisationScope);
+    }
 
     public function member() {
         return $this->belongsTo(Member::class);
