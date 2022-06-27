@@ -39,7 +39,7 @@ class OrganisationMember extends ApiModel
      */
     protected static function booted()
     {
-        static::addGlobalScope(new InActiveOrganisationScope);
+        // static::addGlobalScope(new InActiveOrganisationScope);
     }
 
     public function member() {

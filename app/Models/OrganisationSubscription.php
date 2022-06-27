@@ -136,7 +136,11 @@ class OrganisationSubscription extends Model implements ApiModelInterface
         $this->save();
     }
 
+    public function isBillable() {
+        return $this->subscriptionType->billing_required == 'yes';
+    }
+
     public function isExpired(): bool {
-        return $this->end_dt->isBefore(now());
+        return $this->isBillable() && $this->end_dt && $this->end_dt->isBefore(now());
     }
 }
