@@ -82,8 +82,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('organisation_types', 'OrganisationTypeController');
     Route::apiResource('payment_platforms', 'PaymentPlatformController');
 
-    Route::apiResource('organisation_members', 'OrganisationMemberController');
-
     Route::apiResource('subscription_types', 'SubscriptionTypeController');
     Route::apiResource('system_settings', 'SystemSettingController');
     Route::apiResource('system_setting_category', 'SystemSettingCategoryController');
@@ -110,6 +108,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::post('organisation_subscriptions/{id}/renew', 'OrganisationSubscriptionController@renew');
         Route::post('organisation_subscriptions/{id}/upgrade', 'OrganisationSubscriptionController@upgrade');
 
+        Route::apiResource('organisation_members', 'OrganisationMemberController');
         Route::apiResource('organisation_accounts', 'OrganisationAccountController');
         Route::apiResource('organisation_file_imports', 'OrganisationFileImportController');
 
