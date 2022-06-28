@@ -6,6 +6,7 @@ use App\Traits\SoftDeletesWithActiveFlag;
 use App\Traits\HasCakephpTimestamps;
 use App\Traits\LogModelActivity;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
@@ -143,5 +144,25 @@ class Contribution extends ApiModel
                     return __("Deleted ':type_name' contribution of :amount with receipt #:receipt_no", $params);
                 }
             });
+    }
+
+    public function buildSearchParams(Request $request, $builder)
+    {
+        /** @var Builder $builder */
+        $builder = parent::buildSearchParams($request, $builder);
+
+        if( $request->receipt_no || $request->receipt_dt ) {
+            $builder->whereHas('contributionReceipt', function(Builder $query) use($request) {
+                if( $request->receipt_dt ) {
+                    $query->where('receipt_dt', $request->receipt_dt);
+                }
+
+                if( $request->receipt_no ) {
+                    $query->where('receipt_no', $request->receipt_no);
+                }
+            });
+        }
+
+        return $builder;
     }
 }

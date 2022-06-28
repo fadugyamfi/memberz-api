@@ -49,11 +49,11 @@ class ContributionObserver
     }
 
     public function updated(Contribution $contribution) {
-        $contribution->contribution_receipt->fill([
+        $contribution->contributionReceipt->fill([
             'receipt_dt' => request()->receipt_dt,
             'receipt_no' => request()->receipt_no
         ]);
-        $contribution->contribution_receipt->save();
+        $contribution->contributionReceipt->save();
     }
 
     private function getSumOfContributionAmount(string $receipt_dt, Contribution $contribution) : float {
