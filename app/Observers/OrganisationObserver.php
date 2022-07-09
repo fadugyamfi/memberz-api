@@ -9,6 +9,7 @@ use App\Models\OrganisationAccount;
 use App\Models\OrganisationMember;
 use App\Models\OrganisationMemberCategory;
 use App\Models\OrganisationPaymentPlatform;
+use App\Models\SubscriptionType;
 use App\Services\SubscriptionManagementService;
 use NunoMazer\Samehouse\Facades\Landlord;
 use Ramsey\Uuid\Uuid;
@@ -51,8 +52,13 @@ class OrganisationObserver
         $subscriptionTypeId = intval(request('subscription_type_id'));
         $subscriptionLength = intval(request('subscription_length'));
 
+        if( !$subscriptionTypeId ) {
+            $subscriptionTypeId = SubscriptionType::freePlan()->first()->id;
+            $subscriptionLength = 12;
+        }
+
         $subscriptionManagementService = new SubscriptionManagementService();
-        $subscriptionManagementService->createNewSubscription($organisation->id, $subscriptionTypeId, $subscriptionLength);
+        $subscriptionManagementService->createNewSubscription($organisation, $subscriptionTypeId, $subscriptionLength);
 
         $account = OrganisationAccount::createDefaultAccount($organisation);
         $account->sendAccountCreatedNotification();

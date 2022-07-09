@@ -5,11 +5,16 @@ namespace App\Models;
 use App\Traits\SoftDeletesWithActiveFlag;
 use App\Traits\HasCakephpTimestamps;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 
 class SubscriptionType extends ApiModel
 {
 
     use SoftDeletesWithActiveFlag, HasCakephpTimestamps;
+
+    const FREE_PLAN_NAME = 'free2';
+    const BASIC_PLAN_NAME = 'sms_pro';
+    const PRO_PLAN_NAME = 'pro2';
 
     /**
      * The database table used by the model.
@@ -69,5 +74,9 @@ class SubscriptionType extends ApiModel
         }
 
         return $end_dt;
+    }
+
+    public function scopeFreePlan(Builder $query) {
+        return $query->where('name', self::FREE_PLAN_NAME);
     }
 }

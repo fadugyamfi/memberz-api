@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ModuleContributionReportParametersTableSeeder::class);
         $this->call(ModuleMenusTableSeeder::class);
         $this->call(PaymentTypesTableSeeder::class);
+        $this->call(PaymentPlatformsTableSeeder::class);
         $this->call(SettingTypesTableSeeder::class);
         $this->call(SubscriptionTypesTableSeeder::class);
         $this->call(SystemSettingCategoriesTableSeeder::class);

@@ -16,13 +16,11 @@ class TwoFactorAuthController extends Controller
     /**
      * 2FA - Send Code
      */
-    public function sendCode(TwoFASendCodeRequest $request){
-        $code = $this->twofaService->generateCode(auth()->user());
-        
+    public function sendCode(TwoFASendCodeRequest $request) {
         if ($request->verification_type == 'email') {
-            $this->twofaService->sendTwoFaEmailCode(auth()->user(), $code);
+            $this->twofaService->handleTwoFactorAuthByEmail(auth()->user());
         } else if ($request->verification_type == 'mobile_number'){
-            $this->twofaService->sendTwoFaSmsCode(auth()->user(), $code);
+            $this->twofaService->handleTwoFactorAuthBySMS(auth()->user());
         }
 
         return response()->json(["status" => "success", "message" => "2FA code sent"]);

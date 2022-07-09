@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Mail\Twofa;
+use App\Mail\TwoFactorAuthNotice;
 use App\Models\MemberAccount;
 use App\Models\MemberAccountCode;
 use App\Models\SmsAccount;
@@ -35,40 +35,49 @@ class TwoFactorAuthService {
         $code = $this->generateCode($account);
 
         if (filter_var(request()->username, FILTER_VALIDATE_EMAIL)) {
-            $this->sendTwoFaEmailCode($account, $code);
+            $this->sendTwoFactorAuthCodeByEmail($account, $code);
             $this->log2FACodeSent($account);
         } else {
-            $this->sendTwoFaSmsCode($account, $code);
+            $this->sendTwoFactorAuthCodeBySMS($account, $code);
             $this->log2FACodeSent($account, 'phone');
         }
-        
     }
 
+    public function handleTwoFactorAuthByEmail(MemberAccount $account) {
+        $code = $this->generateCode($account);
+        $this->sendTwoFactorAuthCodeByEmail($account, $code);
+        $this->log2FACodeSent($account);
+    }
+
+    public function handleTwoFactorAuthBySMS(MemberAccount $account) {
+        $code = $this->generateCode($account);
+        $this->sendTwoFactorAuthCodeBySMS($account, $code);
+        $this->log2FACodeSent($account, 'phone');
+    }
 
     /**
      * Send 2FA code via email
      */
-    public function sendTwoFaEmailCode(MemberAccount $account, string $code): void {
-        Mail::to($account->username)->queue(new Twofa($code));
+    public function sendTwoFactorAuthCodeByEmail(MemberAccount $account, string $code): void {
+        Mail::to($account->username)->queue(new TwoFactorAuthNotice($code));
     }
 
 
     /**
      * Send 2FA code via sms
      */
-    public function sendTwoFaSmsCode(MemberAccount $account, string $code): void {
+    public function sendTwoFactorAuthCodeBySMS(MemberAccount $account, string $code): void {
         $memberzSmsAccountId = 1;
         $smsAccount = SmsAccount::find( $memberzSmsAccountId);
-        
+
         SmsAccountMessage::create([
             'module_sms_account_id' => $memberzSmsAccountId,
             'organisation_id' => $smsAccount->organisation_id,
             'member_id' => $account->member_id,
             'to' => $account->mobile_number,
-            'message' => __("[Memberz.org] Your login verfication code is {$code}."),
+            'message' => __("[Memberz.org] Your login verfication code is :code.", ['code' => $code]),
             'sender_id' => $smsAccount->sender_id
         ]);
-
     }
 
     public function log2FACodeSent(MemberAccount $account, $type = 'email') {

@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 
-class Twofa extends Mailable
+class TwoFactorAuthNotice extends Mailable
 {
     use Queueable, SerializesModels;
 

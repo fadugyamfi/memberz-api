@@ -27,7 +27,9 @@ class OrganisationMemberObserver
      * Incremember the counter for membership IDs on the category for the membership
      */
     public function incrementMembershipIDCounter(OrganisationMember $membership) {
-        $membership->organisationMemberCategory->incrementIdCounter();
+        activity()->withoutLogs(function() use($membership) {
+            $membership->category->incrementIdCounter();
+        });
     }
 
     /**
@@ -54,7 +56,7 @@ class OrganisationMemberObserver
         }
 
         if( $membership->source == 'registration' && $membership->member->email ) {
-            Mail::to($membership->member->email)->send(new MemberFormRegistrationCompleted($membership));
+            Mail::to($membership->member->email)->queue(new MemberFormRegistrationCompleted($membership));
         }
     }
 
@@ -67,6 +69,10 @@ class OrganisationMemberObserver
      */
     public function updating(OrganisationMember $membership)
     {
+        if( $membership->uuid == null ) {
+            $membership->uuid = Str::uuid();
+        }
+
         if( $membership->isDirty('approved') && $membership->approved == 1 ) {
             $this->autoGenerateMembershipNo($membership);
 
@@ -94,7 +100,7 @@ class OrganisationMemberObserver
         $membershipDeleted = $membership->isDirty('active') && $membership->approved == 1 && $membership->active == 0;
 
         if( ($registrationApproved|| $registrationRejected) && $membership->member->email ) {
-            Mail::to($membership->member->email)->send(new MemberRegistrationStatusUpdated($membership));
+            Mail::to($membership->member->email)->queue(new MemberRegistrationStatusUpdated($membership));
         }
 
         // TODO: Notify membership deleted

@@ -46,7 +46,13 @@ class AuthController extends Controller
         $this->authLogger->logLoginSuccess($this->account);
 
         if ($this->account->isTwoFARequired()) {
-            $this->twofaService->handle($this->account);
+
+            if( filter_var($request->username, FILTER_VALIDATE_EMAIL) ) {
+                $this->twofaService->handleTwoFactorAuthByEmail($this->account);
+            } else {
+                $this->twofaService->handleTwoFactorAuthBySMS($this->account);
+            }
+
             return response()->json(['status' => '2fa', 'message' => '2FA Code Required']);
         }
 
@@ -89,7 +95,7 @@ class AuthController extends Controller
         $this->account = auth()->user();
 
         if ($this->account->isTwoFARequired()) {
-            $this->twofaService->handle($this->account);
+            $this->twofaService->handleTwoFactorAuthByEmail($this->account);
             return response()->json(['status' => '2fa', 'message' => '2FA Code Required']);
         }
 

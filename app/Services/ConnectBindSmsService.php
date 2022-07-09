@@ -119,7 +119,12 @@ class ConnectBindSmsService {
 
         } catch (\Exception $ex) {
             Log::debug($ex->getTraceAsString());
-            return array('status' => 'error', 'response_message' => 'Internal API Error', 'message' => $ex->getMessage(), 'error' => $ex->getTraceAsString());
+            return [
+                'status' => 'error',
+                'response_message' => 'Internal API Error',
+                'message' => $ex->getMessage(),
+                'error' => $ex->getTraceAsString()
+            ];
         }
     }
 
@@ -140,9 +145,9 @@ class ConnectBindSmsService {
     public function makeRequest($params) {
         $responseObj = Http::get(ConnectBindSmsService::CB_SEND_URL, $params);
 
-        $maskedParams = collect($params)->merge(['password' => 'x_x_x'])->toArray();
-        Log::debug("SMS Request: " . ConnectBindSmsService::CB_SEND_URL . "?" . http_build_query($maskedParams));
-        Log::debug($responseObj->body());
+        // $maskedParams = collect($params)->merge(['password' => 'x_x_x'])->toArray();
+        // Log::debug("SMS Request: " . ConnectBindSmsService::CB_SEND_URL . "?" . http_build_query($maskedParams));
+        // Log::debug($responseObj->body());
 
         $parts = explode("|", $responseObj->body());
 

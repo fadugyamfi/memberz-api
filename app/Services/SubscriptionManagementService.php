@@ -16,9 +16,9 @@ use NunoMazer\Samehouse\Facades\Landlord;
 
 class SubscriptionManagementService {
 
-    public function createNewSubscription($organisation_id, $subscription_type_id, $length) {
+    public function createNewSubscription(Organisation $organisation, $subscription_type_id, $length) {
         $invoice = $this->createInvoice(
-            $organisation_id,
+            $organisation,
             $subscription_type_id,
             $length,
             'Subscription Purchase'
@@ -29,7 +29,7 @@ class SubscriptionManagementService {
         }
 
         $newSubscription = $this->createSubscription(
-            $organisation_id,
+            $organisation->id,
             $subscription_type_id,
             $length,
             $invoice->id
@@ -46,7 +46,7 @@ class SubscriptionManagementService {
      * Renews a subscription at a current tier
      */
     public function renew($orgSubscriptionId, $length) {
-        $subscription = OrganisationSubscription::with(['organisationInvoice'])->find($orgSubscriptionId);
+        $subscription = OrganisationSubscription::with(['organisationInvoice', 'organisation'])->find($orgSubscriptionId);
 
         if( !$subscription ) {
             throw new Exception("Subscription to renew not found");
@@ -57,7 +57,7 @@ class SubscriptionManagementService {
         }
 
         $invoice = $this->createInvoice(
-            $subscription->organisation_id,
+            $subscription->organisation,
             $subscription->subscription_type_id,
             $length,
             'Subscription Renewal'
@@ -95,14 +95,14 @@ class SubscriptionManagementService {
      * Upgrade a subscription to a higher tier
      */
     public function upgrade($orgSubscriptionId, $newSubscriptionTypeId, $length) {
-        $subscription = OrganisationSubscription::find($orgSubscriptionId);
+        $subscription = OrganisationSubscription::with(['organisation'])->find($orgSubscriptionId);
 
         if( !$subscription ) {
             throw new Exception("Subscription to upgrade not found");
         }
 
         $invoice = $this->createInvoice(
-            $subscription->organisation_id,
+            $subscription->organisation,
             $newSubscriptionTypeId,
             $length,
             'Subscription Upgrade'
@@ -139,17 +139,17 @@ class SubscriptionManagementService {
     /**
      * Create Invoice
      */
-    public function createInvoice(int $organisation_id, int $subscriptionTypeId, int $subscriptionLength, string $transactionType = 'Subscription Purchase')
+    public function createInvoice(Organisation $organisation, int $subscriptionTypeId, int $subscriptionLength, string $transactionType = 'Subscription Purchase')
     {
         $transactionType = TransactionType::where('name', $transactionType)->first();
         $subscriptionType = SubscriptionType::find($subscriptionTypeId);
 
         $invoice = OrganisationInvoice::create([
-            'organisation_id' => $organisation_id,
+            'organisation_id' => $organisation->id,
             'transaction_type_id' => $transactionType->id,
             'currency_id' => $subscriptionType->currency_id,
             'paid' => $subscriptionType->billing_required == 'yes' ? 0 : 1,
-            'member_account_id' => auth()->user()->id,
+            'member_account_id' => $organisation->member_account_id,
             'due_date' => date('Y-m-d H:i:s', strtotime("+7 days")),
             'notes' => "Your new organisation will be temporarily enabled for <b>7 days</b> within which you will be required to make
                     payment for your chosen subscription via any cash, cheque or bank transfer to the indicated bank account. <br /><br />

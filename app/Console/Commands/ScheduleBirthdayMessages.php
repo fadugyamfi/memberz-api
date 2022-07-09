@@ -10,6 +10,7 @@ use App\Models\SmsAccountMessage;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use NunoMazer\Samehouse\Facades\Landlord;
+use Spatie\Activitylog\Models\Activity;
 
 class ScheduleBirthdayMessages extends Command
 {
@@ -78,17 +79,22 @@ class ScheduleBirthdayMessages extends Command
             }
 
             Log::info("Processing Birthdays for {$organisation->name}");
-            $this->messageBirthdayCelebrants($organisation_id);
+            $this->messageBirthdayCelebrants($organisation);
         }
     }
 
-    public function messageBirthdayCelebrants($organisation_id)
+    public function messageBirthdayCelebrants(Organisation $organisation)
     {
-        $smsAccount = SmsAccount::activeAccount($organisation_id)->first();
-        $message = OrganisationSetting::getAutomatedBirthdayMessage($organisation_id);
-        $messageTime = OrganisationSetting::getAutomatedBirthdayMessageSendTime($organisation_id);
+        $smsAccount = SmsAccount::activeAccount($organisation->id)->first();
+        $message = OrganisationSetting::getAutomatedBirthdayMessage($organisation->id);
+        $messageTime = OrganisationSetting::getAutomatedBirthdayMessageSendTime($organisation->id);
 
-        $membersBirthdayToday = OrganisationMember::birthdayCelebrants($organisation_id)->get();
+        $membersBirthdayToday = OrganisationMember::birthdayCelebrants($organisation->id)->get();
+
+        if( $membersBirthdayToday->count() == 0 ) {
+            Log::info("No birthday celebrants for {$organisation->name}");
+            return;
+        }
 
         $membersBirthdayToday->each(function ($member) use ($smsAccount, $message, $messageTime) {
             $profileLog = "{$smsAccount->organisation_id}: {$member->first_name} {$member->last_name}, {$member->mobile_number}";
@@ -126,5 +132,18 @@ class ScheduleBirthdayMessages extends Command
 
             Log::info("Birthday Message: Scheduled: {$profileLog}");
         });
+
+        activity()
+            ->inLog("sms")
+            ->performedOn($organisation)
+            ->byAnonymous()
+            ->event("processed")
+            ->tap(function(Activity $activity) use($organisation) {
+                $activity->organisation_id = $organisation->id;
+            })
+            ->log(__("Birthday SMS messages scheduled for :count celebrants in :org_name", [
+                "count" => $membersBirthdayToday->count(),
+                "org_name" => $organisation->name
+            ]));
     }
 }

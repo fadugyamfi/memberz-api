@@ -21,6 +21,10 @@ class ContributionObserver
      * @return void
      */
     public function creating(Contribution $contribution) {
+        if( $contribution->module_contribution_receipt_id ) {
+            return;
+        }
+
         $receipt = $this->createReceipt($contribution);
 
         $contribution->module_contribution_receipt_id = $receipt->id;
@@ -95,7 +99,7 @@ class ContributionObserver
 
     private function sendSMSReceipt(Contribution $contribution) {
         $receiptSettings = ContributionReceiptSetting::first();
-        $smsAccount = SmsAccount::getAccount( Landlord::getTenants()->first() );
+        $smsAccount = SmsAccount::getAccount( $contribution->organisation_id );
 
         if( !$receiptSettings || !$receiptSettings->sms_notify || !$smsAccount ) {
             return;
