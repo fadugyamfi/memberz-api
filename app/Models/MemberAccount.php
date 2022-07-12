@@ -150,7 +150,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
             'member_id' => $member_id,
             'username' => $member->email,
             'mobile_number' => $member->mobile_number,
-            'password' => Hash::make(rand(10000, 99999)),
+            'password' => null, // password is set to null so users receive email to reset password
             'active' => 1,
         ]);
 
@@ -193,7 +193,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
      */
     public function sendPasswordResetNotification($token)
     {
-        Mail::to($this->username)->send(new PasswordReset($token));
+        Mail::to($this->username)->send(new PasswordReset($this->username, $token));
     }
 
     public function unsentNotifications()

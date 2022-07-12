@@ -31,9 +31,10 @@ class NewUserRegistered extends Mailable implements ShouldQueue
     {
         $token = $this->memberAccount->email_verification_token;
         $member_name = $this->memberAccount->member->first_name;
+        $email = $this->memberAccount->member->email;
 
         return $this->markdown('emails.users.created', [
-            'url' => config('app.web_url') . '/' . $token,
+            'url' => config('app.web_url') . "/auth/password-reset?email={$email}&token={$token}",
             'member_name' => $member_name
         ]);
     }

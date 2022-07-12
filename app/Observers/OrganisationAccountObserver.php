@@ -14,9 +14,7 @@ class OrganisationAccountObserver
      */
     public function created(OrganisationAccount $organisationAccount)
     {
-        if ($organisationAccount->organisationRole->isAdmin()){
-            $organisationAccount->sendAccountCreatedNotification();
-        }
+        $organisationAccount->sendAccountCreatedNotification();
     }
 
 

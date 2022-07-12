@@ -31,6 +31,8 @@ class MemberAccountObserver
     {
         $this->logger->logNewAccountRegistered($member_account);
 
-        Mail::to($member_account->username)->queue(new NewUserRegistered($member_account));
+        if( !$member_account->password ) {
+            Mail::to($member_account->username)->queue(new NewUserRegistered($member_account));
+        }
     }
 }

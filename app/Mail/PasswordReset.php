@@ -9,7 +9,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Models\Organisation;
 
 
-class PasswordReset extends Mailable
+class PasswordReset extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -25,8 +25,10 @@ class PasswordReset extends Mailable
      *
      * @return void
      */
-    public function __construct(public string $token)
-    {
+    public function __construct(
+        public string $username,
+        public string $token
+    ) {
         if ($tenantId = request()->header('X-Tenant-Id')){
             $organisation = Organisation::where('uuid', $tenantId)->first();
             $this->organisation = $organisation->name;
@@ -40,10 +42,12 @@ class PasswordReset extends Mailable
      */
     public function build()
     {
+        $appResetURL = config('app.web_url') . "/auth/password-reset?email={$this->username}&token={$this->token}";
+
         if (! $this->organisation) {
-            return $this->markdown('emails.users.passwordreset', ['url' => config('app.web_url') . '/password-reset?token=' . $this->token]);
+            return $this->markdown('emails.users.passwordreset', ['url' => $appResetURL]);
         }
 
-        return $this->markdown('emails.users.newaccountpasswordreset', ['url' => config('app.web_url') . '/password-reset?token=' . $this->token]);
+        return $this->markdown('emails.users.newaccountpasswordreset', ['url' => $appResetURL]);
     }
 }
