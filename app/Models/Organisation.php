@@ -97,21 +97,21 @@ class Organisation extends ApiModel
            ->useLogName("organisation")
            ->setDescriptionForEvent(function (string $eventName) use ($name, $type) {
                if ($eventName == 'created') {
-                   return __("Added organisation \":name\" of type \":type\"", [
+                   return __("Added \":type\" \":name\"", [
                        "name" => $name,
                        'type' => $type,
                    ]);
                }
 
                if ($eventName == 'updated') {
-                   return __("Updated organisation \":name\" of type \":type\"", [
+                   return __("Updated \":type\" \":name\"", [
                     "name" => $name,
                     'type' => $type,
                    ]);
                }
 
                if ($eventName == 'deleted') {
-                   return __("Deleted organisation \":name\" of type \":type\"", [
+                   return __("Deleted \":type\" \":name\" ", [
                     "name" => $name,
                     'type' => $type,
                    ]);

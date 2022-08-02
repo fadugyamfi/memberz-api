@@ -8,6 +8,7 @@ use App\Models\OrganisationSetting;
 use App\Models\SmsAccount;
 use App\Models\SmsAccountMessage;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use NunoMazer\Samehouse\Facades\Landlord;
 use Spatie\Activitylog\Models\Activity;
@@ -89,6 +90,7 @@ class ScheduleBirthdayMessages extends Command
         $message = OrganisationSetting::getAutomatedBirthdayMessage($organisation->id);
         $messageTime = OrganisationSetting::getAutomatedBirthdayMessageSendTime($organisation->id);
 
+        /** @var Collection $membersBirthdayToday */
         $membersBirthdayToday = OrganisationMember::birthdayCelebrants($organisation->id)->get();
 
         if( $membersBirthdayToday->count() == 0 ) {
@@ -133,8 +135,17 @@ class ScheduleBirthdayMessages extends Command
             Log::info("Birthday Message: Scheduled: {$profileLog}");
         });
 
+        $logProperties = $membersBirthdayToday->map(function($member) {
+            return [
+                'member_id' => $member->id,
+                'name' => $member->first_name . ' ' . $member->last_name,
+                'mobile_number' => $member->mobile_number,
+            ];
+        });
+
         activity()
             ->inLog("sms")
+            ->withProperties( $logProperties )
             ->performedOn($organisation)
             ->byAnonymous()
             ->event("processed")

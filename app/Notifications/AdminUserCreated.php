@@ -34,7 +34,7 @@ class AdminUserCreated extends BaseNotification implements ShouldQueue
             ->withParameters([
                 '{member_name}' => $this->getMemberName($notifiable),
                 '{org_name}' => $this->organisation->name,
-                '{role_name}' => $this->role->name
+                '{role_name}' => $this->organisationRole->name
             ]);
     }
 
