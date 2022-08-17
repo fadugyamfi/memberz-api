@@ -68,3 +68,9 @@ be authenticated to generate valid examples for the various endpoints.
 By default the API is configured with live credentials for sending SMS messages through the ConnectBind SMS Gateway service.
 To prevent sending actual SMS messages during localtesting, set the `CONNECT_BIND_FAKER_ENABLED` property to `true` in your `.env` file to
 fake the HTTP requests and return dummy `SUCCESS` results for local testing.
+
+## Seeding Test Data
+    php artisan db:seed --class="Database\Seeders\Tests\TestDataSeeder"
+
+### Developer Notes
+* Temporarily added swiftmailer/swiftmailer to composer.json to resolve issue with ElasticEmail transport not working. Package should be upgraded to use Symphony Mailer in the short term.

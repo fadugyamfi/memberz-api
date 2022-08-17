@@ -27,7 +27,8 @@
         "romanzipp/laravel-queue-monitor": "dev-master",
         "spatie/laravel-activitylog": "^4.0",
         "spatie/laravel-permission": "^5.0",
-        "staudenmeir/laravel-adjacency-list": "^1.9.5"
+        "staudenmeir/laravel-adjacency-list": "^1.9.5",
+        "swiftmailer/swiftmailer": "6.3"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "2.12.x-dev",
