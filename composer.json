@@ -12,7 +12,6 @@
         "doctrine/dbal": "^2.10",
         "fadugyamfi/laravel-api-base": "dev-master",
         "fideloper/proxy": "^4.0",
-        "flexflux/laravel-elastic-email": "dev-master",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.6",
@@ -27,8 +26,7 @@
         "romanzipp/laravel-queue-monitor": "dev-master",
         "spatie/laravel-activitylog": "^4.0",
         "spatie/laravel-permission": "^5.0",
-        "staudenmeir/laravel-adjacency-list": "^1.9.5",
-        "swiftmailer/swiftmailer": "6.3"
+        "staudenmeir/laravel-adjacency-list": "^1.9.5"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "2.12.x-dev",
@@ -77,5 +75,12 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
-    }
+    },
+
+    "repositories": [
+        {
+          "type": "path",
+          "url": "./packages/fadugyamfi/*"
+        }
+      ]
 }

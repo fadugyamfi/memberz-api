@@ -177,7 +177,6 @@ return [
          */
         LaravelApiBase\Providers\LaravelApiBaseProvider::class,
         NunoMazer\Samehouse\LandlordServiceProvider::class,
-        \FlexFlux\LaravelElasticEmail\LaravelElasticEmailServiceProvider::class,
         // Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
         /*
