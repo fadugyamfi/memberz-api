@@ -136,6 +136,10 @@ class SmsAccountMessage extends ApiModel
             throw new Exception('User admin account for organisation not found');
         }
 
+        if( !$membership->member->mobile_number ) {
+            throw new Exception('Membership does not have a mobile number to message');
+        }
+
         self::create([
             'module_sms_account_id' => $smsAccount->id,
             'organisation_id' => $smsAccount->organisation_id,

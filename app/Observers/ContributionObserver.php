@@ -9,6 +9,7 @@ use App\Models\ContributionSummary;
 use App\Models\SmsAccount;
 use App\Models\SmsAccountMessage;
 use Exception;
+use Log;
 use NunoMazer\Samehouse\Facades\Landlord;
 
 class ContributionObserver
@@ -119,6 +120,10 @@ class ContributionObserver
             . "Date: " . date('d M, Y', strtotime($receipt->receipt_dt)) . "\n\n"
             . "Thank you!";
 
-        SmsAccountMessage::createNew(auth()->user(), $contribution->organisationMember, $message);
+        try {
+            SmsAccountMessage::createNew(auth()->user(), $contribution->organisationMember, $message);
+        } catch(Exception $e) {
+            Log::error("Cannot send SMS Receipt: " . $e->getMessage() );
+        }
     }
 }
