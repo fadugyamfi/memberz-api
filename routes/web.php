@@ -11,6 +11,8 @@
 |
 */
 
+use App\Http\Controllers\ActivityLogController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -22,3 +24,5 @@ Route::prefix('jobs')->group(function () {
 });
 
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+
+Route::get('/activities', [ActivityLogController::class, 'logs']);

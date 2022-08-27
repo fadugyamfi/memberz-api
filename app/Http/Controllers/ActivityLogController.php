@@ -37,4 +37,12 @@ class ActivityLogController extends Controller
 
         return response()->json($logNames);
     }
+
+    public function logs(Request $request) {
+        $limit = $request->limit ?? 50;
+
+        $activities = ActivityLog::with(['organisation', 'causer'])->latest()->paginate($limit);
+
+        return view('activities.log', compact('activities'));
+    }
 }
