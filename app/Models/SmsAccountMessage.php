@@ -10,6 +10,9 @@ use App\Traits\PersonalizesSmsMessage;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Propaganistas\LaravelPhone\PhoneNumber;
 
 class SmsAccountMessage extends ApiModel
 {
@@ -140,7 +143,17 @@ class SmsAccountMessage extends ApiModel
             throw new Exception('Membership does not have a mobile number to message');
         }
 
-        self::create([
+        // Number is valid for countries we can message
+        $validator = Validator::make(
+            ['phone_number' => $membership->member->mobile_number],
+            ['phone_number' => Rule::phone()->country(['AUTO', 'GH', 'US', 'NG', 'BN', 'UK'])]
+        );
+
+        if( $validator->fails() ) {
+            throw new Exception('Invalid mobile number to message: ' . $membership->member->mobile_number);
+        }
+
+        return self::create([
             'module_sms_account_id' => $smsAccount->id,
             'organisation_id' => $smsAccount->organisation_id,
             'member_id' => $membership->member_id,

@@ -74,3 +74,5 @@ fake the HTTP requests and return dummy `SUCCESS` results for local testing.
 
 ### Developer Notes
 * Temporarily added swiftmailer/swiftmailer to composer.json to resolve issue with ElasticEmail transport not working. Package should be upgraded to use Symphony Mailer in the short term.
+* Switched to using MAILJET on Production System
+* Sms Messages are only valid if sent to numbers for the following country codes: GH, US, NG, BN, UK
