@@ -12,36 +12,25 @@
 </head>
 
 <body>
-    <div class="container py-4">
+    <div class="container-fluid py-3 py-sm-4 px-sm-4">
         <div class="card">
             <div class="card-header bg-white py-3">
                 <h5>Recent Activities</h5>
             </div>
 
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Organisation</th>
-                            <th>User</th>
-                            <th>Description</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($activities as $activity)
-                            <tr>
-                                <td>{{ $activity->created_at?->fromNow() }}</td>
-                                <td>{{ $activity->organisation?->name }}</td>
-                                <td>{{ $activity->causer?->member->name }}</td>
-                                <td>{{ $activity->description }}</td>
-                                <td></td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+            <ul class="list-group list-group-flush">
+                @foreach ($activities as $activity)
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-sm-1 fw-bold">{{ $activity->created_at?->fromNow() }}</div>
+                                <div class="col-sm-2">{{ $activity->organisation?->name }}</div>
+                                <div class="col-sm-2">{{ $activity->causer?->member->name }}</div>
+                                <div class="col-sm-6 mt-2 mt-sm-0">{{ $activity->description }}</div>
+                                <div class="col-sm-1"></div>
+                            </div>
+                        </li>
+                    @endforeach
+            </ul>
 
             <div class="card-footer d-flex justify-content-center">
                 {{ $activities->links() }}
