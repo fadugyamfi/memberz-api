@@ -16,5 +16,6 @@ class TestDataSeeder extends Seeder
         $this->call(MemberTestSeeder::class);
         $this->call(OrganisationTestSeeder::class);
         $this->call(ContributionTestSeeder::class);
+        $this->call(EventTestSeeder::class);
     }
 }

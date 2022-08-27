@@ -24,7 +24,6 @@ class ContributionTest extends TestCase
 
         $this->user = MemberAccount::find(1);
         $this->organisation = Organisation::find(1);
-
     }
 
     /**
@@ -35,19 +34,17 @@ class ContributionTest extends TestCase
     public function testCanFindContributionByReceiptNo()
     {
 
-        $response = $this->actingAs($this->user, 'api')
-        ->withHeaders([
+        $response = $this->actingAs($this->user, 'api')->withHeaders([
             'X-Tenant-Id' => $this->organisation->uuid
         ])->getJson('/api/contributions', [
             'receipt_no' => 1
         ]);
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'data' => [
-                    ['receipt_no' => 1]
-                ]
-            ]);
+        $response->assertStatus(200)->assertJson([
+            'data' => [
+                ['receipt_no' => 1]
+            ]
+        ]);
     }
 
     /**
@@ -58,18 +55,16 @@ class ContributionTest extends TestCase
     public function testCanFindContributionByReceiptDate()
     {
 
-        $response = $this->actingAs($this->user, 'api')
-        ->withHeaders([
+        $response = $this->actingAs($this->user, 'api')->withHeaders([
             'X-Tenant-Id' => $this->organisation->uuid
         ])->getJson('/api/contributions', [
             'receipt_dt' => '2022-07-02'
         ]);
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'data' => [
-                    ['receipt_dt' => '2022-07-02']
-                ]
-            ]);
+        $response->assertStatus(200)->assertJson([
+            'data' => [
+                ['receipt_dt' => '2022-07-02']
+            ]
+        ]);
     }
 }

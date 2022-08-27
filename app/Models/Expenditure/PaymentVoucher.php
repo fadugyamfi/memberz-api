@@ -1,13 +1,13 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models\Expenditure;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\ApiModel;
 
-class ModuleContributionPaymentVoucher extends ApiModel  
+class PaymentVoucher extends ApiModel
 {
 
-    
+
 
     /**
      * The database table used by the model.

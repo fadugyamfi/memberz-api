@@ -1,27 +1,25 @@
 <?php
 
-namespace App\GenModels;
+namespace App\Models\Expenditure;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\ApiModel;
 
-class ModuleContributionAccountBalance extends ApiModel  
+class Expense extends ApiModel
 {
-
-    
 
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'module_contribution_account_balances';
+    protected $table = 'module_contribution_expenses';
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['organisation_id', 'module_contribution_account_id', 'balance', 'balance_dt', 'member_account_id', 'created', 'modified', 'deleted'];
+    protected $fillable = ['organisation_id', 'expense_type_id', 'payment_voucher_id', 'organisation_member_id', 'description', 'account_id', 'cheque_number', 'amount', 'currency_id', 'organisation_file_import_id', 'created', 'modified', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -35,13 +33,13 @@ class ModuleContributionAccountBalance extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['deleted' => 'boolean'];
+    protected $casts = ['active' => 'boolean'];
 
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = ['balance_dt', 'created', 'modified'];
+    protected $dates = ['created', 'modified'];
 
 }
