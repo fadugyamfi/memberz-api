@@ -99,6 +99,10 @@ class ContributionObserver
     }
 
     private function sendSMSReceipt(Contribution $contribution) {
+        if( $contribution->contributionType->member_required != 'Required' ) {
+            return;
+        }
+
         $receiptSettings = ContributionReceiptSetting::first();
         $smsAccount = SmsAccount::getAccount( $contribution->organisation_id );
 

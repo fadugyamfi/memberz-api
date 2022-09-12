@@ -6,7 +6,7 @@ use App\Models\Expenditure\Expense;
 use LaravelApiBase\Http\Controllers\ApiController;
 
 /**
- * @group Expenses
+ * @group Expenditure - Expenses
  */
 class ExpenseController extends ApiController
 {

@@ -6,7 +6,7 @@ use App\Models\Expenditure\PaymentVoucher;
 use LaravelApiBase\Http\Controllers\ApiController;
 
 /**
- * @group Payment Vouchers
+ * @group Expenditure - Payment Vouchers
  */
 class PaymentVoucherController extends ApiController
 {

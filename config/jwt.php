@@ -101,7 +101,7 @@ return [
     |
     */
 
-    'ttl' => env('JWT_TTL', 60 * 24 * 14), // Remember Users For Up To 2 Weeks
+    'ttl' => env('JWT_TTL', 60 * 24 * 30), // Remember Users For Up To 30 Days
 
     /*
     |--------------------------------------------------------------------------
@@ -120,7 +120,7 @@ return [
     |
     */
 
-    'refresh_ttl' => env('JWT_REFRESH_TTL', 20160),
+    'refresh_ttl' => env('JWT_REFRESH_TTL', 20160 * 4),
 
     /*
     |--------------------------------------------------------------------------

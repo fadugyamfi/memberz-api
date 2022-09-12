@@ -140,7 +140,7 @@ class ContributionSummary extends ApiModel
 
         self::create([
             'organisation_id' => $contribution->organisation_id,
-            'receipt_dt' => $contribution->receipt_dt,
+            'receipt_dt' => $receipt_dt,
             'module_contribution_type_id' => $contribution->module_contribution_type_id,
             'week' => $week,
             'month' => $month,

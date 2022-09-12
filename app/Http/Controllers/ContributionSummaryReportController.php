@@ -10,11 +10,14 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
- * @group Contribution
+ * @group Contribution Summary Reports
  */
 class ContributionSummaryReportController extends Controller
 {
 
+    /**
+     * Get Contribution Summaries
+     */
     public function index(Request $request) {
 
         $year = $request->year ?? date('Y');
@@ -61,18 +64,19 @@ class ContributionSummaryReportController extends Controller
 
         return ContributionSummary::getByYear($year)->getByMonth($month)->with('currency')->selectRaw('week, currency_id, sum(amount) as amount')
             ->groupBy('week')->groupBy('currency_id')->orderBy('week')
-            ->get()->transform(function ($d) {
-            return [
-                'amount' => $d->amount,
-                'week' => $d->week,
-                'currency_id' => $d->currency_id,
-                'currency_code' => $d->currency ? $d->currency->currency_code : '',
-            ];
-        });
+            ->get()
+            ->transform(function ($d) {
+                return [
+                    'amount' => $d->amount,
+                    'week' => $d->week,
+                    'currency_id' => $d->currency_id,
+                    'currency_code' => $d->currency ? $d->currency->currency_code : '',
+                ];
+            });
     }
 
     /**
-     * Total of contributions by type
+     * Total Contributions By Type
      */
     public function totalsByCategory(Request $request)
     {
@@ -84,19 +88,25 @@ class ContributionSummaryReportController extends Controller
             $year = $request->year;
         }
 
-        return ContributionSummary::getByYear($year)->with('currency', 'contributionType')->selectRaw('module_contribution_type_id, currency_id, sum(amount) as amount')
+        return ContributionSummary::getByYear($year)
+            ->with('currency', 'contributionType')
+            ->selectRaw('module_contribution_type_id, currency_id, sum(amount) as amount')
             ->groupBy('module_contribution_type_id')->groupBy('currency_id')->orderBy('module_contribution_type_id')->orderBy('currency_id')
-            ->get()->transform(function ($d) {
-            return [
-                'amount' => $d->amount,
-                'contribution_type_id' => $d->module_contribution_type_id,
-                'contribution_type_name' => $d->contributionType ? $d->contributionType->name : '',
-                'currency_id' => $d->currency_id,
-                'currency_code' => $d->currency ? $d->currency->currency_code : '',
-            ];
-        });
+            ->get()
+            ->transform(function ($d) {
+                return [
+                    'amount' => $d->amount,
+                    'contribution_type_id' => $d->module_contribution_type_id,
+                    'contribution_type_name' => $d->contributionType ? $d->contributionType->name : '',
+                    'currency_id' => $d->currency_id,
+                    'currency_code' => $d->currency ? $d->currency->currency_code : '',
+                ];
+            });
     }
 
+    /**
+     * Contribution Trends
+     */
     public function getTrendReport(Request $request){
         $year = $request->year ?? Contribution::getLatestYears()->first()->year;
 
@@ -125,7 +135,7 @@ class ContributionSummaryReportController extends Controller
     }
 
     /**
-     * Totals of contribution summaries by category
+     * Contribution Summaries By Category
      */
     public function categoryBreakdown(Request $request)
     {
@@ -151,15 +161,15 @@ class ContributionSummaryReportController extends Controller
             ->groupBy('currency_id')
             ->orderBy('module_contribution_type_id')
             ->get()->transform(function ($d) {
-            return [
-                'amount' => $d->amount,
-                'month' => $d->month,
-                'contribution_type_id' => $d->module_contribution_type_id,
-                'contribution_type_name' => $d->contributionType ? $d->contributionType->name : '',
-                'currency_id' => $d->currency_id,
-                'currency_code' => $d->currency ? $d->currency->currency_code : '',
-            ];
-        });
+                return [
+                    'amount' => $d->amount,
+                    'month' => $d->month,
+                    'contribution_type_id' => $d->module_contribution_type_id,
+                    'contribution_type_name' => $d->contributionType ? $d->contributionType->name : '',
+                    'currency_id' => $d->currency_id,
+                    'currency_code' => $d->currency ? $d->currency->currency_code : '',
+                ];
+            });
     }
 
 }

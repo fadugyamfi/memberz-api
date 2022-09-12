@@ -6,7 +6,7 @@ use App\Models\Expenditure\AccountBalance;
 use LaravelApiBase\Http\Controllers\ApiController;
 
 /**
- * @group Expense Account Balances
+ * @group Expenditure - Account Balances
  */
 class AccountBalanceController extends ApiController
 {

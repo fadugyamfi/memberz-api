@@ -6,7 +6,7 @@ use App\Models\Expenditure\ExpenseType;
 use LaravelApiBase\Http\Controllers\ApiController;
 
 /**
- * @group Expense Types
+ * @group Expenditure - Expense Types
  */
 class ExpenseTypeController extends ApiController
 {
