@@ -97,7 +97,7 @@ class Event extends ApiModel
                 }
 
                 if( $eventName == 'deleted' ) {
-                    return __("Delete event :event_name", [
+                    return __("Deleted event :event_name", [
                         "event_name" => $event->event_name
                     ]);
                 }
