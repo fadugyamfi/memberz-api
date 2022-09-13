@@ -2,13 +2,14 @@
 
 namespace App\Models\Expenditure;
 
-use App\Models\ApiModel;
-
+use Spatie\Activitylog\LogOptions;
+use App\Models\{ApiModel, Organisation};
+use NunoMazer\Samehouse\BelongsToTenants;
+use App\Traits\SoftDeletesWithDeletedFlag;
 class ExpenseType extends ApiModel
 {
-
-
-
+    use BelongsToTenants;
+    use SoftDeletesWithDeletedFlag;
     /**
      * The database table used by the model.
      *
@@ -43,5 +44,36 @@ class ExpenseType extends ApiModel
      * @var array
      */
     protected $dates = [];
+
+
+    public function organisation(){
+        return $this->belongsTo(Organisation::class);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $expenseType = $this;
+
+        return LogOptions::defaults()
+            ->useLogName('expenditure')
+            ->logAll()
+            ->setDescriptionForEvent(function ($eventName) use ($expenseType) {
+                $params = [
+                    'name' => $expenseType->name
+                ];
+
+                if ($eventName == 'created') {
+                    return __("Created expense type ':name'", $params);
+                }
+
+                if ($eventName == 'updated') {
+                    return __("Updated expense type ':name'", $params);
+                }
+
+                if ($eventName == 'deleted') {
+                    return __("Deleted expense type ':name'", $params);
+                }
+            });
+    }
 
 }

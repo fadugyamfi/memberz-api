@@ -2,11 +2,17 @@
 
 namespace App\Models\Expenditure;
 
-use App\Models\ApiModel;
-use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use NunoMazer\Samehouse\BelongsToTenants;
+use App\Models\{ApiModel, MemberAccount, Organisation};
+use App\Traits\{HasCakephpTimestamps, LogModelActivity, SoftDeletesWithDeletedFlag};
 
 class AccountBalance extends ApiModel
 {
+    use BelongsToTenants;
+    use LogModelActivity;
+    use HasCakephpTimestamps;
+    use SoftDeletesWithDeletedFlag;
 
     /**
      * The database table used by the model.
@@ -43,4 +49,47 @@ class AccountBalance extends ApiModel
      */
     protected $dates = ['balance_dt', 'created', 'modified'];
 
+    public function oranisation()
+    {
+        return $this->belongsTo(Organisation::class);
+    }
+
+    public function contributionAccount()
+    {
+        return $this->belongsTo(contributionAccount::class);
+    }
+
+    public function memberAccount()
+    {
+        return $this->belongsTo(MemberAccount::class);
+    }
+
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $accountBalance = $this;
+        $memberAccount = $this->memberAccount;
+
+        return LogOptions::defaults()
+            ->useLogName('expenditure')
+            ->logAll()
+            ->setDescriptionForEvent(function ($eventName) use ($accountBalance, $memberAccount) {
+                $params = [
+                    'username' => $memberAccount->username,
+                    'balance' => $accountBalance->balance
+                ];
+
+                if ($eventName == 'created') {
+                    return __("Created account balance of balance ':balance' for member account ':username'", $params);
+                }
+
+                if ($eventName == 'updated') {
+                    return __("Updated account balance of balance ':balance' for member account ':username'", $params);
+                }
+
+                if ($eventName == 'deleted') {
+                    return __("Deleted account balance of balance ':balance' for member account ':username'", $params);
+                }
+            });
+    }
 }

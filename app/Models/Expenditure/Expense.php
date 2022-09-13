@@ -2,10 +2,17 @@
 
 namespace App\Models\Expenditure;
 
-use App\Models\ApiModel;
+use Spatie\Activitylog\LogOptions;
+use NunoMazer\Samehouse\BelongsToTenants;
+use App\Traits\{HasCakephpTimestamps, LogModelActivity, SoftDeletesWithActiveFlag};
+use App\Models\{ApiModel, Currency, Organisation, OrganisationFileImport, OrganisationMember};
 
 class Expense extends ApiModel
 {
+    use BelongsToTenants;
+    use LogModelActivity;
+    use HasCakephpTimestamps;
+    use SoftDeletesWithActiveFlag;
 
     /**
      * The database table used by the model.
@@ -42,4 +49,60 @@ class Expense extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
+
+    public function organisation(){
+        return $this->belongsTo(Organisation::class);
+    }
+
+    public function expenseType(){
+        return $this->belongsTo(ExpenseType::class);
+    }
+
+    public function paymentVoucher(){
+        return $this->belongsTo(PaymentVoucher::class);
+    }
+
+    public function organisationMember(){
+        return $this->belongsTo(OrganisationMember::class);
+    }
+
+    public function account(){
+        return $this->belongsTo(Account::class);
+    }
+
+    public function currency(){
+        return $this->belongsTo(Currency::class);
+    }
+
+    public function organisationFileImport(){
+        return $this->belongsTo(OrganisationFileImport::class);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $expense = $this;
+        $expenseType = $this->expenseType;
+
+        return LogOptions::defaults()
+            ->useLogName('expenditure')
+            ->logAll()
+            ->setDescriptionForEvent(function ($eventName) use ($expense, $expenseType) {
+                $params = [
+                    'amount' => $expense->amount,
+                    'type' => $expenseType->name
+                ];
+
+                if ($eventName == 'created') {
+                    return __("Created ':type' expense with the amount ':amount'", $params);
+                }
+
+                if ($eventName == 'updated') {
+                    return __("Updated ':type' expense with the amount ':amount'", $params);
+                }
+
+                if ($eventName == 'deleted') {
+                    return __("Deleted ':type' expense with the amount ':amount'", $params);
+                }
+            });
+    }
 }
