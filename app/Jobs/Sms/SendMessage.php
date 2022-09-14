@@ -39,6 +39,11 @@ class SendMessage implements ShouldQueue
         $obs = $this;
         $smsAccountMessage = $this->smsMessage;
 
+        if( empty($this->smsMessage->to) ) {
+            Log::error("Cannot send SMS to empty mobile number. Sender ID: {$this->smsMessage->sender_id} SMS Message #{$this->smsMessage->id}");
+            return;
+        }
+
         activity()->withoutLogs(function() use($obs, $smsAccountMessage) {
             $smsService = new ConnectBindSmsService();
 

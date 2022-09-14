@@ -123,6 +123,12 @@ class ProcessBroadcast implements ShouldQueue
                 $membership = OrganisationMember::find($contact->membership_id);
             }
 
+            // skip members without phone number
+            if( !$membership->member->mobile_number ) {
+                Log::error("BROADCAST: Skipping membership without phone number: {$membership->member->name}");
+                continue;
+            }
+
             // create an instant message which will be scheduled for sending in the SmsAccountMessageObserver
             SmsAccountMessage::create([
                 'module_sms_account_broadcast_id' => $this->broadcast->id,
