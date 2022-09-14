@@ -49,7 +49,7 @@ class AccountBalance extends ApiModel
      */
     protected $dates = ['balance_dt', 'created', 'modified'];
 
-    public function oranisation()
+    public function organisation()
     {
         return $this->belongsTo(Organisation::class);
     }
@@ -67,28 +67,28 @@ class AccountBalance extends ApiModel
 
     public function getActivitylogOptions(): LogOptions
     {
-        $accountBalance = $this;
-        $memberAccount = $this->memberAccount;
+        $balance = $this->balance;
+        $org = $this->organisation->name;
 
         return LogOptions::defaults()
             ->useLogName('expenditure')
             ->logAll()
-            ->setDescriptionForEvent(function ($eventName) use ($accountBalance, $memberAccount) {
+            ->setDescriptionForEvent(function ($eventName) use ($balance, $org) {
                 $params = [
-                    'username' => $memberAccount->username,
-                    'balance' => $accountBalance->balance
+                    'org' => $org,
+                    'balance' => $balance
                 ];
 
                 if ($eventName == 'created') {
-                    return __("Created account balance of balance ':balance' for member account ':username'", $params);
+                    return __("Created account balance of balance ':balance' for organisation ':org'", $params);
                 }
 
                 if ($eventName == 'updated') {
-                    return __("Updated account balance of balance ':balance' for member account ':username'", $params);
+                    return __("Updated account balance of balance ':balance' for organisation ':org'", $params);
                 }
 
                 if ($eventName == 'deleted') {
-                    return __("Deleted account balance of balance ':balance' for member account ':username'", $params);
+                    return __("Deleted account balance of balance ':balance' for organisation ':org'", $params);
                 }
             });
     }

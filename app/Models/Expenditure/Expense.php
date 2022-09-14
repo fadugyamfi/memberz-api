@@ -50,46 +50,53 @@ class Expense extends ApiModel
     protected $dates = ['created', 'modified'];
 
 
-    public function organisation(){
+    public function organisation()
+    {
         return $this->belongsTo(Organisation::class);
     }
 
-    public function expenseType(){
+    public function expenseType()
+    {
         return $this->belongsTo(ExpenseType::class);
     }
 
-    public function paymentVoucher(){
+    public function paymentVoucher()
+    {
         return $this->belongsTo(PaymentVoucher::class);
     }
 
-    public function organisationMember(){
+    public function organisationMember()
+    {
         return $this->belongsTo(OrganisationMember::class);
     }
 
-    public function account(){
+    public function account()
+    {
         return $this->belongsTo(Account::class);
     }
 
-    public function currency(){
+    public function currency()
+    {
         return $this->belongsTo(Currency::class);
     }
 
-    public function organisationFileImport(){
+    public function organisationFileImport()
+    {
         return $this->belongsTo(OrganisationFileImport::class);
     }
 
     public function getActivitylogOptions(): LogOptions
     {
-        $expense = $this;
-        $expenseType = $this->expenseType;
+        $amount = $this->currency->currency_code . ' '. $this->amount;
+        $expenseType = $this->expenseType->name;
 
         return LogOptions::defaults()
             ->useLogName('expenditure')
             ->logAll()
-            ->setDescriptionForEvent(function ($eventName) use ($expense, $expenseType) {
+            ->setDescriptionForEvent(function ($eventName) use ($amount, $expenseType) {
                 $params = [
-                    'amount' => $expense->amount,
-                    'type' => $expenseType->name
+                    'amount' => $amount,
+                    'type' => $expenseType
                 ];
 
                 if ($eventName == 'created') {
