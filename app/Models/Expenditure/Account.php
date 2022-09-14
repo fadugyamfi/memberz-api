@@ -2,10 +2,16 @@
 
 namespace App\Models\Expenditure;
 
-use App\Models\ApiModel;
-
+use NunoMazer\Samehouse\BelongsToTenants;
+use Spatie\Activitylog\LogOptions;
+use App\Models\{ApiModel, Bank, Country, Organisation};
+use App\Traits\{HasCakephpTimestamps, LogModelActivity, SoftDeletesWithDeletedFlag};
 class Account extends ApiModel
 {
+    use BelongsToTenants;
+    use LogModelActivity;
+    use HasCakephpTimestamps;
+    use SoftDeletesWithDeletedFlag;
 
     /**
      * The database table used by the model.
@@ -42,4 +48,50 @@ class Account extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
+    public function organisation()
+    {
+        return $this->belongsTo(Organisation::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function bank()
+    {
+        return $this->belongsTo(Bank::class);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $account = $this;
+        $currency = $this->currency;
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->useLogName("expenditure")
+            ->setDescriptionForEvent(function ($eventName) use ($account, $currency) {
+                if ($eventName == 'created') {
+                    return __('Added ":currency" account with name ":name"', [
+                        'name' => $account->name,
+                        'currency' => $currency->name
+                    ]);
+                }
+
+                if ($eventName == 'updated') {
+                    return __('Updated ":currency" account with name ":name"', [
+                        'name' => $account->name,
+                        'currency' => $currency->name
+                    ]);
+                }
+
+                if ($eventName == 'deleted') {
+                    return __('Deleted ":currency" account with name ":name"', [
+                        'name' => $account->name,
+                        'currency' => $currency->name
+                    ]);
+                }
+            });
+    }
 }
