@@ -8,13 +8,15 @@ use App\Traits\HasCakephpTimestamps;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Carbon\Carbon;
+use Database\Factories\Events\EventFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
 class Event extends ApiModel
 {
 
-    use BelongsToTenants, HasCakephpTimestamps, LogModelActivity, SoftDeletesWithActiveFlag;
+    use BelongsToTenants, HasCakephpTimestamps, LogModelActivity, SoftDeletesWithActiveFlag, HasFactory;
 
     /**
      * The database table used by the model.
@@ -73,6 +75,16 @@ class Event extends ApiModel
 
     public function reminders() {
         return $this->hasMany(EventReminder::class, 'organisation_event_id');
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return EventFactory::new();
     }
 
     public function getActivitylogOptions(): LogOptions

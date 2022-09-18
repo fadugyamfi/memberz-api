@@ -21,7 +21,7 @@ class EventTestSeeder extends Seeder
     {
         $organisation = Organisation::find(1);
 
-        Event::factory()->create(3, [
+        Event::factory(3)->create([
             'organisation_id' => $organisation->id
         ]);
     }

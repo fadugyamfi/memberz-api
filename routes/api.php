@@ -209,7 +209,7 @@ Route::middleware(['auth:api', 'multi-tenant'])->group(function () {
 
     Route::apiResource('organisation_accounts', OrganisationAccountController::class);
     Route::apiResource('organisation_file_imports', OrganisationFileImportController::class);
-    Route::apiResource('organisation_members', OrganisationMemberController::class);
+    Route::apiResource('organisation_members', OrganisationMemberController::class)->names('api.organisation_members');
     Route::apiResource('organisation_member_categories', OrganisationMemberCategoryController::class);
     Route::apiResource('organisation_member_imports', OrganisationMemberImportController::class);
     Route::apiResource('organisation_invoices', OrganisationInvoiceController::class);

@@ -58,12 +58,12 @@ class ContributionTest extends TestCase
         $response = $this->actingAs($this->user, 'api')->withHeaders([
             'X-Tenant-Id' => $this->organisation->uuid
         ])->getJson('/api/contributions', [
-            'receipt_dt' => '2022-07-02'
+            'receipt_dt' => date('Y-m-d')
         ]);
 
         $response->assertStatus(200)->assertJson([
             'data' => [
-                ['receipt_dt' => '2022-07-02']
+                ['receipt_dt' => date('Y-m-d')]
             ]
         ]);
     }

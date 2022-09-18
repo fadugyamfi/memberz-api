@@ -13,7 +13,7 @@ class EventsTest extends TestCase
 {
     private MemberAccount $user;
     private Organisation $organisation;
-    use RefreshDatabase;
+    // use RefreshDatabase;
 
     protected function setUp(): void
     {

@@ -7,12 +7,14 @@ use App\Models\Organisation;
 use App\Traits\HasCakephpTimestamps;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithDeletedFlag;
+use Database\Factories\Events\CalendarFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use NunoMazer\Samehouse\BelongsToTenants;
 
 class Calendar extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithDeletedFlag, HasCakephpTimestamps, LogModelActivity;
+    use BelongsToTenants, SoftDeletesWithDeletedFlag, HasCakephpTimestamps, LogModelActivity, HasFactory;
 
     /**
      * The database table used by the model.
@@ -56,5 +58,15 @@ class Calendar extends ApiModel
 
     public function events() {
         return $this->hasMany(Event::class);
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return CalendarFactory::new();
     }
 }

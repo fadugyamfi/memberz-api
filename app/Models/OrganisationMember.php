@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Log;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
@@ -157,7 +159,8 @@ class OrganisationMember extends ApiModel
         }
 
         $builder = $this->advancedSearch($request, $builder);
-
+Log::debug( $builder->toSql() );
+Log::debug( $request->all() );
         return $builder;
     }
 
@@ -172,6 +175,10 @@ class OrganisationMember extends ApiModel
 
         if( $request->gender ) {
             $builder->where(DB::raw('members.gender'), $request->gender);
+        }
+
+        if( $request->marital_status ) {
+            $builder->where(DB::raw('members.marital_status'), $request->marital_status);
         }
 
         if( $request->dayname ) {
@@ -268,6 +275,10 @@ class OrganisationMember extends ApiModel
 
     public function shouldQualifyColumn($column_name)
     {
+        if( !Schema::hasColumn($this->getTable(), $column_name) ) {
+            return false;
+        }
+
         if( in_array($column_name, ['organisation_id']) ) {
             return true;
         }

@@ -70,7 +70,15 @@ To prevent sending actual SMS messages during localtesting, set the `CONNECT_BIN
 fake the HTTP requests and return dummy `SUCCESS` results for local testing.
 
 ## Seeding Test Data
-    php artisan db:seed --class="Database\Seeders\Tests\TestDataSeeder"
+Create a separate mysql database for testing purposes and an accompanying `.env.testing` file in the root directory. Add the relevant
+database credentials to the `.env.testing` file. Populate the database with the following commands
+
+    php artisan migrate:fresh --seed --env=testing
+    php artisan db:seed --env=testing --class="Database\Seeders\Tests\TestDataSeeder"
+
+Run existing tests with
+
+    php artisan test
 
 ### Developer Notes
 * Temporarily added swiftmailer/swiftmailer to composer.json to resolve issue with ElasticEmail transport not working. Package should be upgraded to use Symphony Mailer in the short term.

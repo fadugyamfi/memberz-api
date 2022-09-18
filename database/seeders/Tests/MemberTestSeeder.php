@@ -15,18 +15,32 @@ class MemberTestSeeder extends Seeder
      */
     public function run()
     {
-        $member = Member::create([
+        $member = Member::firstOrCreate([
             'first_name' => 'Test',
             'last_name' => 'Member',
-            'dob' => now()->subYears(18)->format('Y-m-d'),
-            'gender' => 'male',
             'mobile_number' => '+233277593003',
             'email' => 'test.member@memberz.org'
+        ],[
+            'dob' => now()->subYears(18)->format('Y-m-d'),
+            'gender' => 'male',
+            'marital_status' => 'single'
         ]);
 
-        $memberAccount = MemberAccount::create([
-            'member_id' => $member->id,
+        Member::firstOrCreate([
+            'first_name' => 'Married',
+            'last_name' => 'Member',
+            'mobile_number' => '+233277593003',
+            'email' => 'married@memberz.org'
+        ],[
+            'dob' => now()->subYears(35)->format('Y-m-d'),
+            'gender' => 'male',
+            'marital_status' => 'married'
+        ]);
+
+        MemberAccount::firstOrcreate([
             'username' => $member->email,
+        ],[
+            'member_id' => $member->id,
             'password' => bcrypt('memberz1234'),
             'mobile_number' => $member->mobile_number
         ]);
