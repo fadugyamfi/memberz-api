@@ -159,8 +159,7 @@ class OrganisationMember extends ApiModel
         }
 
         $builder = $this->advancedSearch($request, $builder);
-Log::debug( $builder->toSql() );
-Log::debug( $request->all() );
+
         return $builder;
     }
 
