@@ -29,7 +29,7 @@ class EventSessionRequest extends FormRequest
             'name' => ['required', 'string'],
             'session_dt' => ['required', 'date'],
             'session_name' => ['required', 'string'],
-            'registration_code' => ['string']
+            'registration_code' => ['string', 'nullable']
         ];
     }
 }
