@@ -142,7 +142,7 @@ class SubscriptionManagementService {
     public function createInvoice(Organisation $organisation, int $subscriptionTypeId, int $subscriptionLength, string $transactionType = 'Subscription Purchase')
     {
         $transactionType = TransactionType::where('name', $transactionType)->first();
-        $subscriptionType = SubscriptionType::find($subscriptionTypeId);
+        $subscriptionType = SubscriptionType::withTrashed()->find($subscriptionTypeId);
 
         $invoice = OrganisationInvoice::create([
             'organisation_id' => $organisation->id,
