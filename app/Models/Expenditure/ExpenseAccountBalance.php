@@ -68,7 +68,7 @@ class ExpenseAccountBalance extends ApiModel
     public function getActivitylogOptions(): LogOptions
     {
         $balance = $this->balance;
-        $org = $this->organisation->name;
+        $org = $this->organisation?->name;
 
         return LogOptions::defaults()
             ->useLogName('expenditure')
