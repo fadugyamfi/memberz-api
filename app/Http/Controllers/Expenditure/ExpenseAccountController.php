@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Expenditure;
 
-use App\Models\Expenditure\Account;
+use App\Models\Expenditure\ExpenseAccount;
 use LaravelApiBase\Http\Controllers\ApiController;
 
 /**
  * @group Expenditure - Accounts
  */
-class AccountController extends ApiController
+class ExpenseAccountController extends ApiController
 {
-    public function __construct(Account $account) {
+    public function __construct(ExpenseAccount $account) {
         parent::__construct($account);
     }
 }

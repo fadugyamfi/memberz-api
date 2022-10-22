@@ -17,11 +17,12 @@ use App\Http\Controllers\Events\EventController;
 use App\Http\Controllers\Events\EventReminderBroadcastController;
 use App\Http\Controllers\Events\EventReminderController;
 use App\Http\Controllers\Events\EventSessionController;
-use App\Http\Controllers\Expenditure\AccountBalanceController;
-use App\Http\Controllers\Expenditure\AccountController;
+use App\Http\Controllers\Expenditure\ExpenseAccountBalanceController;
+use App\Http\Controllers\Expenditure\ExpenseAccountController;
 use App\Http\Controllers\Expenditure\ExpenseController;
+use App\Http\Controllers\Expenditure\ExpenseRequestController;
+use App\Http\Controllers\Expenditure\ExpenseRequestItemController;
 use App\Http\Controllers\Expenditure\ExpenseTypeController;
-use App\Http\Controllers\Expenditure\PaymentVoucherController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\MemberAccountController;
 use App\Http\Controllers\MemberController;
@@ -272,13 +273,12 @@ Route::middleware(['auth:api', 'multi-tenant'])->group(function () {
         Route::get('/monthly_consolidated_report', MonthlyConsolidatedReportController::class);
     });
 
-    Route::prefix('expenditure')->group(function() {
-        Route::apiResource('/expenses', ExpenseController::class);
-        Route::apiResource('/expense_types', ExpenseTypeController::class);
-        Route::apiResource('/accounts', AccountController::class);
-        Route::apiResource('/account_balances', AccountBalanceController::class);
-        Route::apiResource('/payment_vouchers', PaymentVoucherController::class);
-    });
+    Route::apiResource('/expenses', ExpenseController::class);
+    Route::apiResource('/expense_types', ExpenseTypeController::class);
+    Route::apiResource('/expense_accounts', ExpenseAccountController::class);
+    Route::apiResource('/expense_account_balances', ExpenseAccountBalanceController::class);
+    Route::apiResource('/expense_requests', ExpenseRequestController::class);
+    Route::apiResource('/expense_request_items', ExpenseRequestItemController::class);
 });
 
 // Allow for SSE notifications subscription

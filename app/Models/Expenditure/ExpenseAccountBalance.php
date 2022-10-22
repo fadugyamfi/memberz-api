@@ -7,7 +7,7 @@ use NunoMazer\Samehouse\BelongsToTenants;
 use App\Models\{ApiModel, MemberAccount, Organisation};
 use App\Traits\{HasCakephpTimestamps, LogModelActivity, SoftDeletesWithDeletedFlag};
 
-class AccountBalance extends ApiModel
+class ExpenseAccountBalance extends ApiModel
 {
     use BelongsToTenants;
     use LogModelActivity;
@@ -54,9 +54,9 @@ class AccountBalance extends ApiModel
         return $this->belongsTo(Organisation::class);
     }
 
-    public function contributionAccount()
+    public function account()
     {
-        return $this->belongsTo(contributionAccount::class);
+        return $this->belongsTo(ExpenseAccount::class);
     }
 
     public function memberAccount()

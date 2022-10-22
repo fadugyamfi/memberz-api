@@ -6,7 +6,8 @@ use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 use App\Models\{ApiModel, Bank, Country, Organisation};
 use App\Traits\{HasCakephpTimestamps, LogModelActivity, SoftDeletesWithDeletedFlag};
-class Account extends ApiModel
+
+class ExpenseAccount extends ApiModel
 {
     use BelongsToTenants;
     use LogModelActivity;
@@ -61,6 +62,10 @@ class Account extends ApiModel
     public function bank()
     {
         return $this->belongsTo(Bank::class);
+    }
+
+    public function currency() {
+        return $this->belongsTo(Currency::class);
     }
 
     public function getActivitylogOptions(): LogOptions

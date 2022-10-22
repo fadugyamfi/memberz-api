@@ -16,7 +16,7 @@ use NunoMazer\Samehouse\Facades\Landlord;
 
 class SubscriptionManagementService {
 
-    public function createNewSubscription(Organisation $organisation, $subscription_type_id, $length) {
+    public function createNewSubscription(Organisation $organisation, int $subscription_type_id, int $length) {
         $invoice = $this->createInvoice(
             $organisation,
             $subscription_type_id,
@@ -45,7 +45,7 @@ class SubscriptionManagementService {
     /**
      * Renews a subscription at a current tier
      */
-    public function renew($orgSubscriptionId, $length) {
+    public function renew(int $orgSubscriptionId, int $length) {
         $subscription = OrganisationSubscription::with(['organisationInvoice', 'organisation'])->find($orgSubscriptionId);
 
         if( !$subscription ) {
@@ -94,7 +94,7 @@ class SubscriptionManagementService {
     /**
      * Upgrade a subscription to a higher tier
      */
-    public function upgrade($orgSubscriptionId, $newSubscriptionTypeId, $length) {
+    public function upgrade(int $orgSubscriptionId, int $newSubscriptionTypeId, int $length) {
         $subscription = OrganisationSubscription::with(['organisation'])->find($orgSubscriptionId);
 
         if( !$subscription ) {
@@ -134,6 +134,10 @@ class SubscriptionManagementService {
             ->log(__("Created subscription upgrade invoice"));
 
         return $newSubscription;
+    }
+
+    public function createSubscriptionPurchaseInvoice(Organisation $organisation, int $subscriptionTypeId, int $subscriptionLength) {
+        return $this->createInvoice($organisation, $subscriptionTypeId, $subscriptionLength);
     }
 
     /**
@@ -198,7 +202,7 @@ class SubscriptionManagementService {
         }
     }
 
-    public function applyProratedDiscountOnUpgrade(OrganisationInvoice $invoice, SubscriptionType $subscriptionType, int $subscriptionLength, string $transactionType)
+    public function applyProratedDiscountOnUpgrade(OrganisationInvoice $invoice, SubscriptionType $subscriptionType, string $transactionType)
     {
         if ($transactionType != 'Subscription Upgrade') {
             return;
@@ -223,7 +227,7 @@ class SubscriptionManagementService {
     /**
      * Creates a new subscription for an organisation with the specified paramaters
      */
-    public function createSubscription($organisationId, $subscriptionTypeId, $length, $organisationInvoiceId = null) {
+    public function createSubscription(int $organisationId, int $subscriptionTypeId, int $length, int $organisationInvoiceId = null) {
 
         $currentSubscription = Organisation::find($organisationId)->activeSubscription;
 
