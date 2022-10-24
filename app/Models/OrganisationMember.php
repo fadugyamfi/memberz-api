@@ -150,11 +150,10 @@ class OrganisationMember extends ApiModel
         if( $request->term ) {
             $term = $request->term;
             $builder->where(function($query) use($term) {
-                return $query->where('members.first_name', 'like', "%{$term}%")
-                    ->orWhere('members.last_name', 'like', "%{$term}%")
-                    ->orWhere('members.email', 'like', "%{$term}%")
-                    ->orWhere('members.mobile_number', 'like', "%{$term}%")
-                    ->orWhere('members.business_name', 'like', "%{$term}%");
+                return $query->where('organisation_members.organisation_no', 'like', "{$term}%")
+                    ->orWhere('members.first_name', 'like', "%{$term}%")
+                    ->orWhere(DB::raw("CONCAT(members.first_name, ' ', members.last_name)"), 'like', "%{$term}%")
+                    ->orWhere('members.mobile_number', 'like', "%{$term}%");
             });
         }
 
