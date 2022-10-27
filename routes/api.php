@@ -142,6 +142,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::get('member_accounts/{id}/organisations', [MemberAccountController::class, 'organisations']);
     Route::get('members/{id}/organisations', [MemberController::class, 'organisations']);
+    Route::get('members/{id}/memberships', [MemberController::class, 'memberships']);
     Route::get('organisation_accounts/{organisation_id}/{member_account_id}', [OrganisationAccountController::class, 'userAccount']);
     Route::post('organisations/{id}/logo', [OrganisationLogoController::class, 'update']);
 
