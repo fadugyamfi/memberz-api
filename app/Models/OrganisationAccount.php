@@ -12,6 +12,7 @@ use App\Traits\SoftDeletesWithDeletedFlag;
 use App\Traits\HasCakephpTimestamps;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Permission\Models\Permission;
 
 class OrganisationAccount extends ApiModel
 {
@@ -99,8 +100,11 @@ class OrganisationAccount extends ApiModel
                 'weekly_activity_update' => 1,
                 'birthday_updates' => 1,
                 'active' => 1,
+                'guard_name' => 'api'
             ]
         );
+
+        $defaultRole->givePermissionTo( Permission::all() );
 
         return self::create([
             'organisation_id' => $organisation->id,

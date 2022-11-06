@@ -26,7 +26,7 @@ class OrganisationRole extends ApiModel
      *
      * @var array
      */
-    protected $fillable = ['organisation_id', 'name', 'description', 'admin_access', 'weekly_activity_update', 'birthday_updates', 'created', 'modified', 'active'];
+    protected $fillable = ['organisation_id', 'name', 'description', 'admin_access', 'guard_name', 'weekly_activity_update', 'birthday_updates', 'created', 'modified', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
