@@ -9,6 +9,7 @@ use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
 use Carbon\Carbon;
 use Database\Factories\Events\EventFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
@@ -52,6 +53,11 @@ class Event extends ApiModel
      * @var array
      */
     protected $dates = ['start_dt', 'end_dt', 'created', 'modified'];
+
+
+    protected $appends = ['photo_url'];
+
+
 
     public function organisation() {
         return $this->belongsTo(Organisation::class);
@@ -114,5 +120,22 @@ class Event extends ApiModel
                     ]);
                 }
             });
+    }
+
+    public function scopeUpcoming(Builder $query) {
+        $query->whereDate('start_dt', '>', now()->format('Y-m-d'))
+            ->orWhereDate('end_dt', '>=', now()->format('Y-m-d'));
+    }
+
+    public function getPhotoUrlAttribute() {
+        if ( str_contains($this->photo, 'storage') ) {
+            return url($this->photo);
+        }
+
+        // old server implements
+        $save_dir_root = config('app.old_file_upload_root_directory');
+        $host_server = config('app.old_file_upload_host_server');
+
+        return "{$host_server}{$save_dir_root}/{$this->photo}";
     }
 }

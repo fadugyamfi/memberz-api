@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Events\Event;
 use App\Models\Member;
 use App\Models\Organisation;
 use App\Models\OrganisationMember;
@@ -59,9 +60,26 @@ class MemberController extends ApiController
 
         $memberships = OrganisationMember::query()
             ->where('member_id', $member_id)
-            ->with(['organisation'])
+            ->with(['organisation', 'category', 'organisationMemberCategory'])
             ->get();
 
         return $this->Resource::collection($memberships);
+    }
+
+    public function upcomingEvents(Request $request, int $member_id) {
+        $limit = 10;
+
+        $profile = Member::findOrFail($member_id);
+
+        $organisation_ids = $profile->memberships->pluck('organisation_id');
+
+        $events = Event::upcoming()
+            ->whereIn('organisation_id', $organisation_ids)
+            ->with(['organisation', 'sessions', 'calendar'])
+            ->withCount(['attendees', 'sessions'])
+            ->oldest('start_dt')
+            ->paginate($limit);
+
+        return $this->Resource::collection($events);
     }
 }

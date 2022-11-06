@@ -141,10 +141,15 @@ Route::prefix('organisations/{org_slug}')->middleware('multi-tenant-no-auth')->g
 Route::middleware(['auth:api'])->group(function () {
 
     Route::get('member_accounts/{id}/organisations', [MemberAccountController::class, 'organisations']);
+
     Route::get('members/{id}/organisations', [MemberController::class, 'organisations']);
     Route::get('members/{id}/memberships', [MemberController::class, 'memberships']);
+    Route::get('members/{id}/upcoming-events', [MemberController::class, 'upcomingEvents']);
+
     Route::get('organisation_accounts/{organisation_id}/{member_account_id}', [OrganisationAccountController::class, 'userAccount']);
     Route::post('organisations/{id}/logo', [OrganisationLogoController::class, 'update']);
+
+    Route::post('events/{event}/register', [EventController::class, 'register']);
 
     Route::apiResource('banks', BankController::class);
     Route::apiResource('countries', CountryController::class);
