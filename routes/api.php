@@ -133,6 +133,7 @@ Route::prefix('organisations/{org_slug}')->middleware('multi-tenant-no-auth')->g
     Route::post('/member_accounts', [MemberAccountController::class, 'store']);
     Route::post('/organisation_members', [OrganisationMemberController::class, 'store']);
     Route::get('/organisation_members/{id}', [OrganisationMemberController::class, 'registrant']);
+    Route::get('/organisation_members', [OrganisationMemberController::class, 'index']);
 });
 
 /**
