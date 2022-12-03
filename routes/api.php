@@ -200,7 +200,7 @@ Route::middleware(['auth:api'])->group(function () {
  */
 Route::middleware(['auth:api', 'multi-tenant'])->group(function () {
     Route::controller(OrganisationMemberController::class)->group(function () {
-        Route::get('organisations/{id}/memberships/statistics', 'statistics');
+        Route::get('organisation_members/statistics', 'statistics');
         Route::get('organisation_members/unapproved', 'unapproved');
     });
 

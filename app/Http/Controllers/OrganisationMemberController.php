@@ -45,7 +45,7 @@ class OrganisationMemberController extends ApiController
      *
      * Returns a basic set of statistics about memberships
      */
-    public function statistics(int $organisation_id)
+    public function statistics()
     {
 
         $data = $this->Model::join(
@@ -58,7 +58,7 @@ class OrganisationMemberController extends ApiController
             DB::raw('count(organisation_members.id) as total')
         )
         ->groupBy('category_name')
-        ->where('organisation_members.organisation_id', $organisation_id)
+        // ->where('organisation_members.organisation_id', $organisation_id)
         ->get();
 
         return response()->json(['data' => $data]);

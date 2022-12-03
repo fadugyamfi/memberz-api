@@ -146,13 +146,15 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
             return false;
         }
 
-        $member_account = self::create([
-            'member_id' => $member_id,
-            'username' => $member->email,
-            'mobile_number' => $member->mobile_number,
-            'password' => null, // password is set to null so users receive email to reset password
-            'active' => 1,
-        ]);
+        $member_account = self::withoutEvents(function() use($member) {
+            return MemberAccount::create([
+                'member_id' => $member->id,
+                'username' => $member->email,
+                'mobile_number' => $member->mobile_number,
+                'password' => null, // password is set to null so users receive email to reset password
+                'active' => 1,
+            ]);
+        });
 
         $this->sendSetPasswordNotification($member->email);
 
