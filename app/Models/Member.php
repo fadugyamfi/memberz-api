@@ -73,22 +73,24 @@ class Member extends ApiModel
     public function getFullNameAttribute()
     {
         return $this->middle_name
-        ? "{$this->first_name} {$this->middle_name} {$this->last_name}"
-        : "{$this->first_name} {$this->last_name}";
+            ? "{$this->first_name} {$this->middle_name} {$this->last_name}"
+            : "{$this->first_name} {$this->last_name}";
     }
 
     public function getFullNameWithTitleAttribute()
     {
         return $this->middle_name
-        ? "{$this->title} {$this->first_name} {$this->middle_name} {$this->last_name}"
-        : "{$this->title} {$this->first_name} {$this->last_name}";
+            ? "{$this->title} {$this->first_name} {$this->middle_name} {$this->last_name}"
+            : "{$this->title} {$this->first_name} {$this->last_name}";
     }
 
-    public function getAgeAttribute() {
+    public function getAgeAttribute()
+    {
         return $this->dob ? now()->diff($this->dob)->y : null;
     }
 
-    public function scopeActive(Builder $builder) : Builder {
+    public function scopeActive(Builder $builder): Builder
+    {
         return $builder->where('active', 1);
     }
 
@@ -99,20 +101,20 @@ class Member extends ApiModel
         return LogOptions::defaults()
             ->logAll()
             ->useLogName("member_profile")
-            ->setDescriptionForEvent(function($eventName) use($member) {
-                if( $eventName == 'created' ) {
+            ->setDescriptionForEvent(function ($eventName) use ($member) {
+                if ($eventName == 'created') {
                     return __('Added member profile for ":name"', [
                         'name' => $member->name
                     ]);
                 }
 
-                if( $eventName == 'updated' ) {
+                if ($eventName == 'updated') {
                     return __('Updated member profile for ":name"', [
                         'name' => $member->name
                     ]);
                 }
 
-                if( $eventName == 'deleted' ) {
+                if ($eventName == 'deleted') {
                     return __('Deleted member profile for ":name"', [
                         'name' => $member->name
                     ]);
