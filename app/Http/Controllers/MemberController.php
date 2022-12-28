@@ -75,7 +75,13 @@ class MemberController extends ApiController
 
         $events = Event::upcoming()
             ->whereIn('organisation_id', $organisation_ids)
-            ->with(['organisation', 'sessions', 'calendar'])
+            ->with([
+                'organisation',
+                'calendar',
+                'sessions' => function($query) {
+                    $query->withCount(['attendees']);
+                },
+            ])
             ->withCount(['attendees', 'sessions'])
             ->oldest('start_dt')
             ->paginate($limit);

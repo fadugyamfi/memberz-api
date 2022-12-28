@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 use Log;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
@@ -149,6 +150,16 @@ class OrganisationMember extends ApiModel
 
         if( $request->term ) {
             $term = $request->term;
+
+            // strip leading 0 from possible phone number for easier search
+            if( Str::startsWith($term, '0') && is_numeric(Str::substr($term, 1)) ) {
+                $term = Str::substr($term, 1);
+
+            // if number looks like a phone number, try converting it to a phone number for search
+            } else if( is_numeric($term) ) {
+                $term = phone($term, 'GH');
+            }
+
             $builder->where(function($query) use($term) {
                 return $query->where('organisation_members.organisation_no', 'like', "{$term}%")
                     ->orWhere('members.first_name', 'like', "%{$term}%")
