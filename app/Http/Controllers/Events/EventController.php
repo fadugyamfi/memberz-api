@@ -37,7 +37,7 @@ class EventController extends Controller {
             ->when($request->organisation_event_session_id, function(Builder $query) use($request) {
                 $query->where('organisation_event_session_id', $request->organisation_event_session_id);
             })
-            ->with(['session', 'membership', 'member'])
+            ->with(['session', 'membership', 'member.profilePhoto'])
             ->join('members', 'members.id', '=', 'organisation_event_attendees.member_id')
             ->select('organisation_event_attendees.*')
             ->orderBy('organisation_event_attendees.organisation_event_session_id')
