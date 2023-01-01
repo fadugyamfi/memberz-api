@@ -59,7 +59,12 @@ class MemberController extends ApiController
     public function memberships(Request $request, int $member_id) {
 
         $memberships = OrganisationMember::query()
+            ->join('organisations', function($join) {
+                $join->on('organisations.id', 'organisation_members.organisation_id')
+                    ->where('organisations.active', 1);
+            })
             ->where('member_id', $member_id)
+            ->select('organisation_members.*')
             ->with(['organisation', 'category', 'organisationMemberCategory'])
             ->get();
 
