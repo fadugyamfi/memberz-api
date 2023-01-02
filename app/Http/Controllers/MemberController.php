@@ -28,7 +28,7 @@ class MemberController extends ApiController
     public function organisations(Request $request, int $member_id) {
 
         $profile = Member::find($member_id);
-        $limit = $request->limit ?? 15;
+        $limit = $request->input('limit', 15);
 
         if( !$profile ) {
             return response()->json(['error' => 'Profile Not Found'], 404);
