@@ -151,6 +151,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('members/{id}/organisations', [MemberController::class, 'organisations']);
     Route::get('members/{id}/memberships', [MemberController::class, 'memberships']);
     Route::get('members/{id}/upcoming-events', [MemberController::class, 'upcomingEvents']);
+    Route::get('members/{id}/past-events', [MemberController::class, 'pastEvents']);
 
     Route::get('organisation_accounts/{organisation_id}/{member_account_id}', [OrganisationAccountController::class, 'userAccount']);
     Route::post('organisations/{id}/logo', [OrganisationLogoController::class, 'update']);

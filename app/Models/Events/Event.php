@@ -127,6 +127,11 @@ class Event extends ApiModel
             ->orWhereDate('end_dt', '>=', now()->format('Y-m-d'));
     }
 
+    public function scopePast(Builder $query) {
+        $query->whereDate('end_dt', '<=', now()->format('Y-m-d'));
+    }
+
+
     public function getPhotoUrlAttribute() {
         if ( str_contains($this->photo, 'storage') ) {
             return url($this->photo);

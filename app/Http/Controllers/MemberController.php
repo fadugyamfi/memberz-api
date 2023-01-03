@@ -6,9 +6,8 @@ use App\Models\Events\Event;
 use App\Models\Member;
 use App\Models\Organisation;
 use App\Models\OrganisationMember;
+use Illuminate\Http\Request;
 use LaravelApiBase\Http\Controllers\ApiController;
-use Request;
-
 /**
  * @group Member Profiles
  */
@@ -72,7 +71,7 @@ class MemberController extends ApiController
     }
 
     public function upcomingEvents(Request $request, int $member_id) {
-        $limit = 10;
+        $limit = $request->input('limit', 15);
 
         $profile = Member::findOrFail($member_id);
 
@@ -89,6 +88,29 @@ class MemberController extends ApiController
             ])
             ->withCount(['attendees', 'sessions'])
             ->oldest('start_dt')
+            ->paginate($limit);
+
+        return $this->Resource::collection($events);
+    }
+
+    public function pastEvents(Request $request, int $member_id) {
+        $limit = $request->input('limit', 20);
+
+        $profile = Member::findOrFail($member_id);
+
+        $organisation_ids = $profile->memberships->pluck('organisation_id');
+
+        $events = Event::past()
+            ->whereIn('organisation_id', $organisation_ids)
+            ->with([
+                'organisation',
+                'calendar',
+                'sessions' => function($query) {
+                    $query->withCount(['attendees']);
+                },
+            ])
+            ->withCount(['attendees', 'sessions'])
+            ->latest('start_dt')
             ->paginate($limit);
 
         return $this->Resource::collection($events);
