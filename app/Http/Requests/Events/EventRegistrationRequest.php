@@ -26,9 +26,9 @@ class EventRegistrationRequest extends FormRequest
         return [
             'organisation_event_id' => ['required', 'numeric'],
             'organisation_event_session_id' => ['required', 'numeric'],
-            'organisation_member_id' => ['required_without_all:membership_uuid,member_id', 'numeric'],
-            'membership_uuid' => ['required_without_all:organisation_member_id,member_id', 'uuid'],
-            'member_id' => ['required_without_all:membership_uuid,organisation_member_id', 'numeric', 'exists:members,id']
+            'organisation_member_ids' => ['required_without_all:membership_uuids,member_ids', 'array'],
+            'membership_uuids' => ['required_without_all:organisation_member_ids,member_ids', 'array'],
+            'member_ids' => ['required_without_all:membership_uuids,organisation_member_ids', 'array']
         ];
     }
 }

@@ -14,6 +14,7 @@ use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\Events\CalendarController;
 use App\Http\Controllers\Events\EventAttendeeController;
 use App\Http\Controllers\Events\EventController;
+use App\Http\Controllers\Events\EventRegistrationController;
 use App\Http\Controllers\Events\EventReminderBroadcastController;
 use App\Http\Controllers\Events\EventReminderController;
 use App\Http\Controllers\Events\EventSessionController;
@@ -156,7 +157,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('organisation_accounts/{organisation_id}/{member_account_id}', [OrganisationAccountController::class, 'userAccount']);
     Route::post('organisations/{id}/logo', [OrganisationLogoController::class, 'update']);
 
-    Route::post('events/{event}/register', [EventController::class, 'register']);
+    Route::post('events/{event}/register', EventRegistrationController::class);
 
     Route::apiResource('banks', BankController::class);
     Route::apiResource('countries', CountryController::class);

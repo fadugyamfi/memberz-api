@@ -67,37 +67,5 @@ class EventController extends Controller {
         return response()->json($record->first());
     }
 
-    public function register(EventRegistrationRequest $request, Event $event) {
-        $membership = null;
 
-        if( $request->membership_uuid ) {
-            $membership = OrganisationMember::where('uuid', $request->membership_uuid)->firstOrFail();
-        } else if( $request->organisation_member_id ) {
-            $membership = OrganisationMember::findOrFail($request->organisation_member_id);
-        }
-
-        $existingAttendee = EventAttendee::where([
-            'organisation_id' => $event->organisation_id,
-            'member_id' => $membership ? $membership->member_id : $request->member_id,
-            'organisation_event_id' => $request->organisation_event_id,
-            'organisation_event_session_id' => $request->organisation_event_session_id
-        ])->first();
-
-        if( $existingAttendee ) {
-            return response()->json([
-                'message' => __('Member already registered for this session'),
-                'data' => $existingAttendee
-            ], 422);
-        }
-
-        $attendee = EventAttendee::create( array_merge($request->validated(), [
-            'organisation_id' => $event->organisation_id,
-            'member_id' => $membership ? $membership->member_id : $request->member_id
-        ]));
-
-        return response()->json([
-            'message' => __('Attendance recorded'),
-            'data' => $attendee
-        ]);
-    }
 }
