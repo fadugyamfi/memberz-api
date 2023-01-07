@@ -60,7 +60,8 @@ class MemberController extends ApiController
         $memberships = OrganisationMember::query()
             ->join('organisations', function($join) {
                 $join->on('organisations.id', 'organisation_members.organisation_id')
-                    ->where('organisations.active', 1);
+                    ->where('organisations.active', 1)
+                    ->where('organisations.trashed', 0);
             })
             ->where('member_id', $member_id)
             ->select('organisation_members.*')
