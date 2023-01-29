@@ -73,11 +73,7 @@ class OrganisationController extends Controller
      * return the 10 most recently updated organisations with more than 25 members
      */
     public function recommended() {
-        /** @var MemberAccount $user */
-        $user = auth()->user();
-
         $threshold = now()->subDays(365)->format('Y-m-d');
-        $userOrganisationIds = $user->memberships()->get()->pluck('organisation_id');
 
         $organisations = Organisation::query()
             ->join('organisation_members', 'organisation_members.organisation_id', '=', 'organisations.id')
@@ -86,9 +82,14 @@ class OrganisationController extends Controller
                 DB::raw('count(organisation_members.id) as membership_count'),
                 DB::raw('max(organisation_members.modified) as recent_membership')
             )
-            ->whereNotIn('organisation_members.organisation_id', $userOrganisationIds)
+            ->when(auth()->check(), function($query) {
+                /** @var MemberAccount $user */
+                $user = auth()->user();
+                $userOrganisationIds = $user->memberships()->get()->pluck('organisation_id');
+                $query->whereNotIn('organisation_members.organisation_id', $userOrganisationIds);
+            })
             ->groupBy(DB::raw('organisations.id'))
-            ->having('membership_count', '>', 15)
+            ->having('membership_count', '>', 5)
             // ->havingRaw(DB::raw("DATE(recent_membership) > '{$threshold}'"))
             ->limit(10)
             ->with(['organisationType'])
