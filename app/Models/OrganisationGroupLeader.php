@@ -71,7 +71,7 @@ class OrganisationGroupLeader extends ApiModel
         $org_name = $this->organisation->name;
         $role = $this->role;
         $group = $this->organisationGroup->name;
-        $leader = $this->organisationMember->member->name;
+        $leader = $this->organisationMember->member?->name;
 
         return LogOptions::defaults()
             ->logAll()
