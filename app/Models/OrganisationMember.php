@@ -98,8 +98,14 @@ class OrganisationMember extends ApiModel
     }
 
     public function scopeBirthdayCelebrants(Builder $builder, $organisation_id) : Builder {
+        // $mcs = MemberCategorySetting::where('name', 'birthdays')->first();
+
         return $builder->active()->approved()
            ->join('members', 'members.id', '=', 'organisation_members.member_id')
+        //    ->leftJoin('organisation_member_category_settings omc', function($join) use($mcs) {
+        //         $join->on('omc.organisation_member_category_id', 'organisation_members.organisation_member_category_id')
+        //             ->where('omc.member_category_setting_id', $mcs->id);
+        //    })
            ->where('organisation_members.organisation_id', $organisation_id)
            ->whereMonth('dob', '=', Carbon::now()->format('m'))
            ->whereDay('dob', '=', Carbon::now()->format('d'))
