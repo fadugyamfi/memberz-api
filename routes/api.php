@@ -138,6 +138,7 @@ Route::prefix('organisations/{org_slug}')->middleware('multi-tenant-no-auth')->g
     Route::get('/organisation_members', [OrganisationMemberController::class, 'index']);
 
     Route::post('/memberships', [OrganisationMemberController::class, 'store']);
+    Route::delete('/memberships/{id}', [OrganisationMemberController::class, 'destroyMembership']);
     Route::get('/memberships/{id}', [OrganisationMemberController::class, 'registrant']);
     Route::get('/memberships', [OrganisationMemberController::class, 'index']);
     Route::get('/membership_categories', [OrganisationMemberCategoryController::class, 'index']);

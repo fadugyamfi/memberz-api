@@ -66,6 +66,7 @@ class MemberController extends ApiController
             ->where('member_id', $member_id)
             ->select('organisation_members.*')
             ->with(['organisation', 'category', 'organisationMemberCategory'])
+            ->orderBy('organisations.name', 'asc')
             ->get();
 
         return $this->Resource::collection($memberships);

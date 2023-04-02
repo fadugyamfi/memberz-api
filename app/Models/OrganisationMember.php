@@ -133,6 +133,15 @@ class OrganisationMember extends ApiModel
         $this->organisation_no = $nextID;
     }
 
+    public function setInitialMembershipStartDate() {
+        if( $this->membership_start_dt != null ) {
+            return;
+        }
+
+        $this->fill(['membership_start_dt' => now()]);
+        $this->save();
+    }
+
     /**
      * Overriden to provide support for searching for members using multiple methods
      *

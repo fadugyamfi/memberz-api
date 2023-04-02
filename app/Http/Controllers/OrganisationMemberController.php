@@ -74,6 +74,14 @@ class OrganisationMemberController extends Controller
         return response()->json(['error' => 'Could not find member record to delete'], 404);
     }
 
+    /**
+     * Delete Membership
+     */
+    public function destroyMembership($slug, $id)
+    {
+        return $this->destroy($id);
+    }
+
     // public function showByUuid(Request $request, $uuid) {
     //     $membership = OrganisationMember::where('uuid', $uuid)->first();
     // }

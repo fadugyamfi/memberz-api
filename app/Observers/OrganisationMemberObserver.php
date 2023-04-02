@@ -79,6 +79,9 @@ class OrganisationMemberObserver
             // we update the counter immediately after auto generating the number in the case of an update
             // since we can't determine if an update to the organisation_no was manual or auto generated.
             $this->incrementMembershipIDCounter($membership);
+
+            // set membership start date
+            $membership->setInitialMembershipStartDate();
         }
     }
 
