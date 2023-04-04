@@ -67,9 +67,6 @@ class ConnectBindSmsService {
         }
 
         try {
-            Log::debug(config('sms.connectbind.username'));
-            Log::debug(config('sms.connectbind.password'));
-
             $this->setCredentials( config('sms.connectbind.username'), config('sms.connectbind.password'));
             $this->setSender($sender_id);
 

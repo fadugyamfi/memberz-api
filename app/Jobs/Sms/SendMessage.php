@@ -98,7 +98,7 @@ class SendMessage implements ShouldQueue
 
         $this->updateBroadcastSentCounter($smsAccountMessage);
 
-        Log::debug('Sent message successfully to ' . $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
+        Log::debug('Sent message successfully to ' . $smsAccountMessage->to . ' from ' . $smsAccountMessage->sender_id .  ' at ' . date('Y-m-d H:i:s'));
     }
 
     public function updateBroadcastSentCounter(SmsAccountMessage $smsAccountMessage) {
