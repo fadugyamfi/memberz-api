@@ -49,6 +49,10 @@ class OrganisationInvoice extends Model implements ApiModelInterface
      */
     protected $dates = ['due_date', 'created', 'modified'];
 
+    public function memberAccount() {
+        return $this->belongsTo(MemberAccount::class);
+    }
+
     public function organisation()
     {
         return $this->belongsTo(Organisation::class);

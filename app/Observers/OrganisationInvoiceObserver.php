@@ -2,7 +2,10 @@
 
 namespace App\Observers;
 
+use App\Mail\OrganisationInvoiceCreated;
+use App\Mail\OrganisationInvoiceUpdated;
 use App\Models\OrganisationInvoice;
+use Illuminate\Support\Facades\Mail;
 
 class OrganisationInvoiceObserver
 {
@@ -15,10 +18,18 @@ class OrganisationInvoiceObserver
     public function created(OrganisationInvoice $organisationInvoice)
     {
         $organisationInvoice->generateInvoiceNumber();
+
+        foreach(['support@memberz.org', $organisationInvoice->memberAccount?->username ] as $email) {
+            Mail::to($email)->queue( new OrganisationInvoiceCreated($organisationInvoice) );
+        }
     }
 
     public function updated(OrganisationInvoice $organisationInvoice) {
         if( $organisationInvoice->getOriginal('paid') == 0 && $organisationInvoice->paid == 1 ) {
+            foreach(['support@memberz.org', $organisationInvoice->memberAccount?->username ] as $email) {
+                Mail::to($email)->queue( new OrganisationInvoiceUpdated($organisationInvoice) );
+            }
+
             $this->applySmsCreditTopup($organisationInvoice);
         }
     }
