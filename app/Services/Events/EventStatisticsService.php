@@ -15,13 +15,14 @@ class EventStatisticsService {
             ->select(
                 'session_name',
                 'session_dt',
-                'organisation_event_attendee_count',
                 DB::raw('COUNT(organisation_event_attendees.member_id) as total_guests'),
                 DB::raw("IFNULL(COUNT(CASE members.gender WHEN 'male' THEN members.id END), 0) as male_guests"),
                 DB::raw("IFNULL(COUNT(CASE members.gender WHEN 'female' THEN members.id END), 0) as female_guests")
             )
             ->where('organisation_event_attendees.organisation_event_id', $event->id)
-            ->groupBy('organisation_event_attendees.organisation_event_session_id')
+            ->groupBy('organisation_event_sessions.session_name')
+            ->groupBy('organisation_event_sessions.session_dt')
+            ->orderBy('organisation_event_sessions.session_dt')
             ->get();
     }
 
