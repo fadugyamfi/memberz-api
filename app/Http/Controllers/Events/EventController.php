@@ -9,6 +9,7 @@ use App\Http\Resources\Events\EventResource;
 use App\Models\Events\Event;
 use App\Models\Events\EventAttendee;
 use App\Models\OrganisationMember;
+use App\Services\Events\EventStatisticsService;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,12 +22,29 @@ use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
  */
 class EventController extends Controller {
 
-    use ApiControllerBehavior;
+    use ApiControllerBehavior {
+        show as apiShow;
+    }
 
     public function __construct(Event $event)
     {
         $this->setApiModel($event);
         $this->setApiResource(EventResource::class);
+    }
+
+    public function show(Request $request, $id, EventStatisticsService $statistics) {
+        $event = $this->Model->getById($id, $request);
+
+        $stats = [
+            'gender' => $statistics->attendanceByGender($event),
+            'categories' => $statistics->attendanceByMembershipCategories($event),
+            'groups' => $statistics->attendanceByGroups($event)
+        ];
+
+        $response = new EventResource($event);
+        $response->addStatistics($stats);
+
+        return $response;
     }
 
     public function attendees(Request $request, Event $event) {
