@@ -31,7 +31,9 @@ class OrganisationMemberRequest extends FormRequest
             'member_id' => [
                 'required_without_all:first_name,last_name,mobile_number,gender',
                 'nullable',
-                Rule::unique('organisation_members', 'member_id')->where('organisation_id', $this->organisation_id)
+                Rule::unique('organisation_members', 'member_id')
+                    ->where('organisation_id', $this->organisation_id)
+                    ->ignore($this->id)
             ],
             'organisation_member_category_id' => ['required', Rule::exists('organisation_member_categories', 'id')],
             'first_name' => ['required_without:member_id', 'string'],
