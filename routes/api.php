@@ -57,6 +57,7 @@ use App\Http\Controllers\OrganisationTypeController;
 use App\Http\Controllers\PaymentPlatformController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\Reporting\ContributorsByTypeController;
 use App\Http\Controllers\Reporting\IncomeSummaryController;
 use App\Http\Controllers\Reporting\MonthlyConsolidatedReportController;
 use App\Http\Controllers\Reporting\NonContributingMembersController;
@@ -286,6 +287,7 @@ Route::middleware(['auth:api', 'multi-tenant'])->group(function () {
         Route::get('/income_summary', IncomeSummaryController::class);
         Route::get('/top_contributors', TopContributorsController::class);
         Route::get('/monthly_consolidated_report', MonthlyConsolidatedReportController::class);
+        Route::get('/contributors_by_type', ContributorsByTypeController::class);
     });
 
     Route::prefix('expenditure')->group(function() {

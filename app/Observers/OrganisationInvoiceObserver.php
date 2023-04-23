@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Mail;
 
 class OrganisationInvoiceObserver
 {
+
+    private $supportEmail = 'support@memberz.org';
+    private $noReplyEmail = 'no-reply@memberz.org';
+
     /**
      * Handle the organisation invoice "created" event.
      *
@@ -19,15 +23,28 @@ class OrganisationInvoiceObserver
     {
         $organisationInvoice->generateInvoiceNumber();
 
-        foreach(['support@memberz.org', $organisationInvoice->memberAccount?->username ] as $email) {
-            Mail::to($email)->queue( new OrganisationInvoiceCreated($organisationInvoice) );
+        foreach([$this->supportEmail, $organisationInvoice->memberAccount?->username ] as $email) {
+            $mail = Mail::to($email);
+
+            if( $email == $this->supportEmail ) {
+                $mail->from($this->noReplyEmail);
+            }
+
+            $mail->queue( new OrganisationInvoiceCreated($organisationInvoice) );
         }
     }
 
     public function updated(OrganisationInvoice $organisationInvoice) {
         if( $organisationInvoice->getOriginal('paid') == 0 && $organisationInvoice->paid == 1 ) {
-            foreach(['support@memberz.org', $organisationInvoice->memberAccount?->username ] as $email) {
-                Mail::to($email)->queue( new OrganisationInvoiceUpdated($organisationInvoice) );
+
+            foreach([$this->supportEmail, $organisationInvoice->memberAccount?->username ] as $email) {
+                $mail = Mail::to($email);
+
+                if( $email == $this->supportEmail ) {
+                    $mail->from($this->noReplyEmail);
+                }
+
+                $mail->queue( new OrganisationInvoiceUpdated($organisationInvoice) );
             }
 
             $this->applySmsCreditTopup($organisationInvoice);

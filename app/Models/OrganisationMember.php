@@ -309,4 +309,8 @@ class OrganisationMember extends ApiModel
 
         return parent::shouldQualifyColumn($column_name);
     }
+
+    public function hasEmail() {
+        return filter_var($this->member?->email, FILTER_VALIDATE_EMAIL);
+    }
 }
