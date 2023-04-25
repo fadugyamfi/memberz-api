@@ -154,7 +154,7 @@ class OrganisationMember extends ApiModel
     public function buildSearchParams(Request $request, $builder)
     {
         $this->fillable = array_merge($this->fillable, [
-            'first_name', 'last_name', 'email', 'mobile_number', 'occupation', 'business_name', 'dob', 'marital_status'
+            'first_name', 'last_name', 'email', 'mobile_number', 'occupation', 'business_name', 'dob', 'marital_status', 'residential_address'
         ]);
 
         $builder->approved()->active()

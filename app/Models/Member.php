@@ -24,7 +24,9 @@ class Member extends ApiModel
     protected $fillable = [
         'title', 'first_name', 'middle_name', 'last_name', 'maiden_name', 'gender', 'dob', 'mobile_number', 'email', 'website', 'occupation',
         'profession', 'business_name', 'active', 'nationality', 'place_of_birth', 'address', 'marital_status', 'field_of_study',
-        'educational_bg', 'home_town', 'tribe', 'employment_status', 'social_security_no', 'position'
+        'educational_bg', 'home_town', 'tribe', 'employment_status', 'social_security_no', 'position', 'residential_address', 'residential_city',
+        'residential_region', 'residential_district', 'business_address', 'business_region', 'business_city', 'business_district', 'residential_zip_code',
+        'business_zip_code'
     ];
 
     protected $appends = ['full_name', 'full_name_with_title', 'age'];
