@@ -120,6 +120,10 @@ class Contribution extends ApiModel
             ->whereIn('module_contribution_receipt_id', $receipt_ids);
     }
 
+    public function isMemberSpecific() {
+        return $this->contributionType?->member_required == 'Required';
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         $contribution = $this;

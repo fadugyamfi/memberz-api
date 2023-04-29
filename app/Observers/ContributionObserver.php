@@ -63,7 +63,7 @@ class ContributionObserver
         $contribution->contributionReceipt->save();
     }
 
-    private function getSumOfContributionAmount(string $receipt_dt, Contribution $contribution) : float {
+    private function getSumOfContributionAmount(string $receipt_dt, Contribution $contribution): float {
         return Contribution::getSummaryData($receipt_dt, $contribution)->sum('amount');
     }
 
@@ -71,9 +71,9 @@ class ContributionObserver
         return ContributionSummary::getExistingSummaryRecord($receipt_dt, $contribution)->first();
     }
 
-    private function getReceiptDate(int $contribution_receipt_id) : string {
-        $contribution_receipt = ContributionReceipt::find($contribution_receipt_id);
-        return  $contribution_receipt->receipt_dt;
+    private function getReceiptDate(int $contribution_receipt_id): ?string {
+        $contributionReceipt = ContributionReceipt::find($contribution_receipt_id);
+        return $contributionReceipt?->receipt_dt;
     }
 
 
@@ -103,15 +103,25 @@ class ContributionObserver
         return $receipt;
     }
 
-    private function sendSMSReceipt(Contribution $contribution, MemberAccount $user) {
-        if( $contribution->contributionType->member_required != 'Required' ) {
-            return;
-        }
+    private function shouldSendSmsNotification() {
+        $sendSmsNotification = request('send_sms');
 
+        return $sendSmsNotification != null && $sendSmsNotification == true;
+    }
+
+    private function organisationSmsNotificationSettingEnabled(int $organisation_id) {
         $receiptSettings = ContributionReceiptSetting::first();
-        $smsAccount = SmsAccount::getAccount( $contribution->organisation_id );
+        $smsAccount = SmsAccount::getAccount( $organisation_id );
 
-        if( !$receiptSettings || !$receiptSettings->sms_notify || !$smsAccount ) {
+        return $receiptSettings && $receiptSettings->sms_notify && $smsAccount;
+    }
+
+    private function sendSMSReceipt(Contribution $contribution, MemberAccount $user) {
+        if(
+            !$contribution->isMemberSpecific() ||
+            !$this->shouldSendSmsNotification() ||
+            !$this->organisationSmsNotificationSettingEnabled($contribution->organisation_id)
+        ) {
             return;
         }
 
