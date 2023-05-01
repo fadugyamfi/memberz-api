@@ -6,6 +6,7 @@ use App\Models\OrganisationInvoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -20,7 +21,8 @@ class OrganisationInvoiceCreated extends Mailable
      * @return void
      */
     public function __construct(
-        public OrganisationInvoice $invoice
+        public OrganisationInvoice $invoice,
+        public ?string $fromAddress = null
     ) {
         //
     }
@@ -32,8 +34,17 @@ class OrganisationInvoiceCreated extends Mailable
      */
     public function envelope()
     {
+        $subject = 'Your Memberz.Org Order ' . $this->invoice->invoice_no;
+
+        if( $this->fromAddress ) {
+            return new Envelope(
+                from: new Address($this->fromAddress),
+                subject: $subject,
+            );
+        }
+
         return new Envelope(
-            subject: 'Your Memberz.Org Order ' . $this->invoice->invoice_no,
+            subject: $subject,
         );
     }
 

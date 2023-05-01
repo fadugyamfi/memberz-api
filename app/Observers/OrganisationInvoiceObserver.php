@@ -26,11 +26,11 @@ class OrganisationInvoiceObserver
         foreach([$this->supportEmail, $organisationInvoice->memberAccount?->username ] as $email) {
             $mail = Mail::to($email);
 
-            // if( $email == $this->supportEmail ) {
-            //     $mail->from($this->noReplyEmail);
-            // }
-
-            $mail->queue( new OrganisationInvoiceCreated($organisationInvoice) );
+            if( $email == $this->supportEmail ) {
+                $mail->queue( new OrganisationInvoiceCreated($organisationInvoice, $this->noReplyEmail) );
+            } else {
+                $mail->queue( new OrganisationInvoiceCreated($organisationInvoice) );
+            }
         }
     }
 
@@ -40,11 +40,11 @@ class OrganisationInvoiceObserver
             foreach([$this->supportEmail, $organisationInvoice->memberAccount?->username ] as $email) {
                 $mail = Mail::to($email);
 
-                // if( $email == $this->supportEmail ) {
-                //     $mail->from($this->noReplyEmail);
-                // }
-
-                $mail->queue( new OrganisationInvoiceUpdated($organisationInvoice) );
+                if( $email == $this->supportEmail ) {
+                    $mail->queue( new OrganisationInvoiceUpdated($organisationInvoice, $this->noReplyEmail) );
+                } else {
+                    $mail->queue( new OrganisationInvoiceUpdated($organisationInvoice) );
+                }
             }
 
             $this->applySmsCreditTopup($organisationInvoice);

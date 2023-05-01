@@ -21,7 +21,8 @@ class OrganisationInvoiceUpdated extends Mailable
      * @return void
      */
     public function __construct(
-        public OrganisationInvoice $invoice
+        public OrganisationInvoice $invoice,
+        public ?string $fromAddress = null
     ) {
         //
     }
@@ -33,8 +34,17 @@ class OrganisationInvoiceUpdated extends Mailable
      */
     public function envelope()
     {
+        $subject = 'Your Memberz.Org Order ' . $this->invoice->invoice_no . ' - Order Update';
+
+        if( $this->fromAddress ) {
+            return new Envelope(
+                from: new Address($this->fromAddress),
+                subject: $subject,
+            );
+        }
+
         return new Envelope(
-            subject: 'Your Memberz.Org Order ' . $this->invoice->invoice_no . ' - Order Update',
+            subject: $subject,
         );
     }
 
