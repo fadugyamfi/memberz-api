@@ -26,9 +26,9 @@ class OrganisationInvoiceObserver
         foreach([$this->supportEmail, $organisationInvoice->memberAccount?->username ] as $email) {
             $mail = Mail::to($email);
 
-            if( $email == $this->supportEmail ) {
-                $mail->from($this->noReplyEmail);
-            }
+            // if( $email == $this->supportEmail ) {
+            //     $mail->from($this->noReplyEmail);
+            // }
 
             $mail->queue( new OrganisationInvoiceCreated($organisationInvoice) );
         }
@@ -40,9 +40,9 @@ class OrganisationInvoiceObserver
             foreach([$this->supportEmail, $organisationInvoice->memberAccount?->username ] as $email) {
                 $mail = Mail::to($email);
 
-                if( $email == $this->supportEmail ) {
-                    $mail->from($this->noReplyEmail);
-                }
+                // if( $email == $this->supportEmail ) {
+                //     $mail->from($this->noReplyEmail);
+                // }
 
                 $mail->queue( new OrganisationInvoiceUpdated($organisationInvoice) );
             }
