@@ -3,6 +3,7 @@
 namespace App\Jobs\Sms;
 
 use App\Models\SmsAccountMessage;
+use App\Models\SystemSetting;
 use App\Services\ConnectBindSmsService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -44,6 +45,22 @@ class SendMessage implements ShouldQueue
             return;
         }
 
+        $setting = SystemSetting::where('name', 'sms_credits')->first();
+
+        if( $setting && $setting->value <= 0 ) {
+            $smsAccountMessage->updateSentStatus("Send Failed. Contact support@memberz.org", 0);
+            Log::error("Cannot send SMS. System has no SMS credits");
+            activity('sms')->log('SMS messaging failed. System does not have enough SMS credits');
+            return;
+        }
+
+        if( $setting && $setting->value < $smsAccountMessage->pages ) {
+            $smsAccountMessage->updateSentStatus("Send Failed. Contact support@memberz.org", 0);
+            Log::error("Cannot send SMS. System does not have enough SMS credits");
+            activity('sms')->log('SMS messaging failed. System does not have enough SMS credits');
+            return;
+        }
+
         activity()->withoutLogs(function() use($obs, $smsAccountMessage) {
             $smsService = new ConnectBindSmsService();
 
@@ -76,11 +93,12 @@ class SendMessage implements ShouldQueue
         $send_status = 'Sent Successfully';
         $pages =  $smsAccountMessage->pages;
         $smsAccountMessage->smsAccount->deductCredit($pages);
+        SystemSetting::deductSmsCredits($pages);
         $smsAccountMessage->updateSentStatus($send_status, $sent);
 
         $this->updateBroadcastSentCounter($smsAccountMessage);
 
-        Log::debug('Sent message successfully to ' . $smsAccountMessage->to . ' at ' . date('Y-m-d H:i:s'));
+        Log::debug('Sent message successfully to ' . $smsAccountMessage->to . ' from ' . $smsAccountMessage->sender_id .  ' at ' . date('Y-m-d H:i:s'));
     }
 
     public function updateBroadcastSentCounter(SmsAccountMessage $smsAccountMessage) {

@@ -79,6 +79,9 @@ class OrganisationMemberObserver
             // we update the counter immediately after auto generating the number in the case of an update
             // since we can't determine if an update to the organisation_no was manual or auto generated.
             $this->incrementMembershipIDCounter($membership);
+
+            // set membership start date
+            $membership->setInitialMembershipStartDate();
         }
     }
 
@@ -97,9 +100,10 @@ class OrganisationMemberObserver
     private function notifyRegistrationUpdate(OrganisationMember $membership) {
         $registrationApproved = $membership->isDirty('approved') && $membership->approved == 1 && $membership->active == 1;
         $registrationRejected = $membership->isDirty('active') && $membership->approved == 0 && $membership->active == 0;
+        $membershipCanceled = ($membership->isDirty('active') && $membership->isDirty('approved')) && $membership->approved == 0 && $membership->active == 0;
         $membershipDeleted = $membership->isDirty('active') && $membership->approved == 1 && $membership->active == 0;
 
-        if( ($registrationApproved|| $registrationRejected) && $membership->member->email ) {
+        if( ($registrationApproved || $registrationRejected || $membershipCanceled) && $membership->member->email ) {
             Mail::to($membership->member->email)->queue(new MemberRegistrationStatusUpdated($membership));
         }
 

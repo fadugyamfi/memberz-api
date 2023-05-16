@@ -7,12 +7,7 @@ use App\Models\Member;
 use App\Models\OrganisationMember;
 use App\Traits\HasCakephpTimestamps;
 use App\Traits\LogModelActivity;
-use App\Traits\SoftDeletesWithDeletedFlag;
-use DB;
-use Illuminate\Http\Request;
-use Landlord;
 use NunoMazer\Samehouse\BelongsToTenants;
-use Schema;
 use Spatie\Activitylog\LogOptions;
 
 class EventAttendee extends ApiModel

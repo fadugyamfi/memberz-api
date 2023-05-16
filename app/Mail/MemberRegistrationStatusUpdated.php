@@ -31,9 +31,10 @@ class MemberRegistrationStatusUpdated extends Mailable implements ShouldQueue
     public function build()
     {
         $approved = $this->membership->approved == 1 && $this->membership->active == 1;
+        $canceled = $this->membership->approved == 0 && $this->membership->active == 0;
         $organisation_name = $this->membership->organisation->name;
         $member_name = $this->membership->member->first_name;
 
-        return $this->markdown('emails.users.memberregistrationupdated', compact('approved', 'organisation_name', 'member_name'));
+        return $this->markdown('emails.users.memberregistrationupdated', compact('approved', 'canceled', 'organisation_name', 'member_name'));
     }
 }

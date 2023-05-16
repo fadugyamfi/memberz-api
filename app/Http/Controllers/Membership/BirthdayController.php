@@ -21,7 +21,16 @@ class BirthdayController extends Controller
         $query = OrganisationMember::join('members', 'members.id', '=', 'organisation_members.member_id')
             ->selectRaw('organisation_members.*')
             ->selectRaw('YEAR(dob) as `dob_year`')
-            ->selectRaw('MONTH(dob) as `dob_month`');
+            ->selectRaw('MONTH(dob) as `dob_month`')
+            ->selectRaw('DAY(dob) as `dob_date`');
+
+        if( $request->start_date && $request->end_date ) {
+            $query->whereBetween('dob', [$request->start_date, $request->end_date]);
+        }
+
+        if( $request->organisation_member_category_id ) {
+            $query->where('organisation_member_category_id', $request->organisation_member_category_id);
+        }
 
         if( $request->year ) {
             $query->where(DB::raw('YEAR(dob)'), $request->year);
@@ -44,7 +53,9 @@ class BirthdayController extends Controller
             return response()->json(['count' => $query->count()]);
         }
 
-        $birthdays = $query->orderBy('dob', 'asc')
+
+
+        $birthdays = $query->orderBy('dob_date', 'asc')
             ->orderBy('members.last_name', 'asc')
             ->with('member')
             ->paginate($limit);

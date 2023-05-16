@@ -2,7 +2,7 @@
 This is the API backend for the Memberz.Org Angular application.
 
 ## Basic Requirements
-	PHP >= 8.0
+	PHP >= 8.1
 	OpenSSL PHP Extension
 	PDO PHP Extension
     JSON PHP extension
@@ -84,3 +84,8 @@ Run existing tests with
 * Temporarily added swiftmailer/swiftmailer to composer.json to resolve issue with ElasticEmail transport not working. Package should be upgraded to use Symphony Mailer in the short term.
 * Switched to using MAILJET on Production System
 * Sms Messages are only valid if sent to numbers for the following country codes: GH, US, NG, BN, UK
+
+## Troubleshooting
+* After changing a SMS messaging account password, be sure to
+  * update the `.env` file with the new password
+  * restart any queues using the `php artisan queue:restart` command. This command is run as part of auto-deployment script

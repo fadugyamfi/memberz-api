@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 use Log;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
@@ -97,8 +98,14 @@ class OrganisationMember extends ApiModel
     }
 
     public function scopeBirthdayCelebrants(Builder $builder, $organisation_id) : Builder {
+        // $mcs = MemberCategorySetting::where('name', 'birthdays')->first();
+
         return $builder->active()->approved()
            ->join('members', 'members.id', '=', 'organisation_members.member_id')
+        //    ->leftJoin('organisation_member_category_settings omc', function($join) use($mcs) {
+        //         $join->on('omc.organisation_member_category_id', 'organisation_members.organisation_member_category_id')
+        //             ->where('omc.member_category_setting_id', $mcs->id);
+        //    })
            ->where('organisation_members.organisation_id', $organisation_id)
            ->whereMonth('dob', '=', Carbon::now()->format('m'))
            ->whereDay('dob', '=', Carbon::now()->format('d'))
@@ -126,6 +133,15 @@ class OrganisationMember extends ApiModel
         $this->organisation_no = $nextID;
     }
 
+    public function setInitialMembershipStartDate() {
+        if( $this->membership_start_dt != null ) {
+            return;
+        }
+
+        $this->fill(['membership_start_dt' => now()]);
+        $this->save();
+    }
+
     /**
      * Overriden to provide support for searching for members using multiple methods
      *
@@ -138,7 +154,7 @@ class OrganisationMember extends ApiModel
     public function buildSearchParams(Request $request, $builder)
     {
         $this->fillable = array_merge($this->fillable, [
-            'first_name', 'last_name', 'email', 'mobile_number', 'occupation', 'business_name', 'dob', 'marital_status'
+            'first_name', 'last_name', 'email', 'mobile_number', 'occupation', 'business_name', 'dob', 'marital_status', 'residential_address'
         ]);
 
         $builder->approved()->active()
@@ -149,18 +165,26 @@ class OrganisationMember extends ApiModel
 
         if( $request->term ) {
             $term = $request->term;
+
+            // strip leading 0 from possible phone number for easier search
+            if( Str::startsWith($term, '0') && is_numeric(Str::substr($term, 1)) ) {
+                $term = Str::substr($term, 1);
+
+            // if number looks like a phone number, try converting it to a phone number for search
+            } else if( is_numeric($term) ) {
+                $term = phone($term, 'GH');
+            }
+
             $builder->where(function($query) use($term) {
-                return $query->where('members.first_name', 'like', "%{$term}%")
-                    ->orWhere('members.last_name', 'like', "%{$term}%")
-                    ->orWhere('members.email', 'like', "%{$term}%")
-                    ->orWhere('members.mobile_number', 'like', "%{$term}%")
-                    ->orWhere('members.business_name', 'like', "%{$term}%");
+                return $query->where('organisation_members.organisation_no', 'like', "{$term}%")
+                    ->orWhere('members.first_name', 'like', "%{$term}%")
+                    ->orWhere(DB::raw("CONCAT(members.first_name, ' ', members.last_name)"), 'like', "%{$term}%")
+                    ->orWhere('members.mobile_number', 'like', "%{$term}%");
             });
         }
 
         $builder = $this->advancedSearch($request, $builder);
-Log::debug( $builder->toSql() );
-Log::debug( $request->all() );
+
         return $builder;
     }
 
@@ -284,5 +308,9 @@ Log::debug( $request->all() );
         }
 
         return parent::shouldQualifyColumn($column_name);
+    }
+
+    public function hasEmail() {
+        return filter_var($this->member?->email, FILTER_VALIDATE_EMAIL);
     }
 }

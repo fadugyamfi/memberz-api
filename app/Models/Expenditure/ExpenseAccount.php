@@ -4,9 +4,10 @@ namespace App\Models\Expenditure;
 
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
-use App\Models\{ApiModel, Bank, Country, Organisation};
+use App\Models\{ApiModel, Bank, Country, Currency, Organisation};
 use App\Traits\{HasCakephpTimestamps, LogModelActivity, SoftDeletesWithDeletedFlag};
-class Account extends ApiModel
+
+class ExpenseAccount extends ApiModel
 {
     use BelongsToTenants;
     use LogModelActivity;
@@ -63,6 +64,10 @@ class Account extends ApiModel
         return $this->belongsTo(Bank::class);
     }
 
+    public function currency() {
+        return $this->belongsTo(Currency::class);
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         $account = $this;
@@ -74,22 +79,22 @@ class Account extends ApiModel
             ->setDescriptionForEvent(function ($eventName) use ($account, $currency) {
                 if ($eventName == 'created') {
                     return __('Added ":currency" account with name ":name"', [
-                        'name' => $account->name,
-                        'currency' => $currency->name
+                        'name' => $account?->name,
+                        'currency' => $currency?->name
                     ]);
                 }
 
                 if ($eventName == 'updated') {
                     return __('Updated ":currency" account with name ":name"', [
-                        'name' => $account->name,
-                        'currency' => $currency->name
+                        'name' => $account?->name,
+                        'currency' => $currency?->name
                     ]);
                 }
 
                 if ($eventName == 'deleted') {
                     return __('Deleted ":currency" account with name ":name"', [
                         'name' => $account->name,
-                        'currency' => $currency->name
+                        'currency' => $currency?->name
                     ]);
                 }
             });

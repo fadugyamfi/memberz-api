@@ -29,9 +29,9 @@ class OrganisationGroupRequest extends ApiRequest
             'name' => 'required|string',
             'active' => 'tinyint|nullable',
             'organisation_group_leaders.*.id' => 'sometimes|numeric|nullable',
-            'organisation_group_leaders.*.name' => 'sometimes|string',
-            'organisation_group_leaders.*.role' => 'sometimes|string',
-            'organisation_group_leaders.*.organisation_member_id' => 'sometimes|required|numeric|exists:organisation_members,id'
+            'organisation_group_leaders.*.name' => 'sometimes|nullable|string',
+            'organisation_group_leaders.*.role' => 'sometimes|nullable|string',
+            'organisation_group_leaders.*.organisation_member_id' => 'sometimes|nullable|numeric|exists:organisation_members,id'
         ];
     }
 

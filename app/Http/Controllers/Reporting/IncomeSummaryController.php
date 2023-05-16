@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Reporting;
 
 use App\Http\Requests\IncomeSummaryRequest;
 use App\Models\Contribution;
+use DB;
 
 /**
  * @group Finance Reporting
@@ -16,7 +17,7 @@ class IncomeSummaryController
      */
     public function __invoke(IncomeSummaryRequest $request)
     {
-        return Contribution::whereBetween('module_member_contributions.created', [$request->start_date, $request->end_date])
+        return Contribution::whereBetween( DB::raw('DATE(module_member_contributions.created)'), [$request->start_date, $request->end_date])
             ->byCurrencyId($request->currency_id)
             ->with(['contributionPaymentType', 'currency'])
             ->selectRaw('module_contribution_types.name, module_contribution_payment_type_id, module_member_contributions.currency_id, sum(amount) as amount')
