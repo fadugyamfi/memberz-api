@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Reporting;
 
 use App\Http\Requests\ContributorsByTypeRequest;
 use App\Models\Contribution;
+use DB;
 
 /**
  * @group Finance Reporting
@@ -18,7 +19,7 @@ class ContributorsByTypeController
     {
         $limit = $request->limit ?? 200;
 
-        return Contribution::whereBetween('module_member_contributions.created', [$request->start_date, $request->end_date])
+        return Contribution::whereBetween( DB::raw('DATE(module_member_contributions.created)'), [$request->start_date, $request->end_date])
             ->when($request->year, fn($q) => $q->byYear($request->year)->groupBy('year')->select('year'))
             ->byCurrencyId($request->currency_id)
             ->byContributionType($request->contribution_type_id)
