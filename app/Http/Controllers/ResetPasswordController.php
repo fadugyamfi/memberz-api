@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Models\MemberAccount;
 use App\Services\AuthLogService;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 
 /**
@@ -33,8 +34,18 @@ class ResetPasswordController extends Controller
                 ]);
 
                 $user->save();
+
+                Log::info("Password reset successfully for {$user->username}");
             }
         );
+
+        if ($status === Password::INVALID_USER){
+            return response()->json(['message' => 'Invalid user credentials'], 401);
+        }
+
+        if ($status === Password::INVALID_TOKEN){
+            return response()->json(['message' => 'Invalid token for password reset'], 401);
+        }
 
         if ($status !== Password::PASSWORD_RESET){
             return response()->json(['message' => 'Error resetting password.'], 401);

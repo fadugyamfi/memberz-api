@@ -61,7 +61,8 @@ class ContributionRequest extends ApiRequest
             'amount' => 'required|numeric',
             'receipt_no' => 'nullable|string|max:50',
             'receipt_dt' => 'nullable|date',
-            'active' => 'nullable|boolean'
+            'active' => 'nullable|boolean',
+            'send_sms' => 'required|boolean'
         ];
     }
 }

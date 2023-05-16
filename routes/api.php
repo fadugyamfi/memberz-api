@@ -14,6 +14,7 @@ use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\Events\CalendarController;
 use App\Http\Controllers\Events\EventAttendeeController;
 use App\Http\Controllers\Events\EventController;
+use App\Http\Controllers\Events\EventRegistrationController;
 use App\Http\Controllers\Events\EventReminderBroadcastController;
 use App\Http\Controllers\Events\EventReminderController;
 use App\Http\Controllers\Events\EventSessionController;
@@ -57,6 +58,7 @@ use App\Http\Controllers\OrganisationTypeController;
 use App\Http\Controllers\PaymentPlatformController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\Reporting\ContributorsByTypeController;
 use App\Http\Controllers\Reporting\IncomeSummaryController;
 use App\Http\Controllers\Reporting\MonthlyConsolidatedReportController;
 use App\Http\Controllers\Reporting\NonContributingMembersController;
@@ -118,6 +120,7 @@ Route::group(['middleware' => ['api'], 'prefix' => 'system'], function () {
 });
 
 Route::controller(OrganisationController::class)->group(function() {
+    Route::get('organisations/public', 'index');
     Route::get('organisations/slugs', 'slugs');
     Route::get('organisations/recommended', 'recommended');
 });
@@ -134,6 +137,13 @@ Route::prefix('organisations/{org_slug}')->middleware('multi-tenant-no-auth')->g
     Route::post('/member_accounts', [MemberAccountController::class, 'store']);
     Route::post('/organisation_members', [OrganisationMemberController::class, 'store']);
     Route::get('/organisation_members/{id}', [OrganisationMemberController::class, 'registrant']);
+    Route::get('/organisation_members', [OrganisationMemberController::class, 'index']);
+
+    Route::post('/memberships', [OrganisationMemberController::class, 'store']);
+    Route::delete('/memberships/{id}', [OrganisationMemberController::class, 'destroyMembership']);
+    Route::get('/memberships/{id}', [OrganisationMemberController::class, 'registrant']);
+    Route::get('/memberships', [OrganisationMemberController::class, 'index']);
+    Route::get('/membership_categories', [OrganisationMemberCategoryController::class, 'index']);
 });
 
 /**
@@ -142,9 +152,16 @@ Route::prefix('organisations/{org_slug}')->middleware('multi-tenant-no-auth')->g
 Route::middleware(['auth:api'])->group(function () {
 
     Route::get('member_accounts/{id}/organisations', [MemberAccountController::class, 'organisations']);
+
     Route::get('members/{id}/organisations', [MemberController::class, 'organisations']);
+    Route::get('members/{id}/memberships', [MemberController::class, 'memberships']);
+    Route::get('members/{id}/upcoming-events', [MemberController::class, 'upcomingEvents']);
+    Route::get('members/{id}/past-events', [MemberController::class, 'pastEvents']);
+
     Route::get('organisation_accounts/{organisation_id}/{member_account_id}', [OrganisationAccountController::class, 'userAccount']);
     Route::post('organisations/{id}/logo', [OrganisationLogoController::class, 'update']);
+
+    Route::post('events/{event}/register', EventRegistrationController::class);
 
     Route::apiResource('banks', BankController::class);
     Route::apiResource('countries', CountryController::class);
@@ -189,7 +206,7 @@ Route::middleware(['auth:api'])->group(function () {
  */
 Route::middleware(['auth:api', 'multi-tenant'])->group(function () {
     Route::controller(OrganisationMemberController::class)->group(function () {
-        Route::get('organisations/{id}/memberships/statistics', 'statistics');
+        Route::get('organisation_members/statistics', 'statistics');
         Route::get('organisation_members/unapproved', 'unapproved');
     });
 
@@ -271,6 +288,7 @@ Route::middleware(['auth:api', 'multi-tenant'])->group(function () {
         Route::get('/income_summary', IncomeSummaryController::class);
         Route::get('/top_contributors', TopContributorsController::class);
         Route::get('/monthly_consolidated_report', MonthlyConsolidatedReportController::class);
+        Route::get('/contributors_by_type', ContributorsByTypeController::class);
     });
 
     Route::apiResource('/expenses', ExpenseController::class);

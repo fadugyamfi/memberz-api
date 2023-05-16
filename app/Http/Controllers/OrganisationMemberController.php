@@ -2,20 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrganisationMemberRequest;
+use App\Models\Member;
 use App\Models\Organisation;
 use App\Models\OrganisationMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use LaravelApiBase\Http\Controllers\ApiController;
+use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
 /**
  * @group Organisation Members
  */
-class OrganisationMemberController extends ApiController
+class OrganisationMemberController extends Controller
 {
+
+    use ApiControllerBehavior {
+        store as apiStore;
+    }
+
     public function __construct(OrganisationMember $organisationMember)
     {
-        parent::__construct($organisationMember);
+        $this->setApiModel($organisationMember);
+    }
+
+    public function store(OrganisationMemberRequest $request)
+    {
+        if( !$request->input('member_id') ) {
+            $member = Member::firstOrCreate([
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'mobile_number' => phone($request->input('mobile_number'), 'GH')->formatE164(),
+                'gender' => $request->input('gender')
+            ], [
+                'dob' => $request->input('dob'),
+                'address' => $request->input('address'),
+                'source_organisation_id' => $request->input('organisation_id'),
+                'email' => $request->input('email'),
+                'occupation' => $request->input('occupation'),
+                'profession' => $request->input('profession'),
+                'marital_status' => $request->input('marital_status'),
+                'educational_bg' => $request->input('educational_bg'),
+                'place_of_birth' => $request->input('place_of_birth'),
+                'business_name' => $request->input('business_name')
+            ]);
+
+            $request->merge([
+                'member_id' => $member->id
+            ]);
+        }
+
+
+        return $this->apiStore($request);
     }
 
     /**
@@ -36,6 +74,14 @@ class OrganisationMemberController extends ApiController
         return response()->json(['error' => 'Could not find member record to delete'], 404);
     }
 
+    /**
+     * Delete Membership
+     */
+    public function destroyMembership($slug, $id)
+    {
+        return $this->destroy($id);
+    }
+
     // public function showByUuid(Request $request, $uuid) {
     //     $membership = OrganisationMember::where('uuid', $uuid)->first();
     // }
@@ -45,7 +91,7 @@ class OrganisationMemberController extends ApiController
      *
      * Returns a basic set of statistics about memberships
      */
-    public function statistics(int $organisation_id)
+    public function statistics()
     {
 
         $data = $this->Model::join(
@@ -58,7 +104,7 @@ class OrganisationMemberController extends ApiController
             DB::raw('count(organisation_members.id) as total')
         )
         ->groupBy('category_name')
-        ->where('organisation_members.organisation_id', $organisation_id)
+        // ->where('organisation_members.organisation_id', $organisation_id)
         ->get();
 
         return response()->json(['data' => $data]);

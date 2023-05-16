@@ -17,6 +17,10 @@ class OrganisationGroupObserver
         }
 
         foreach($leaders as $leader) {
+            if( empty($leader['organisation_member_id']) ) {
+                continue;
+            }
+
             OrganisationGroupLeader::updateOrCreate([
                 'id' => $leader['id'],
                 'organisation_member_id' => $leader['organisation_member_id'],

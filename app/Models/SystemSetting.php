@@ -8,6 +8,8 @@ class SystemSetting extends ApiModel
 {
     use HasCakephpTimestamps;
 
+    const SMS_CREDITS = 'sms_credits';
+
     /**
      * The database table used by the model.
      *
@@ -43,4 +45,14 @@ class SystemSetting extends ApiModel
      */
     protected $dates = ['created', 'modified'];
 
+    public static function deductSmsCredits($credits = 1) {
+        $setting = SystemSetting::where('name', self::SMS_CREDITS)->first();
+
+        if( $setting && $setting->value >= $credits ) {
+            $setting->value = intval($setting->value) - $credits;
+            $setting->save();
+        }
+
+        return $setting;
+    }
 }

@@ -22,8 +22,11 @@ class Member extends ApiModel
     protected $guarded = ['id'];
 
     protected $fillable = [
-        'title', 'first_name', 'middle_name', 'last_name', 'gender', 'dob', 'mobile_number', 'email', 'website', 'occupation', 'profession', 'business_name', 'active',
-        'nationality', 'place_of_birth', 'address'
+        'title', 'first_name', 'middle_name', 'last_name', 'maiden_name', 'gender', 'dob', 'mobile_number', 'email', 'website', 'occupation',
+        'profession', 'business_name', 'active', 'nationality', 'place_of_birth', 'address', 'marital_status', 'field_of_study',
+        'educational_bg', 'home_town', 'tribe', 'employment_status', 'social_security_no', 'position', 'residential_address', 'residential_city',
+        'residential_region', 'residential_district', 'business_address', 'business_region', 'business_city', 'business_district', 'residential_zip_code',
+        'business_zip_code'
     ];
 
     protected $appends = ['full_name', 'full_name_with_title', 'age'];
@@ -72,22 +75,24 @@ class Member extends ApiModel
     public function getFullNameAttribute()
     {
         return $this->middle_name
-        ? "{$this->first_name} {$this->middle_name} {$this->last_name}"
-        : "{$this->first_name} {$this->last_name}";
+            ? "{$this->first_name} {$this->middle_name} {$this->last_name}"
+            : "{$this->first_name} {$this->last_name}";
     }
 
     public function getFullNameWithTitleAttribute()
     {
         return $this->middle_name
-        ? "{$this->title} {$this->first_name} {$this->middle_name} {$this->last_name}"
-        : "{$this->title} {$this->first_name} {$this->last_name}";
+            ? "{$this->title} {$this->first_name} {$this->middle_name} {$this->last_name}"
+            : "{$this->title} {$this->first_name} {$this->last_name}";
     }
 
-    public function getAgeAttribute() {
+    public function getAgeAttribute()
+    {
         return $this->dob ? now()->diff($this->dob)->y : null;
     }
 
-    public function scopeActive(Builder $builder) : Builder {
+    public function scopeActive(Builder $builder): Builder
+    {
         return $builder->where('active', 1);
     }
 
@@ -98,20 +103,20 @@ class Member extends ApiModel
         return LogOptions::defaults()
             ->logAll()
             ->useLogName("member_profile")
-            ->setDescriptionForEvent(function($eventName) use($member) {
-                if( $eventName == 'created' ) {
+            ->setDescriptionForEvent(function ($eventName) use ($member) {
+                if ($eventName == 'created') {
                     return __('Added member profile for ":name"', [
                         'name' => $member->name
                     ]);
                 }
 
-                if( $eventName == 'updated' ) {
+                if ($eventName == 'updated') {
                     return __('Updated member profile for ":name"', [
                         'name' => $member->name
                     ]);
                 }
 
-                if( $eventName == 'deleted' ) {
+                if ($eventName == 'deleted') {
                     return __('Deleted member profile for ":name"', [
                         'name' => $member->name
                     ]);

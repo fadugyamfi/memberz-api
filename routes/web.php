@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\CsvController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,3 +27,5 @@ Route::prefix('jobs')->group(function () {
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 
 Route::get('/activities', [ActivityLogController::class, 'logs']);
+
+Route::get('/csv', [CsvController::class, 'index']);

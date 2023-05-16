@@ -7,7 +7,7 @@ return [
      */
     'connectbind' => [
         'username' => env('CONNECT_BIND_USERNAME', 'txg-memberzo'),
-        'password' => env('CONNECT_BIND_PASSWORD', 'SmsL0g1!'),
+        'password' => env('CONNECT_BIND_PASSWORD', 'MzSMS01!'),
         'fake_requests' => env('CONNECT_BIND_FAKER_ENABLED', false),
     ]
 ];
