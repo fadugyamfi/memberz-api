@@ -45,6 +45,7 @@ use App\Http\Controllers\OrganisationInvoicePaymentController;
 use App\Http\Controllers\OrganisationLogoController;
 use App\Http\Controllers\OrganisationMemberAnniversaryController;
 use App\Http\Controllers\OrganisationMemberCategoryController;
+use App\Http\Controllers\OrganisationMemberCategorySettingController;
 use App\Http\Controllers\OrganisationMemberController;
 use App\Http\Controllers\OrganisationMemberGroupController;
 use App\Http\Controllers\OrganisationMemberImportController;
@@ -243,6 +244,11 @@ Route::middleware(['auth:api', 'multi-tenant'])->group(function () {
     Route::apiResource('organisation_member_groups', OrganisationMemberGroupController::class);
     Route::apiResource('organisation_registration_forms', OrganisationRegistrationFormController::class);
     Route::apiResource('organisation_payment_platforms', OrganisationPaymentPlatformController::class);
+    Route::apiResource('organisation_member_category_settings', OrganisationMemberCategorySettingController::class)->parameters([
+        'organisation_member_category_settings' => 'setting'
+    ]);
+    Route::apiResource('organisation_anniversaries', OrganisationAnniversaryController::class);
+    Route::apiResource('organisation_member_anniversaries', OrganisationMemberAnniversaryController::class);
 
     Route::get('events/{event}/attendees', [EventController::class, 'attendees']);
     Route::get('events/statistics', [EventController::class, 'attendanceStatistics']);
@@ -279,9 +285,6 @@ Route::middleware(['auth:api', 'multi-tenant'])->group(function () {
         Route::get('/category_breakdown', 'categoryBreakdown');
         Route::get('/trend_report', 'getTrendReport');
     });
-
-    Route::apiResource('organisation_anniversaries', OrganisationAnniversaryController::class);
-    Route::apiResource('organisation_member_anniversaries', OrganisationMemberAnniversaryController::class);
 
     Route::prefix('finance_reporting')->group(function() {
         Route::get('/non_contributing_members', NonContributingMembersController::class);
