@@ -229,13 +229,14 @@ class SubscriptionManagementService {
      */
     public function createSubscription(int $organisationId, int $subscriptionTypeId, int $length, int $organisationInvoiceId = null) {
 
+        /** @var OrganisationSubscription $currentSubscription */
         $currentSubscription = Organisation::find($organisationId)->activeSubscription;
 
         $newStartDate = new DateTime();
         $newEndDate = new DateTime();
         $newEndDate->add( new DateInterval("P{$length}M") );
 
-        $currentSubEndDate = $currentSubscription ? new DateTime( $currentSubscription->end_dt ) : new DateTime();
+        $currentSubEndDate = $currentSubscription?->isBillable() ? new DateTime( $currentSubscription->end_dt ) : new DateTime();
         $now = new DateTime();
 
         // if current subscription date has not elapsed
@@ -247,9 +248,7 @@ class SubscriptionManagementService {
 
             Log::debug("Remaining Sub Days: {$days}, New Sub Days: {$newDays}");
 
-            if( abs($newDays - $days) > OrganisationSubscription::MIN_ALLOWED_PRORATE_DAYS ) {
-                $newEndDate->add( new DateInterval("P{$days}D") );
-            }
+            $newEndDate->add( new DateInterval("P{$days}D") );
         }
 
         // create new subscription record
