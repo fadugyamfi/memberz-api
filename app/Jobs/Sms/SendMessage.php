@@ -63,6 +63,13 @@ class SendMessage implements ShouldQueue
             return;
         }
 
+        if( !$this->smsMessage->smsAccount->active ) {
+            Log::debug("SMS Account Not Active For Sender ID '{$this->smsMessage->smsAccount->sender_id}'. Ignoring message to {$this->smsMessage->to}");
+            $smsAccountMessage->updateSentStatus("Send Failed. Sms Account Inactive", 0);
+            activity('sms')->log('SMS messaging failed. SMS Account Inactive');
+            return;
+        }
+
         activity()->withoutLogs(function() use($obs, $smsAccountMessage) {
             $smsService = app(SmsServiceProvider::class);
 
