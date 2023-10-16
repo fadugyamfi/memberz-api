@@ -26,7 +26,7 @@ class SmsAccount extends ApiModel
      *
      * @var array
      */
-    protected $fillable = ['organisation_id', 'sender_id', 'account_balance', 'bonus_balance', 'created', 'modified', 'active'];
+    protected $fillable = ['organisation_id', 'sender_id', 'account_balance', 'bonus_balance', 'sender_id_approved', 'created', 'modified', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -152,5 +152,15 @@ class SmsAccount extends ApiModel
                     ]);
                 }
             });
+    }
+
+    public function senderIdApproved() {
+        return $this->sender_id_approved == 1;
+    }
+
+    public static function isApprovedSenderId(string $senderId) {
+        $account = SmsAccount::where('sender_id', $senderId)->first();
+
+        return $account && $account->senderIdApproved();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Jobs\Sms;
 
+use App\Models\SmsAccount;
 use App\Models\SmsAccountMessage;
 use App\Models\SystemSetting;
 use App\Services\ConnectBindSmsService;
@@ -65,11 +66,15 @@ class SendMessage implements ShouldQueue
         activity()->withoutLogs(function() use($obs, $smsAccountMessage) {
             $smsService = app(SmsServiceProvider::class);
 
-            $response = $smsService->send(
-                $this->smsMessage->to,
-                $this->smsMessage->message,
-                $this->smsMessage->sender_id ?? $this->smsMessage->smsAccount?->sender_id
-            );
+            $message = $this->smsMessage->message;
+            $senderId = $this->smsMessage->sender_id ?? $this->smsMessage->smsAccount?->sender_id;
+
+            if( !SmsAccount::isApprovedSenderId($senderId) ) {
+                $message = "From {$senderId}\n\n{$message}";
+                $senderId = 'Memberz.Org';
+            }
+
+            $response = $smsService->send($this->smsMessage->to, $message, $senderId);
 
             $obs->processResponse($smsAccountMessage, $response);
         });
