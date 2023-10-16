@@ -5,6 +5,7 @@ namespace App\Jobs\Sms;
 use App\Models\SmsAccountMessage;
 use App\Models\SystemSetting;
 use App\Services\ConnectBindSmsService;
+use App\Services\Sms\SmsServiceProvider;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -62,7 +63,7 @@ class SendMessage implements ShouldQueue
         }
 
         activity()->withoutLogs(function() use($obs, $smsAccountMessage) {
-            $smsService = new ConnectBindSmsService();
+            $smsService = app(SmsServiceProvider::class);
 
             $response = $smsService->send(
                 $this->smsMessage->to,
