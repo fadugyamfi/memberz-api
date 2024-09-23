@@ -20,7 +20,7 @@ class OrganisationFactory extends Factory
         return [
             'name' => fake()->text(50),
             'organisation_type_id' => OrganisationType::inRandomOrder()->first()?->id ?? 1,
-            'country_id' => 80
+            'country_id' => 80,
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace Database\Factories\Events;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Events\Calendar;
+use App\Models\Organisation;
 use DateInterval;
 use Illuminate\Support\Str;
 
@@ -19,22 +20,21 @@ class EventFactory extends Factory
      */
     public function definition()
     {
-        $calendar = Calendar::factory()->create();
-        $eventName = $this->faker->name();
+        $eventName = fake()->name();
         $startDate = now();
         $endDate = now()->add( new DateInterval('P1D'));
 
         return [
-            'organisation_id' => 1,
-            'organisation_calendar_id' => $calendar->id,
-            'event_name' => $this->faker->name(),
+            'organisation_id' => Organisation::factory(),
+            'organisation_calendar_id' => Calendar::factory(),
+            'event_name' => fake()->name(),
             'slug' => Str::slug($eventName),
-            'short_description' => $this->faker->text(100),
-            'long_description' => $this->faker->text(200),
+            'short_description' => fake()->text(100),
+            'long_description' => fake()->text(200),
             'start_dt' => $startDate->format('Y-m-d'),
             'end_dt' => $endDate->format('Y-m-d'),
             'all_day' => 0,
-            'venue' => $this->faker->name(),
+            'venue' => fake()->name(),
         ];
     }
 }

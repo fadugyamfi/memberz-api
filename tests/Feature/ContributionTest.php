@@ -20,6 +20,8 @@ class ContributionTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        Mail::fake();
     }
 
     /**
@@ -29,8 +31,6 @@ class ContributionTest extends TestCase
      */
     public function testCanFindContributionByReceiptNo()
     {
-
-        Mail::fake();
 
         $user = MemberAccount::factory()->create();
 
@@ -60,11 +60,8 @@ class ContributionTest extends TestCase
         ]);
 
         $response->assertStatus(200)
-            ->assertJson([
-                'data' => [
-                    ['receipt_no' => $receipt->receipt_no]
-                ]
-            ]);
+            ->assertJson([ 'data' => [ ['receipt_no' => $receipt->receipt_no] ] ])
+            ->assertJsonCount($contributions->count(), 'data');;
     }
 
     /**
@@ -72,25 +69,41 @@ class ContributionTest extends TestCase
      *
      * @return void
      */
-    // public function testCanFindContributionByReceiptDate()
-    // {
-    //     Mail::fake();
+    public function testCanFindContributionByReceiptDate()
+    {
+        $user = MemberAccount::factory()->create();
 
-    //     $user = MemberAccount::factory()->create();
-    //     $organisation = Organisation::factory()->create([
-    //         'member_account_id' => $user->id
-    //     ]);
+        $organisation = Organisation::factory()->create([
+            'name' => 'Contribution Test Org',
+            'member_account_id' => $user->id
+        ]);
 
-    //     $response = $this->actingAs($user, 'api')->withHeaders([
-    //         'X-Tenant-Id' => $organisation->uuid
-    //     ])->getJson('/api/contributions', [
-    //         'receipt_dt' => date('Y-m-d')
-    //     ]);
+        $membership = OrganisationMember::factory()->recycle( collect([$organisation, $user->member]) )->create();
 
-    //     $response->assertStatus(200)->assertJson([
-    //         'data' => [
-    //             ['receipt_dt' => date('Y-m-d')]
-    //         ]
-    //     ]);
-    // }
+        $contributionType = ContributionType::factory()->recycle($organisation)->create([
+            'name' => 'Monthly Dues'
+        ]);
+
+        $today = date('Y-m-d');
+
+        $receipt = ContributionReceipt::factory()->recycle($organisation)->create([
+            'organisation_account_id' => $organisation->organisationAccounts()->first()?->id,
+            'receipt_dt' => $today
+        ]);
+
+        $contributions = Contribution::factory(2)->recycle( 
+            collect([$organisation, $receipt, $membership, $contributionType]) 
+        )->create();
+
+
+        $response = $this->actingAs($user, 'api')->withHeaders([
+            'X-Tenant-Id' => $organisation->uuid
+        ])->getJson('/api/contributions', [
+            'receipt_dt' => $today
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJson(['data' => [ ['receipt_dt' => $today] ]])
+            ->assertJsonCount($contributions->count(), 'data');
+    }
 }
