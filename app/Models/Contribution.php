@@ -6,13 +6,14 @@ use App\Traits\SoftDeletesWithActiveFlag;
 use App\Traits\HasCakephpTimestamps;
 use App\Traits\LogModelActivity;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Http\Request;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
 class Contribution extends ApiModel
 {
-    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity, HasFactory;
 
     /**
      * The database table used by the model.
@@ -48,6 +49,8 @@ class Contribution extends ApiModel
      * @var array
      */
     protected $dates = ['created', 'modified'];
+
+    public $shouldSendSmsNotification = false;
 
     public function organisation() {
         return $this->belongsTo(Organisation::class);

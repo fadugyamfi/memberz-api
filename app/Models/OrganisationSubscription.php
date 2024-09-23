@@ -41,7 +41,12 @@ class OrganisationSubscription extends Model implements ApiModelInterface
      *
      * @var array
      */
-    protected $casts = ['current' => 'boolean'];
+    protected $casts = [
+        'current' => 'boolean',
+        'start_dt' => 'datetime',
+        'end_dt' => 'datetime',
+        'last_renewal_notice_dt' => 'datetime'
+    ];
 
     /**
      * The attributes that should be mutated to dates.

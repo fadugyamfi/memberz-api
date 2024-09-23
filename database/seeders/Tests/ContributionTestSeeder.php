@@ -34,7 +34,8 @@ class ContributionTestSeeder extends Seeder
             'currency_id' => 80
         ]);
 
-        Contribution::create([
+        $contribution = new Contribution();
+        $contribution->fill([
             'organisation_id' => $organisation->id,
             'organisation_member_id' => $organisation->organisationMembers()->first()->id,
             'module_contribution_type_id' => $contributionType->id,
@@ -54,5 +55,6 @@ class ContributionTestSeeder extends Seeder
             // 'modified',
             'active' => 1
         ]);
+        $contribution->save();
     }
 }

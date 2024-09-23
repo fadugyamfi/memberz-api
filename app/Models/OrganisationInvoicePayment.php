@@ -39,7 +39,7 @@ class OrganisationInvoicePayment extends Model implements ApiModelInterface
      *
      * @var array
      */
-    protected $casts = ['deleted' => 'boolean'];
+    protected $casts = ['deleted' => 'boolean', 'payment_date' => 'date'];
 
     /**
      * The attributes that should be mutated to dates.

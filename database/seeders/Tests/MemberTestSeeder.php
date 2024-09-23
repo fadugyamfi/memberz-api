@@ -5,6 +5,7 @@ namespace Database\Seeders\Tests;
 use App\Models\Member;
 use App\Models\MemberAccount;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class MemberTestSeeder extends Seeder
 {
@@ -41,7 +42,7 @@ class MemberTestSeeder extends Seeder
             'username' => $member->email,
         ],[
             'member_id' => $member->id,
-            'password' => bcrypt('memberz1234'),
+            'password' => Hash::make('memberz1234'),
             'mobile_number' => $member->mobile_number
         ]);
     }

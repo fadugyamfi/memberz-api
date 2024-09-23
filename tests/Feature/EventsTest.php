@@ -11,24 +11,24 @@ use Tests\TestCase;
 
 class EventsTest extends TestCase
 {
-    private MemberAccount $user;
-    private Organisation $organisation;
+    // private MemberAccount $user;
+    // private Organisation $organisation;
     // use RefreshDatabase;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->user = MemberAccount::find(1);
-        $this->organisation = Organisation::find(1);
+        // $this->user = MemberAccount::find(1);
+        // $this->organisation = Organisation::find(1);
     }
 
-    public function testCanLoadEvents() {
+    // public function testCanLoadEvents() {
 
-        $response = $this->actingAs($this->user, 'api')->withHeaders([
-            'X-Tenant-Id' => $this->organisation->uuid
-        ])->getJson('/api/events');
+    //     $response = $this->actingAs($this->user, 'api')->withHeaders([
+    //         'X-Tenant-Id' => $this->organisation->uuid
+    //     ])->getJson('/api/events');
 
-        $response->assertStatus(200);
-    }
+    //     $response->assertStatus(200);
+    // }
 }

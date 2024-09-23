@@ -45,7 +45,15 @@ class Event extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['all_day' => 'boolean', 'registration_enabled' => 'boolean', 'attendee_self_reporting' => 'boolean', 'require_session_code' => 'boolean', 'active' => 'boolean'];
+    protected $casts = [
+        'all_day' => 'boolean', 
+        'registration_enabled' => 'boolean', 
+        'attendee_self_reporting' => 'boolean', 
+        'require_session_code' => 'boolean', 
+        'active' => 'boolean',
+        'start_dt' => 'datetime',
+        'end_dt' => 'datetime'
+    ];
 
     /**
      * The attributes that should be mutated to dates.

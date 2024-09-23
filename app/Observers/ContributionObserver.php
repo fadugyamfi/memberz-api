@@ -2,17 +2,12 @@
 
 namespace App\Observers;
 
+use App\Jobs\SendSMSReceipt;
 use App\Models\ContributionReceipt;
 use App\Models\Contribution;
 use App\Models\ContributionReceiptSetting;
 use App\Models\ContributionSummary;
-use App\Models\MemberAccount;
-use App\Models\SmsAccount;
-use App\Models\SmsAccountMessage;
-use DateTime;
 use Exception;
-use Log;
-use NunoMazer\Samehouse\Facades\Landlord;
 
 class ContributionObserver
 {
@@ -27,6 +22,8 @@ class ContributionObserver
         if( $contribution->module_contribution_receipt_id ) {
             return;
         }
+
+        $contribution->shouldSendSmsNotification = $this->shouldSendSmsNotification();
 
         $receipt = $this->createReceipt($contribution);
 
@@ -52,7 +49,8 @@ class ContributionObserver
             $existingSummaryRecord->save();
         }
 
-        $this->sendSMSReceipt($contribution, auth()->user());
+        // attempt sending an sms notification. Will cancel out if conditions are not met
+        SendSMSReceipt::dispatchSync($contribution);
     }
 
     public function updated(Contribution $contribution) {
@@ -109,79 +107,5 @@ class ContributionObserver
         return $sendSmsNotification != null && $sendSmsNotification == true;
     }
 
-    private function organisationSmsNotificationSettingEnabled(int $organisation_id) {
-        $receiptSettings = ContributionReceiptSetting::first();
-        $smsAccount = SmsAccount::getAccount( $organisation_id );
-
-        return $receiptSettings && $receiptSettings->sms_notify && $smsAccount;
-    }
-
-    private function sendSMSReceipt(Contribution $contribution, MemberAccount $user) {
-        if(
-            !$contribution->isMemberSpecific() ||
-            !$this->shouldSendSmsNotification() ||
-            !$this->organisationSmsNotificationSettingEnabled($contribution->organisation_id)
-        ) {
-            return;
-        }
-
-        $receipt = $contribution->contributionReceipt;
-        $membership = $contribution->organisationMember;
-        $txn = $contribution->description ?? $contribution->contributionType->name . ' Payment';
-        $paymentType = $contribution->contributionPaymentType;
-
-        $periods = $this->getContributionPeriods($contribution);
-
-        $message = "Dear {$membership->member->first_name} \n"
-            . "Your Payment Receipt \n"
-            . "Txn: {$txn}\n"
-            . "Amt: {$contribution->currency->currency_code} " . number_format($contribution->amount, 2) . "\n"
-            . "Receipt No: {$receipt->receipt_no}\n"
-            . "Type: {$paymentType->name}\n"
-            . "Period: {$periods}\n"
-            . "Date: " . date('d M, Y', strtotime($receipt->receipt_dt)) . "\n\n"
-            . "Thank you!";
-
-        try {
-            SmsAccountMessage::createNew($user, $contribution->organisationMember, $message);
-        } catch(Exception $e) {
-            Log::error("Cannot send SMS Receipt: " . $e->getMessage() );
-        }
-    }
-
-    private function getContributionPeriods(Contribution $contribution): string {
-        $start_dt = null;
-        $periods = null;
-        $start_month = null;
-        $start_year = null;
-        $end_month = null;
-        $end_year = null;
-
-        if( $start_dt == null ) {
-            $start_dt = new DateTime("{$contribution->year}-{$contribution->month}-01");
-            $start_month = $contribution->month;
-            $start_year = $contribution->year;
-        }
-
-        $current_dt = new DateTime("{$contribution->year}-{$contribution->month}-01");
-
-        // cache period info
-        if( $current_dt < $start_dt ) {
-            $start_month = $contribution->month;
-            $start_year = $contribution->year;
-        }
-
-        else if( $current_dt > $start_dt ) {
-            $end_month = $contribution->month;
-            $end_year = $contribution->year;
-        }
-
-        if( $end_month > $start_month || $end_year > $start_year ) {
-            $periods = date('M Y', strtotime("$start_year-$start_month-01")) . " - " . date('M Y', strtotime("$end_year-$end_month-01"));
-        } else {
-            $periods = date('M Y', strtotime("$start_year-$start_month-01"));
-        }
-
-        return $periods;
-    }
+    
 }

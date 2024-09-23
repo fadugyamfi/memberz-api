@@ -38,6 +38,7 @@ class AuthController extends Controller
         $credentials  = $this->getLoginCredentials($request);
 
         if (!$token = auth()->attempt($credentials)) {
+            Log::debug("Standard login attempt failed. Trying old login format");
             return $this->oldLoginAttempt($request);
         }
 
@@ -80,12 +81,14 @@ class AuthController extends Controller
         $account = MemberAccount::where('username', $credentials['username'])->where('active', 1)->first();
 
         if (!$account) {
+            Log::debug("OLD Login: Account not found for username");
             return response()->json(['error' => 'Unauthorized', 'message' => 'Account not found'], 404);
         }
 
         $credentials['password'] = md5($credentials['password'] . $account->pass_salt);
 
         if (!$token = auth()->attempt($credentials)) {
+            Log::debug("OLD Login: Account found, password could not be validated");
             $this->authLogger->logLoginFailure($account);
             return response()->json(['error' => 'Unauthorized', 'message' => 'Old login credentials invalid'], 401);
         }

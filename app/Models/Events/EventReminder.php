@@ -3,6 +3,7 @@
 namespace App\Models\Events;
 
 use App\Models\ApiModel;
+use App\Models\Organisation;
 use App\Models\OrganisationMemberCategory;
 use App\Models\SmsBroadcastList;
 use App\Traits\HasCakephpTimestamps;
@@ -41,7 +42,9 @@ class EventReminder extends ApiModel
      *
      * @var array
      */
-    protected $casts = [];
+    protected $casts = [
+        'reminder_dt' => 'datetime'
+    ];
 
     /**
      * The attributes that should be mutated to dates.

@@ -41,7 +41,11 @@ class SmsBroadcast extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['sent' => 'boolean', 'active' => 'boolean'];
+    protected $casts = [
+        'sent' => 'boolean', 
+        'active' => 'boolean',
+        'send_at' => 'datetime'
+    ];
 
     /**
      * The attributes that should be mutated to dates.

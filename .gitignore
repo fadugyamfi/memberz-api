@@ -13,3 +13,6 @@ yarn-error.log
 packages
 laravel-excel
 .scribe
+.phpunit.cache/test-results
+phpunit.xml.bak
+.vscode/settings.json

@@ -37,7 +37,7 @@ class OrganisationMemberAnniversary extends ApiModel
      *
      * @var array
      */
-    protected $casts = [];
+    protected $casts = ['value' => 'date'];
 
     /**
      * The attributes that should be mutated to dates.

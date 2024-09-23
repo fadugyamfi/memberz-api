@@ -32,7 +32,12 @@ class OrganisationRegistrationForm extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['form_enabled' => 'boolean', 'excluded_stardard_fields' => 'array', 'custom_fields' => 'array'];
+    protected $casts = [
+        'form_enabled' => 'boolean', 
+        'excluded_stardard_fields' => 'array', 
+        'custom_fields' => 'array',
+        'expiration_dt' => 'date'
+    ];
 
     /**
      * The attributes that should be mutated to dates.

@@ -5,10 +5,11 @@ namespace App\Models;
 use App\Traits\SoftDeletesWithActiveFlag;
 use App\Traits\HasCakephpTimestamps;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use NunoMazer\Samehouse\BelongsToTenants;
 class ContributionReceipt extends ApiModel
 {
-    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestamps;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestamps, HasFactory;
 
     /**
      * The database table used by the model.
@@ -36,7 +37,7 @@ class ContributionReceipt extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['active' => 'boolean'];
+    protected $casts = ['active' => 'boolean', 'receipt_dt' => 'date'];
 
     /**
      * The attributes that should be mutated to dates.

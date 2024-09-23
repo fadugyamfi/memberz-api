@@ -9,11 +9,12 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Member extends ApiModel
 {
 
-    use HasCakephpTimestamps, LogModelActivity; // SoftDeletesWithActiveFlag,
+    use HasCakephpTimestamps, LogModelActivity, HasFactory; // SoftDeletesWithActiveFlag,
 
     protected $table = 'members';
 
