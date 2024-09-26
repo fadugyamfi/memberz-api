@@ -106,4 +106,46 @@ class ContributionTest extends TestCase
             ->assertJson(['data' => [ ['receipt_dt' => $today] ]])
             ->assertJsonCount($contributions->count(), 'data');
     }
+
+        /**
+     * Testing if search by receipt_dt works.
+     *
+     * @return void
+     */
+    public function testCanLoadContributions()
+    {
+        $user = MemberAccount::factory()->create();
+
+        $organisation = Organisation::factory()->create([
+            'name' => 'Contribution Load Test Org',
+            'member_account_id' => $user->id
+        ]);
+
+        $membership = OrganisationMember::factory()->recycle( collect([$organisation, $user->member]) )->create();
+
+        $contributionType = ContributionType::factory()->recycle($organisation)->create([
+            'name' => 'Load Type'
+        ]);
+
+        $today = date('Y-m-d');
+
+        $receipt = ContributionReceipt::factory()->recycle($organisation)->create([
+            'organisation_account_id' => $organisation->organisationAccounts()->first()?->id,
+            'receipt_dt' => $today
+        ]);
+
+        $contributions = Contribution::factory(2)->recycle( 
+            collect([$organisation, $receipt, $membership, $contributionType]) 
+        )->create();
+
+
+        $response = $this->actingAs($user, 'api')->withHeaders([
+            'X-Tenant-Id' => $organisation->uuid
+        ])->getJson('/api/contributions', [
+            'sort' => 'latest',
+            'contain' => 'organisation_member.member'
+        ]);
+
+        $response->assertStatus(200);
+    }
 }

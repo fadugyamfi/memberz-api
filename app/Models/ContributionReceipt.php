@@ -37,7 +37,10 @@ class ContributionReceipt extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['active' => 'boolean', 'receipt_dt' => 'date'];
+    protected $casts = [
+        'active' => 'boolean', 
+        'receipt_dt' => 'date'
+    ];
 
     /**
      * The attributes that should be mutated to dates.
