@@ -94,18 +94,18 @@ use Illuminate\Support\Facades\Route;
 
 /** Unauthenticated auth routes */
 Route::prefix('auth')->group(function () {
-    Route::post('forgot-password', ForgotPasswordController::class);
-    Route::post('reset-password', ResetPasswordController::class);
-    Route::post('register', RegisterController::class);
-    Route::post('login', [AuthController::class, 'login']);
-    Route::get('verify/{token}', VerifyEmailController::class);
-    Route::post('2fa-validate', [AuthController::class, 'twoFaValidate']);
+    Route::post('forgot-password', ForgotPasswordController::class)->name('auth.forgot-password');
+    Route::post('reset-password', ResetPasswordController::class)->name('route.reset-password');
+    Route::post('register', RegisterController::class)->name('auth.register');
+    Route::post('login', [AuthController::class, 'login'])->name('auth.login');
+    Route::get('verify/{token}', VerifyEmailController::class)->name('auth.verify');
+    Route::post('2fa-validate', [AuthController::class, 'twoFaValidate'])->name('auth.two-factor-auth');
 
     /** Authenticated auth routes */
     Route::middleware(['api'])->group(function () {
-        Route::post('logout', [AuthController::class, 'logout']);
-        Route::post('refresh', [AuthController::class, 'refresh']);
-        Route::get('me', [AuthController::class, 'me']);
+        Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');
+        Route::post('refresh', [AuthController::class, 'refresh'])->name('auth.refresh');
+        Route::get('me', [AuthController::class, 'me'])->name('auth.me');
     });
 });
 
