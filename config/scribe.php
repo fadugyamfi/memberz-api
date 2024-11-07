@@ -9,12 +9,12 @@ return [
     /*
      * The HTML <title> for the generated documentation. If this is empty, Scribe will infer it from config('app.name').
      */
-    'title' => null,
+    'title' => 'Memberz.Org API',
 
     /*
      * A short description of your API. Will be included in the docs webpage, Postman collection and OpenAPI spec.
      */
-    'description' => '',
+    'description' => 'API Endpoints for the Memberz.Org service',
 
     /*
      * The base URL displayed in the docs. If this is empty, Scribe will use the value of config('app.url').
@@ -144,6 +144,10 @@ return [
          * Middleware to attach to the docs endpoint (if `add_routes` is true).
          */
         'middleware' => [],
+        // Directory within `public` in which to store CSS and JS assets.
+        // By default, assets are stored in `public/vendor/scribe`.
+        // If set, assets will be stored in `public/{{assets_directory}}`
+        'assets_directory' => null,
     ],
 
     'try_it_out' => [
@@ -205,13 +209,13 @@ return [
          * Placeholder your users will see for the auth parameter in the example requests.
          * Set this to null if you want Scribe to use a random value as placeholder instead.
          */
-        'placeholder' => '{token}',
+        'placeholder' => '{auth-token}',
 
         /*
          * Any extra authentication-related info for your users. For instance, you can describe how to find or generate their auth credentials.
          * Markdown and HTML are supported.
          */
-        'extra_info' => 'You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.',
+        'extra_info' => 'Generate an auth token by calling the login endpoint with a valid username and password combo',
     ],
 
     /*
@@ -273,11 +277,6 @@ INTRO
     ],
 
     /*
-     * Endpoints which don't have a @group will be placed in this default group.
-     */
-    'default_group' => 'Endpoints',
-
-    /*
      * Custom logo path. This will be used as the value of the src attribute for the <img> tag,
      * so make sure it points to an accessible URL or path. Set to false to not use a logo.
      *
@@ -287,12 +286,6 @@ INTRO
      *
      */
     'logo' => false,
-
-    /*
-     * If you would like the package to generate the same example values for parameters on each run,
-     * set this to any number (eg. 1234)
-     */
-    'faker_seed' => null,
 
     /**
      * The strategies Scribe will use to extract information about your routes at each stage.
@@ -352,5 +345,30 @@ INTRO
      * Tell Scribe which connections should be transacted here.
      * If you only use one db connection, you can leave this as is.
      */
-    'database_connections_to_transact' => [config('database.default')]
+    'database_connections_to_transact' => [config('database.default')],
+    'external' => ['html_attributes' => []],
+    'groups' => [
+        // Endpoints which don't have a @group will be placed in this default group.
+        'default' => 'Endpoints',
+        // By default, Scribe will sort groups alphabetically, and endpoints in the order their routes are defined.
+        // You can override this by listing the groups, subgroups and endpoints here in the order you want them.
+        // See https://scribe.knuckles.wtf/blog/laravel-v4#easier-sorting and https://scribe.knuckles.wtf/laravel/reference/config#order for details
+        'order' => [],
+    ],
+    // Customize the "Last updated" value displayed in the docs by specifying tokens and formats.
+    // Examples:
+    // - {date:F j Y} => March 28, 2022
+    // - {git:short} => Short hash of the last Git commit
+    // Available tokens are `{date:<format>}` and `{git:<format>}`.
+    // The format you pass to `date` will be passed to PHP's `date()` function.
+    // The format you pass to `git` can be either "short" or "long".
+    'last_updated' => 'Last updated: {date:F j, Y}',
+    'examples' => [
+        // Set this to any number (eg. 1234) to generate the same example values for parameters on each run,
+        'faker_seed' => null,
+        // With API resources and transformers, Scribe tries to generate example models to use in your API responses.
+        // By default, Scribe will try the model's factory, and if that fails, try fetching the first from the database.
+        // You can reorder or remove strategies here.
+        'models_source' => ['factoryCreate', 'factoryMake', 'databaseFirst'],
+    ]
 ];

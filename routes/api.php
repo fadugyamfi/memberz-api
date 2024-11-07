@@ -34,6 +34,7 @@ use App\Http\Controllers\Membership\BirthdayController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrganisationAccountController;
 use App\Http\Controllers\OrganisationAnniversaryController;
+use App\Http\Controllers\OrganisationBranchController;
 use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\OrganisationFileImportController;
 use App\Http\Controllers\OrganisationGroupController;
@@ -227,6 +228,7 @@ Route::middleware(['auth:api', 'multi-tenant'])->group(function () {
     });
 
     Route::apiResource('organisation_accounts', OrganisationAccountController::class);
+    Route::apiResource('organisation_branches', OrganisationBranchController::class);
     Route::apiResource('organisation_file_imports', OrganisationFileImportController::class);
     Route::apiResource('organisation_members', OrganisationMemberController::class)->names('api.organisation_members');
     Route::apiResource('organisation_member_categories', OrganisationMemberCategoryController::class);

@@ -23,6 +23,7 @@
         "romanzipp/laravel-queue-monitor": "^5.0.0",
         "spatie/laravel-activitylog": "^4.8",
         "spatie/laravel-permission": "^6.7.0",
+        "spatie/laravel-tags": "^4.7",
         "staudenmeir/laravel-adjacency-list": "^1.22"
     },
     "require-dev": {

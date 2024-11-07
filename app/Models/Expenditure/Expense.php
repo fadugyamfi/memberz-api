@@ -72,7 +72,7 @@ class Expense extends ApiModel
 
     public function account()
     {
-        return $this->belongsTo(Account::class);
+        return $this->belongsTo(ExpenseAccount::class);
     }
 
     public function currency()
@@ -87,7 +87,7 @@ class Expense extends ApiModel
 
     public function getActivitylogOptions(): LogOptions
     {
-        $amount = $this->currency->currency_code . ' '. $this->amount;
+        $amount = $this->currency?->currency_code . ' '. $this->amount;
         $expenseType = $this->expenseType->name;
 
         return LogOptions::defaults()
