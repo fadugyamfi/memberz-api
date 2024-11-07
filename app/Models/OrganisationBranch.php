@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use LaravelApiBase\Models\ApiModelBehavior;
+use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Tags\HasTags;
 
 class OrganisationBranch extends ApiModel
 {
     use HasFactory;
     use HasTags;
+    use BelongsToTenants;
 
     protected $table = 'organisation_branches';
 

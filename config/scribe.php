@@ -65,7 +65,7 @@ return [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
-                'X-Tenant-ID' => env('SCRIBE_TENANT_ID')
+                'X-Tenant-ID' => '{{tenant_id}}'
             ],
             /*
              * If no @response or @transformer declarations are found for the route,
