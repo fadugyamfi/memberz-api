@@ -45,7 +45,11 @@ class SmsAccountMessage extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['bday_msg' => 'boolean', 'active' => 'boolean'];
+    protected $casts = [
+        'bday_msg' => 'boolean', 
+        'active' => 'boolean',
+        'sent_at' => 'datetime'
+    ];
 
     /**
      * The attributes that should be mutated to dates.

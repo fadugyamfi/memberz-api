@@ -40,7 +40,10 @@ class ExpenseAccountBalance extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['deleted' => 'boolean'];
+    protected $casts = [
+        'deleted' => 'boolean',
+        'balance_dt' => 'datetime'
+    ];
 
     /**
      * The attributes that should be mutated to dates.

@@ -40,7 +40,11 @@ class OrganisationInvoice extends Model implements ApiModelInterface
      *
      * @var array
      */
-    protected $casts = ['paid' => 'boolean', 'deleted' => 'boolean'];
+    protected $casts = [
+        'paid' => 'boolean', 
+        'deleted' => 'boolean',
+        'due_date' => 'date:Y-m-d'
+    ];
 
     /**
      * The attributes that should be mutated to dates.
@@ -96,5 +100,14 @@ class OrganisationInvoice extends Model implements ApiModelInterface
 
     public function hasInvoiceNumber() {
         return !empty($this->invoice_no);
+    }
+
+    public function markPaid() {
+        $this->paid = 1;
+        $this->save();
+    }
+
+    public function isPaid() {
+        return $this->paid == 1;
     }
 }

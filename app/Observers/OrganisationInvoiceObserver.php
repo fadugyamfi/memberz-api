@@ -47,15 +47,7 @@ class OrganisationInvoiceObserver
                 }
             }
 
-            $this->applySmsCreditTopup($organisationInvoice);
+            $organisationInvoice->smsAccountTopup?->credit();
         }
-    }
-
-    public function applySmsCreditTopup(OrganisationInvoice $invoice) {
-        if( !$invoice->smsAccountTopup ) {
-            return;
-        }
-
-        $invoice->smsAccountTopup->credit();
     }
 }

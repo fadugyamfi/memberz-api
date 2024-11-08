@@ -7,6 +7,9 @@ return [
     'table' => 'queue_monitor',
     'connection' => null,
 
+    // Determined if the queued jobs should be monitored
+    'monitor_queued_jobs' => true,
+
     /*
      * Set the model used for monitoring.
      * If using a custom model, be sure to implement the
@@ -25,31 +28,40 @@ return [
      * The optional UI settings.
      */
     'ui' => [
+        'enabled' => true,
+
+        // Accepts route group configuration
+        'route' => [
+            'prefix' => 'jobs',
+            // 'middleware' => ''
+        ],
+
         /*
          * Set the monitored jobs count to be displayed per page.
          */
         'per_page' => 35,
 
-        /*
-         *  Show custom data stored on model
-         */
+        // Show custom data stored on model
         'show_custom_data' => false,
 
-        /**
-         * Allow the deletion of single monitor items.
-         */
+        // Allow the deletion of single monitor items.
         'allow_deletion' => true,
 
-        /**
-         * Allow purging all monitor entries.
-         */
+        // Allow retry for a single failed monitor item.
+        'allow_retry' => true,
+
+        // Allow purging all monitor entries.
         'allow_purge' => true,
 
         'show_metrics' => true,
 
-        /**
-         * Time frame used to calculate metrics values (in days).
-         */
+        // Time frame used to calculate metrics values (in days).
         'metrics_time_frame' => 14,
+
+        // The interval before refreshing the dashboard (in seconds).
+        'refresh_interval' => null,
+
+        // Order the queued but not started jobs first
+        'order_queued_first' => false,
     ],
 ];

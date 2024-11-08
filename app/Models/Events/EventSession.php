@@ -3,6 +3,7 @@
 namespace App\Models\Events;
 
 use App\Models\ApiModel;
+use App\Models\Organisation;
 use App\Traits\HasCakephpTimestamps;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithDeletedFlag;
@@ -39,7 +40,10 @@ class EventSession extends ApiModel
      *
      * @var array
      */
-    protected $casts = ['deleted' => 'boolean'];
+    protected $casts = [
+        'deleted' => 'boolean',
+        'session_dt' => 'datetime'
+    ];
 
     /**
      * The attributes that should be mutated to dates.

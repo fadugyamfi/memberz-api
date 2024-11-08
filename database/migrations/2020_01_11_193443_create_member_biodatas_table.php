@@ -16,10 +16,10 @@ class CreateMemberBiodatasTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('member_id')->unsigned()->nullable()->index('member_id');
-			$table->binary('image', 16777215)->nullable();
-			$table->binary('fingerprint', 16777215)->nullable();
-			$table->binary('fingerprint_template', 16777215)->nullable();
-			$table->binary('signature', 16777215)->nullable();
+			$table->binary('image')->nullable();
+			$table->binary('fingerprint')->nullable();
+			$table->binary('fingerprint_template')->nullable();
+			$table->binary('signature')->nullable();
 		});
 	}
 

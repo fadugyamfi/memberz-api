@@ -10,6 +10,7 @@ use App\Notifications\SmsBroadcastScheduled;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithDeletedFlag;
 use App\Traits\HasCakephpTimestamps;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Permission\Models\Permission;
@@ -17,7 +18,7 @@ use Spatie\Permission\Models\Permission;
 class OrganisationAccount extends ApiModel
 {
 
-    use BelongsToTenants, SoftDeletesWithDeletedFlag, HasCakephpTimestamps, LogModelActivity;
+    use BelongsToTenants, SoftDeletesWithDeletedFlag, HasCakephpTimestamps, LogModelActivity, HasFactory;
 
     const DELETED_AT = 'deleted';
 
@@ -108,7 +109,7 @@ class OrganisationAccount extends ApiModel
 
         return self::create([
             'organisation_id' => $organisation->id,
-            'member_account_id' => $organisation->creator->id, // auth()->user()->id,
+            'member_account_id' => $organisation->creator?->id, // auth()->user()->id,
             'organisation_role_id' => $defaultRole->id,
             'notifications' => 1,
             'weekly_updates' => 1,

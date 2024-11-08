@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Events;
 
+use App\Models\Organisation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,9 +18,9 @@ class CalendarFactory extends Factory
     public function definition()
     {
         return [
-            'organisation_id' => 1,
-            'name' => $this->faker->name(),
-            'color' => $this->faker->hexColor(),
+            'organisation_id' => Organisation::factory(),
+            'name' => fake()->name(),
+            'color' => fake()->hexColor(),
             'organisation_event_count' => 0,
             'is_default' => 1,
             'fetch_events_on_load' => 1,

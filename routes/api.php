@@ -34,6 +34,7 @@ use App\Http\Controllers\Membership\BirthdayController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrganisationAccountController;
 use App\Http\Controllers\OrganisationAnniversaryController;
+use App\Http\Controllers\OrganisationBranchController;
 use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\OrganisationFileImportController;
 use App\Http\Controllers\OrganisationGroupController;
@@ -76,6 +77,7 @@ use App\Http\Controllers\SubscriptionTypeController;
 use App\Http\Controllers\Support\SystemSettingController;
 use App\Http\Controllers\SystemSettingCategoryController;
 use App\Http\Controllers\SystemSettingController as ControllersSystemSettingController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\TransactionTypeController;
 use App\Http\Controllers\TwoFactorAuthController;
 use App\Http\Controllers\VerifyEmailController;
@@ -94,18 +96,18 @@ use Illuminate\Support\Facades\Route;
 
 /** Unauthenticated auth routes */
 Route::prefix('auth')->group(function () {
-    Route::post('forgot-password', ForgotPasswordController::class);
-    Route::post('reset-password', ResetPasswordController::class);
-    Route::post('register', RegisterController::class);
-    Route::post('login', [AuthController::class, 'login']);
-    Route::get('verify/{token}', VerifyEmailController::class);
-    Route::post('2fa-validate', [AuthController::class, 'twoFaValidate']);
+    Route::post('forgot-password', ForgotPasswordController::class)->name('auth.forgot-password');
+    Route::post('reset-password', ResetPasswordController::class)->name('route.reset-password');
+    Route::post('register', RegisterController::class)->name('auth.register');
+    Route::post('login', [AuthController::class, 'login'])->name('auth.login');
+    Route::get('verify/{token}', VerifyEmailController::class)->name('auth.verify');
+    Route::post('2fa-validate', [AuthController::class, 'twoFaValidate'])->name('auth.two-factor-auth');
 
     /** Authenticated auth routes */
     Route::middleware(['api'])->group(function () {
-        Route::post('logout', [AuthController::class, 'logout']);
-        Route::post('refresh', [AuthController::class, 'refresh']);
-        Route::get('me', [AuthController::class, 'me']);
+        Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');
+        Route::post('refresh', [AuthController::class, 'refresh'])->name('auth.refresh');
+        Route::get('me', [AuthController::class, 'me'])->name('auth.me');
     });
 });
 
@@ -227,6 +229,7 @@ Route::middleware(['auth:api', 'multi-tenant'])->group(function () {
     });
 
     Route::apiResource('organisation_accounts', OrganisationAccountController::class);
+    Route::apiResource('organisation_branches', OrganisationBranchController::class);
     Route::apiResource('organisation_file_imports', OrganisationFileImportController::class);
     Route::apiResource('organisation_members', OrganisationMemberController::class)->names('api.organisation_members');
     Route::apiResource('organisation_member_categories', OrganisationMemberCategoryController::class);
@@ -300,6 +303,9 @@ Route::middleware(['auth:api', 'multi-tenant'])->group(function () {
     Route::apiResource('/expense_account_balances', ExpenseAccountBalanceController::class);
     Route::apiResource('/expense_requests', ExpenseRequestController::class);
     Route::apiResource('/expense_request_items', ExpenseRequestItemController::class);
+
+    Route::get('/tags/types', [TagController::class, 'getTypes']); 
+    Route::apiResource('/tags', TagController::class);
 });
 
 // Allow for SSE notifications subscription

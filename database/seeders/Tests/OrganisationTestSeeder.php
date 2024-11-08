@@ -30,6 +30,10 @@ class OrganisationTestSeeder extends Seeder
 
         $membershipCategory = OrganisationMemberCategory::where('organisation_id', $organisation->id)->first();
 
+        if( !$membershipCategory ) {
+            $membershipCategory = OrganisationMemberCategory::createDefault($organisation);
+        }
+
         Member::all()->each(function($member) use($organisation, $membershipCategory) {
             OrganisationMember::firstOrCreate([
                 'organisation_id' => $organisation->id,

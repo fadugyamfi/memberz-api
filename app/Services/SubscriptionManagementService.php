@@ -16,7 +16,7 @@ use NunoMazer\Samehouse\Facades\Landlord;
 
 class SubscriptionManagementService {
 
-    public function createNewSubscription(Organisation $organisation, int $subscription_type_id, int $length) {
+    public function createNewSubscription(Organisation $organisation, int $subscription_type_id, int $length): OrganisationSubscription {
         $invoice = $this->createInvoice(
             $organisation,
             $subscription_type_id,
@@ -45,14 +45,14 @@ class SubscriptionManagementService {
     /**
      * Renews a subscription at a current tier
      */
-    public function renew(int $orgSubscriptionId, int $length) {
+    public function renew(int $orgSubscriptionId, int $length): OrganisationSubscription {
         $subscription = OrganisationSubscription::with(['organisationInvoice', 'organisation'])->find($orgSubscriptionId);
 
         if( !$subscription ) {
             throw new Exception("Subscription to renew not found");
         }
 
-        if( $subscription->organisationInvoice->paid == 0 ) {
+        if( !$subscription->organisationInvoice->isPaid() ) {
             throw new Exception("Current subscription invoice has not been paid. You cannot renew the subscription until previous has been paid");
         }
 
@@ -143,7 +143,12 @@ class SubscriptionManagementService {
     /**
      * Create Invoice
      */
-    public function createInvoice(Organisation $organisation, int $subscriptionTypeId, int $subscriptionLength, string $transactionType = 'Subscription Purchase')
+    public function createInvoice(
+        Organisation $organisation, 
+        int $subscriptionTypeId, 
+        int $subscriptionLength, 
+        string $transactionType = 'Subscription Purchase'
+    ): OrganisationInvoice
     {
         $transactionType = TransactionType::where('name', $transactionType)->first();
         $subscriptionType = SubscriptionType::withTrashed()->find($subscriptionTypeId);
@@ -225,9 +230,14 @@ class SubscriptionManagementService {
     }
 
     /**
-     * Creates a new subscription for an organisation with the specified paramaters
+     * Creates a new subscription for an orgaxisation with the specified paramaters
      */
-    public function createSubscription(int $organisationId, int $subscriptionTypeId, int $length, int $organisationInvoiceId = null) {
+    public function createSubscription(
+        int $organisationId, 
+        int $subscriptionTypeId, 
+        int $length, 
+        int $organisationInvoiceId = null
+    ): OrganisationSubscription {
 
         /** @var OrganisationSubscription $currentSubscription */
         $currentSubscription = Organisation::find($organisationId)->activeSubscription;

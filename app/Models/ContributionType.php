@@ -5,12 +5,13 @@ namespace App\Models;
 use App\Traits\SoftDeletesWithActiveFlag;
 use App\Traits\HasCakephpTimestamps;
 use App\Traits\LogModelActivity;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Activitylog\LogOptions;
 
 class ContributionType extends ApiModel
 {
-    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity;
+    use BelongsToTenants, SoftDeletesWithActiveFlag, HasCakephpTimestamps, LogModelActivity, HasFactory;
 
     /**
      * The database table used by the model.

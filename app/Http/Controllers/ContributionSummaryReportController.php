@@ -70,7 +70,7 @@ class ContributionSummaryReportController extends Controller
                     'amount' => $d->amount,
                     'week' => $d->week,
                     'currency_id' => $d->currency_id,
-                    'currency_code' => $d->currency ? $d->currency->currency_code : '',
+                    'currency_code' => $d->currency ? $d->currency?->currency_code : '',
                 ];
             });
     }

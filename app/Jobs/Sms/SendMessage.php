@@ -2,9 +2,11 @@
 
 namespace App\Jobs\Sms;
 
+use App\Models\SmsAccount;
 use App\Models\SmsAccountMessage;
 use App\Models\SystemSetting;
 use App\Services\ConnectBindSmsService;
+use App\Services\Sms\SmsServiceProvider;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -61,14 +63,25 @@ class SendMessage implements ShouldQueue
             return;
         }
 
-        activity()->withoutLogs(function() use($obs, $smsAccountMessage) {
-            $smsService = new ConnectBindSmsService();
+        if( !$this->smsMessage->smsAccount->active ) {
+            Log::debug("SMS Account Not Active For Sender ID '{$this->smsMessage->smsAccount->sender_id}'. Ignoring message to {$this->smsMessage->to}");
+            $smsAccountMessage->updateSentStatus("Send Failed. Sms Account Inactive", 0);
+            activity('sms')->log('SMS messaging failed. SMS Account Inactive');
+            return;
+        }
 
-            $response = $smsService->send(
-                $this->smsMessage->to,
-                $this->smsMessage->message,
-                $this->smsMessage->sender_id ?? $this->smsMessage->smsAccount?->sender_id
-            );
+        activity()->withoutLogs(function() use($obs, $smsAccountMessage) {
+            $smsService = app(SmsServiceProvider::class);
+
+            $message = $this->smsMessage->message;
+            $senderId = $this->smsMessage->sender_id ?? $this->smsMessage->smsAccount?->sender_id;
+
+            if( !SmsAccount::isApprovedSenderId($senderId) ) {
+                $message = "From {$senderId}\n\n{$message}";
+                $senderId = 'Memberz.Org';
+            }
+
+            $response = $smsService->send($this->smsMessage->to, $message, $senderId);
 
             $obs->processResponse($smsAccountMessage, $response);
         });
