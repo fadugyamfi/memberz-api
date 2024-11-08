@@ -21,12 +21,12 @@ class OrganisationBranchResource extends JsonResource
                 'phone' => $this->organisation?->phone,
                 'logo' => $this->organisation?->logo,
             ],
-            'branch_organisation' => [
-                'name' => $this->branchOrganisation?->name,
-                'email' => $this->branchOrganisation?->email,
-                'phone' => $this->branchOrganisation?->phone,
-                'logo' => $this->branchOrganisation?->logo,
-                'short_description' => $this->branchOrganisation?->short_description,
+            'branch' => [
+                'name' => $this->branch?->name,
+                'email' => $this->branch?->email,
+                'phone' => $this->branch?->phone,
+                'logo' => $this->branch?->logo,
+                'short_description' => $this->branch?->short_description,
             ],
             'primary_contact' => [
                 'title' => $this->primaryContact?->title,

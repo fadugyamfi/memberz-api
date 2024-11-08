@@ -334,7 +334,7 @@ paths:
         in: path
         name: token
         description: ''
-        example: et
+        example: labore
         required: true
         schema:
           type: string
@@ -384,7 +384,7 @@ paths:
                 code:
                   type: string
                   description: ''
-                  example: ipsa
+                  example: dolorem
               required:
                 - code
   /api/auth/logout:
@@ -2021,7 +2021,7 @@ paths:
                 verification_type:
                   type: string
                   description: ''
-                  example: rerum
+                  example: est
               required:
                 - verification_type
   /api/2fa/enable:
@@ -2062,7 +2062,7 @@ paths:
                 code:
                   type: string
                   description: ''
-                  example: voluptas
+                  example: eligendi
               required:
                 - code
   /api/2fa/disable:
@@ -2191,12 +2191,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: quae
+          example: qui
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: quae
+            example: qui
         -
           in: header
           name: X-Tenant-ID
@@ -2613,7 +2613,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 12
+        example: 13
         required: true
         schema:
           type: integer
@@ -2850,31 +2850,31 @@ paths:
                 organisation_id:
                   type: numeric
                   description: 'Organisation id'
-                  example: dicta
+                  example: facere
                 receipt_mode:
                   type: string
                   description: "'auto|manual'"
-                  example: ullam
+                  example: qui
                 receipt_prefix:
                   type: string
                   description: ''
-                  example: ipsa
+                  example: quos
                 receipt_postfix:
                   type: string
                   description: ''
-                  example: dolor
+                  example: enim
                 receipt_counter:
                   type: numeric
                   description: ''
-                  example: officia
+                  example: cupiditate
                 default_currency:
                   type: numeric
                   description: 'default currency id'
-                  example: deleniti
+                  example: est
                 sms_notify:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
               required:
                 - organisation_id
                 - receipt_mode
@@ -2985,12 +2985,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: aut
+          example: omnis
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: aut
+            example: omnis
         -
           in: header
           name: X-Tenant-ID
@@ -3407,7 +3407,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 12
+        example: 8
         required: true
         schema:
           type: integer
@@ -3649,12 +3649,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: quis
+          example: dolores
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: quis
+            example: dolores
         -
           in: header
           name: X-Tenant-ID
@@ -4071,7 +4071,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 20
+        example: 13
         required: true
         schema:
           type: integer
@@ -4173,12 +4173,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: voluptatem
+          example: consequatur
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: voluptatem
+            example: consequatur
         -
           in: header
           name: X-Tenant-ID
@@ -4595,7 +4595,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 9
+        example: 1
         required: true
         schema:
           type: integer
@@ -4725,12 +4725,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: porro
+          example: eum
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: porro
+            example: eum
         -
           in: header
           name: X-Tenant-ID
@@ -5615,12 +5615,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: odit
+          example: consequatur
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: odit
+            example: consequatur
         -
           in: header
           name: X-Tenant-ID
@@ -6037,7 +6037,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 4
+        example: 9
         required: true
         schema:
           type: integer
@@ -6139,12 +6139,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: neque
+          example: earum
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: neque
+            example: earum
         -
           in: header
           name: X-Tenant-ID
@@ -6561,7 +6561,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 10
+        example: 18
         required: true
         schema:
           type: integer
@@ -6603,11 +6603,11 @@ paths:
                 organisation_event_id:
                   type: number
                   description: ''
-                  example: 44.9665819
+                  example: 2261.3077
                 organisation_event_session_id:
                   type: number
                   description: ''
-                  example: 1248.0
+                  example: 51.69
                 organisation_member_ids:
                   type: object
                   description: 'This field is required when none of <code>membership_uuids</code> and <code>member_ids</code> are present.'
@@ -6733,12 +6733,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: vitae
+          example: eos
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: vitae
+            example: eos
         -
           in: header
           name: X-Tenant-ID
@@ -7155,7 +7155,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 12
+        example: 4
         required: true
         schema:
           type: integer
@@ -7257,12 +7257,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: tempora
+          example: est
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: tempora
+            example: est
         -
           in: header
           name: X-Tenant-ID
@@ -7679,7 +7679,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 6
+        example: 4
         required: true
         schema:
           type: integer
@@ -7781,12 +7781,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: nostrum
+          example: id
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: nostrum
+            example: id
         -
           in: header
           name: X-Tenant-ID
@@ -8305,12 +8305,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: natus
+          example: exercitationem
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: natus
+            example: exercitationem
         -
           in: header
           name: X-Tenant-ID
@@ -8727,7 +8727,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 20
+        example: 17
         required: true
         schema:
           type: integer
@@ -8829,12 +8829,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: rem
+          example: velit
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: rem
+            example: velit
         -
           in: header
           name: X-Tenant-ID
@@ -8982,27 +8982,27 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 405.7817
+                  example: 122704588.85019
                 organisation_event_id:
                   type: number
                   description: ''
-                  example: 1810.0
+                  example: 4391.17
                 name:
                   type: string
                   description: ''
-                  example: quia
+                  example: sint
                 session_dt:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:41'
+                  example: '2024-11-08T10:13:06'
                 session_name:
                   type: string
                   description: ''
-                  example: ad
+                  example: reiciendis
                 registration_code:
                   type: string
                   description: ''
-                  example: repellat
+                  example: et
               required:
                 - organisation_id
                 - organisation_event_id
@@ -9110,27 +9110,27 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 141.4
+                  example: 2.0
                 organisation_event_id:
                   type: number
                   description: ''
-                  example: 943249.8651
+                  example: 1496.0
                 name:
                   type: string
                   description: ''
-                  example: voluptates
+                  example: ut
                 session_dt:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:41'
+                  example: '2024-11-08T10:13:06'
                 session_name:
                   type: string
                   description: ''
-                  example: error
+                  example: et
                 registration_code:
                   type: string
                   description: ''
-                  example: eos
+                  example: velit
               required:
                 - organisation_id
                 - organisation_event_id
@@ -9197,7 +9197,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 19
+        example: 12
         required: true
         schema:
           type: integer
@@ -9364,12 +9364,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: unde
+          example: ad
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: unde
+            example: ad
         -
           in: header
           name: X-Tenant-ID
@@ -9750,7 +9750,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the event.'
-        example: possimus
+        example: impedit
         required: true
         schema:
           type: string
@@ -9852,12 +9852,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: ea
+          example: exercitationem
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: ea
+            example: exercitationem
         -
           in: header
           name: X-Tenant-ID
@@ -10005,27 +10005,27 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 33766540.0
+                  example: 219324.947
                 currency_id:
                   type: number
                   description: ''
-                  example: 223657.7
+                  example: 74181.531
                 module_contribution_account_id:
                   type: number
                   description: ''
-                  example: 1906453.62376
+                  example: 448345.025
                 balance:
                   type: number
                   description: ''
-                  example: 1946.688557
+                  example: 2192803.6
                 balance_dt:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:43'
+                  example: '2024-11-08T10:13:08'
                 member_account_id:
                   type: number
                   description: ''
-                  example: 1.1639258
+                  example: 5562.29999
               required:
                 - organisation_id
                 - currency_id
@@ -10134,27 +10134,27 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 256249372.00825
+                  example: 901.50493549
                 currency_id:
                   type: number
                   description: ''
-                  example: 1.863997
+                  example: 67571.1936
                 module_contribution_account_id:
                   type: number
                   description: ''
-                  example: 1279.96781
+                  example: 30.45941
                 balance:
                   type: number
                   description: ''
-                  example: 39.82
+                  example: 227.1
                 balance_dt:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:43'
+                  example: '2024-11-08T10:13:08'
                 member_account_id:
                   type: number
                   description: ''
-                  example: 145432563.0
+                  example: 430.655322991
               required:
                 - organisation_id
                 - currency_id
@@ -10222,7 +10222,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 6
+        example: 2
         required: true
         schema:
           type: integer
@@ -10324,12 +10324,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: eius
+          example: ut
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: eius
+            example: ut
         -
           in: header
           name: X-Tenant-ID
@@ -10477,23 +10477,23 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 230674039.9845
+                  example: 4445.32
                 currency_id:
                   type: number
                   description: ''
-                  example: 691966.82
+                  example: 3342023.7435643
                 name:
                   type: string
                   description: ''
-                  example: reiciendis
+                  example: aut
                 description:
                   type: string
                   description: ''
-                  example: 'Voluptas nisi vitae voluptate magni neque dolore.'
+                  example: 'Magni corporis ipsam tempora officiis aut recusandae id.'
                 account_type:
                   type: string
                   description: ''
-                  example: Savings
+                  example: Current
                   enum:
                     - Cash
                     - Current
@@ -10502,11 +10502,11 @@ paths:
                 bank_id:
                   type: number
                   description: ''
-                  example: 22.566201455
+                  example: 54768089.899016
                 amount:
                   type: number
                   description: ''
-                  example: 3860.136234
+                  example: 3.0
               required:
                 - organisation_id
                 - currency_id
@@ -10614,23 +10614,23 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 41758.5
+                  example: 55.4147015
                 currency_id:
                   type: number
                   description: ''
-                  example: 217.16575
+                  example: 2828120.3196496
                 name:
                   type: string
                   description: ''
-                  example: commodi
+                  example: qui
                 description:
                   type: string
                   description: ''
-                  example: 'Est consequatur sed amet ut voluptas temporibus.'
+                  example: 'Quae unde harum omnis tempore quae et.'
                 account_type:
                   type: string
                   description: ''
-                  example: Current
+                  example: Savings
                   enum:
                     - Cash
                     - Current
@@ -10639,11 +10639,11 @@ paths:
                 bank_id:
                   type: number
                   description: ''
-                  example: 78026077.8
+                  example: 1799.0
                 amount:
                   type: number
                   description: ''
-                  example: 269041226.0
+                  example: 5953.143295
               required:
                 - organisation_id
                 - currency_id
@@ -10710,7 +10710,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 6
+        example: 17
         required: true
         schema:
           type: integer
@@ -10812,12 +10812,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: ipsam
+          example: qui
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: ipsam
+            example: qui
         -
           in: header
           name: X-Tenant-ID
@@ -10965,31 +10965,31 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 54335.922088705
+                  example: 5755.5744904
                 expense_request_id:
                   type: number
                   description: ''
-                  example: 63680.6423
+                  example: 337641830.474
                 currency_id:
                   type: number
                   description: ''
-                  example: 109661.9068513
+                  example: 490.36243
                 quantity:
                   type: number
                   description: ''
-                  example: 491.46022
+                  example: 66765325.095824
                 unit_price:
                   type: number
                   description: 'Must be at least 1.'
-                  example: 14
+                  example: 40
                 total:
                   type: number
                   description: 'Must be at least 1.'
-                  example: 89
+                  example: 24
                 description:
                   type: string
                   description: ''
-                  example: 'Veritatis quas quod eius soluta mollitia.'
+                  example: 'Pariatur quod eveniet dolorem ullam non.'
               required:
                 - organisation_id
                 - currency_id
@@ -11147,7 +11147,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 8
+        example: 18
         required: true
         schema:
           type: integer
@@ -11249,12 +11249,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: et
+          example: voluptatum
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: et
+            example: voluptatum
         -
           in: header
           name: X-Tenant-ID
@@ -11402,35 +11402,35 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 60152.63784316
+                  example: 63023352.179662
                 currency_id:
                   type: number
                   description: ''
-                  example: 1.1926645
+                  example: 277.587
                 requested_by_id:
                   type: number
                   description: ''
-                  example: 28043.0
+                  example: 3911.978924099
                 approved_by_id:
                   type: number
                   description: ''
-                  example: 463492150.1095
+                  example: 34424580.032062
                 voucher_no:
                   type: string
                   description: ''
-                  example: eum
+                  example: quae
                 request_dt:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:43'
+                  example: '2024-11-08T10:13:09'
                 amount:
                   type: number
                   description: 'Must be at least 1.'
-                  example: 15
+                  example: 36
                 approved_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:43'
+                  example: '2024-11-08T10:13:09'
               required:
                 - organisation_id
                 - currency_id
@@ -11537,35 +11537,35 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 659.83
+                  example: 22.115998642
                 currency_id:
                   type: number
                   description: ''
-                  example: 301365132.4955
+                  example: 7974833.3074
                 requested_by_id:
                   type: number
                   description: ''
-                  example: 499320.874644
+                  example: 104.89917292
                 approved_by_id:
                   type: number
                   description: ''
-                  example: 36325.620245085
+                  example: 0.0
                 voucher_no:
                   type: string
                   description: ''
-                  example: fugiat
+                  example: asperiores
                 request_dt:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:44'
+                  example: '2024-11-08T10:13:09'
                 amount:
                   type: number
                   description: 'Must be at least 1.'
-                  example: 52
+                  example: 24
                 approved_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:44'
+                  example: '2024-11-08T10:13:09'
               required:
                 - organisation_id
                 - currency_id
@@ -11631,7 +11631,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 15
+        example: 13
         required: true
         schema:
           type: integer
@@ -11733,12 +11733,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: doloremque
+          example: blanditiis
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: doloremque
+            example: blanditiis
         -
           in: header
           name: X-Tenant-ID
@@ -12155,7 +12155,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 17
+        example: 16
         required: true
         schema:
           type: integer
@@ -12257,12 +12257,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: aut
+          example: harum
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: aut
+            example: harum
         -
           in: header
           name: X-Tenant-ID
@@ -12679,7 +12679,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 19
+        example: 3
         required: true
         schema:
           type: integer
@@ -12721,7 +12721,7 @@ paths:
                 year:
                   type: number
                   description: ''
-                  example: 298438.6
+                  example: 287143.852253
               required:
                 - year
   /api/finance_reporting/income_summary:
@@ -12762,15 +12762,15 @@ paths:
                 start_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:43'
+                  example: '2024-11-08T10:13:08'
                 end_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:43'
+                  example: '2024-11-08T10:13:08'
                 currency_id:
                   type: number
                   description: ''
-                  example: 5504398.879993
+                  example: 263.636
               required:
                 - start_date
                 - end_date
@@ -12813,11 +12813,11 @@ paths:
                 year:
                   type: number
                   description: ''
-                  example: 20242873.874714
+                  example: 26.70805959
                 currency_id:
                   type: number
                   description: ''
-                  example: 8923988.49374
+                  example: 84207.89
               required:
                 - year
                 - currency_id
@@ -12859,11 +12859,11 @@ paths:
                 year:
                   type: number
                   description: ''
-                  example: 7179272.9723
+                  example: 3444377.0
                 currency_id:
                   type: number
                   description: ''
-                  example: 3736.1
+                  example: 3.2678348
               required:
                 - year
                 - currency_id
@@ -12905,23 +12905,23 @@ paths:
                 year:
                   type: number
                   description: ''
-                  example: 24487.1
+                  example: 5051.2585555
                 start_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:43'
+                  example: '2024-11-08T10:13:08'
                 end_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:43'
+                  example: '2024-11-08T10:13:08'
                 currency_id:
                   type: number
                   description: ''
-                  example: 6.5261
+                  example: 21042965.978116
                 contribution_type_id:
                   type: number
                   description: ''
-                  example: 22268.97631
+                  example: 58559750.90382
               required:
                 - currency_id
                 - contribution_type_id
@@ -13844,12 +13844,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: dolor
+          example: ut
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: dolor
+            example: ut
         -
           in: header
           name: X-Tenant-ID
@@ -15088,12 +15088,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: quidem
+          example: amet
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: quidem
+            example: amet
         -
           in: header
           name: X-Tenant-ID
@@ -17401,19 +17401,19 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 48090.228
+                  example: 1146.0
                 organisation_member_category_id:
                   type: number
                   description: ''
-                  example: 4156073.5845101
+                  example: 1.0
                 member_category_setting_id:
                   type: number
                   description: ''
-                  example: 1.0
+                  example: 45978029.0
                 value:
                   type: string
                   description: ''
-                  example: debitis
+                  example: est
               required:
                 - organisation_id
                 - organisation_member_category_id
@@ -18960,19 +18960,19 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 432.32184
+                  example: 790622.33083
                 organisation_member_category_id:
                   type: number
                   description: ''
-                  example: 13559538.995894
+                  example: 2023.021
                 member_category_setting_id:
                   type: number
                   description: ''
-                  example: 2.3863
+                  example: 7.32126555
                 value:
                   type: string
                   description: ''
-                  example: nobis
+                  example: ut
               required:
                 - organisation_id
                 - organisation_member_category_id
@@ -19046,7 +19046,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 10
+        example: 6
         required: true
         schema:
           type: integer
@@ -19148,12 +19148,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: iusto
+          example: nostrum
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: iusto
+            example: nostrum
         -
           in: header
           name: X-Tenant-ID
@@ -19301,7 +19301,7 @@ paths:
                 member_id:
                   type: number
                   description: ''
-                  example: 0.0
+                  example: 259627173.80896
                 image:
                   type: string
                   format: binary
@@ -19309,7 +19309,7 @@ paths:
                 image_base64:
                   type: string
                   description: ''
-                  example: quia
+                  example: ut
               required:
                 - member_id
                 - image
@@ -19415,7 +19415,7 @@ paths:
                 member_id:
                   type: number
                   description: ''
-                  example: 4930.93189
+                  example: 0.21
                 image:
                   type: string
                   format: binary
@@ -19423,7 +19423,7 @@ paths:
                 image_base64:
                   type: string
                   description: ''
-                  example: totam
+                  example: nesciunt
               required:
                 - member_id
                 - image
@@ -19488,7 +19488,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 17
+        example: 11
         required: true
         schema:
           type: integer
@@ -20535,12 +20535,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: voluptates
+          example: possimus
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: voluptates
+            example: possimus
         -
           in: header
           name: X-Tenant-ID
@@ -20957,7 +20957,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 2
+        example: 12
         required: true
         schema:
           type: integer
@@ -21059,12 +21059,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: eveniet
+          example: ad
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: eveniet
+            example: ad
         -
           in: header
           name: X-Tenant-ID
@@ -21481,7 +21481,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 19
+        example: 4
         required: true
         schema:
           type: integer
@@ -21583,12 +21583,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: quod
+          example: labore
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: quod
+            example: labore
         -
           in: header
           name: X-Tenant-ID
@@ -22103,7 +22103,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 17
+        example: 8
         required: true
         schema:
           type: integer
@@ -25014,7 +25014,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the membership.'
-        example: ut
+        example: et
         required: true
         schema:
           type: string
@@ -25051,7 +25051,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the notification.'
-        example: nihil
+        example: et
         required: true
         schema:
           type: string
@@ -25227,7 +25227,7 @@ paths:
         in: path
         name: member_id
         description: 'The ID of the member.'
-        example: aliquid
+        example: laborum
         required: true
         schema:
           type: string
@@ -25329,12 +25329,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: doloremque
+          example: ut
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: doloremque
+            example: ut
         -
           in: header
           name: X-Tenant-ID
@@ -25482,39 +25482,39 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 64.14158
+                  example: 67.751051
                 organisation_member_category_id:
                   type: number
                   description: ''
-                  example: 21518.0135379
+                  example: 14085908.516
                 name:
                   type: string
                   description: ''
-                  example: illo
+                  example: veritatis
                 description:
                   type: string
                   description: ''
-                  example: 'Quam adipisci quas sit autem.'
+                  example: 'Quos odit est placeat dolores qui labore.'
                 expiration_dt:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:40'
+                  example: '2024-11-08T10:13:05'
                 excluded_standard_fields:
                   type: string
                   description: ''
-                  example: quos
+                  example: earum
                 custom_fields:
                   type: string
                   description: 'Must be a valid JSON string.'
-                  example: '["ut","hic"]'
+                  example: '["aut","ex"]'
                 form_enabled:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
                 deleted_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:40'
+                  example: '2024-11-08T10:13:05'
               required:
                 - organisation_id
                 - organisation_member_category_id
@@ -25742,7 +25742,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 15
+        example: 2
         required: true
         schema:
           type: integer
@@ -25787,7 +25787,7 @@ paths:
         in: path
         name: member_account_id
         description: 'The ID of the member account.'
-        example: quidem
+        example: quia
         required: true
         schema:
           type: string
@@ -25889,12 +25889,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: qui
+          example: inventore
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: qui
+            example: inventore
         -
           in: header
           name: X-Tenant-ID
@@ -26042,19 +26042,19 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 216944.31555501
+                  example: 619224012.30826
                 member_id:
                   type: number
                   description: 'This field is required when <code>member_account_id</code> is not present.'
-                  example: 2117771.650317
+                  example: 879900.648179
                 member_account_id:
                   type: number
                   description: 'This field is required when <code>member_id</code> is not present.'
-                  example: 347609.40738753
+                  example: 1408.752942
                 organisation_role_id:
                   type: number
                   description: ''
-                  example: 1751999.333804
+                  example: 11388.6
               required:
                 - organisation_id
                 - organisation_role_id
@@ -26159,19 +26159,19 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 0.6
+                  example: 47189490.809696
                 member_id:
                   type: number
                   description: 'This field is required when <code>member_account_id</code> is not present.'
-                  example: 30.04603641
+                  example: 520.36415561
                 member_account_id:
                   type: number
                   description: 'This field is required when <code>member_id</code> is not present.'
-                  example: 427.7603514
+                  example: 20044290.418
                 organisation_role_id:
                   type: number
                   description: ''
-                  example: 559.5
+                  example: 19.10577
               required:
                 - organisation_id
                 - organisation_role_id
@@ -26235,7 +26235,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 16
+        example: 15
         required: true
         schema:
           type: integer
@@ -26337,12 +26337,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: laboriosam
+          example: rerum
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: laboriosam
+            example: rerum
         -
           in: header
           name: X-Tenant-ID
@@ -26759,7 +26759,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 15
+        example: 1
         required: true
         schema:
           type: integer
@@ -26861,12 +26861,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: vel
+          example: iste
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: vel
+            example: iste
         -
           in: header
           name: X-Tenant-ID
@@ -27283,7 +27283,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 6
+        example: 8
         required: true
         schema:
           type: integer
@@ -27385,12 +27385,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: tempora
+          example: recusandae
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: tempora
+            example: recusandae
         -
           in: header
           name: X-Tenant-ID
@@ -27551,6 +27551,11 @@ paths:
                   type: number
                   description: 'The secondary contact person in this organisation.'
                   example: 1444.0
+                tags:
+                  type: object
+                  description: ''
+                  example: null
+                  properties: {  }
               required:
                 - organisation_id
                 - branch_organisation_id
@@ -27668,6 +27673,11 @@ paths:
                   type: number
                   description: 'The secondary contact person in this organisation.'
                   example: 1444.0
+                tags:
+                  type: object
+                  description: ''
+                  example: null
+                  properties: {  }
               required:
                 - organisation_id
                 - branch_organisation_id
@@ -27731,7 +27741,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 6
+        example: 17
         required: true
         schema:
           type: integer
@@ -27833,12 +27843,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: et
+          example: quaerat
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: et
+            example: quaerat
         -
           in: header
           name: X-Tenant-ID
@@ -27986,11 +27996,11 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 75.0
+                  example: 82187143.735
                 import_to_id:
                   type: number
                   description: ''
-                  example: 7766.63
+                  example: 289470752.387
                 import_type:
                   type: string
                   description: ''
@@ -28158,7 +28168,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 7
+        example: 14
         required: true
         schema:
           type: integer
@@ -28260,12 +28270,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: molestiae
+          example: veritatis
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: molestiae
+            example: veritatis
         -
           in: header
           name: X-Tenant-ID
@@ -28682,7 +28692,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 11
+        example: 16
         required: true
         schema:
           type: integer
@@ -28784,12 +28794,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: fuga
+          example: enim
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: fuga
+            example: enim
         -
           in: header
           name: X-Tenant-ID
@@ -29206,7 +29216,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 4
+        example: 12
         required: true
         schema:
           type: integer
@@ -29308,12 +29318,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: quidem
+          example: ut
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: quidem
+            example: ut
         -
           in: header
           name: X-Tenant-ID
@@ -29704,7 +29714,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 13
+        example: 10
         required: true
         schema:
           type: integer
@@ -29806,12 +29816,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: quo
+          example: placeat
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: quo
+            example: placeat
         -
           in: header
           name: X-Tenant-ID
@@ -30228,7 +30238,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 7
+        example: 8
         required: true
         schema:
           type: integer
@@ -30752,7 +30762,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 19
+        example: 9
         required: true
         schema:
           type: integer
@@ -30854,12 +30864,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: pariatur
+          example: aut
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: pariatur
+            example: aut
         -
           in: header
           name: X-Tenant-ID
@@ -31276,7 +31286,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 10
+        example: 20
         required: true
         schema:
           type: integer
@@ -32153,12 +32163,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: ea
+          example: cum
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: ea
+            example: cum
         -
           in: header
           name: X-Tenant-ID
@@ -32447,7 +32457,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 1
+        example: 12
         required: true
         schema:
           type: integer
@@ -32549,12 +32559,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: harum
+          example: iusto
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: harum
+            example: iusto
         -
           in: header
           name: X-Tenant-ID
@@ -33249,7 +33259,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 1
+        example: 7
         required: true
         schema:
           type: integer
@@ -33351,12 +33361,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: consequatur
+          example: commodi
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: consequatur
+            example: commodi
         -
           in: header
           name: X-Tenant-ID
@@ -33773,7 +33783,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 9
+        example: 5
         required: true
         schema:
           type: integer
@@ -34493,11 +34503,11 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 3839511.2657926
+                  example: 3266458.0
                 organisation_no:
                   type: string
                   description: ''
-                  example: velit
+                  example: quia
                 member_id:
                   type: string
                   description: 'This field is required when none of <code>first_name</code>, <code>last_name</code>, <code>mobile_number</code>, and <code>gender</code> are present.'
@@ -34505,19 +34515,19 @@ paths:
                 organisation_member_category_id:
                   type: string
                   description: ''
-                  example: minima
+                  example: aspernatur
                 first_name:
                   type: string
                   description: 'This field is required when <code>member_id</code> is not present.'
-                  example: quia
+                  example: voluptatum
                 last_name:
                   type: string
                   description: 'This field is required when <code>member_id</code> is not present.'
-                  example: et
+                  example: ratione
                 mobile_number:
                   type: string
                   description: 'This field is required when <code>member_id</code> is not present.'
-                  example: eos
+                  example: et
                 gender:
                   type: string
                   description: 'This field is required when <code>member_id</code> is not present.'
@@ -34528,11 +34538,11 @@ paths:
                 dob:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:36'
+                  example: '2024-11-08T10:13:01'
                 email:
                   type: string
                   description: 'Must be a valid email address.'
-                  example: kkris@example.com
+                  example: melyssa07@example.net
               required:
                 - organisation_id
                 - organisation_member_category_id
@@ -36026,11 +36036,11 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 46923359.77487
+                  example: 60.537
                 organisation_no:
                   type: string
                   description: ''
-                  example: sit
+                  example: ipsa
                 member_id:
                   type: string
                   description: 'This field is required when none of <code>first_name</code>, <code>last_name</code>, <code>mobile_number</code>, and <code>gender</code> are present.'
@@ -36038,19 +36048,19 @@ paths:
                 organisation_member_category_id:
                   type: string
                   description: ''
-                  example: sit
+                  example: placeat
                 first_name:
                   type: string
                   description: 'This field is required when <code>member_id</code> is not present.'
-                  example: labore
+                  example: voluptates
                 last_name:
                   type: string
                   description: 'This field is required when <code>member_id</code> is not present.'
-                  example: et
+                  example: voluptatibus
                 mobile_number:
                   type: string
                   description: 'This field is required when <code>member_id</code> is not present.'
-                  example: reiciendis
+                  example: possimus
                 gender:
                   type: string
                   description: 'This field is required when <code>member_id</code> is not present.'
@@ -36061,11 +36071,11 @@ paths:
                 dob:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:36'
+                  example: '2024-11-08T10:13:01'
                 email:
                   type: string
                   description: 'Must be a valid email address.'
-                  example: jazmyne30@example.org
+                  example: viviane62@example.net
               required:
                 - organisation_id
                 - organisation_member_category_id
@@ -36997,12 +37007,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: excepturi
+          example: quis
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: excepturi
+            example: quis
         -
           in: header
           name: X-Tenant-ID
@@ -37150,11 +37160,11 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 22262.072359
+                  example: 8115024.8532965
                 organisation_no:
                   type: string
                   description: ''
-                  example: quam
+                  example: suscipit
                 member_id:
                   type: string
                   description: 'This field is required when none of <code>first_name</code>, <code>last_name</code>, <code>mobile_number</code>, and <code>gender</code> are present.'
@@ -37162,19 +37172,19 @@ paths:
                 organisation_member_category_id:
                   type: string
                   description: ''
-                  example: ut
+                  example: nemo
                 first_name:
                   type: string
                   description: 'This field is required when <code>member_id</code> is not present.'
-                  example: ex
+                  example: veniam
                 last_name:
                   type: string
                   description: 'This field is required when <code>member_id</code> is not present.'
-                  example: quibusdam
+                  example: est
                 mobile_number:
                   type: string
                   description: 'This field is required when <code>member_id</code> is not present.'
-                  example: et
+                  example: odio
                 gender:
                   type: string
                   description: 'This field is required when <code>member_id</code> is not present.'
@@ -37185,11 +37195,11 @@ paths:
                 dob:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-11-07T17:01:39'
+                  example: '2024-11-08T10:13:04'
                 email:
                   type: string
                   description: 'Must be a valid email address.'
-                  example: christa24@example.com
+                  example: scottie.beer@example.com
               required:
                 - organisation_id
                 - organisation_member_category_id
@@ -37388,7 +37398,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 6
+        example: 10
         required: true
         schema:
           type: integer
@@ -37490,12 +37500,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: aut
+          example: perferendis
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: aut
+            example: perferendis
         -
           in: header
           name: X-Tenant-ID
@@ -37683,27 +37693,27 @@ paths:
                 name:
                   type: string
                   description: Name
-                  example: quo
+                  example: beatae
                 method_name:
                   type: string
                   description: 'Method name'
-                  example: ipsum
+                  example: eos
                 config_keys:
                   type: string
                   description: 'Comma separated config keys'
-                  example: numquam
+                  example: ut
                 description:
                   type: string
                   description: Description
-                  example: 'Id qui illo et veniam quibusdam et quidem.'
+                  example: 'Blanditiis officia reprehenderit itaque voluptate.'
                 logo:
                   type: string
                   description: Description
-                  example: amet
+                  example: aperiam
                 instructions:
                   type: string
                   description: Description
-                  example: quaerat
+                  example: ut
                 deleted:
                   type: boolean
                   description: Deleted
@@ -37849,31 +37859,31 @@ paths:
                 name:
                   type: string
                   description: Name
-                  example: est
+                  example: blanditiis
                 method_name:
                   type: string
                   description: 'Method name'
-                  example: et
+                  example: laboriosam
                 config_keys:
                   type: string
                   description: 'Comma separated config keys'
-                  example: in
+                  example: natus
                 description:
                   type: string
                   description: Description
-                  example: 'Eos nam dolore non quod hic nemo.'
+                  example: 'Molestiae occaecati minus ea minima.'
                 logo:
                   type: string
                   description: Description
-                  example: et
+                  example: dolor
                 instructions:
                   type: string
                   description: Description
-                  example: itaque
+                  example: et
                 deleted:
                   type: boolean
                   description: Deleted
-                  example: true
+                  example: false
     delete:
       summary: 'Delete Resource'
       operationId: deleteResource
@@ -37934,7 +37944,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 8
+        example: 13
         required: true
         schema:
           type: integer
@@ -38036,12 +38046,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: tenetur
+          example: minima
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: tenetur
+            example: minima
         -
           in: header
           name: X-Tenant-ID
@@ -38305,27 +38315,27 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 62233.93089888
+                  example: 3649338.2551
                 payment_platform_id:
                   type: number
                   description: ''
-                  example: 15025.14
+                  example: 18735847.139193
                 currency_id:
                   type: number
                   description: ''
-                  example: 460149.73791741
+                  example: 4.8773
                 country_id:
                   type: number
                   description: ''
-                  example: 19.1577
+                  example: 16723.1789
                 config:
                   type: string
                   description: ''
-                  example: eius
+                  example: molestiae
                 platform_mode:
                   type: string
                   description: ''
-                  example: live
+                  example: dev
                   enum:
                     - live
                     - sandbox
@@ -38333,15 +38343,15 @@ paths:
                 member_registration_instruction:
                   type: string
                   description: ''
-                  example: itaque
+                  example: blanditiis
                 event_registration_instruction:
                   type: string
                   description: ''
-                  example: ipsum
+                  example: alias
                 general_instructions:
                   type: string
                   description: ''
-                  example: dolor
+                  example: mollitia
               required:
                 - organisation_id
                 - payment_platform_id
@@ -38566,27 +38576,27 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 51.98133
+                  example: 82316.9707
                 payment_platform_id:
                   type: number
                   description: ''
-                  example: 3.8
+                  example: 420200972.4504
                 currency_id:
                   type: number
                   description: ''
-                  example: 274.66
+                  example: 41810.3172
                 country_id:
                   type: number
                   description: ''
-                  example: 44294081.05
+                  example: 84003201.360403
                 config:
                   type: string
                   description: ''
-                  example: totam
+                  example: sit
                 platform_mode:
                   type: string
                   description: ''
-                  example: sandbox
+                  example: live
                   enum:
                     - live
                     - sandbox
@@ -38594,15 +38604,15 @@ paths:
                 member_registration_instruction:
                   type: string
                   description: ''
-                  example: dolores
+                  example: et
                 event_registration_instruction:
                   type: string
                   description: ''
-                  example: nulla
+                  example: suscipit
                 general_instructions:
                   type: string
                   description: ''
-                  example: consequatur
+                  example: nulla
               required:
                 - organisation_id
                 - payment_platform_id
@@ -38670,7 +38680,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 11
+        example: 13
         required: true
         schema:
           type: integer
@@ -38842,12 +38852,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: voluptas
+          example: suscipit
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: voluptas
+            example: suscipit
         -
           in: header
           name: X-Tenant-ID
@@ -39264,7 +39274,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 12
+        example: 13
         required: true
         schema:
           type: integer
@@ -39366,12 +39376,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: blanditiis
+          example: et
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: blanditiis
+            example: et
         -
           in: header
           name: X-Tenant-ID
@@ -39788,7 +39798,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 19
+        example: 13
         required: true
         schema:
           type: integer
@@ -39890,12 +39900,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: voluptate
+          example: accusamus
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: voluptate
+            example: accusamus
         -
           in: header
           name: X-Tenant-ID
@@ -40312,7 +40322,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 1
+        example: 16
         required: true
         schema:
           type: integer
@@ -40354,11 +40364,11 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 402.4053801
+                  example: 361800.83447546
                 length:
                   type: number
                   description: ''
-                  example: 50.0
+                  example: 164825567.78663
               required:
                 - organisation_id
                 - length
@@ -40409,15 +40419,15 @@ paths:
                 organisation_id:
                   type: number
                   description: ''
-                  example: 36.977
+                  example: 1649518.963801
                 subscription_type_id:
                   type: number
                   description: ''
-                  example: 28497242.3
+                  example: 46.94419
                 length:
                   type: number
                   description: ''
-                  example: 5696.524740013
+                  example: 24892869.810318
               required:
                 - organisation_id
                 - subscription_type_id
@@ -40529,12 +40539,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: dignissimos
+          example: repellat
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: dignissimos
+            example: repellat
         -
           in: header
           name: X-Tenant-ID
@@ -40951,7 +40961,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 16
+        example: 18
         required: true
         schema:
           type: integer
@@ -41053,12 +41063,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: quidem
+          example: ut
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: quidem
+            example: ut
         -
           in: header
           name: X-Tenant-ID
@@ -41475,7 +41485,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 14
+        example: 15
         required: true
         schema:
           type: integer
@@ -43670,7 +43680,7 @@ paths:
                 image_base64:
                   type: string
                   description: ''
-                  example: ut
+                  example: magni
               required:
                 - image
                 - image_base64
@@ -43781,12 +43791,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: delectus
+          example: suscipit
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: delectus
+            example: suscipit
         -
           in: header
           name: X-Tenant-ID
@@ -43934,71 +43944,71 @@ paths:
                 organisation_type_id:
                   type: number
                   description: ''
-                  example: 317.1814497
+                  example: 128.19399565
                 name:
                   type: string
                   description: ''
-                  example: facilis
+                  example: dolores
                 slug:
                   type: string
                   description: ''
-                  example: fuga
+                  example: dolores
                 email:
                   type: string
                   description: 'Must be a valid email address.'
-                  example: paige37@example.org
+                  example: lucy.schmitt@example.net
                 phone:
                   type: string
                   description: ''
-                  example: assumenda
+                  example: quia
                 website:
                   type: string
                   description: 'Must be a valid URL.'
-                  example: 'https://www.mayert.net/quia-tempora-aliquid-optio-doloribus-nobis'
+                  example: 'https://www.cormier.com/veniam-maiores-non-magni-culpa'
                 country_id:
                   type: number
                   description: ''
-                  example: 1.483
+                  example: 567563.19883276
                 currency_id:
                   type: number
                   description: ''
-                  example: 2.67614
+                  example: 595666079.006
                 logo:
                   type: string
                   description: 'Must be a valid URL.'
-                  example: 'http://www.mcglynn.net/quibusdam-deserunt-nobis-rerum-soluta-eum-quaerat'
+                  example: 'https://smith.net/natus-saepe-hic-doloremque-sequi-eum-iusto-qui.html'
                 address:
                   type: string
                   description: ''
-                  example: voluptatem
+                  example: voluptas
                 city:
                   type: string
                   description: ''
-                  example: aut
+                  example: fugiat
                 state:
                   type: string
                   description: ''
-                  example: nobis
+                  example: explicabo
                 post_code:
                   type: string
                   description: ''
-                  example: dolore
+                  example: accusantium
                 short_description:
                   type: string
                   description: ''
-                  example: quisquam
+                  example: quod
                 long_description:
                   type: string
                   description: ''
-                  example: culpa
+                  example: non
                 subscription_type_id:
                   type: number
                   description: ''
-                  example: 0.0
+                  example: 9.32
                 subscription_length:
                   type: number
                   description: ''
-                  example: 905.979007322
+                  example: 6.3571
               required:
                 - organisation_type_id
                 - name
@@ -44092,63 +44102,63 @@ paths:
                 organisation_type_id:
                   type: number
                   description: ''
-                  example: 16982198.49
+                  example: 6270738.56086
                 name:
                   type: string
                   description: ''
-                  example: excepturi
+                  example: sunt
                 slug:
                   type: string
                   description: ''
-                  example: dolorem
+                  example: aut
                 email:
                   type: string
                   description: 'Must be a valid email address.'
-                  example: ydoyle@example.com
+                  example: lemke.sophie@example.net
                 phone:
                   type: string
                   description: ''
-                  example: earum
+                  example: iure
                 website:
                   type: string
                   description: 'Must be a valid URL.'
-                  example: 'http://www.marquardt.com/'
+                  example: 'http://www.upton.com/aut-odio-sequi-delectus-sed-ut-recusandae-ex-aspernatur'
                 country_id:
                   type: number
                   description: ''
-                  example: 949.526179668
+                  example: 0.358711
                 currency_id:
                   type: number
                   description: ''
-                  example: 14579.3392598
+                  example: 163752.0
                 logo:
                   type: string
                   description: 'Must be a valid URL.'
-                  example: 'http://gulgowski.com/est-sit-ut-perspiciatis-enim-id-ad'
+                  example: 'http://www.bins.com/vero-accusantium-praesentium-officiis-est-a-natus-et.html'
                 address:
                   type: string
                   description: ''
-                  example: nesciunt
+                  example: nam
                 city:
                   type: string
                   description: ''
-                  example: quos
+                  example: dignissimos
                 state:
                   type: string
                   description: ''
-                  example: fugiat
+                  example: quia
                 post_code:
                   type: string
                   description: ''
-                  example: recusandae
+                  example: repellat
                 short_description:
                   type: string
                   description: ''
-                  example: et
+                  example: voluptas
                 long_description:
                   type: string
                   description: ''
-                  example: sed
+                  example: voluptates
               required:
                 - organisation_type_id
                 - name
@@ -44215,7 +44225,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 14
+        example: 19
         required: true
         schema:
           type: integer
@@ -44317,12 +44327,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: esse
+          example: est
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: esse
+            example: est
         -
           in: header
           name: X-Tenant-ID
@@ -44739,7 +44749,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 6
+        example: 11
         required: true
         schema:
           type: integer
@@ -44841,12 +44851,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: ad
+          example: dolores
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: ad
+            example: dolores
         -
           in: header
           name: X-Tenant-ID
@@ -44994,23 +45004,23 @@ paths:
                 module_sms_account_id:
                   type: number
                   description: ''
-                  example: 974154.51287
+                  example: 5.4052629
                 member_id:
                   type: number
                   description: ''
-                  example: 1542401.9621
+                  example: 47309.0
                 to:
                   type: string
                   description: ''
-                  example: autem
+                  example: sit
                 message:
                   type: string
                   description: ''
-                  example: dolor
+                  example: unde
                 sent_by:
                   type: number
                   description: ''
-                  example: 385237175.67634
+                  example: 71.1931
               required:
                 - module_sms_account_id
                 - member_id
@@ -45117,23 +45127,23 @@ paths:
                 module_sms_account_id:
                   type: number
                   description: ''
-                  example: 12.044
+                  example: 94102602.05
                 member_id:
                   type: number
                   description: ''
-                  example: 14099001.0
+                  example: 21.2193
                 to:
                   type: string
                   description: ''
-                  example: qui
+                  example: incidunt
                 message:
                   type: string
                   description: ''
-                  example: non
+                  example: rerum
                 sent_by:
                   type: number
                   description: ''
-                  example: 34.879794746
+                  example: 402176.14693214
               required:
                 - module_sms_account_id
                 - member_id
@@ -45199,7 +45209,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 20
+        example: 1
         required: true
         schema:
           type: integer
@@ -45301,12 +45311,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: dolor
+          example: amet
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: dolor
+            example: amet
         -
           in: header
           name: X-Tenant-ID
@@ -45723,7 +45733,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 15
+        example: 4
         required: true
         schema:
           type: integer
@@ -45825,12 +45835,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: qui
+          example: distinctio
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: qui
+            example: distinctio
         -
           in: header
           name: X-Tenant-ID
@@ -46247,7 +46257,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 11
+        example: 20
         required: true
         schema:
           type: integer
@@ -46349,12 +46359,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: quam
+          example: sequi
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: quam
+            example: sequi
         -
           in: header
           name: X-Tenant-ID
@@ -46771,7 +46781,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 16
+        example: 3
         required: true
         schema:
           type: integer
@@ -46938,12 +46948,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: ut
+          example: ducimus
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: ut
+            example: ducimus
         -
           in: header
           name: X-Tenant-ID
@@ -47360,7 +47370,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 3
+        example: 14
         required: true
         schema:
           type: integer
@@ -47462,12 +47472,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: natus
+          example: cumque
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: natus
+            example: cumque
         -
           in: header
           name: X-Tenant-ID
@@ -47884,7 +47894,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 5
+        example: 18
         required: true
         schema:
           type: integer
@@ -48014,12 +48024,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: culpa
+          example: distinctio
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: culpa
+            example: distinctio
         -
           in: header
           name: X-Tenant-ID
@@ -48436,7 +48446,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 16
+        example: 14
         required: true
         schema:
           type: integer
@@ -48538,12 +48548,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: eos
+          example: nam
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: eos
+            example: nam
         -
           in: header
           name: X-Tenant-ID
@@ -48960,7 +48970,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 2
+        example: 16
         required: true
         schema:
           type: integer
@@ -49347,12 +49357,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: sed
+          example: minima
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: sed
+            example: minima
         -
           in: header
           name: X-Tenant-ID
@@ -49769,7 +49779,559 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 8
+        example: 12
+        required: true
+        schema:
+          type: integer
+  /api/tags/types:
+    get:
+      summary: 'Get Tag Types'
+      operationId: getTagTypes
+      description: ''
+      parameters:
+        -
+          in: header
+          name: X-Tenant-ID
+          description: ''
+          example: '{{tenant_id}}'
+          schema:
+            type: string
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Tags
+  /api/tags/count:
+    get:
+      summary: 'Count Resources'
+      operationId: countResources
+      description: 'Returns a simple count of data in this resource'
+      parameters:
+        -
+          in: query
+          name: fieldName
+          description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field.'
+          example: null
+          required: false
+          schema:
+            type: string
+            description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field.'
+            example: null
+        -
+          in: header
+          name: X-Tenant-ID
+          description: ''
+          example: '{{tenant_id}}'
+          schema:
+            type: string
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Tags
+  /api/tags/search:
+    get:
+      summary: 'Search Resources'
+      operationId: searchResources
+      description: "Allows searching for data in this resource using multiple options.\n\nOptions for searching\n- By field name: e.g. `?name=John` - Specific search\n- By field name with `LIKE` operator: e.g. `?name_like=John` - Fuzzy search\n- By field name with `!=` operator: e.g. `?age_not=5`\n- By field name with `>` or `<` operator: e.g. `?age_gt=5` or `?age_lt=10`\n- By field name with `>=` or `<=` operator: e.g. `?age_gte=5` or `?age_lte=10`\n- By field name with `IN` or `NOT IN` operator: e.g. `?id_in=1,3,5` or `?id_notIn=2,4`\n- By field name with `NULL` or `NOT NULL` operator: e.g. `?email_isNull` or `?email_isNotNull`"
+      parameters:
+        -
+          in: query
+          name: limit
+          description: 'Total items to return e.g. `?limit=15`.'
+          example: '3'
+          required: false
+          schema:
+            type: string
+            description: 'Total items to return e.g. `?limit=15`.'
+            example: '3'
+        -
+          in: query
+          name: page
+          description: 'Page of items to return e.g. `?page=1`.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Page of items to return e.g. `?page=1`.'
+            example: 1
+        -
+          in: query
+          name: sort
+          description: 'Sorting options e.g. `?sort=field1:asc,field2:asc` OR `?sort=latest/oldest`.'
+          example: latest
+          required: false
+          schema:
+            type: string
+            description: 'Sorting options e.g. `?sort=field1:asc,field2:asc` OR `?sort=latest/oldest`.'
+            example: latest
+        -
+          in: query
+          name: count
+          description: 'Count related models. Alternatively `with_count` e.g. `?count=relation1,relation2`.'
+          example: null
+          required: false
+          schema:
+            type: integer
+            description: 'Count related models. Alternatively `with_count` e.g. `?count=relation1,relation2`.'
+            example: null
+        -
+          in: query
+          name: contain
+          description: 'Contain data from related model e.g. `?contain=relation1,relation2`.'
+          example: null
+          required: false
+          schema:
+            type: string
+            description: 'Contain data from related model e.g. `?contain=relation1,relation2`.'
+            example: null
+        -
+          in: query
+          name: fieldName
+          description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
+          example: enim
+          required: false
+          schema:
+            type: string
+            description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
+            example: enim
+        -
+          in: header
+          name: X-Tenant-ID
+          description: ''
+          example: '{{tenant_id}}'
+          schema:
+            type: string
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Tags
+  /api/tags:
+    get:
+      summary: 'Get All'
+      operationId: getAll
+      description: "Returns a list of items in this resource and allows filtering the data based on fields in the database\n\nOptions for searching / filtering\n- By field name: e.g. `?name=John` - Specific search\n- By field name with `LIKE` operator: e.g. `?name_like=John` - Fuzzy search\n- By field name with `!=` operator: e.g. `?age_not=5`\n- By field name with `>` or `<` operator: e.g. `?age_gt=5` or `?age_lt=10`\n- By field name with `>=` or `<=` operator: e.g. `?age_gte=5` or `?age_lte=10`\n- By field name with `IN` or `NOT IN` operator: e.g. `?id_in=1,3,5` or `?id_notIn=2,4`\n- By field name with `NULL` or `NOT NULL` operator: e.g. `?email_isNull` or `?email_isNotNull`"
+      parameters:
+        -
+          in: query
+          name: limit
+          description: 'Total items to return e.g. `?limit=15`.'
+          example: '3'
+          required: false
+          schema:
+            type: string
+            description: 'Total items to return e.g. `?limit=15`.'
+            example: '3'
+        -
+          in: query
+          name: page
+          description: 'Page of items to return e.g. `?page=1`.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Page of items to return e.g. `?page=1`.'
+            example: 1
+        -
+          in: query
+          name: sort
+          description: 'Sorting options e.g. `?sort=field1:asc,field2:asc` OR `?sort=latest/oldest`.'
+          example: latest
+          required: false
+          schema:
+            type: string
+            description: 'Sorting options e.g. `?sort=field1:asc,field2:asc` OR `?sort=latest/oldest`.'
+            example: latest
+        -
+          in: query
+          name: count
+          description: 'Count related models. Alternatively `with_count` e.g. `?count=relation1,relation2`.'
+          example: null
+          required: false
+          schema:
+            type: integer
+            description: 'Count related models. Alternatively `with_count` e.g. `?count=relation1,relation2`.'
+            example: null
+        -
+          in: query
+          name: contain
+          description: 'Contain data from related model e.g. `?contain=relation1,relation2`.'
+          example: null
+          required: false
+          schema:
+            type: string
+            description: 'Contain data from related model e.g. `?contain=relation1,relation2`.'
+            example: null
+        -
+          in: query
+          name: fieldName
+          description: 'Pass any field and value to filter results e.g. `name=John&email=any@aol.com`.'
+          example: null
+          required: false
+          schema:
+            type: string
+            description: 'Pass any field and value to filter results e.g. `name=John&email=any@aol.com`.'
+            example: null
+        -
+          in: header
+          name: X-Tenant-ID
+          description: ''
+          example: '{{tenant_id}}'
+          schema:
+            type: string
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Tags
+    post:
+      summary: 'Create Resource'
+      operationId: createResource
+      description: "Create a new record of this resource in the database. You can return related data or counts of related data\nin the response using the `count` and `contain` query params"
+      parameters:
+        -
+          in: query
+          name: count
+          description: 'Count related models. Alternatively `with_count` e.g. `?count=relation1,relation2`.'
+          example: null
+          required: false
+          schema:
+            type: integer
+            description: 'Count related models. Alternatively `with_count` e.g. `?count=relation1,relation2`.'
+            example: null
+        -
+          in: query
+          name: contain
+          description: 'Contain data from related model e.g. `?contain=relation1,relation2`.'
+          example: null
+          required: false
+          schema:
+            type: string
+            description: 'Contain data from related model e.g. `?contain=relation1,relation2`.'
+            example: null
+        -
+          in: header
+          name: X-Tenant-ID
+          description: ''
+          example: '{{tenant_id}}'
+          schema:
+            type: string
+      responses:
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message:
+                    - 'validation error message'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: array
+                    example:
+                      - 'validation error message'
+                    items:
+                      type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'Details of error message'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'Details of error message'
+      tags:
+        - Tags
+  '/api/tags/{id}':
+    get:
+      summary: 'View Resource'
+      operationId: viewResource
+      description: "Returns information about a specific record in this resource. You can return related data or counts of related data\nin the response using the `count` and `contain` query params"
+      parameters:
+        -
+          in: query
+          name: count
+          description: 'Count related models. Alternatively `with_count` e.g. `?count=relation1,relation2`.'
+          example: null
+          required: false
+          schema:
+            type: integer
+            description: 'Count related models. Alternatively `with_count` e.g. `?count=relation1,relation2`.'
+            example: null
+        -
+          in: query
+          name: contain
+          description: 'Contain data from related model e.g. `?contain=relation1,relation2`.'
+          example: null
+          required: false
+          schema:
+            type: string
+            description: 'Contain data from related model e.g. `?contain=relation1,relation2`.'
+            example: null
+        -
+          in: header
+          name: X-Tenant-ID
+          description: ''
+          example: '{{tenant_id}}'
+          schema:
+            type: string
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: failed
+                  message: 'Resource not found'
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  message:
+                    type: string
+                    example: 'Resource not found'
+      tags:
+        - Tags
+    put:
+      summary: 'Update Resource'
+      operationId: updateResource
+      description: "Updates the data of the record with the specified `id`. You can return related data or counts of related data\nin the response using the `count` and `contain` query params"
+      parameters:
+        -
+          in: query
+          name: count
+          description: 'Count related models. Alternatively `with_count` e.g. `?count=relation1,relation2`.'
+          example: null
+          required: false
+          schema:
+            type: integer
+            description: 'Count related models. Alternatively `with_count` e.g. `?count=relation1,relation2`.'
+            example: null
+        -
+          in: query
+          name: contain
+          description: 'Contain data from related model e.g. `?contain=relation1,relation2`.'
+          example: null
+          required: false
+          schema:
+            type: string
+            description: 'Contain data from related model e.g. `?contain=relation1,relation2`.'
+            example: null
+        -
+          in: header
+          name: X-Tenant-ID
+          description: ''
+          example: '{{tenant_id}}'
+          schema:
+            type: string
+      responses:
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message:
+                    - 'validation error messages'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: array
+                    example:
+                      - 'validation error messages'
+                    items:
+                      type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: failed
+                  message: 'Resource not found'
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  message:
+                    type: string
+                    example: 'Resource not found'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'Details of error message'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'Details of error message'
+      tags:
+        - Tags
+    delete:
+      summary: 'Delete Resource'
+      operationId: deleteResource
+      description: 'Deletes the record with the specified `id`'
+      parameters:
+        -
+          in: header
+          name: X-Tenant-ID
+          description: ''
+          example: '{{tenant_id}}'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Resource deleted'
+                  data:
+                    id: 1
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Resource deleted'
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: failed
+                  message: 'Resource not found'
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  message:
+                    type: string
+                    example: 'Resource not found'
+      tags:
+        - Tags
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The id of the resource to view'
+        example: 13
         required: true
         schema:
           type: integer
@@ -49871,12 +50433,12 @@ paths:
           in: query
           name: fieldName
           description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-          example: laboriosam
+          example: hic
           required: false
           schema:
             type: string
             description: 'Pass any field and value to search by e.g. `name=John&email=any@aol.com`. Search logic may use LIKE or `=` depending on field'
-            example: laboriosam
+            example: hic
         -
           in: header
           name: X-Tenant-ID
@@ -50293,7 +50855,7 @@ paths:
         in: path
         name: id
         description: 'The id of the resource to view'
-        example: 13
+        example: 5
         required: true
         schema:
           type: integer
@@ -50498,6 +51060,9 @@ tags:
     description: ''
   -
     name: 'System Settings'
+    description: ''
+  -
+    name: Tags
     description: ''
   -
     name: 'Transaction Types'

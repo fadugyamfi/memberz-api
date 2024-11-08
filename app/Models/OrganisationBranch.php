@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\Observers\OrganisationBranchObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use LaravelApiBase\Models\ApiModelBehavior;
 use NunoMazer\Samehouse\BelongsToTenants;
 use Spatie\Tags\HasTags;
 
+#[ObservedBy(OrganisationBranchObserver::class)]
 class OrganisationBranch extends ApiModel
 {
     use HasFactory;
@@ -23,19 +27,19 @@ class OrganisationBranch extends ApiModel
         'secondary_member_id',
     ];
 
-    public function organisation() {
+    public function organisation(): BelongsTo {
         return $this->belongsTo(Organisation::class);
     }
 
-    public function branchOrganisation() {
+    public function branch(): BelongsTo {
         return $this->belongsTo(Organisation::class, 'branch_organisation_id');
     }
 
-    public function primaryContact() {
+    public function primaryContact(): BelongsTo {
         return $this->belongsTo(Member::class, 'primary_member_id');
     }
 
-    public function secondaryContact() {
+    public function secondaryContact(): BelongsTo {
         return $this->belongsTo(Member::class, 'secondary_member_id');
     }
 }

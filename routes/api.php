@@ -77,6 +77,7 @@ use App\Http\Controllers\SubscriptionTypeController;
 use App\Http\Controllers\Support\SystemSettingController;
 use App\Http\Controllers\SystemSettingCategoryController;
 use App\Http\Controllers\SystemSettingController as ControllersSystemSettingController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\TransactionTypeController;
 use App\Http\Controllers\TwoFactorAuthController;
 use App\Http\Controllers\VerifyEmailController;
@@ -302,6 +303,9 @@ Route::middleware(['auth:api', 'multi-tenant'])->group(function () {
     Route::apiResource('/expense_account_balances', ExpenseAccountBalanceController::class);
     Route::apiResource('/expense_requests', ExpenseRequestController::class);
     Route::apiResource('/expense_request_items', ExpenseRequestItemController::class);
+
+    Route::get('/tags/types', [TagController::class, 'getTypes']); 
+    Route::apiResource('/tags', TagController::class);
 });
 
 // Allow for SSE notifications subscription

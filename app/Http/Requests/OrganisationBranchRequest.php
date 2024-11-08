@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use LaravelApiBase\Http\Requests\ApiRequest;
 
 class OrganisationBranchRequest extends ApiRequest
@@ -25,9 +26,23 @@ class OrganisationBranchRequest extends ApiRequest
     {
         return [
             'organisation_id' => 'required|numeric|exists:organisations,id',
-            'branch_organisation_id' => 'required|numeric|exists:organisations,id',
+            'branch_organisation_id' => [
+                'required', 'numeric',
+                Rule::exists('organisations', 'id'),
+                Rule::unique('organisation_branches', 'branch_organisation_id')
+                    ->where('organisation_id', $this->organisation_id)
+                    ->ignore($this->id)
+            ],
             'primary_member_id' => 'nullable|numeric|exists:members,id',
             'secondary_member_id' => 'nullable|numeric|exists:members,id',
+            'tags' => ['array', 'nullable']
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'branch_organisation_id.unique' => __('Branch already associated with this organisation')
         ];
     }
 
