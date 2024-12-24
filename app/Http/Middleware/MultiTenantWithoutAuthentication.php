@@ -21,14 +21,14 @@ class MultiTenantWithoutAuthentication
     public function handle(Request $request, Closure $next)
     {
         if( !$request->hasHeader('X-Tenant-Id') ) {
-            return abort(403, __("No organisation specified"));
+            return abort(403, __("auth.multi-tenant.header-missing"));
         }
 
         if( $request->hasHeader('X-Tenant-Id') ) {
             $tenantId = $request->header('X-Tenant-Id');
 
             if( !Uuid::isValid($tenantId) ) {
-                return abort(403, __("Invalid organisation identifier specified"));
+                return abort(403, __("auth.multi-tenant.invalid"));
             }
 
             $organisation = Organisation::where('uuid', $tenantId)->first();

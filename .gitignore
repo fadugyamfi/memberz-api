@@ -16,3 +16,4 @@ laravel-excel
 .phpunit.cache/test-results
 phpunit.xml.bak
 .vscode/settings.json
+docs

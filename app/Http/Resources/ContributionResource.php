@@ -19,9 +19,9 @@ class ContributionResource extends JsonResource
             'member_id' => $this->organisationMember?->member_id,
             'member_name' => $this->organisationMember?->member?->name,
             'payment_type' => $this->contributionPaymentType?->name,
-            'currency_code' => $this->currency->currency_code,
-            'receipt_no' => $this->contributionReceipt->receipt_no,
-            'receipt_dt' => $this->contributionReceipt->receipt_dt?->format('Y-m-d'),
+            'currency_code' => $this->currency?->currency_code,
+            'receipt_no' => $this->contributionReceipt?->receipt_no,
+            'receipt_dt' => $this->contributionReceipt?->receipt_dt?->format('Y-m-d'),
             'month_name' => date('F', strtotime("2021-{$this->month}-01")),
             'bank' => $this->bank
         ]);

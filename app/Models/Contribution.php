@@ -139,7 +139,7 @@ class Contribution extends ApiModel
             ->setDescriptionForEvent(function($eventName) use($contribution, $type, $receipt) {
                 $params = [
                     'type_name' => $type->name,
-                    'amount' => $contribution->currency->currency_code . ' ' . number_format($contribution->amount, 2),
+                    'amount' => $contribution->currency?->currency_code . ' ' . number_format($contribution->amount, 2),
                     'receipt_no' => $receipt->receipt_no
                 ];
 

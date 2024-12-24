@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use App\Observers\MemberRelationObserver;
 use App\Traits\LogModelActivity;
 use App\Traits\SoftDeletesWithActiveFlag;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 
+#[ObservedBy(MemberRelationObserver::class)]
 class MemberRelation extends ApiModel
 {
     use LogModelActivity, SoftDeletesWithActiveFlag;
@@ -30,8 +34,27 @@ class MemberRelation extends ApiModel
         return $this->belongsTo(Member::class);
     }
 
+    /**
+     * @deprecated use profile relationship instead
+     */
     public function relative(){
         return $this->belongsTo(Member::class, 'relation_member_id');
+    }
+
+    public function profile(): BelongsTo {
+        return $this->belongsTo(Member::class, 'relation_member_id');
+    }
+
+    public function isParent() {
+        return $this->member_relation_type_id == MemberRelationType::PARENT;
+    }
+
+    public function isSpouse() {
+        return $this->member_relation_type_id == MemberRelationType::SPOUSE;
+    }
+
+    public function isChild() {
+        return $this->member_relation_type_id == MemberRelationType::CHILD;
     }
 
     public function getActivitylogOptions(): LogOptions
