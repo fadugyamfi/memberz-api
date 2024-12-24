@@ -126,6 +126,7 @@ Route::controller(OrganisationController::class)->group(function() {
     Route::get('organisations/public', 'index');
     Route::get('organisations/slugs', 'slugs');
     Route::get('organisations/recommended', 'recommended');
+    Route::get('organisations/list', 'list');
 });
 
 /**
