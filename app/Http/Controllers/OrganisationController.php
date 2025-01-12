@@ -116,7 +116,7 @@ class OrganisationController extends Controller
                 'organisationType', 
                 'memberAccount.member:id,first_name,last_name,mobile_number,email,dob'
             ])
-            ->select('id', 'name', 'phone', 'email', 'member_account_id', 'logo')
+            ->select('id', 'name', 'phone', 'email', 'member_account_id', 'logo', 'uuid')
             ->where('name', 'LIKE', "%{$term}%")
             ->limit($limit)
             ->orderBy('name')
@@ -129,6 +129,7 @@ class OrganisationController extends Controller
                     'email' => $organisation->email,
                     'member_account' => $organisation->memberAccount,
                     'logo' => $organisation->logo,
+                    'uuid' => $organisation->uuid,
                     'membership' => OrganisationMember::where('organisation_id', $organisation->id)
                         ->where('member_id', $organisation->memberAccount?->member_id)
                         ->with(['member:id,first_name,last_name,mobile_number,email,dob'])
