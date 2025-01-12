@@ -10,6 +10,9 @@ use Ramsey\Uuid\Uuid;
 
 class MultiTenant
 {
+
+    const X_TENANT_ID = 'X-Tenant-Id';
+
     /**
      * Handle an incoming request.
      *
@@ -20,22 +23,26 @@ class MultiTenant
 
     public function handle(Request $request, Closure $next)
     {
-        if( !$request->hasHeader('X-Tenant-Id') ) {
-            return abort(403, __("No organisation specified"));
+        if( !$request->hasHeader(self::X_TENANT_ID) ) {
+            return abort(403, __("auth.multi-tenant.header-missing"));
         }
 
-        if( $request->hasHeader('X-Tenant-Id') && auth()->check() ) {
-            $tenantId = $request->header('X-Tenant-Id');
+        if( $request->hasHeader(self::X_TENANT_ID) && auth()->check() ) {
+            $tenantId = $request->header(self::X_TENANT_ID);
 
             if( !Uuid::isValid($tenantId) ) {
-                return abort(403, __("Invalid organisation identifier specified"));
+                return abort(403, __("auth.multi-tenant.invalid"));
             }
 
-            $organisation_ids = auth()->user()->getOrganisationIds();
+            /** @var MemberAccount $user */
+            $user = auth()->user();
+            $organisation_ids = $user->getOrganisationIds();
+
+            /** @var Organisation $organisation */
             $organisation = Organisation::where('uuid', $tenantId)->first();
 
             if( !$organisation || !collect($organisation_ids)->contains($organisation->id) ) {
-                return abort(404, __('Access to organisation not permitted'));
+                return abort(404, __('auth.multi-tenant.not-permitted', ['org_name' => $organisation->name]));
             }
 
             Landlord::addTenant($organisation);

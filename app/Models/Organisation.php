@@ -76,6 +76,10 @@ class Organisation extends ApiModel
         return $this->hasOne(SmsAccount::class, 'organisation_id');
     }
 
+    public function memberAccount() {
+        return $this->belongsTo(MemberAccount::class);
+    }
+
     public function generateSlug($force = false) {
         if( $this->slug && !$force ) {
             return;

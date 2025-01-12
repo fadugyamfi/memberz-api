@@ -50,7 +50,7 @@ class SendSMSReceipt implements ShouldQueue
         $periods = $this->getContributionPeriods($this->contribution);
 
         $formatter = NumberFormatter::create("gh_GH", NumberFormatter::CURRENCY);
-        $amount = $formatter->formatCurrency($this->contribution->amount, $this->contribution->currency->currency_code);
+        $amount = $formatter->formatCurrency($this->contribution->amount, $this->contribution->currency?->currency_code);
 
         $message = "Dear {$membership->member->first_name}\n"
             . "Your Payment Receipt\n"
