@@ -7,3 +7,4 @@ php artisan cache:clear && php artisan config:cache && php artisan route:cache
 php artisan storage:link
 php artisan migrate --force
 php artisan queue:restart
+php artisan scribe:generate

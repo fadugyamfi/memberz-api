@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Member extends ApiModel
 {
@@ -66,6 +67,14 @@ class Member extends ApiModel
         return new Attribute(
             get: fn ($value, $attributes) => $attributes['first_name'] . ' ' . $attributes['last_name'],
         );
+    }
+
+    public function relatives(): HasMany {
+        return $this->hasMany(MemberRelation::class);
+    }
+
+    public function spouse() {
+        return $this->relatives()->where('member_relation_type_id', MemberRelationType::SPOUSE);
     }
 
     public function getNameAttribute()

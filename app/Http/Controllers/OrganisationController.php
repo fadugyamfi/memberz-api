@@ -7,7 +7,9 @@ use App\Http\Requests\OrganisationRequest;
 use App\Http\Resources\OrganisationResource;
 use App\Models\MemberAccount;
 use App\Models\Organisation;
+use App\Models\OrganisationMember;
 use DB;
+use Illuminate\Http\Request;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
 /**
@@ -96,5 +98,45 @@ class OrganisationController extends Controller
             ->get();
 
         return response()->json($organisations);
+    }
+
+    /**
+     * Get Organisations For Auto Complete List
+     *
+     * Returns a short list of organisations that one can join. Current criteria is to
+     * return the 10 most recently updated organisations with more than 25 members
+     */
+    public function list(Request $request) {
+
+        $limit = $request->input('limit') ?? 30;
+        $term = $request->input('term');
+
+        $organisations = Organisation::query()
+            ->with([
+                'organisationType', 
+                'memberAccount.member:id,first_name,last_name,mobile_number,email,dob'
+            ])
+            ->select('id', 'name', 'phone', 'email', 'member_account_id', 'logo', 'uuid')
+            ->where('name', 'LIKE', "%{$term}%")
+            ->limit($limit)
+            ->orderBy('name')
+            ->get()
+            ->map(function(Organisation $organisation) {
+                return [
+                    'id' => $organisation->id,
+                    'name' => $organisation->name,
+                    'phone' => $organisation->phone,
+                    'email' => $organisation->email,
+                    'member_account' => $organisation->memberAccount,
+                    'logo' => $organisation->logo,
+                    'uuid' => $organisation->uuid,
+                    'membership' => OrganisationMember::where('organisation_id', $organisation->id)
+                        ->where('member_id', $organisation->memberAccount?->member_id)
+                        ->with(['member:id,first_name,last_name,mobile_number,email,dob'])
+                        ->first()
+                ];
+            });
+
+        return response()->json(['data' => $organisations]);
     }
 }
