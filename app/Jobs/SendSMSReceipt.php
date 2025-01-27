@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Contribution;
 use App\Models\ContributionReceiptSetting;
+use App\Models\MemberAccount;
 use App\Models\SmsAccount;
 use App\Models\SmsAccountMessage;
 use DateTime;
@@ -23,8 +24,10 @@ class SendSMSReceipt implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(private Contribution $contribution)
-    {
+    public function __construct(
+        private Contribution $contribution,
+        private MemberAccount $user
+    ) {
         //
     }
 
@@ -33,12 +36,12 @@ class SendSMSReceipt implements ShouldQueue
      */
     public function handle(): void
     {
-        if(
-            !$this->contribution->shouldSendSmsNotification ||
-            !$this->contribution->isMemberSpecific() ||
-            !$this->organisationSmsNotificationSettingEnabled($this->contribution->organisation_id) || 
-            !auth()->check()
-        ) {
+        if( !$this->contribution->shouldSendSmsNotification || !$this->contribution->isMemberSpecific() ) {
+            return;
+        }
+
+        if( !$this->organisationSmsNotificationSettingEnabled($this->contribution->organisation_id) ) {
+            Log::error("Cannot send SMS Receipt: SMS Notification Setting Disabled");
             return;
         }
 
@@ -63,7 +66,7 @@ class SendSMSReceipt implements ShouldQueue
             . "Thank you!";
 
         try {
-            SmsAccountMessage::createNew(auth()->user(), $this->contribution->organisationMember, $message);
+            SmsAccountMessage::createNew($this->user, $this->contribution->organisationMember, $message);
         } catch(Exception $e) {
             Log::error("Cannot send SMS Receipt: " . $e->getMessage() );
         }
