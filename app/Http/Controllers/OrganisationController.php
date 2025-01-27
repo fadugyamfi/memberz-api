@@ -10,6 +10,7 @@ use App\Models\Organisation;
 use App\Models\OrganisationMember;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use LaravelApiBase\Http\Controllers\ApiControllerBehavior;
 
 /**
@@ -84,9 +85,9 @@ class OrganisationController extends Controller
                 DB::raw('count(organisation_members.id) as membership_count'),
                 DB::raw('max(organisation_members.modified) as recent_membership')
             )
-            ->when(auth()->check(), function($query) {
+            ->when(Auth::check(), function($query) {
                 /** @var MemberAccount $user */
-                $user = auth()->user();
+                $user = Auth::user();
                 $userOrganisationIds = $user->memberships()->get()->pluck('organisation_id');
                 $query->whereNotIn('organisation_members.organisation_id', $userOrganisationIds);
             })
