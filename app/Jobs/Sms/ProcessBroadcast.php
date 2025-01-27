@@ -44,6 +44,12 @@ class ProcessBroadcast implements ShouldQueue
 
         $smsAccount = $this->broadcast->smsAccount;
         $organisation = $smsAccount->organisation;
+
+        if( !$smsAccount && !$organisation ) {
+            Log::error("No Sms Account or Organisation found for Broadcast {$this->broadcast->id}");
+            return;
+        }   
+
         $totalContacts = $this->getTotalContacts();
         $totalMessages = $this->broadcast->message_pages * $totalContacts;
         $insufficientCreditForMessages = $smsAccount->available_credit < $totalMessages;
@@ -51,7 +57,7 @@ class ProcessBroadcast implements ShouldQueue
         if( !$smsAccount->hasCredit() || $insufficientCreditForMessages ) {
             $this->broadcast->notifyInsufficientCredits();
             $this->broadcast->rescheduleForAnHour();
-            Log::info("Insufficient Sms Account Credits for {$organisation->name}. Broadcast Rescheduled For +1 hours");
+            Log::error("Insufficient Sms Account Credits for {$organisation->name}. Broadcast Rescheduled For +1 hours");
             return;
         }
 

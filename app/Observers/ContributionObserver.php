@@ -50,7 +50,7 @@ class ContributionObserver
         }
 
         // attempt sending an sms notification. Will cancel out if conditions are not met
-        SendSMSReceipt::dispatchSync($contribution);
+        SendSMSReceipt::dispatchSync($contribution, auth()->user());
     }
 
     public function updated(Contribution $contribution) {
