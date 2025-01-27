@@ -37,7 +37,7 @@ class SendSMSReceipt implements ShouldQueue
     public function handle(): void
     {
         if( !$this->contribution->shouldSendSmsNotification ) {
-            Log::error("Cannot send SMS Receipt: SMS Notification Not Selected By User");
+            Log::error("Cannot send SMS Receipt: SMS Notification Not Selected By User. Request inputs: " . json_encode(request()->all()) );    
             return;
         }
 

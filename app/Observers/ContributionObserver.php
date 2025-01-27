@@ -8,6 +8,7 @@ use App\Models\Contribution;
 use App\Models\ContributionReceiptSetting;
 use App\Models\ContributionSummary;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class ContributionObserver
 {
@@ -50,7 +51,7 @@ class ContributionObserver
         }
 
         // attempt sending an sms notification. Will cancel out if conditions are not met
-        SendSMSReceipt::dispatchSync($contribution, auth()->user());
+        SendSMSReceipt::dispatchSync($contribution, Auth::user());
     }
 
     public function updated(Contribution $contribution) {
@@ -79,7 +80,7 @@ class ContributionObserver
         $receiptSettings = ContributionReceiptSetting::first();
         $receipt_no = $receiptSettings->receipt_mode == 'auto' ? $receiptSettings->nextReceiptNo() : request()->receipt_no;
         $receipt_dt = request()->receipt_dt ?? date('Y-m-d');
-        $adminAccount = auth()->user()?->tenantAccount;
+        $adminAccount = Auth::user()?->tenantAccount;
 
         $receipt = ContributionReceipt::firstOrCreate([
             'receipt_no' => $receipt_no,
@@ -102,7 +103,7 @@ class ContributionObserver
     }
 
     private function shouldSendSmsNotification() {
-        $sendSmsNotification = request('send_sms');
+        $sendSmsNotification = request()->input('send_sms');
 
         return $sendSmsNotification == true;
     }
