@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\Organisation;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use NunoMazer\Samehouse\Facades\Landlord;
 use Ramsey\Uuid\Uuid;
 
@@ -27,7 +28,7 @@ class MultiTenant
             return abort(403, __("auth.multi-tenant.header-missing"));
         }
 
-        if( $request->hasHeader(self::X_TENANT_ID) && auth()->check() ) {
+        if( $request->hasHeader(self::X_TENANT_ID) && Auth::check() ) {
             $tenantId = $request->header(self::X_TENANT_ID);
 
             if( !Uuid::isValid($tenantId) ) {
@@ -35,7 +36,7 @@ class MultiTenant
             }
 
             /** @var MemberAccount $user */
-            $user = auth()->user();
+            $user = Auth::user();
             $organisation_ids = $user->getOrganisationIds();
 
             /** @var Organisation $organisation */

@@ -16,6 +16,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use NumberFormatter;
+use NunoMazer\Samehouse\Facades\Landlord;
 
 class SendSMSReceipt implements ShouldQueue
 {
@@ -36,18 +37,18 @@ class SendSMSReceipt implements ShouldQueue
      */
     public function handle(): void
     {
-        if( !$this->contribution->shouldSendSmsNotification && !request()->input('send_sms') ) {
-            Log::error("Cannot send SMS Receipt: SMS Notification Not Selected By User." );    
-            return;
-        }
-
         if( !$this->contribution->isMemberSpecific() ) {
             Log::debug("Cannot send SMS Receipt: Contribution is not Member Specific");
         }
 
         if( !$this->organisationSmsNotificationSettingEnabled($this->contribution->organisation_id) ) {
-            Log::error("Cannot send SMS Receipt: SMS Notification Setting Disabled");
+            Log::error("Cannot send SMS Receipt: SMS Notification Setting Disabled for Organisation {$this->contribution->organisation_id}");   
             return;
+        }
+
+        if( !Landlord::hasTenant($this->contribution->organisation) ) {
+            Landlord::addTenant($this->contribution->organisation);
+            Landlord::applyTenantScopesToDeferredModels();
         }
 
         $receipt = $this->contribution->contributionReceipt;
@@ -114,7 +115,7 @@ class SendSMSReceipt implements ShouldQueue
     }
 
     private function organisationSmsNotificationSettingEnabled(int $organisation_id) {
-        $receiptSettings = ContributionReceiptSetting::first();
+        $receiptSettings = ContributionReceiptSetting::where('organisation_id', $organisation_id)->first();
         $smsAccount = SmsAccount::getAccount( $organisation_id );
 
         return $receiptSettings && $receiptSettings->sms_notify && $smsAccount;

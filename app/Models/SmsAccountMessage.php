@@ -140,7 +140,7 @@ class SmsAccountMessage extends ApiModel
         }
 
         if( !$user->tenantAccount ) {
-            throw new Exception('User admin account for organisation not found');
+            throw new Exception('User admin account for organisation not found: ' . $user->tenantAccount);
         }
 
         if( !$membership->member->mobile_number ) {

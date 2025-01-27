@@ -19,7 +19,7 @@ class OrganisationMemberCategorySettingController extends Controller
     }
 
     public function __construct(OrganisationMemberCategorySetting $memberCategorySetting) {
-        parent::__construct($memberCategorySetting);
+        $this->setApiModel($memberCategorySetting);
     }
 
     public function store(OrganisationMemberCategorySettingRequest $request)

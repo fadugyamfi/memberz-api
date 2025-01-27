@@ -36,7 +36,9 @@ class ContributionObserver
      * @return void
      */
     public function created(Contribution $contribution) {
-        $contribution->shouldSendSmsNotification = $this->shouldSendSmsNotification();
+        if( !$contribution->shouldSendSmsNotification ) {
+            $contribution = $this->shouldSendSmsNotification();
+        } 
 
         $receipt_dt = $this->getReceiptDate($contribution->module_contribution_receipt_id);
 
@@ -51,7 +53,9 @@ class ContributionObserver
         }
 
         // attempt sending an sms notification. Will cancel out if conditions are not met
-        SendSMSReceipt::dispatchSync($contribution, Auth::user());
+        if( $contribution->shouldSendSmsNotification ) {
+            SendSMSReceipt::dispatchSync($contribution, Auth::user());
+        }
     }
 
     public function updated(Contribution $contribution) {
