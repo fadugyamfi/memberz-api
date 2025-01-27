@@ -23,8 +23,6 @@ class ContributionObserver
             return;
         }
 
-        $contribution->shouldSendSmsNotification = $this->shouldSendSmsNotification();
-
         $receipt = $this->createReceipt($contribution);
 
         $contribution->module_contribution_receipt_id = $receipt->id;
@@ -37,6 +35,8 @@ class ContributionObserver
      * @return void
      */
     public function created(Contribution $contribution) {
+        $contribution->shouldSendSmsNotification = $this->shouldSendSmsNotification();
+
         $receipt_dt = $this->getReceiptDate($contribution->module_contribution_receipt_id);
 
         $existingSummaryRecord = $this->getContributionSummaryRecord($receipt_dt, $contribution);
@@ -104,7 +104,7 @@ class ContributionObserver
     private function shouldSendSmsNotification() {
         $sendSmsNotification = request('send_sms');
 
-        return $sendSmsNotification != null && $sendSmsNotification == true;
+        return $sendSmsNotification == true;
     }
 
     
