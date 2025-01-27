@@ -36,8 +36,13 @@ class SendSMSReceipt implements ShouldQueue
      */
     public function handle(): void
     {
-        if( !$this->contribution->shouldSendSmsNotification || !$this->contribution->isMemberSpecific() ) {
+        if( !$this->contribution->shouldSendSmsNotification ) {
+            Log::error("Cannot send SMS Receipt: SMS Notification Not Selected By User");
             return;
+        }
+
+        if( !$this->contribution->isMemberSpecific() ) {
+            Log::debug("Cannot send SMS Receipt: Contribution is not Member Specific");
         }
 
         if( !$this->organisationSmsNotificationSettingEnabled($this->contribution->organisation_id) ) {
