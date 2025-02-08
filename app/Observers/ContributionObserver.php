@@ -37,7 +37,7 @@ class ContributionObserver
      */
     public function created(Contribution $contribution) {
         if( !$contribution->shouldSendSmsNotification ) {
-            $contribution = $this->shouldSendSmsNotification();
+            $contribution->shouldSendSmsNotification = $this->shouldSendSmsNotification();
         } 
 
         $receipt_dt = $this->getReceiptDate($contribution->module_contribution_receipt_id);
