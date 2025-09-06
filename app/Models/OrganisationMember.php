@@ -140,7 +140,7 @@ class OrganisationMember extends ApiModel
         }
 
         $this->fill(['membership_start_dt' => now()]);
-        $this->save();
+        $this->saveQuietly();
     }
 
     /**
