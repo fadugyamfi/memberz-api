@@ -158,7 +158,13 @@ class OrganisationMember extends ApiModel
             'first_name', 'last_name', 'email', 'mobile_number', 'occupation', 'business_name', 'dob', 'marital_status', 'residential_address'
         ]);
 
-        $builder->approved()->active()
+        if( $request->has('approved') && $request->approved == '0' ) {
+            $builder->unapproved();
+        } else {
+            $builder->approved();
+        }
+
+        $builder->active()
             ->join('members', 'members.id', '=', 'organisation_members.member_id')
             ->select('organisation_members.*', DB::raw("FLOOR(DATEDIFF(NOW(), dob) / 365.25) as age"));
 

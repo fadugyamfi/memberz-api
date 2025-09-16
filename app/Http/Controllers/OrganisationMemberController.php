@@ -101,7 +101,11 @@ class OrganisationMemberController extends Controller
         )
         ->select(
             DB::raw('organisation_member_categories.name as category_name'),
-            DB::raw('count(organisation_members.id) as total')
+            DB::raw('count(organisation_members.id) as total'),
+            DB::raw('sum(case when organisation_members.approved = 1 then 1 else 0 end) as approved'),
+            DB::raw('sum(case when organisation_members.approved = 0 then 1 else 0 end) as unapproved'),
+            DB::raw('sum(case when organisation_members.active = 1 then 1 else 0 end) as active_accounts'),
+            DB::raw('sum(case when organisation_members.active = 0 then 1 else 0 end) as inactive_accounts')
         )
         ->groupBy('category_name')
         // ->where('organisation_members.organisation_id', $organisation_id)
