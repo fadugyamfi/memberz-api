@@ -35,12 +35,16 @@ class OrganisationMemberRequest extends FormRequest
                     ->where('organisation_id', $this->organisation_id)
                     ->ignore($this->id)
             ],
-            'organisation_member_category_id' => ['required', Rule::exists('organisation_member_categories', 'id')],
+            'organisation_member_category_id' => [
+                'required', 
+                Rule::exists('organisation_member_categories', 'id')
+                    ->where('organisation_id', $this->organisation_id)
+            ],
             'first_name' => ['required_without:member_id', 'string'],
             'last_name' => ['required_without:member_id', 'string'],
             'mobile_number' => ['required_without:member_id', 'string'],
             'gender' => ['string', 'required_without:member_id', 'in:male,female'],
-            'dob' => ['date'],
+            'dob' => ['date', 'nullable'],
             'email' => ['email', 'nullable']
         ];
     }
