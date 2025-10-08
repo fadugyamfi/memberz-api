@@ -30,6 +30,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MemberImageController;
 use App\Http\Controllers\MemberRelationController;
 use App\Http\Controllers\MemberRelationTypeController;
+use App\Http\Controllers\Membership\AnniversaryController;
 use App\Http\Controllers\Membership\BirthdayController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrganisationAccountController;
@@ -227,6 +228,10 @@ Route::middleware(['auth:api', 'multi-tenant'])->group(function () {
     Route::controller(BirthdayController::class)->group(function () {
         Route::get('organisation_members/birthdays', 'index');
         Route::get('organisation_members/birthdays/summary', 'summary');
+    });
+
+    Route::controller(AnniversaryController::class)->group(function () {
+        Route::get('organisation_member_anniversaries/upcoming', 'index');
     });
 
     Route::apiResource('organisation_accounts', OrganisationAccountController::class);
