@@ -137,7 +137,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         }
     }
 
-    public function createTempAccount(int $member_id): self
+    public function createTempAccount(int $member_id): MemberAccount
     {
         $existingAccount = self::where('member_id', $member_id)->active()->first();
 
@@ -149,7 +149,7 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
 
         if (!$member) {
             Log::error("Could not create temporary member account. Member profile does not exist for member_id {$member_id}");
-            return false;
+            throw new Exception("Could not create temporary member account. Member profile does not exist for member_id {$member_id}");
         }
 
         $member_account = self::withoutEvents(function() use($member) {

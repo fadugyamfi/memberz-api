@@ -26,19 +26,21 @@ class OrganisationAccountRequest extends ApiRequest
      */
     protected function prepareForValidation()
     {
-        if (! $this->member_account_id) {
-            $tempMemberAccount = (new MemberAccount())->createTempAccount(request('member_id'));
+        if( $this->member_account_id ) {
+            return;
+        }
 
-            if (!$tempMemberAccount) {
-                Log::error("Temporary account not created/available, so not creating organisation account");
-                return;
-            }
+        // if no member account ID, create a temporary account for the member if possible
+        try {
+            $tempMemberAccount = (new MemberAccount())->createTempAccount(request('member_id'));
 
             $this->merge([
                 'member_account_id' => (int) $tempMemberAccount->id
             ]);
+        } catch (\Exception $e) {
+            Log::error("Temporary account not created/available, so not creating organisation account: " . $e->getMessage());
+            return;
         }
-
     }
 
 
