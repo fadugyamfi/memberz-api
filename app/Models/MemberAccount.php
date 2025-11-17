@@ -153,7 +153,12 @@ class MemberAccount extends Authenticatable implements ApiModelInterface, JWTSub
         }
 
         $member_account = self::withoutEvents(function() use($member) {
-            return MemberAccount::create([
+            // member might have created an account previously not linked to the organisation
+            // we might creating the account for. In such cases, we just return the existing account
+            return MemberAccount::firstOrCreate([
+                'username' => $member->email,
+                'active' => 1,
+            ],[
                 'member_id' => $member->id,
                 'username' => $member->email,
                 'mobile_number' => $member->mobile_number,

@@ -101,6 +101,24 @@ class OrganisationMemberCategory extends ApiModel
         );
     }
 
+    public static function getDefaultCategoryId($organisation_id) {
+        $defaultCategory = self::where([
+            'organisation_id' => $organisation_id,
+            'default' => 1,
+            'active' => 1
+        ])->first();
+
+        if( $defaultCategory ) {
+            return $defaultCategory->id;
+        }
+
+        // if no default category found, create one
+        $organisation = Organisation::find($organisation_id);
+        $newDefaultCategory = self::createDefault($organisation);
+
+        return $newDefaultCategory->id;
+    }
+
     /**
      * Format user activities description for membership category
      * @override
