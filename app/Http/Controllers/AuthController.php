@@ -65,8 +65,10 @@ class AuthController extends Controller
         $username = $request->username;
 
         if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
+            Log::debug("Login using non-email identifier, checking for mobile number match for username: " . $username);
             $memberAccount = MemberAccount::where('mobile_number', $username)->orWhere('mobile_number', 'like', '%' . $username)->first();
             if( $memberAccount ) {
+                Log::debug("Login using mobile number matched to account id: " . $memberAccount->id);
                 $username = $memberAccount->username;
             }
         }
